@@ -17,6 +17,7 @@ gem 'govuk_elements_rails'
 gem 'moj_template'
 
 gem 'dotenv-rails'
+gem 'devise'
 
 group :development, :test do
   gem 'pry'
