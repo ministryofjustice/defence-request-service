@@ -18,10 +18,12 @@ gem 'moj_template'
 
 gem 'dotenv-rails'
 gem 'devise'
+gem 'rails_config'
 
 group :test do
 
 end
+
 group :development, :test do
   gem 'capybara'
   gem 'pry'
