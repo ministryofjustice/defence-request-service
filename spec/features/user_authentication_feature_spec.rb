@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.feature 'user authentication' do
   context 'with authentication' do
     let(:cso_password) { 'password' }
-    let(:cso_user) { User.create(email: 'cso@example.com', password: cso_password) }
+    let(:cso_user) { User.create(email: 'cso@example.com', password: cso_password, role: :cso) }
 
     scenario 'logs in with valid credentials' do
       visit new_user_session_path

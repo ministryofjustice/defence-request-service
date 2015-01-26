@@ -18,6 +18,7 @@ gem 'moj_template'
 
 gem 'dotenv-rails'
 gem 'devise'
+gem "pundit"
 gem 'rails_config'
 
 group :test do

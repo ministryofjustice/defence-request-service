@@ -7,4 +7,4 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 User.where(email: 'cso@example.com').first_or_create(
-  email: 'cso@example.com', password: 'password')
+  email: 'cso@example.com', password: 'password', role: :cso)

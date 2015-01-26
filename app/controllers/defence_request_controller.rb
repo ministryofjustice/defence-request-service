@@ -1,4 +1,4 @@
-class DefenceRequestController < ApplicationController
+class DefenceRequestController < BaseController
 
   def index
     render text: 'CSO DASHBOARD'
