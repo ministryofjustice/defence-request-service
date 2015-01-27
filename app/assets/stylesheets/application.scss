@@ -1,0 +1,38 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+.phase-banner{
+  background-color: #d53880;
+  padding: 10px 0 8px 0;
+  border-bottom: 1px solid #bfc1c3;
+  p {
+    margin: 0;
+    color: #000;
+  }
+  span {
+    display: inline-block;
+    width: 75%;
+    vertical-align: top;
+  }
+}
+
+.phase-tag{
+  color: #FFF;
+}
+
+.navbar{
+  margin-bottom: 0px;
+}
+
+.navbar-default {
+  background-color: #000;
+  border-color: #e7e7e7;
+}
+
+.main_content{
+  padding-top: 40px;
+}
+
+.flash_message{
+  padding-top: 40px;
+}
