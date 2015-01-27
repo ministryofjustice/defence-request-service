@@ -30,6 +30,9 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'
   gem 'spring'
   gem 'web-console', '~> 2.0'
+
+  # Stops each asset request being logged in dev / test
+  gem 'quiet_assets', '~> 1.1'
 end
 
 gem 'rails_12factor', group: :production
