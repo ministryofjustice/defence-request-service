@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby '2.1.5'
 
 gem 'coffee-rails', '~> 4.1.0'
 gem 'jbuilder', '~> 2.0'
@@ -17,6 +18,8 @@ gem 'govuk_elements_rails'
 gem 'moj_template'
 
 gem 'dotenv-rails'
+
+gem 'unicorn'
 
 group :development, :test do
   gem 'pry'
