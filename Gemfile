@@ -19,8 +19,6 @@ gem 'moj_template'
 
 gem 'dotenv-rails'
 
-gem 'unicorn'
-
 group :development, :test do
   gem 'pry'
   gem 'rspec'
