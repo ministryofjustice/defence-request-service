@@ -11,14 +11,19 @@ gem 'uglifier', '>= 1.3.0'
 gem 'unicorn'
 
 # Gov.uk styles
-gem 'govuk_frontend_toolkit'
-gem 'govuk_elements_rails'
-# MOJ styles
-gem 'moj_template'
+gem 'bootstrap-sass', '~> 3.3.3'
 
 gem 'dotenv-rails'
+gem 'devise'
+gem 'pundit'
+gem 'rails_config'
+
+group :test do
+
+end
 
 group :development, :test do
+  gem 'capybara'
   gem 'pry'
   gem 'rspec'
   gem 'rspec-rails', '~> 3.0.0'

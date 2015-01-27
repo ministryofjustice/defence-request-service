@@ -2,12 +2,20 @@
 <html>
 <head>
   <title>DefenceSolicitor</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= yield %>
-
+  <div class="main-content">
+    <div class="row">
+      <div class="col-md-12">
+        <%= render partial: 'shared/head' %>
+        <%= render partial: 'shared/phase_banner' %>
+        <%= render partial: 'shared/flash_messages' if flash.any? %>
+        <%= render partial: 'shared/main_content' %>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
