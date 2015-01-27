@@ -9,7 +9,7 @@ RSpec.feature 'user authentication' do
       visit new_user_session_path
       fill_in 'user_email', with: cso_user.email
       fill_in 'user_password', with: cso_password
-      click_button 'Log in'
+      click_button 'Sign in'
       expect(page).to have_content('CSO DASHBOARD')
     end
 
@@ -17,14 +17,14 @@ RSpec.feature 'user authentication' do
       visit new_user_session_path
       fill_in 'user_email', with: cso_user.email
       fill_in 'user_password', with: 'notarealpassword'
-      click_button 'Log in'
+      click_button 'Sign in'
       expect(page).to_not have_content('CSO DASHBOARD')
     end
 
     context 'unauthenticated' do
       scenario 'logs in with valid credentials' do
         visit root_path
-        expect(page).to have_content('Log in')
+        expect(page).to have_button('Sign in')
       end
     end
   end
