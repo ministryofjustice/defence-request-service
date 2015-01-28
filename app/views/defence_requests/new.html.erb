@@ -1,0 +1,42 @@
+<h2>New Defence Request</h2>
+
+<div class="col-md-6">
+  <%= form_for(@defence_request) do |f| %>
+    <div class="field">
+      <%= f.label :solicitor_type_own, 'Own Solicitor', class: 'form-label' %>
+      <%= f.radio_button :solicitor_type, 'own', class: 'solicitor_type_radio' %>
+      <%= f.label :solicitor_type_duty, 'Duty Solicitor', class: 'form-label' %>
+      <%= f.radio_button :solicitor_type, 'duty', class: 'solicitor_type_radio' %>
+    </div>
+
+    <div id="chkbox1" class="search_box">
+      <%= label_tag 'search', 'Search' %>
+      <%= text_field_tag 'search', nil, placeholder: 'Enter solicitor/firm name...', class: 'form-control'%>
+    </div>
+  <% end %>
+</div>
+
+<script>
+ $(document).ready(function () {
+   var ownSolicitor_checked = ($("input[type='radio']#solicitor_type_own:checked").length > 0);
+   var dutySolicitor_checked = ($("input[type='radio']#solicitor_type_duty:checked").length > 0);
+
+   if (ownSolicitor_checked){
+     $('.search_box').show();
+   }
+   else
+   {
+     $('.search_box').hide();
+   }
+
+   $(".solicitor_type_radio").change(function () {
+     if (this.value == "own") {
+       $('.search_box').stop(true,true).show(1000);
+     } else {
+       $('.search_box').stop(true,true).hide(1000);
+       $("input[name='defence_request[solicitor_type]']").attr('checked', false);
+     }
+   });
+ });
+</script>
+
