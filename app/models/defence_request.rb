@@ -1,3 +1,3 @@
-class DefenceRequest
+class DefenceRequest < ActiveRecord::Base
 
 end
