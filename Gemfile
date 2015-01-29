@@ -36,6 +36,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   # Stops each asset request being logged in dev / test
   gem 'quiet_assets', '~> 1.1'
+  gem 'launchy'
 end
 
 gem 'rails_12factor', group: :production
