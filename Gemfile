@@ -13,12 +13,14 @@ gem 'unicorn'
 
 # Gov.uk styles
 gem 'bootstrap-sass', '~> 3.3.3'
+gem 'bootstrap_form'
 
 gem 'dotenv-rails'
 gem 'devise'
 gem 'pundit'
 gem 'rails_config'
 gem 'httparty'
+gem 'phony_rails'
 
 group :test do
 
@@ -31,7 +33,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'
   gem 'spring'
   gem 'web-console', '~> 2.0'
-
+  gem 'shoulda-matchers'
   # Stops each asset request being logged in dev / test
   gem 'quiet_assets', '~> 1.1'
 end
