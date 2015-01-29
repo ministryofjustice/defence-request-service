@@ -1,5 +1,15 @@
 <div class="col-md-6">
   <h2>New Defence Request</h2>
+
+  <div class="search_box">
+    <%= form_tag(solicitors_search_defence_requests_path, remote: true, class: 'solicitor_search') do %>
+      <%= label_tag 'q', 'Search' %>
+      <%= text_field_tag 'q', nil, placeholder: 'Enter solicitor/firm name...', class: 'form-control'%>
+    <% end %>
+    <div class="list-group solicitor_results_list">
+    </div>
+  </div>
+
   <%= bootstrap_form_for(@defence_request, class: 'new_defence_request') do |f| %>
     <%= render partial: 'shared/form_errors', locals: {object: @defence_request} %>
 
@@ -8,15 +18,7 @@
       <%= f.radio_button :solicitor_type, :duty, label: t('duty'), name: 'defence_request[solicitor_type]', inline: true, class: 'solicitor_type_radio' %>
     <% end %>
 
-    <div class="search_box">
-      <%= form_tag(solicitors_search_defence_requests_path, remote: true, class: 'solicitor_search') do %>
-        <%= label_tag 'q', 'Search' %>
-        <%= text_field_tag 'q', nil, placeholder: 'Enter solicitor/firm name...', class: 'form-control'%>
-      <% end %>
-    </div>
 
-    <div class="list-group solicitor_results_list">
-    </div>
 
     <!-- details -->
     <div class="panel panel-default details">
