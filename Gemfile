@@ -18,6 +18,7 @@ gem 'dotenv-rails'
 gem 'devise'
 gem 'pundit'
 gem 'rails_config'
+gem 'httparty'
 
 group :test do
 
