@@ -16,7 +16,7 @@ RSpec.feature 'defence request creation' do
     visit new_defence_request_path
     expect(page).to have_content ('New Defence Request')
     choose 'Own'
-    page.fill_in 'search[]', with: 'Bob Smith'
+    page.fill_in 'q', with: 'Bob Smith'
   end
 
   scenario 'selecting own solicitor' do

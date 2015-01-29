@@ -39,7 +39,7 @@ class DefenceRequestsController < BaseController
 
     params[:defence_request]['time_of_arrival'] = time_of_arrival
 
-    params.fetch(:defence_request).permit(:solicitor_type,
+    params.require(:defence_request).permit(:solicitor_type,
                                           :solicitor_name,
                                           :solicitor_firm,
                                           :scheme,
