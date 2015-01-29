@@ -9,6 +9,18 @@ module ApplicationHelper
     nil
   end
 
+  def is_dashboard?
+    is_controller?('defence_requests') && is_action?('index')
+  end
+
+  def is_controller?(controller)
+    params[:controller] == controller
+  end
+
+  def is_action?(action)
+    params[:action] == action
+  end
+
   private
   def bootstrap_class_for(flash_type)
     {alert: 'alert-danger', notice: 'alert-info'}[flash_type.to_sym] || flash_type.to_s
