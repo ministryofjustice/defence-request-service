@@ -1,31 +1,84 @@
-<h2>New Defence Request</h2>
-
 <div class="col-md-6">
-  <%= form_for(@defence_request) do |f| %>
-    <div class="field">
-      <%= f.label :solicitor_type_own, 'Own Solicitor', class: 'form-label' %>
-      <%= f.radio_button :solicitor_type, 'own', class: 'solicitor_type_radio' %>
-      <%= f.label :solicitor_type_duty, 'Duty Solicitor', class: 'form-label' %>
-      <%= f.radio_button :solicitor_type, 'duty', class: 'solicitor_type_radio' %>
-    </div>
-  <% end %>
+  <h2>New Defence Request</h2>
+  <%= bootstrap_form_for(@defence_request, class: 'new_defence_request') do |f| %>
+    <%= render partial: 'shared/form_errors', locals: {object: @defence_request} %>
 
-  <div class="search_box">
-    <%= form_tag(solicitors_search_defence_requests_path, remote: true, class: 'solicitor_search') do %>
-      <%= label_tag 'q', 'Search' %>
-      <%= text_field_tag 'q', nil, placeholder: 'Enter solicitor/firm name...', class: 'form-control'%>
+    <%= f.form_group :solicitor_type, label: { text: t('solicitor_type') } do %>
+      <%= f.radio_button :solicitor_type, :own, label: t('own'), name: 'defence_request[solicitor_type]', inline: true, class: 'solicitor_type_radio' %>
+      <%= f.radio_button :solicitor_type, :duty, label: t('duty'), name: 'defence_request[solicitor_type]', inline: true, class: 'solicitor_type_radio' %>
     <% end %>
-  </div>
 
-  <div class="list-group solicitor_results_list">
-  </div>
+    <div class="search_box">
+      <%= form_tag(solicitors_search_defence_requests_path, remote: true, class: 'solicitor_search') do %>
+        <%= label_tag 'q', 'Search' %>
+        <%= text_field_tag 'q', nil, placeholder: 'Enter solicitor/firm name...', class: 'form-control'%>
+      <% end %>
+    </div>
+
+    <div class="list-group solicitor_results_list">
+    </div>
+
+    <!-- details -->
+    <div class="panel panel-default details">
+      <div class="panel-heading">
+        <h3 class="panel-title">Details</h3>
+      </div>
+      <div class="panel-body">
+        <%= f.text_field :solicitor_name, label: t('solicitor_name') %>
+        <%= f.text_field :solicitor_firm, label: t('solicitor_firm') %>
+        <%= f.select :scheme, DefenceRequest::SCHEMES, {label: t('scheme')} %>
+        <%= f.text_field :phone_number, label: t('phone_number') %>
+        <%= f.text_field :custody_number, label: t('custody_number') %>
+        <%= f.text_field :allegations, label: t('allegations') %>
+        <%= f.time_select :time_of_arrival, { label: t('time_of_arrival') }, { class: 'time-select' } %>
+      </div>
+    </div>
+    <!-- detainee -->
+    <div class="panel panel-default detainee">
+      <div class="panel-heading">
+        <h3 class="panel-title">Detainee</h3>
+      </div>
+      <div class="panel-body">
+        <%= f.text_field :detainee_surname, label: t('detainee_surname') %>
+        <%= f.text_field :detainee_first_name, label: t('detainee_first_name') %>
+
+        <%= f.form_group :gender, label: {text: t('gender')} do %>
+          <%= f.radio_button :gender, :male, label: t('male'), name: 'defence_request[gender]', inline: true %>
+          <%= f.radio_button :gender, :female, label: t('female'), name: 'defence_request[gender]', inline: true %>
+        <% end %>
+
+        <%= f.check_box :adult, label: t('adult') %>
+
+        <%= f.date_select :date_of_birth, {
+            start_year: Date.today.year,
+            end_year: 120.years.ago.year,
+            label: t('date_of_birth')
+        }, {
+                              class: 'time-select'
+                          } %>
+        <%= f.check_box :appropriate_adult, label: t('appropriate_adult') %>
+      </div>
+    </div>
+    <!-- comments -->
+    <div class="panel panel-default comments">
+      <div class="panel-heading">
+        <h3 class="panel-title">Comments</h3>
+      </div>
+      <div class="panel-body">
+        <%= f.text_area :comments, label: t('comments'), rows: '5' %>
+      </div>
+    </div>
+    <%= f.form_group do %>
+      <%= f.submit class: 'btn btn-primary' %>
+    <% end %>
+  <% end %>
 </div>
 
 
 <script>
  $(document).ready(function () {
-   var ownSolicitor_checked = ($("input[type='radio']#solicitor_type_own:checked").length > 0);
-   var dutySolicitor_checked = ($("input[type='radio']#solicitor_type_duty:checked").length > 0);
+   var ownSolicitor_checked = ($("input[type='radio']#defence_request_solicitor_type_own:checked").length > 0);
+   var dutySolicitor_checked = ($("input[type='radio']#defence_request_solicitor_type_duty:checked").length > 0);
 
    if (ownSolicitor_checked){
      $('.search_box').show();

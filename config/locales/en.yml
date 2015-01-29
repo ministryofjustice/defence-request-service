@@ -21,3 +21,31 @@
 
 en:
   not_authorized: "You are not authorised to perform this action"
+  new_defence_request: "New Defence Request"
+  prohibit_save: Please review the following %{count}
+  error: error
+  solicitor_type: "Solicitor Type"
+  search: "Search"
+  solicitor_name: "Solicitor Name"
+  solicitor_firm: "Solicitor Firm"
+  scheme: "Scheme"
+  phone_number: "Phone Number"
+  custody_number: "Custody Number"
+  allegations: "Allegations"
+  time_of_arrival: "Time of Arrival"
+  detainee_name: "Detainee Surname"
+  detainee_first_name: "Detainee First Name"
+  gender: "Gender"
+  male: "Male"
+  female: "Female"
+  adult: "Adult?"
+  date_of_birth: "Date of Birth"
+  appropriate_adult: "Appropriate Adult"
+  detainee_surname: "Detainee Surname"
+  comments: "Comments"
+
+  models:
+    create: "%{model} successfully created"
+    update: "%{model} successfully updated"
+    destroy: "%{model} successfully deleted"
+    failed_destroy: "%{model} was not deleted"

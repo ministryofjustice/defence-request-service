@@ -1,0 +1,8 @@
+<% if object.errors.any? %>
+  <h2><%= t('prohibit_save', count: pluralize(object.errors.count, t('error'))) %></h2>
+  <ul>
+    <% object.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+<% end %>
