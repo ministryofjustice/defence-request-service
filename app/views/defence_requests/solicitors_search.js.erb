@@ -1,0 +1,15 @@
+<% @solicitors.each do |solicitor| %>
+  $('.solicitor_results_list').append("<a href='#' class='list-group-item solicitor_result'>\
+      <h4 class='list-group-item-heading'><%= solicitor['name'] %></h4>\
+      <p class='list-group-item-text'><strong>Firm</strong> <%= solicitor['firm']['name'] %></p>\
+      <p class='list-group-item-text'><strong>Mob</strong> <%= solicitor['mobile'] %></p>\
+      <p class='list-group-item-text'><strong>Email</strong> <%= solicitor['email'] %></p>\
+      </a>");
+<% end %>
+
+$('.solicitor_result').each( function() {
+  $(this).click(function(e) {
+    e.preventDefault();
+    $('.solicitor_results_list').html('');
+  });
+});

@@ -8,4 +8,8 @@ class DefenceRequestsControllerPolicy < Struct.new(:user, :defense_request_contr
     user.cso?
   end
 
+  def solicitors_search?
+    user.cso?
+  end
+
 end

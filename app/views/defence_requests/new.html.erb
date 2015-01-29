@@ -8,13 +8,19 @@
       <%= f.label :solicitor_type_duty, 'Duty Solicitor', class: 'form-label' %>
       <%= f.radio_button :solicitor_type, 'duty', class: 'solicitor_type_radio' %>
     </div>
-
-    <div id="chkbox1" class="search_box">
-      <%= label_tag 'search', 'Search' %>
-      <%= text_field_tag 'search', nil, placeholder: 'Enter solicitor/firm name...', class: 'form-control'%>
-    </div>
   <% end %>
+
+  <div class="search_box">
+    <%= form_tag(solicitors_search_defence_requests_path, remote: true, class: 'solicitor_search') do %>
+      <%= label_tag 'q', 'Search' %>
+      <%= text_field_tag 'q', nil, placeholder: 'Enter solicitor/firm name...', class: 'form-control'%>
+    <% end %>
+  </div>
+
+  <div class="list-group solicitor_results_list">
+  </div>
 </div>
+
 
 <script>
  $(document).ready(function () {
@@ -34,9 +40,9 @@
        $('.search_box').stop(true,true).show(1000);
      } else {
        $('.search_box').stop(true,true).hide(1000);
-       $("input[name='defence_request[solicitor_type]']").attr('checked', false);
      }
    });
+
  });
 </script>
 
