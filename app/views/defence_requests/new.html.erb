@@ -4,7 +4,7 @@
   <div class="search_box">
     <%= form_tag(solicitors_search_defence_requests_path, remote: true, class: 'solicitor_search') do %>
       <%= label_tag 'q', t('search') %>
-      <%= text_field_tag 'q', nil, placeholder: t('enter_solicitor_firm_name'), class: 'form-control'%>
+      <%= text_field_tag 'q', nil, placeholder: t('enter_solicitor_firm_name'), autocomplete: "off", class: 'form-control' %>
     <% end %>
     <div class="list-group solicitor_results_list">
     </div>
