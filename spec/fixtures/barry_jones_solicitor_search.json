@@ -1,0 +1,25 @@
+{
+  "solicitors": [
+     {
+      "id": 12,
+      "name": "Barry Jones",
+      "address": "27224 Emmet Isle Turks and Caicos Islands",
+      "postcode": "IB9 3VT",
+      "mobile": "(417) 759-0883 x92467",
+      "email": "barry.jones@mrazschaefer.net",
+      "firm_id": 3,
+      "created_at": "2015-01-28T12:32:46.418Z",
+      "updated_at": "2015-01-28T12:32:46.418Z",
+      "firm": {
+        "id": 3,
+        "name": "Stroman and Sons",
+        "address": "1054 Flo Vista Saint Vincent and the Grenadines",
+        "postcode": "HC5 6CU",
+        "tel": "(509) 168-3965 x20125",
+        "email": "sallie.upton@ko.name",
+        "created_at": "2015-01-28T12:32:46.358Z",
+        "updated_at": "2015-01-28T12:32:46.358Z"
+      }
+    }
+  ]
+}

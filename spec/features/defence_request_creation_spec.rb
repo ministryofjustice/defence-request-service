@@ -73,10 +73,34 @@ RSpec.feature 'defence request creation' do
    expect(page).to have_field 'Phone Number', with: '248.412.8095'
   end
 
+  scenario 'performing multiple own solicitor searches', js: true do
+   stub_solicitor_search_for_bob_smith
+   stub_solicitor_search_for_barry_jones
+
+   visit root_path
+   click_link 'New Defence Request'
+   choose 'Own'
+   fill_in 'q', with: "Bob Smith"
+   page.execute_script('$(".solicitor_search").submit()')
+   expect(page).to have_content 'Bobson Smith'
+
+   fill_in 'q', with: "Barry Jones"
+   page.execute_script('$(".solicitor_search").submit()')
+
+   expect(page).to_not have_content 'Bobson Smith'
+   expect(page).to have_content 'Barry Jones'
+  end
+
 end
 
 def stub_solicitor_search_for_bob_smith
   body = File.open 'spec/fixtures/bob_smith_solicitor_search.json'
   stub_request(:post, "http://solicitor-search.herokuapp.com/solicitors/search/?q=Bob%20Smith").
+    to_return(body: body, status: 200)
+end
+
+def stub_solicitor_search_for_barry_jones
+  body = File.open 'spec/fixtures/barry_jones_solicitor_search.json'
+  stub_request(:post, "http://solicitor-search.herokuapp.com/solicitors/search/?q=Barry%20Jones").
     to_return(body: body, status: 200)
 end

@@ -1,3 +1,5 @@
+$('.solicitor_results_list').html('');
+
 <% @solicitors.each do |solicitor| %>
   $('.solicitor_results_list').append("<a href='#' class='list-group-item solicitor_result' id=<%= solicitor_id solicitor %>>\
       <h4 class='list-group-item-heading'><%= solicitor['name'] %></h4>\
