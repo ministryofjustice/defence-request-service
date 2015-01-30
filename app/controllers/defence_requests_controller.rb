@@ -24,6 +24,19 @@ class DefenceRequestsController < BaseController
     end
   end
 
+  def edit
+    @defence_request = DefenceRequest.find(params[:id])
+  end
+
+  def update
+    @defence_request = DefenceRequest.find(params[:id])
+    if @defence_request.update_attributes(defence_request_params)
+      redirect_to({ action: :index }, notice: t('models.create', model: @defence_request.class))
+    else
+      render :edit
+    end
+  end
+
   private
 
 

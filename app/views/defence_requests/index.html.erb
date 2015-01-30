@@ -6,11 +6,6 @@
 </div>
 <div class="row">
   <table class="table table-striped table-bordered defence_requests">
-    <colgroup>
-      <col>
-      <col span="5" style="background-color: #e9fffa">
-      <col span="6" style="background-color: #e1ffde">
-    </colgroup>
     <thead>
     <tr>
       <th>#</th>
@@ -33,12 +28,7 @@
     </thead>
     <tbody>
     <% @defence_requests.each_with_index do |def_req, ind| %>
-      <colgroup>
-        <col>
-        <col span="5" style="background-color: #e9fffa">
-        <col span="6" style="background-color: #e1ffde">
-      </colgroup>
-      <tr>
+      <tr id=<%= "dr_#{def_req.id}" %>>
         <th scope="row"><%= ind %></th>
         <td><%= def_req.solicitor_type %></td>
         <td><%= def_req.solicitor_name %></td>
@@ -60,3 +50,53 @@
     </tbody>
   </table>
 </div>
+<script>
+  $(document).ready(function () {
+
+    // connect to server like normal
+    var dispatcher = new WebSocketRails('localhost:3000/websocket');
+
+    // subscribe to the channel
+    var channel = dispatcher.subscribe('defence_request_changes');
+
+    // bind to a channel event
+    channel.bind('defence_request_change', function(data) {
+      var current_count = $(".defence_requests tbody tr").length
+      var defence_request_html = "<td>" +
+                                  current_count +
+                                  "</td><td>" +
+                                  data.solicitor_type +
+                                  "</td><td>" +
+                                  data.solicitor_name +
+                                  "</td><td>" +
+                                  data.solicitor_firm +
+                                  "</td><td>" +
+                                  data.scheme +
+                                  "</td><td>" +
+                                  data.phone_number +
+                                  "</td><td>" +
+                                  data.detainee_surname +
+                                  "</td><td>" +
+                                  data.detainee_first_name +
+                                  "</td><td>" +
+                                  data.gender +
+                                  "</td><td>" +
+                                  data.adult +
+                                  "</td><td>" +
+                                  data.date_of_birth +
+                                  "</td><td>" +
+                                  data.appropriate_adult +
+                                  "</td><td>" +
+                                  data.custody_number +
+                                  "</td><td>" +
+                                  data.allegations +
+                                  "</td><td>" +
+                                  data.comments +
+                                  "</td><td>" +
+                                  data.time_of_arrival +
+                                  "</td>"
+      $("#dr_" + data.id).html(defence_request_html)
+      $("#dr_" + data.id).effect("highlight", 1500);
+    });
+  });
+</script>

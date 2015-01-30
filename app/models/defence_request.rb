@@ -1,5 +1,7 @@
 class DefenceRequest < ActiveRecord::Base
 
+  after_save :notify_dashboard
+
   phony_normalize :phone_number, default_country_code: 'GB'
 
   validates :solicitor_name,
@@ -17,4 +19,10 @@ class DefenceRequest < ActiveRecord::Base
     ['Brighton Scheme 2', 2],
     ['Brighton Scheme 3', 3]
   ]
+
+
+  def notify_dashboard
+    WebsocketRails[:defence_request_changes].trigger(:defence_request_change, self)
+  end
+
 end
