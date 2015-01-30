@@ -10,7 +10,7 @@ class DefenceRequestsController < BaseController
   end
 
   def solicitors_search
-    query_string = params[:q]
+    query_string = URI.escape(params[:q])
     url = URI.parse "#{Settings.solicitor_search_domain}/solicitors/search/?q=#{query_string}"
     @solicitors = JSON.parse(HTTParty.post(url).body)['solicitors']
   end
