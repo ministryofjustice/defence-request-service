@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150128172027) do
+ActiveRecord::Schema.define(version: 20150130160100) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "defence_requests", force: :cascade do |t|
-    t.string   "solicitor_type",      null: false
+    t.string   "solicitor_type",                      null: false
     t.string   "solicitor_name"
     t.string   "solicitor_firm"
     t.string   "scheme"
@@ -25,13 +25,13 @@ ActiveRecord::Schema.define(version: 20150128172027) do
     t.string   "detainee_surname"
     t.string   "detainee_first_name"
     t.string   "gender"
-    t.string   "adult"
     t.datetime "date_of_birth"
-    t.string   "appropriate_adult"
     t.string   "custody_number"
     t.string   "allegations"
     t.datetime "time_of_arrival"
     t.text     "comments"
+    t.boolean  "adult"
+    t.boolean  "appropriate_adult",   default: false, null: false
   end
 
   create_table "users", force: :cascade do |t|
