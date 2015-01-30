@@ -50,6 +50,7 @@ en:
   change_password: "Change Password"
   own: 'Own'
   duty: 'Duty'
+  no_results_found: 'No results found'
 
   models:
     create: "%{model} successfully created"

@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'json'
 
 RSpec.feature 'defence request creation' do
 
@@ -78,6 +79,18 @@ RSpec.feature 'defence request creation' do
    expect(page).to have_content 'Barry Jones'
   end
 
+  scenario "searching for someone who doesn't exist", js: true do
+   stub_solicitor_search_for_mystery_man
+
+   visit root_path
+   click_link 'New Defence Request'
+   choose 'Own'
+   fill_in 'q', with: "Mystery Man"
+   page.execute_script('$(".solicitor_search").submit()')
+
+   expect(page).to have_content 'No results found'
+  end
+
 end
 
 def stub_solicitor_search_for_bob_smith
@@ -89,5 +102,11 @@ end
 def stub_solicitor_search_for_barry_jones
   body = File.open 'spec/fixtures/barry_jones_solicitor_search.json'
   stub_request(:post, "http://solicitor-search.herokuapp.com/solicitors/search/?q=Barry%20Jones").
+    to_return(body: body, status: 200)
+end
+
+def stub_solicitor_search_for_mystery_man
+  body = { solicitors: [] }.to_json
+  stub_request(:post, "http://solicitor-search.herokuapp.com/solicitors/search/?q=Mystery%20Man").
     to_return(body: body, status: 200)
 end
