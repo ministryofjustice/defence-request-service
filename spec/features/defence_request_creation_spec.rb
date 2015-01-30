@@ -6,20 +6,7 @@ RSpec.feature 'defence request creation' do
     create_cso_and_login
   end
 
-  scenario 'selecting duty solicitor' do
-    visit new_defence_request_path
-    expect(page).to have_content ('New Defence Request')
-    choose 'Duty'
-  end
-
-  scenario 'selecting own solicitor' do
-    visit new_defence_request_path
-    expect(page).to have_content ('New Defence Request')
-    choose 'Own'
-    page.fill_in 'q', with: 'Bob Smith'
-  end
-
-  scenario 'selecting own solicitor' do
+  scenario 'Filling in form manually for own solicitor' do
     visit root_path
     click_link 'New Defence Request'
     expect(page).to have_content ('New Defence Request')
