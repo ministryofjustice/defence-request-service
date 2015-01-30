@@ -49,3 +49,4 @@ en:
     update: "%{model} successfully updated"
     destroy: "%{model} successfully deleted"
     failed_destroy: "%{model} was not deleted"
+  change_password: "Change Password"
