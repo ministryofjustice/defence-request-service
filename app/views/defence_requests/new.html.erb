@@ -14,8 +14,8 @@
     <%= render partial: 'shared/form_errors', locals: {object: @defence_request} %>
 
     <%= f.form_group :solicitor_type, label: { text: t('solicitor_type') } do %>
+      <%= f.radio_button :solicitor_type, :duty, label: t('duty'), name: 'defence_request[solicitor_type]', inline: true, class: 'solicitor_type_radio', checked: true %>
       <%= f.radio_button :solicitor_type, :own, label: t('own'), name: 'defence_request[solicitor_type]', inline: true, class: 'solicitor_type_radio' %>
-      <%= f.radio_button :solicitor_type, :duty, label: t('duty'), name: 'defence_request[solicitor_type]', inline: true, class: 'solicitor_type_radio' %>
     <% end %>
 
 
