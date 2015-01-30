@@ -23,7 +23,7 @@ gem 'httparty'
 gem 'phony_rails'
 
 group :test do
-
+  gem 'webmock'
 end
 
 group :development, :test do
@@ -37,6 +37,8 @@ group :development, :test do
   # Stops each asset request being logged in dev / test
   gem 'quiet_assets', '~> 1.1'
   gem 'launchy'
+  gem 'poltergeist'
+  gem 'database_cleaner'
 end
 
 gem 'rails_12factor', group: :production

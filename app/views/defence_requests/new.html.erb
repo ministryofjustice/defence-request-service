@@ -1,10 +1,10 @@
 <div class="col-md-6">
-  <h2>New Defence Request</h2>
+  <h2><%= t('new_defence_request') %></h2>
 
   <div class="search_box">
     <%= form_tag(solicitors_search_defence_requests_path, remote: true, class: 'solicitor_search') do %>
-      <%= label_tag 'q', 'Search' %>
-      <%= text_field_tag 'q', nil, placeholder: 'Enter solicitor/firm name...', class: 'form-control'%>
+      <%= label_tag 'q', t('search') %>
+      <%= text_field_tag 'q', nil, placeholder: t('enter_solicitor_firm_name'), class: 'form-control'%>
     <% end %>
     <div class="list-group solicitor_results_list">
     </div>
@@ -14,8 +14,8 @@
     <%= render partial: 'shared/form_errors', locals: {object: @defence_request} %>
 
     <%= f.form_group :solicitor_type, label: { text: t('solicitor_type') } do %>
+      <%= f.radio_button :solicitor_type, :duty, label: t('duty'), name: 'defence_request[solicitor_type]', inline: true, class: 'solicitor_type_radio', checked: true %>
       <%= f.radio_button :solicitor_type, :own, label: t('own'), name: 'defence_request[solicitor_type]', inline: true, class: 'solicitor_type_radio' %>
-      <%= f.radio_button :solicitor_type, :duty, label: t('duty'), name: 'defence_request[solicitor_type]', inline: true, class: 'solicitor_type_radio' %>
     <% end %>
 
 
@@ -23,7 +23,7 @@
     <!-- details -->
     <div class="panel panel-default details">
       <div class="panel-heading">
-        <h3 class="panel-title">Details</h3>
+        <h3 class="panel-title"><%= t('details') %></h3>
       </div>
       <div class="panel-body">
         <%= f.text_field :solicitor_name, label: t('solicitor_name') %>
@@ -38,7 +38,7 @@
     <!-- detainee -->
     <div class="panel panel-default detainee">
       <div class="panel-heading">
-        <h3 class="panel-title">Detainee</h3>
+        <h3 class="panel-title"><%= t('detainee') %></h3>
       </div>
       <div class="panel-body">
         <%= f.text_field :detainee_surname, label: t('detainee_surname') %>
@@ -64,7 +64,7 @@
     <!-- comments -->
     <div class="panel panel-default comments">
       <div class="panel-heading">
-        <h3 class="panel-title">Comments</h3>
+        <h3 class="panel-title"><%= t('comments') %></h3>
       </div>
       <div class="panel-body">
         <%= f.text_area :comments, label: t('comments'), rows: '5' %>

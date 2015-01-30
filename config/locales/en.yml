@@ -43,10 +43,16 @@ en:
   appropriate_adult: "Appropriate Adult"
   detainee_surname: "Detainee Surname"
   comments: "Comments"
+  enter_solicitor_firm_name: "Enter solicitor/firm name..."
+  details: "Details"
+  detainee: "Detainee"
+  new_defence_request: "New Defence Request"
+  change_password: "Change Password"
+  own: 'Own'
+  duty: 'Duty'
 
   models:
     create: "%{model} successfully created"
     update: "%{model} successfully updated"
     destroy: "%{model} successfully deleted"
     failed_destroy: "%{model} was not deleted"
-  change_password: "Change Password"
