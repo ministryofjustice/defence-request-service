@@ -54,4 +54,29 @@ RSpec.feature 'defence request creation' do
     expect(page).to have_content 'Bob Smith'
   end
 
+  scenario 'selecting own solicior and choosing from search box', js: true do
+   stub_solicitor_search_for_bob_smith
+   visit root_path
+   click_link 'New Defence Request'
+   choose 'Own'
+   fill_in 'q', with: "Bob Smith"
+
+   #TODO: fire event on search box somehow instead of manually submitting form
+   page.execute_script('$(".solicitor_search").submit()')
+   expect(page).to have_content 'Bobson Smith'
+   expect(page).to have_content 'Bobby Bob Smithson'
+
+   click_link 'Bobson Smith'
+   expect(page).to_not have_content 'Bobby Bob Smithson'
+   expect(page).to have_field 'Solicitor Name', with: 'Bobson Smith'
+   expect(page).to have_field 'Solicitor Firm', with: 'Kreiger LLC'
+   expect(page).to have_field 'Phone Number', with: '248.412.8095'
+  end
+
+end
+
+def stub_solicitor_search_for_bob_smith
+  body = File.open 'spec/fixtures/bob_smith_solicitor_search.json'
+  stub_request(:post, "http://solicitor-search.herokuapp.com/solicitors/search/?q=Bob%20Smith").
+    to_return(body: body, status: 200)
 end
