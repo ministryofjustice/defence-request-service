@@ -37,15 +37,21 @@ class DefenceRequestsController < BaseController
     end
   end
 
+  def refresh_part
+    @defence_requests = DefenceRequest.all
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
   private
-
-
 
   def defence_request_params
     time_of_arrival = DateTime.parse(
       params[:defence_request]['time_of_arrival(1i)'] +
-        params[:defence_request]['time_of_arrival(2i)'] +
-        params[:defence_request]['time_of_arrival(3i)'] + ' ' +
+        sprintf('%02d', params[:defence_request]['time_of_arrival(2i)']) +
+        sprintf('%02d', params[:defence_request]['time_of_arrival(3i)']) + ' ' +
         params[:defence_request]['time_of_arrival(4i)'] + ':' +
         params[:defence_request]['time_of_arrival(5i)']
     )

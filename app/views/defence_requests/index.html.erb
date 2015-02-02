@@ -27,34 +27,40 @@
     </tr>
     </thead>
     <tbody>
-    <% @defence_requests.each_with_index do |def_req, ind| %>
-      <tr id=<%= "dr_#{def_req.id}" %>>
-        <th scope="row"><%= ind %></th>
-        <td><%= def_req.solicitor_type %></td>
-        <td><%= def_req.solicitor_name %></td>
-        <td><%= def_req.solicitor_firm %></td>
-        <td><%= def_req.scheme %></td>
-        <td><%= def_req.phone_number %></td>
-        <td><%= def_req.detainee_surname %></td>
-        <td><%= def_req.detainee_first_name %></td>
-        <td><%= def_req.gender %></td>
-        <td><%= def_req.adult %></td>
-        <td><%= def_req.date_of_birth %></td>
-        <td><%= def_req.appropriate_adult %></td>
-        <td><%= def_req.custody_number %></td>
-        <td><%= def_req.allegations %></td>
-        <td><%= def_req.comments %></td>
-        <td><%= def_req.time_of_arrival %></td>
-      </tr>
-    <% end %>
+     <%= render partial: 'table_body' %>
     </tbody>
   </table>
 </div>
 <script>
   $(document).ready(function () {
+    WebSocketTest();
+  });
 
-    // connect to server like normal
+  function WebSocketTest()
+  {
+    if ("WebSocket" in window)
+    {
+      // the browser does support WebSockets
+      refreshWithWebSocket();
+//      console.log('the browser does support WebSockets');
+    }
+    else
+    {
+      // the browser doesn't support WebSockets
+      setInterval(refreshPartial, 3000);
+//      console.log('the browser doesnt support WebSockets');
+    }
+  }
+
+  function refreshWithWebSocket() {
+    //    // connect to server like normal
+    var host = location.origin.replace(/^http:\/\//, '');
+
     var dispatcher = new WebSocketRails('localhost:3000/websocket');
+
+//    var dispatcher = new WebSocketRails(host+"/websocket");
+
+//    var dispatcher = new WebSocketRails('dsds-devtest.herokuapp.com/websocket');
 
     // subscribe to the channel
     var channel = dispatcher.subscribe('defence_request_changes');
@@ -63,40 +69,51 @@
     channel.bind('defence_request_change', function(data) {
       var current_count = $(".defence_requests tbody tr").length
       var defence_request_html = "<td>" +
-                                  current_count +
-                                  "</td><td>" +
-                                  data.solicitor_type +
-                                  "</td><td>" +
-                                  data.solicitor_name +
-                                  "</td><td>" +
-                                  data.solicitor_firm +
-                                  "</td><td>" +
-                                  data.scheme +
-                                  "</td><td>" +
-                                  data.phone_number +
-                                  "</td><td>" +
-                                  data.detainee_surname +
-                                  "</td><td>" +
-                                  data.detainee_first_name +
-                                  "</td><td>" +
-                                  data.gender +
-                                  "</td><td>" +
-                                  data.adult +
-                                  "</td><td>" +
-                                  data.date_of_birth +
-                                  "</td><td>" +
-                                  data.appropriate_adult +
-                                  "</td><td>" +
-                                  data.custody_number +
-                                  "</td><td>" +
-                                  data.allegations +
-                                  "</td><td>" +
-                                  data.comments +
-                                  "</td><td>" +
-                                  data.time_of_arrival +
-                                  "</td>"
+          current_count +
+          "</td><td>" +
+          data.solicitor_type +
+          "</td><td>" +
+          data.solicitor_name +
+          "</td><td>" +
+          data.solicitor_firm +
+          "</td><td>" +
+          data.scheme +
+          "</td><td>" +
+          data.phone_number +
+          "</td><td>" +
+          data.detainee_surname +
+          "</td><td>" +
+          data.detainee_first_name +
+          "</td><td>" +
+          data.gender +
+          "</td><td>" +
+          data.adult +
+          "</td><td>" +
+          data.date_of_birth +
+          "</td><td>" +
+          data.appropriate_adult +
+          "</td><td>" +
+          data.custody_number +
+          "</td><td>" +
+          data.allegations +
+          "</td><td>" +
+          data.comments +
+          "</td><td>" +
+          data.time_of_arrival +
+          "</td>"
       $("#dr_" + data.id).html(defence_request_html)
       $("#dr_" + data.id).effect("highlight", 1500);
     });
-  });
+  }
+
+  // calls action refreshing the partial
+  function refreshPartial() {
+    $.ajax({
+      url: "defence_requests/refresh_part"
+  })
+//  console.log('now!');
+  }
+
+
+
 </script>
