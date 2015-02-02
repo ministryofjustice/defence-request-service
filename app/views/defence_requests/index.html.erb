@@ -1,9 +1,13 @@
 <div class="row">
-  <h1>CSO DASHBOARD</h1>
+  <h1><%= "#{pundit_user.role.upcase}  #{t('dashboard')}"%></h1>
 </div>
+
+<% if pundit_user.cso? %>
 <div class="row new_defence_request">
   <%= link_to t('new_defence_request'), new_defence_request_path, class: 'btn btn-default' %>
 </div>
+<% end %>
+
 <div class="row">
   <table class="table table-striped table-bordered defence_requests">
     <colgroup>
