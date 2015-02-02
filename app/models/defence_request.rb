@@ -13,6 +13,7 @@ class DefenceRequest < ActiveRecord::Base
   validates :phone_number, phony_plausible: true
 
   SCHEMES = [
+    ['No Scheme', nil],
     ['Brighton Scheme 1', 1],
     ['Brighton Scheme 2', 2],
     ['Brighton Scheme 3', 3]
