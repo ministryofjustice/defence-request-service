@@ -103,9 +103,11 @@ RSpec.feature 'defence request creation' do
 
    expect(page).to have_field 'Solicitor Name', with: "", disabled: true
    expect(page).to have_field 'Solicitor Firm', with: "", disabled: true
+   expect(page).to have_field 'Scheme', with: "No Scheme", disabled: false
    expect(page).to_not have_content 'Bobson Smith'
 
    choose 'Own'
+   expect(page).to have_field 'Scheme', with: "No Scheme", disabled: true
    expect(page).to have_field 'q', with: ''
   end
 
