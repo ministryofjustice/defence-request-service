@@ -1,12 +1,15 @@
 <div class="col-md-6">
   <h2><%= t('new_defence_request') %></h2>
 
-  <div class="search_box">
-    <%= form_tag(solicitors_search_defence_requests_path, remote: true, class: 'solicitor_search') do %>
-      <%= label_tag 'q', t('search') %>
+  <div class="search_box row-fluid">
+    <%= bootstrap_form_tag(url: solicitors_search_defence_requests_path,  remote: true, class: 'solicitor_search') do |f| %>
+      <%= label_tag 'q', t('search'), class: 'col-md-12' %>
+      <div class='col-md-10'>
       <%= text_field_tag 'q', nil, placeholder: t('enter_solicitor_firm_name'), autocomplete: "off", class: 'form-control' %>
+      </div>
+      <%= f.submit 'Search', class: 'btn btn-primary col-md-2 pull-right' %>
     <% end %>
-    <div class="list-group solicitor_results_list">
+    <div class="list-group solicitor_results_list col-md-10">
     </div>
   </div>
 
@@ -93,7 +96,7 @@
    $(".solicitor_type_radio").change(function () {
      if (this.value == "own") {
        $('.solicitor_results_list').html('')
-       $('input #q').val('')
+       $('#q').val('')
        $('.search_box').stop(true,true).show(1000);
      } else {
        $('.search_box').stop(true,true).hide(1000);

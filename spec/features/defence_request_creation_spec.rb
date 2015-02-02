@@ -49,8 +49,7 @@ RSpec.feature 'defence request creation' do
    choose 'Own'
    fill_in 'q', with: "Bob Smith"
 
-   #TODO: fire event on search box somehow instead of manually submitting form
-   page.execute_script('$(".solicitor_search").submit()')
+   click_button 'Search'
    expect(page).to have_content 'Bobson Smith'
    expect(page).to have_content 'Bobby Bob Smithson'
 
@@ -69,11 +68,11 @@ RSpec.feature 'defence request creation' do
    click_link 'New Defence Request'
    choose 'Own'
    fill_in 'q', with: "Bob Smith"
-   page.execute_script('$(".solicitor_search").submit()')
+   click_button 'Search'
    expect(page).to have_content 'Bobson Smith'
 
    fill_in 'q', with: "Barry Jones"
-   page.execute_script('$(".solicitor_search").submit()')
+   click_button 'Search'
 
    expect(page).to_not have_content 'Bobson Smith'
    expect(page).to have_content 'Barry Jones'
@@ -86,7 +85,7 @@ RSpec.feature 'defence request creation' do
    click_link 'New Defence Request'
    choose 'Own'
    fill_in 'q', with: "Mystery Man"
-   page.execute_script('$(".solicitor_search").submit()')
+   click_button 'Search'
 
    expect(page).to have_content 'No results found'
   end
@@ -98,11 +97,11 @@ RSpec.feature 'defence request creation' do
    click_link 'New Defence Request'
    choose 'Own'
    fill_in 'q', with: "Bob Smith"
-   page.execute_script('$(".solicitor_search").submit()')
+   click_button 'Search'
    choose 'Duty'
-
    expect(page).to_not have_content 'Bobson Smith'
-   expect(find_field('q').value).to have_text('')
+   choose 'Own'
+   expect(page).to have_field 'q', with: ''
   end
 
 end
