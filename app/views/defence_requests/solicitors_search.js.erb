@@ -1,5 +1,10 @@
 $('.solicitor_results_list').html('');
 
+<% if @solicitors.empty? %>
+  $('.solicitor_results_list').append("<p class='list-group-item'>\
+      <%= t('no_results_found') %></p>");
+<% end %>
+
 <% @solicitors.each do |solicitor| %>
   $('.solicitor_results_list').append("<a href='#' class='list-group-item solicitor_result' id=<%= solicitor_id solicitor %>>\
       <h4 class='list-group-item-heading'><%= solicitor['name'] %></h4>\
