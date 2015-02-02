@@ -2,7 +2,7 @@
   <h1><%= "#{current_user.role.upcase}  #{t('dashboard')}"%></h1>
 </div>
 
-<% if pundit_user.cso? %>
+<% if policy(:defence_requests_controller).create? %>
 <div class="row new_defence_request">
   <%= link_to t('new_defence_request'), new_defence_request_path, class: 'btn btn-default' %>
 </div>
