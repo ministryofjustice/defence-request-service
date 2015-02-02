@@ -1,5 +1,5 @@
 <div class="row">
-  <h1><%= "#{pundit_user.role.upcase}  #{t('dashboard')}"%></h1>
+  <h1><%= "#{current_user.role.upcase}  #{t('dashboard')}"%></h1>
 </div>
 
 <% if pundit_user.cso? %>
