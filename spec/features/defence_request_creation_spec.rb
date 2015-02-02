@@ -91,6 +91,20 @@ RSpec.feature 'defence request creation' do
    expect(page).to have_content 'No results found'
   end
 
+  scenario "toggling duty or own", js: true do
+   stub_solicitor_search_for_bob_smith
+
+   visit root_path
+   click_link 'New Defence Request'
+   choose 'Own'
+   fill_in 'q', with: "Bob Smith"
+   page.execute_script('$(".solicitor_search").submit()')
+   choose 'Duty'
+
+   expect(page).to_not have_content 'Bobson Smith'
+   expect(find_field('q').value).to have_text('')
+  end
+
 end
 
 def stub_solicitor_search_for_bob_smith

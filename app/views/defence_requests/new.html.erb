@@ -92,6 +92,8 @@
 
    $(".solicitor_type_radio").change(function () {
      if (this.value == "own") {
+       $('.solicitor_results_list').html('')
+       $('input #q').val('')
        $('.search_box').stop(true,true).show(1000);
      } else {
        $('.search_box').stop(true,true).hide(1000);
