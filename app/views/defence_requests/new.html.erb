@@ -84,35 +84,35 @@
  $(document).ready(function () {
    var ownSolicitor_checked = ($("input[type='radio']#defence_request_solicitor_type_own:checked").length > 0);
 
-   var enable_form_fields_and_clear_search = function() {
-     $('.solicitor_results_list').html("")
-     $('input #q').val("")
+   var enable_form_fields = function() {
      $('#defence_request_solicitor_firm').removeAttr("disabled");
      $('#defence_request_solicitor_name').removeAttr("disabled");
    }
 
-   var disable_form_fields = function() {
+   var disable_form_fields_and_clear_search = function() {
      $('#defence_request_solicitor_firm').attr("disabled", "disabled");
      $('#defence_request_solicitor_firm').val("");
      $('#defence_request_solicitor_name').attr("disabled", "disabled");
      $('#defence_request_solicitor_name').val("");
+     $('.solicitor_results_list').html("")
+     $('#q').val("")
    }
 
    if (ownSolicitor_checked){
      $('.search_box').show();
-     enable_form_fields_and_clear_search();
+     enable_form_fields();
      } else {
      $('.search_box').hide();
-     disable_form_fields();
+     disable_form_fields_and_clear_search();
    }
 
    $(".solicitor_type_radio").change(function () {
      if (this.value == "own") {
        $('.search_box').stop(true,true).show(1000);
-       enable_form_fields_and_clear_search();
+       enable_form_fields();
      } else {
        $('.search_box').stop(true,true).hide(1000);
-       disable_form_fields();
+       disable_form_fields_and_clear_search();
      }
    });
 
