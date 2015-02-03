@@ -27,7 +27,7 @@
     </tr>
     </thead>
     <tbody>
-     <%= render partial: 'table_body' %>
+    <%= render partial: 'table_body' %>
     </tbody>
   </table>
 </div>
@@ -36,35 +36,37 @@
     WebSocketTest();
   });
 
-  function WebSocketTest(){
+  function WebSocketTest() {
 
-    if ("WebSocket" in window && browserOK())
-    {
+    if ("WebSocket" in window && browserOK()) {
       // the browser does support WebSockets
       refreshWithWebSocket();
-//      console.log('the browser does support WebSockets');
+      console.log('the browser does support WebSockets');
     }
-    else
-    {
+    else {
       // the browser doesn't support WebSockets
       setInterval(refreshPartial, 3000);
-//      console.log('the browser doesnt support WebSockets');
+      console.log('the browser doesnt support WebSockets');
     }
   }
 
   function refreshWithWebSocket() {
     //    // connect to server like normal
-//    var host = location.origin.replace(/^http:\/\//, '');
+    if (!window.location.origin) {
+      window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
+    }
+    var host = location.origin.replace(/^http:\/\//, '');
 
-//    var dispatcher = new WebSocketRails('localhost:5000/websocket');
-//    var dispatcher = new WebSocketRails(host+"/websocket");
-    var dispatcher = new WebSocketRails('dsds-devtest.herokuapp.com/websocket');
+    // THIS DOESNT WORK ON HEROKU
+    var dispatcher = new WebSocketRails(host + '/websocket');
+    // THIS WORKS LOCALLY
+    // var dispatcher = new WebSocketRails('localhost:3001/websocket');
 
     // subscribe to the channel
     var channel = dispatcher.subscribe('defence_request_changes');
 
     // bind to a channel event
-    channel.bind('defence_request_change', function(data) {
+    channel.bind('defence_request_change', function (data) {
       var current_count = $(".defence_requests tbody tr").length
       var defence_request_html = "<td>" +
           current_count +
@@ -108,44 +110,43 @@
   function refreshPartial() {
     $.ajax({
       url: "defence_requests/refresh_part"
-  })
+    })
 //  console.log('now!');
   }
 
-  function browserOK(){
+  function browserOK() {
     var browserString = navigator.sayswho
     var ok = false
     //Firefox versions above 12
-    if(browserString.split(" ")[0] == 'Firefox' && Number(browserString.split(" ")[1]) > 12){
+    if (browserString.split(" ")[0] == 'Firefox' && Number(browserString.split(" ")[1]) > 12) {
       ok = true
     }
     //Internate Explorer above 9
-    if(browserString.split(" ")[0] == 'MSIE' && Number(browserString.split(" ")[1]) > 9){
+    if (browserString.split(" ")[0] == 'MSIE' && Number(browserString.split(" ")[1]) > 9) {
       ok = true
     }
     //Chrome above 16
-    if(browserString.split(" ")[0] == 'Chrome' && Number(browserString.split(" ")[1]) > 16){
+    if (browserString.split(" ")[0] == 'Chrome' && Number(browserString.split(" ")[1]) > 16) {
       ok = true
     }
     return ok
   }
 
-  navigator.sayswho= (function(){
-    var ua= navigator.userAgent, tem,
-        M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
-    if(/trident/i.test(M[1])){
-      tem=  /\brv[ :]+(\d+)/g.exec(ua) || [];
-      return 'IE '+(tem[1] || '');
+  navigator.sayswho = (function () {
+    var ua = navigator.userAgent, tem,
+        M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+    if (/trident/i.test(M[1])) {
+      tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
+      return 'IE ' + (tem[1] || '');
     }
-    if(M[1]=== 'Chrome'){
-      tem= ua.match(/\bOPR\/(\d+)/)
-      if(tem!= null) return 'Opera '+tem[1];
+    if (M[1] === 'Chrome') {
+      tem = ua.match(/\bOPR\/(\d+)/)
+      if (tem != null) return 'Opera ' + tem[1];
     }
-    M= M[2]? [M[1], M[2]]: [navigator.appName, navigator.appVersion, '-?'];
-    if((tem= ua.match(/version\/(\d+)/i))!= null) M.splice(1, 1, tem[1]);
+    M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
+    if ((tem = ua.match(/version\/(\d+)/i)) != null) M.splice(1, 1, tem[1]);
     return M.join(' ');
   })();
-
 
 
 </script>
