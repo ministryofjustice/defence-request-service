@@ -39,6 +39,7 @@ RSpec.feature 'defence request creation' do
       fill_in 'Comments', with: 'This is a very bad man. Send him down...'
       click_button 'Create Defence request'
     end
+    an_audit_should_exist_for_the_defence_request_creation
     expect(page).to have_content 'Bob Smith'
     expect(page).to have_content 'DefenceRequest successfully created'
   end
@@ -130,4 +131,12 @@ def stub_solicitor_search_for_mystery_man
   body = { solicitors: [] }.to_json
   stub_request(:post, "http://solicitor-search.herokuapp.com/solicitors/search/?q=Mystery%20Man").
     to_return(body: body, status: 200)
+end
+
+def an_audit_should_exist_for_the_defence_request_creation
+  expect(DefenceRequest.first.audits.length).to eq 1
+  audit = DefenceRequest.first.audits.first
+
+  expect(audit.auditable_type).to eq 'DefenceRequest'
+  expect(audit.action).to eq 'create'
 end
