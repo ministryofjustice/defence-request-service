@@ -51,6 +51,7 @@ en:
   own: 'Own'
   duty: 'Duty'
   no_results_found: 'No results found'
+  dashboard: 'Dashboard'
 
   models:
     create: "%{model} successfully created"

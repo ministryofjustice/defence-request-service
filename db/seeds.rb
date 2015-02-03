@@ -8,3 +8,6 @@
 
 User.where(email: 'cso@example.com').first_or_create(
   email: 'cso@example.com', password: 'password', role: :cso)
+
+User.where(email: 'cco@example.com').first_or_create(
+  email: 'cco@example.com', password: 'password', role: :cco)

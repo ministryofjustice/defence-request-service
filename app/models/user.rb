@@ -7,4 +7,8 @@ class User < ActiveRecord::Base
     self.role.to_sym == :cso
   end
 
+  def cco?
+    self.role.to_sym == :cco
+  end
+
 end
