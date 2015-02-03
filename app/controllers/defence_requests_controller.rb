@@ -29,16 +29,6 @@ class DefenceRequestsController < BaseController
 
 
   def defence_request_params
-    time_of_arrival = DateTime.parse(
-      params[:defence_request]['time_of_arrival(1i)'] +
-        params[:defence_request]['time_of_arrival(2i)'] +
-        params[:defence_request]['time_of_arrival(3i)'] + ' ' +
-        params[:defence_request]['time_of_arrival(4i)'] + ':' +
-        params[:defence_request]['time_of_arrival(5i)']
-    )
-
-    params[:defence_request]['time_of_arrival'] = time_of_arrival
-
     params.require(:defence_request).permit(:solicitor_type,
                                           :solicitor_name,
                                           :solicitor_firm,
@@ -46,6 +36,7 @@ class DefenceRequestsController < BaseController
                                           :phone_number,
                                           :detainee_surname,
                                           :detainee_first_name,
+                                          :time_of_arrival,
                                           :gender,
                                           :adult,
                                           :date_of_birth,
