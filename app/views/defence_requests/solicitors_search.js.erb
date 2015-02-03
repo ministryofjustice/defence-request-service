@@ -8,7 +8,7 @@ $('.solicitor_results_list').html('');
 <% @solicitors.each do |solicitor| %>
   $('.solicitor_results_list').append("<a href='#' class='list-group-item solicitor_result' id=<%= solicitor_id solicitor %>>\
       <h4 class='list-group-item-heading'><%= solicitor['name'] %></h4>\
-      <p class='list-group-item-text'><strong>Firm</strong> <%= solicitor['firm']['name'] %></p>\
+      <p class='list-group-item-text'><strong>Firm</strong> <%= solicitor['firm_name'] %></p>\
       <p class='list-group-item-text'><strong>Tel</strong> <%= solicitor['mobile'] %></p>\
       <p class='list-group-item-text'><strong>Email</strong> <%= solicitor['email'] %></p>\
       </a>");
@@ -17,7 +17,7 @@ $('.solicitor_results_list').html('');
     e.preventDefault();
     $('.solicitor_results_list').html('');
     $('#defence_request_solicitor_name').val('<%= solicitor['name'] %>')
-    $('#defence_request_solicitor_firm').val('<%= solicitor['firm']['name'] %>')
+    $('#defence_request_solicitor_firm').val('<%= solicitor['firm_name'] %>')
     $('#defence_request_phone_number').val('<%= solicitor['mobile'] %>')
   });
 <% end %>
