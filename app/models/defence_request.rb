@@ -9,7 +9,7 @@ class DefenceRequest < ActiveRecord::Base
             :allegations,
             length: { minimum: 5 }
 
-  validates :gender, :date_of_birth, :time_of_arrival, :custody_number, :scheme, presence: true
+  validates :gender, :date_of_birth, :time_of_arrival, :custody_number, presence: true
   validates :phone_number, phony_plausible: true
 
   audited

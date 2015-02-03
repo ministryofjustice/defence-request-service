@@ -7,7 +7,7 @@ RSpec.feature 'defence request creation' do
     create_cso_and_login
   end
 
-  scenario 'Filling in form manually for own solicitor' do
+  scenario 'Filling in form manually for own solicitor', js: true do
     visit root_path
     click_link 'New Defence Request'
     expect(page).to have_content ('New Defence Request')
@@ -18,7 +18,6 @@ RSpec.feature 'defence request creation' do
       within '.details' do
         fill_in 'Solicitor Name', with: 'Bob Smith'
         fill_in 'Solicitor Firm', with: 'Acme Solicitors'
-        select('Brighton Scheme 1', from: 'defence_request[scheme]')
         fill_in 'Phone Number', with: '0207 284 0000'
         fill_in 'Custody Number', with: '#CUST-01234'
         fill_in 'Allegations', with: 'BadMurder'
