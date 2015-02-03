@@ -40,6 +40,7 @@ RSpec.feature 'defence request creation' do
       click_button 'Create Defence request'
     end
     expect(page).to have_content 'Bob Smith'
+    expect(page).to have_content 'DefenceRequest successfully created'
   end
 
   scenario 'selecting own solicior and choosing from search box', js: true do
