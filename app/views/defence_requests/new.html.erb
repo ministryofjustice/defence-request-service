@@ -31,7 +31,7 @@
       <div class="panel-body">
         <%= f.text_field :solicitor_name, label: t('solicitor_name') %>
         <%= f.text_field :solicitor_firm, label: t('solicitor_firm') %>
-        <%= f.select :scheme, DefenceRequest::SCHEMES, {label: t('scheme')} %>
+        <%= f.select :scheme, solicitor_schemes, { label: t('scheme') } %>
         <%= f.text_field :phone_number, label: t('phone_number') %>
         <%= f.text_field :custody_number, label: t('custody_number') %>
         <%= f.text_field :allegations, label: t('allegations') %>
@@ -83,23 +83,39 @@
 <script>
  $(document).ready(function () {
    var ownSolicitor_checked = ($("input[type='radio']#defence_request_solicitor_type_own:checked").length > 0);
-   var dutySolicitor_checked = ($("input[type='radio']#defence_request_solicitor_type_duty:checked").length > 0);
+
+   var own_setup = function() {
+     $('#defence_request_solicitor_firm').removeAttr("disabled");
+     $('#defence_request_solicitor_name').removeAttr("disabled");
+     $('#defence_request_scheme').val("No Scheme");
+     $('#defence_request_scheme').attr("disabled", "disabled");
+   }
+
+   var duty_setup = function() {
+     $('#defence_request_solicitor_firm').attr("disabled", "disabled");
+     $('#defence_request_solicitor_firm').val("");
+     $('#defence_request_solicitor_name').attr("disabled", "disabled");
+     $('#defence_request_solicitor_name').val("");
+     $('#defence_request_scheme').removeAttr("disabled");
+     $('.solicitor_results_list').html("")
+     $('#q').val("")
+   }
 
    if (ownSolicitor_checked){
      $('.search_box').show();
-   }
-   else
-   {
+     own_setup()
+     } else {
      $('.search_box').hide();
+     duty_setup()
    }
 
    $(".solicitor_type_radio").change(function () {
      if (this.value == "own") {
-       $('.solicitor_results_list').html('')
-       $('#q').val('')
        $('.search_box').stop(true,true).show(1000);
+       own_setup()
      } else {
        $('.search_box').stop(true,true).hide(1000);
+       duty_setup()
      }
    });
 

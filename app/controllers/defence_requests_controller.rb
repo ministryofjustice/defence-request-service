@@ -26,8 +26,6 @@ class DefenceRequestsController < BaseController
 
   private
 
-
-
   def defence_request_params
     time_of_arrival = DateTime.parse(
       params[:defence_request]['time_of_arrival(1i)'] +
