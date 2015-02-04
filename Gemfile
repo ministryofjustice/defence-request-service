@@ -22,6 +22,7 @@ gem 'rails_config'
 gem 'httparty'
 gem 'phony_rails'
 gem 'audited-activerecord'
+gem 'simple_states'
 
 group :test do
   gem 'webmock'
