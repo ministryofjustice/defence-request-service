@@ -16,7 +16,7 @@ class DefenceRequestsControllerPolicy < Struct.new(:user, :defense_request_contr
   end
 
   def refresh_dashboard?
-    user.cso?
+    user.cso? || user.cco?
   end
 
 end
