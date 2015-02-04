@@ -26,7 +26,7 @@ class DefenceRequestsController < BaseController
   def create
     @defence_request = DefenceRequest.new(defence_request_params)
     if @defence_request.save
-      redirect_to({ action: :index }, notice: t('models.create', model: @defence_request.class))
+      redirect_to(defence_requests_path, notice: t('models.create', model: @defence_request.class))
     else
       render :new
     end
@@ -37,7 +37,7 @@ class DefenceRequestsController < BaseController
 
   def update
     if @defence_request.update_attributes(defence_request_params)
-      redirect_to({ action: :index }, notice: t('models.update', model: @defence_request.class))
+      redirect_to(defence_requests_path, notice: t('models.update', model: @defence_request.class))
     else
       render :edit
     end

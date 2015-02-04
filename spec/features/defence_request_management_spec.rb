@@ -132,26 +132,23 @@ RSpec.feature 'defence request creation' do
         expect(page).to have_content ('Edit defence request')
 
         within '.edit_defence_request' do
-          within '.details' do
-            fill_in 'Solicitor Name', with: 'Dave Smith'
-            fill_in 'Solicitor Firm', with: 'Broken Solicitors'
-            fill_in 'Phone Number', with: '0207 284 9999'
-            fill_in 'Custody Number', with: '#CUST-9876'
-            fill_in 'Allegations', with: 'BadMurder'
-            select('10', from: 'defence_request_time_of_arrival_4i')
-            select('00', from: 'defence_request_time_of_arrival_5i')
-          end
+          fill_in 'Solicitor Name', with: 'Dave Smith'
+          fill_in 'Solicitor Firm', with: 'Broken Solicitors'
+          fill_in 'Phone Number', with: '0207 284 9999'
+          fill_in 'Custody Number', with: '#CUST-9876'
+          fill_in 'Allegations', with: 'BadMurder'
+          select('10', from: 'defence_request_time_of_arrival_4i')
+          select('00', from: 'defence_request_time_of_arrival_5i')
 
-          within '.detainee' do
-            fill_in 'Detainee Surname', with: 'Annie'
-            fill_in 'Detainee First Name', with: 'Nother'
-            choose 'Female'
-            uncheck 'defence_request[adult]'
-            select('1986', from: 'defence_request_date_of_birth_1i')
-            select('December', from: 'defence_request_date_of_birth_2i')
-            select('31', from: 'defence_request_date_of_birth_3i')
-            check 'defence_request[appropriate_adult]'
-          end
+
+          fill_in 'Detainee Surname', with: 'Annie'
+          fill_in 'Detainee First Name', with: 'Nother'
+          choose 'Female'
+          uncheck 'defence_request[adult]'
+          select('1986', from: 'defence_request_date_of_birth_1i')
+          select('December', from: 'defence_request_date_of_birth_2i')
+          select('31', from: 'defence_request_date_of_birth_3i')
+          check 'defence_request[appropriate_adult]'
           fill_in 'Comments', with: 'I fought the law...'
           click_button 'Update Defence request'
         end
@@ -183,7 +180,7 @@ def stub_solicitor_search_for_barry_jones
 end
 
 def stub_solicitor_search_for_mystery_man
-  body = { solicitors: [], firms: [] }.to_json
+  body = {solicitors: [], firms: []}.to_json
   stub_request(:post, "http://solicitor-search.herokuapp.com/search/?q=Mystery%20Man").
     to_return(body: body, status: 200)
 end

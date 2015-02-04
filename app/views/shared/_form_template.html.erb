@@ -5,7 +5,7 @@
         <h3 class="panel-title"><%= (form_type +' '+ object_name).humanize %></h3>
       </div>
       <div class="panel-body">
-        <%= render partial: 'form', locals: { form_type: form_type } %>
+        <%= render 'form', form_type: form_type %>
       </div>
     </div>
   </div>

@@ -1,9 +1,9 @@
 <% if @defence_request.new_record? %>
-  <%= render partial: 'solicitor_search', locals: {object: @defence_request} %>
+  <%= render 'solicitor_search', object: @defence_request %>
 <% end %>
 
 <%= bootstrap_form_for(@defence_request) do |f| %>
-  <%= render partial: 'shared/form_errors', locals: {object: @defence_request} %>
+  <%= render 'shared/form_errors', object: @defence_request %>
 
   <% if @defence_request.new_record? %>
     <%= f.form_group :solicitor_type, label: {text: t('solicitor_type')} do %>
