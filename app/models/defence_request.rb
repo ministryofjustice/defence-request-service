@@ -1,4 +1,11 @@
 class DefenceRequest < ActiveRecord::Base
+  include SimpleStates
+
+  self.initial_state = :open
+  states :open, :closed
+  event :close,  :from => :open, :to => :closed
+
+  scope :open, -> { where(state: :open) }
 
   phony_normalize :phone_number, default_country_code: 'GB'
 

@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe DefenceRequest, type: :model do
-  describe :validations do
-    subject { DefenceRequest.new }
+  describe 'states' do
 
     it { expect(subject).to validate_presence_of :gender }
     it { expect(subject).to validate_presence_of :date_of_birth }
@@ -17,5 +16,12 @@ RSpec.describe DefenceRequest, type: :model do
 
     it { expect(subject).to allow_value('020 1234 5678', '+44(0)7891234567').for(:phone_number) }
     it { expect(subject).to_not allow_value('1234', 'ABC').for(:phone_number) }
+  end
+
+  describe 'states' do
+    specify { expect(subject.state).to eql 'open' }
+
+    specify { expect{ subject.close }.to_not raise_error }
+    specify { expect{ subject.close; subject.close }.to raise_error(SimpleStates::TransitionException) }
   end
 end

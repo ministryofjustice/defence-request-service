@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 20150204123953) do
     t.text     "comments"
     t.boolean  "adult"
     t.boolean  "appropriate_adult",   default: false, null: false
+    t.string   "state"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
