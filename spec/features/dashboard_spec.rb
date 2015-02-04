@@ -18,7 +18,7 @@ RSpec.feature 'Defence request dashboard' do
       visit defence_requests_path
 
       within ".defence_requests" do
-        expect(/defence_request_#{dr_1.id}.*defence_request_#{dr_2.id}/m =~ page.body).to_not be_nil
+        expect(element_order_correct?("defence_request_#{dr_1.id}","defence_request_#{dr_2.id}")).to eq true
       end
     end
 
@@ -39,5 +39,7 @@ RSpec.feature 'Defence request dashboard' do
     end
 
   end
-
+  def element_order_correct?(first_element,second_element)
+    !!(/#{first_element}.*#{second_element}/m =~ page.body)
+  end
 end
