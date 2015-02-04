@@ -27,4 +27,8 @@ class DefenceRequestsControllerPolicy < Struct.new(:user, :defense_request_contr
     user.cso? || user.cco?
   end
 
+  def close?
+    user.cso?
+  end
+
 end

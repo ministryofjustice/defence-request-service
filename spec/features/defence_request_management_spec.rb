@@ -11,7 +11,7 @@ RSpec.feature 'defence request creation' do
       scenario 'Filling in form manually for own solicitor', js: true do
         visit root_path
         click_link 'New Defence Request'
-        expect(page).to have_content ('New defence request')
+        expect(page).to have_content ('New Defence Request')
 
         within '.new_defence_request' do
           choose 'Own'
@@ -36,11 +36,11 @@ RSpec.feature 'defence request creation' do
             check 'defence_request[appropriate_adult]'
           end
           fill_in 'Comments', with: 'This is a very bad man. Send him down...'
-          click_button 'Create Defence request'
+          click_button 'Create Defence Request'
         end
         an_audit_should_exist_for_the_defence_request_creation
         expect(page).to have_content 'Bob Smith'
-        expect(page).to have_content 'DefenceRequest successfully created'
+        expect(page).to have_content 'Defence Request successfully created'
       end
 
       scenario 'selecting own solicior and choosing from search box', js: true do
@@ -127,9 +127,9 @@ RSpec.feature 'defence request creation' do
       scenario 'editing a DR' do
         visit root_path
         within "#defence_request_#{dr_1.id}" do
-          click_link 'edit'
+          click_link 'Edit'
         end
-        expect(page).to have_content ('Edit defence request')
+        expect(page).to have_content ('Edit Defence Request')
 
         within '.edit_defence_request' do
           fill_in 'Solicitor Name', with: 'Dave Smith'
@@ -150,8 +150,9 @@ RSpec.feature 'defence request creation' do
           select('31', from: 'defence_request_date_of_birth_3i')
           check 'defence_request[appropriate_adult]'
           fill_in 'Comments', with: 'I fought the law...'
-          click_button 'Update Defence request'
+          click_button 'Update Defence Request'
         end
+
         within "#defence_request_#{dr_1.id}" do
           expect(page).to have_content('Dave Smith')
           expect(page).to have_content('Broken Solicitors')
