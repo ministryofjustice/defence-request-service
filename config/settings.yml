@@ -3,4 +3,6 @@ devise:
   salt: <%= ENV["DEVISE_SALT"] %>
 rails:
   secret_key_base: <%= ENV["SECRET_KEY_BASE"] %>
-solicitor_search_domain: "http://solicitor-search.herokuapp.com"
+dsds:
+  dashboard_refresh_seconds: 3000
+  solicitor_search_domain: "http://solicitor-search.herokuapp.com"

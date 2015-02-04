@@ -1,0 +1,20 @@
+<% @defence_requests.each_with_index do |def_req, ind| %>
+  <%= content_tag_for(:tr, def_req) do %>
+    <th scope="row"><%= ind %></th>
+    <td><%= def_req.solicitor_type %></td>
+    <td><%= def_req.solicitor_name %></td>
+    <td><%= def_req.solicitor_firm %></td>
+    <td><%= def_req.scheme %></td>
+    <td><%= def_req.phone_number %></td>
+    <td><%= def_req.detainee_surname %></td>
+    <td><%= def_req.detainee_first_name %></td>
+    <td><%= def_req.gender %></td>
+    <td><%= def_req.adult %></td>
+    <td><%= def_req.date_of_birth %></td>
+    <td><%= def_req.appropriate_adult %></td>
+    <td><%= def_req.custody_number %></td>
+    <td><%= def_req.allegations %></td>
+    <td><%= def_req.comments %></td>
+    <td><%= def_req.time_of_arrival %></td>
+  <% end %>
+<% end %>

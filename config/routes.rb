@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   end
   root 'defence_requests#index'
 
+  get 'defence_requests/refresh_dashboard' => 'defence_requests#refresh_dashboard'
+
   resources :defence_requests do
     collection do
       post 'solicitors_search'
