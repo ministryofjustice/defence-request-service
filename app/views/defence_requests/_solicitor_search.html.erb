@@ -1,0 +1,11 @@
+<div class="search_box row-fluid">
+  <%= bootstrap_form_tag(url: solicitors_search_defence_requests_path, remote: true, class: 'solicitor_search') do |f| %>
+    <%= label_tag 'q', t('search'), class: 'col-md-12' %>
+    <div class='col-md-10'>
+      <%= text_field_tag 'q', nil, placeholder: t('enter_solicitor_firm_name'), autocomplete: "off", class: 'form-control' %>
+    </div>
+    <%= f.submit 'Search', class: 'btn btn-primary col-md-2 pull-right' %>
+  <% end %>
+  <div class="list-group solicitor_results_list col-md-10">
+  </div>
+</div>

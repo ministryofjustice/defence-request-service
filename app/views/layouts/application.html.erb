@@ -9,13 +9,13 @@
 <body>
   <div class="main-content">
       <div class="col-md-12">
-        <%= render partial: 'shared/head' %>
-        <%= render partial: 'shared/phase_banner' %>
-        <%= render partial: 'shared/flash_messages' if flash.any? %>
+        <%= render 'shared/head' %>
+        <%= render 'shared/phase_banner' %>
+        <%= render 'shared/flash_messages' if flash.any? %>
         <% if is_dashboard? %>
-          <%= render partial: 'shared/dashboard' %>
+          <%= render 'shared/dashboard' %>
         <% else %>
-          <%= render partial: 'shared/main_content' %>
+          <%= render 'shared/main_content' %>
         <% end %>
       </div>
   </div>

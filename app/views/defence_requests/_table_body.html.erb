@@ -16,5 +16,8 @@
     <td><%= def_req.allegations %></td>
     <td><%= def_req.comments %></td>
     <td><%= def_req.time_of_arrival %></td>
+    <td class="actions">
+      <%= link_to 'edit', edit_defence_request_path(def_req), class: 'btn btn-default btn-xs' %>
+    </td>
   <% end %>
 <% end %>
