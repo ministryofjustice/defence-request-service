@@ -91,6 +91,36 @@ RSpec.feature 'defence request creation' do
         expect(page).to have_content 'No results found'
       end
 
+      scenario "using Close link to clear solicitor search results", js: true do
+        stub_solicitor_search_for_bob_smith
+        visit root_path
+        click_link 'New Defence Request'
+        choose 'Own'
+        fill_in 'q', with: "Bob Smith"
+
+        click_button 'Search'
+        expect(page).to have_content 'Bobson Smith'
+
+        within('.solicitor_results_list') do
+        click_link("Close")
+        end
+        expect(page).not_to have_content 'Bobson Smith'
+      end
+
+      scenario "pressing ESC clears solicitor search results", js: true do
+        stub_solicitor_search_for_bob_smith
+        visit root_path
+        click_link 'New Defence Request'
+        choose 'Own'
+        fill_in 'q', with: "Bob Smith"
+
+        click_button 'Search'
+        expect(page).to have_content 'Bobson Smith'
+
+        page.execute_script("$('body').trigger($.Event(\"keydown\", { keyCode: 27 }))")
+        expect(page).not_to have_content 'Bobson Smith'
+      end
+
       scenario "toggling duty or own", js: true do
         stub_solicitor_search_for_bob_smith
 
