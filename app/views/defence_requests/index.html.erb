@@ -38,7 +38,7 @@
 
 <script>
   $(document).ready(function () {
-    setInterval(refreshPartial, 3000);
+    setInterval(refreshPartial, <%= Settings.dsds.dashboard_refresh_seconds %>);
   });
 
   // calls action refreshing the partial

@@ -14,28 +14,26 @@ RSpec.feature 'Defence request dashboard' do
       expect(page).to have_content('CSO Dashboard')
     end
 
-    scenario 'i can see all active DR`s' do
+    scenario 'i can see all active DR`s in chronological order' do
       visit defence_requests_path
 
-      within "#dr_#{dr_1.id}" do
-        expect(page).to have_content(dr_1.solicitor_name)
-      end
-
-      within "#dr_#{dr_2.id}" do
-        expect(page).to have_content(dr_2.solicitor_name)
+      within ".defence_requests" do
+        expect(/defence_request_#{dr_1.id}.*defence_request_#{dr_2.id}/m =~ page.body).to_not be_nil
       end
     end
 
     scenario 'i can see the dashboard with refreshed data after a period', js: true do
+      Settings.dsds.dashboard_refresh_seconds = 200
       visit defence_requests_path
 
-      within "#dr_#{dr_1.id}" do
+      within "#defence_request_#{dr_1.id}" do
         expect(page).to have_content(dr_1.solicitor_name)
       end
 
       dr_1.update(solicitor_name: 'New Solicitor')
-      sleep(3)
-      within "#dr_#{dr_1.id}" do
+
+      sleep(Settings.dsds.dashboard_refresh_seconds/1000)
+      within "#defence_request_#{dr_1.id}" do
         expect(page).to have_content('New Solicitor')
       end
     end

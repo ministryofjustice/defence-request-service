@@ -1,7 +1,7 @@
 class DefenceRequestsController < BaseController
 
   def index
-    @defence_requests = DefenceRequest.all
+    @defence_requests = DefenceRequest.order(created_at: :asc)
   end
 
   def new
@@ -11,7 +11,7 @@ class DefenceRequestsController < BaseController
 
   def solicitors_search
     query_string = URI.escape(params[:q])
-    search_url = URI.parse "#{Settings.solicitor_search_domain}/search/?q=#{query_string}"
+    search_url = URI.parse "#{Settings.dsds.solicitor_search_domain}/search/?q=#{query_string}"
     search_json = JSON.parse(HTTParty.post(search_url).body)
 
     # Below is evil, this is a quick hack to search for solicitors and firms in the same box until we figure out how
@@ -31,7 +31,7 @@ class DefenceRequestsController < BaseController
   end
 
   def refresh_dashboard
-    @defence_requests = DefenceRequest.all
+    @defence_requests = DefenceRequest.order(created_at: :asc)
 
     respond_to do |format|
       format.js
