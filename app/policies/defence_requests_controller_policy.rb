@@ -11,6 +11,14 @@ class DefenceRequestsControllerPolicy < Struct.new(:user, :defense_request_contr
     user.cso?
   end
 
+  def edit?
+    user.cso?
+  end
+
+  def update?
+    user.cso?
+  end
+
   def solicitors_search?
     user.cso?
   end

@@ -1,5 +1,7 @@
 class DefenceRequestsController < BaseController
 
+  before_action :find_defence_request, only: [:edit, :update]
+
   def index
     @defence_requests = DefenceRequest.order(created_at: :asc)
   end
@@ -30,6 +32,17 @@ class DefenceRequestsController < BaseController
     end
   end
 
+  def edit
+  end
+
+  def update
+    if @defence_request.update_attributes(defence_request_params)
+      redirect_to({ action: :index }, notice: t('models.update', model: @defence_request.class))
+    else
+      render :edit
+    end
+  end
+
   def refresh_dashboard
     @defence_requests = DefenceRequest.order(created_at: :asc)
 
@@ -39,6 +52,10 @@ class DefenceRequestsController < BaseController
   end
 
   private
+
+  def find_defence_request
+    @defence_request = DefenceRequest.find(params[:id])
+  end
 
   def defence_request_params
     params.require(:defence_request).permit(:solicitor_type,
