@@ -10,11 +10,6 @@
 
 <div class="row">
   <table class="table table-striped table-bordered defence_requests">
-    <colgroup>
-      <col>
-      <col span="5" style="background-color: #e9fffa">
-      <col span="6" style="background-color: #e1ffde">
-    </colgroup>
     <thead>
     <tr>
       <th>#</th>
@@ -36,31 +31,21 @@
     </tr>
     </thead>
     <tbody>
-    <% @defence_requests.each_with_index do |def_req, ind| %>
-      <colgroup>
-        <col>
-        <col span="5" style="background-color: #e9fffa">
-        <col span="6" style="background-color: #e1ffde">
-      </colgroup>
-      <tr>
-        <th scope="row"><%= ind %></th>
-        <td><%= def_req.solicitor_type %></td>
-        <td><%= def_req.solicitor_name %></td>
-        <td><%= def_req.solicitor_firm %></td>
-        <td><%= def_req.scheme %></td>
-        <td><%= def_req.phone_number %></td>
-        <td><%= def_req.detainee_surname %></td>
-        <td><%= def_req.detainee_first_name %></td>
-        <td><%= def_req.gender %></td>
-        <td><%= def_req.adult %></td>
-        <td><%= def_req.date_of_birth %></td>
-        <td><%= def_req.appropriate_adult %></td>
-        <td><%= def_req.custody_number %></td>
-        <td><%= def_req.allegations %></td>
-        <td><%= def_req.comments %></td>
-        <td><%= def_req.time_of_arrival %></td>
-      </tr>
-    <% end %>
+    <%= render partial: 'table_body' %>
     </tbody>
   </table>
 </div>
+
+<script>
+  $(document).ready(function () {
+    setInterval(refreshPartial, 3000);
+  });
+
+  // calls action refreshing the partial
+  function refreshPartial() {
+    $.ajax({
+      url: "defence_requests/refresh_dashboard"
+    })
+  }
+
+</script>

@@ -30,6 +30,14 @@ class DefenceRequestsController < BaseController
     end
   end
 
+  def refresh_dashboard
+    @defence_requests = DefenceRequest.all
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
   private
 
   def defence_request_params
