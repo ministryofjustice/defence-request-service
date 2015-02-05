@@ -32,6 +32,9 @@ en:
   solicitor_type: "Solicitor Type"
   time_of_arrival: "Time of Arrival"
   update: "Update"
+  cso: "Custody Suite Officer"
+  cco: "Call Center Operative"
+  solicitor: "Solicitor"
 
   models:
     create: "%{model} successfully created"

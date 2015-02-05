@@ -19,4 +19,12 @@ RSpec.describe DefenceRequestsControllerPolicy do
     end
   end
 
+  [:index?].each do |action|
+    permissions action do
+      it "grants access to #{action} user role is 'solicitor'" do
+        expect(subject).to permit(User.new(role: :solicitor), DefenceRequestsController)
+      end
+    end
+  end
+
 end

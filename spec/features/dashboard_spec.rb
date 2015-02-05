@@ -11,7 +11,7 @@ RSpec.feature 'Defence request dashboard' do
     let!(:dr_2) { create(:defence_request) }
 
     scenario 'i am redirected to my dashboard at login' do
-      expect(page).to have_content('CSO Dashboard')
+      expect(page).to have_content('Custody Suite Officer Dashboard')
     end
 
     scenario 'i can see all active DR`s in chronological order' do

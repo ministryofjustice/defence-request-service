@@ -1,5 +1,5 @@
 <div class="row">
-  <h1><%= "#{current_user.role.upcase}  #{t('dashboard')}"%></h1>
+  <h1><%= "#{t(current_user.role)}  #{t('dashboard')}"%></h1>
 </div>
 
 <% if policy(:defence_requests_controller).create? %>
