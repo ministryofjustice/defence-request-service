@@ -5,8 +5,7 @@ FactoryGirl.define do
     sequence(:solicitor_firm) { |n| "solicitor_firm-#{n}" }
     scheme 1
     phone_number '447810480123'
-    sequence(:detainee_surname) { |n| "detainee_surname-#{n}" }
-    sequence(:detainee_first_name) { |n| "detainee_first_name-#{n}" }
+    sequence(:detainee_name) { |n| "detainee_name-#{n}" }
     gender %w(male female).sample
     date_of_birth Date.current - 21.years
     sequence(:custody_number) { |n| "custody_number-#{n}" }

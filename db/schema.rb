@@ -40,13 +40,12 @@ ActiveRecord::Schema.define(version: 20150204123953) do
   add_index "audits", ["user_id", "user_type"], name: "user_index", using: :btree
 
   create_table "defence_requests", force: :cascade do |t|
-    t.string   "solicitor_type",                      null: false
+    t.string   "solicitor_type",                    null: false
     t.string   "solicitor_name"
     t.string   "solicitor_firm"
     t.string   "scheme"
     t.string   "phone_number"
-    t.string   "detainee_surname"
-    t.string   "detainee_first_name"
+    t.string   "detainee_name"
     t.string   "gender"
     t.datetime "date_of_birth"
     t.string   "custody_number"
@@ -54,10 +53,10 @@ ActiveRecord::Schema.define(version: 20150204123953) do
     t.datetime "time_of_arrival"
     t.text     "comments"
     t.boolean  "adult"
-    t.boolean  "appropriate_adult",   default: false, null: false
-    t.string   "state"
+    t.boolean  "appropriate_adult", default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "state"
   end
 
   create_table "users", force: :cascade do |t|

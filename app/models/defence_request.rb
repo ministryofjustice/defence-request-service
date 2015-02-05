@@ -7,17 +7,17 @@ class DefenceRequest < ActiveRecord::Base
 
   scope :open, -> { where(state: :open) }
 
-  phony_normalize :phone_number, default_country_code: 'GB'
+  before_save :format_phone_number
 
   validates :solicitor_name,
             :solicitor_firm,
-            :detainee_surname,
-            :detainee_first_name,
+            :detainee_name,
             :allegations,
-            length: { minimum: 5 }
-
-  validates :gender, :date_of_birth, :time_of_arrival, :custody_number, presence: true
-  validates :phone_number, phony_plausible: true
+            :phone_number,
+            :gender,
+            :date_of_birth,
+            :time_of_arrival,
+            :custody_number, presence: true
 
   audited
 
@@ -26,4 +26,10 @@ class DefenceRequest < ActiveRecord::Base
               'Brighton Scheme 2',
               'Brighton Scheme 3']
 
+
+  private
+
+  def format_phone_number
+    self.phone_number = self.phone_number.gsub(/\D/, '')
+  end
 end

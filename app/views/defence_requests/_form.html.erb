@@ -33,8 +33,7 @@
       <h3 class="panel-title"><%= t('detainee') %></h3>
     </div>
     <div class="panel-body">
-      <%= f.text_field :detainee_surname, label: t('detainee_surname') %>
-      <%= f.text_field :detainee_first_name, label: t('detainee_first_name') %>
+      <%= f.text_field :detainee_name, label: t('detainee_name') %>
 
       <%= f.form_group :gender, label: {text: t('gender')} do %>
         <%= f.radio_button :gender, :male, label: t('male'), name: 'defence_request[gender]', inline: true %>

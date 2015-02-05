@@ -38,6 +38,19 @@ RSpec.feature 'Defence request dashboard' do
       end
     end
 
+    scenario 'Closing a case' do
+      visit defence_requests_path
+
+      expect(page).to have_content dr_1.solicitor_name
+
+      within "#defence_request_#{dr_1.id}" do
+        click_button 'Close'
+      end
+
+      expect(page).to have_content "Defence Request successfully closed"
+      expect(page).to_not have_content dr_1.solicitor_name
+    end
+
   end
   def element_order_correct?(first_element,second_element)
     !!(/#{first_element}.*#{second_element}/m =~ page.body)
