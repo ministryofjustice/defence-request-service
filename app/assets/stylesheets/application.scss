@@ -48,6 +48,9 @@
 
 .solicitor_results_list{
   padding-left: 14px;
+  position: absolute;
+  margin-top: 60px;
+  z-index: 1;
 }
 
 td.actions{
