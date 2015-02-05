@@ -2,7 +2,7 @@
   <div class="row">
     <div class="panel panel-default col-md-8 col-md-offset-2">
       <div class="panel-heading">
-        <h3 class="panel-title"><%= (form_type +' '+ object_name).humanize %></h3>
+        <h3 class="panel-title"><%= (form_type.capitalize + ' ' + klass.model_name.human) %></h3>
       </div>
       <div class="panel-body">
         <%= render 'form', form_type: form_type %>

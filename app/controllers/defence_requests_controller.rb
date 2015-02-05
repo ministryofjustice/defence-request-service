@@ -1,9 +1,9 @@
 class DefenceRequestsController < BaseController
 
-  before_action :find_defence_request, only: [:edit, :update]
+  before_action :find_defence_request, only: [:edit, :update, :close]
 
   def index
-    @defence_requests = DefenceRequest.order(created_at: :asc)
+    @defence_requests = DefenceRequest.open.order(created_at: :asc)
   end
 
   def new
@@ -26,7 +26,7 @@ class DefenceRequestsController < BaseController
   def create
     @defence_request = DefenceRequest.new(defence_request_params)
     if @defence_request.save
-      redirect_to(defence_requests_path, notice: t('models.create', model: @defence_request.class))
+      redirect_to(defence_requests_path, notice: flash_message(:create, DefenceRequest))
     else
       render :new
     end
@@ -44,10 +44,19 @@ class DefenceRequestsController < BaseController
   end
 
   def refresh_dashboard
-    @defence_requests = DefenceRequest.order(created_at: :asc)
+    @defence_requests = DefenceRequest.open.order(created_at: :asc)
 
     respond_to do |format|
       format.js
+    end
+  end
+
+  def close
+    @defence_request.close
+    if @defence_request.save
+      redirect_to(defence_requests_path, notice: flash_message(:close, DefenceRequest))
+    else
+      redirect_to(defence_requests_path, notice: flash_message(:failed_close, DefenceRequest))
     end
   end
 
@@ -75,7 +84,6 @@ class DefenceRequestsController < BaseController
                                           :comments,
                                           :time_of_arrival)
   end
+
 end
-
-
 

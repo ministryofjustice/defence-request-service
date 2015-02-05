@@ -22,8 +22,6 @@ en:
   female: "Female"
   gender: "Gender"
   male: "Male"
-  new_defence_request: "New Defence Request"
-  new_defence_request: "New Defence Request"
   no_results_found: 'No results found - Contact DSCC'
   not_authorized: "You are not authorised to perform this action"
   own: 'Own'
@@ -42,10 +40,14 @@ en:
     update: "%{model} successfully updated"
     destroy: "%{model} successfully deleted"
     failed_destroy: "%{model} was not deleted"
+    close: "%{model} successfully closed"
+    failed_close: "%{model} was not closed"
 
   helpers:
     submit:
       create: "Create %{model}"
       update: "Update %{model}"
 
-
+  activerecord:
+    models:
+      defence_request: "Defence Request"

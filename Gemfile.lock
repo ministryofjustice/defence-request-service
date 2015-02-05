@@ -96,6 +96,7 @@ GEM
       railties (>= 3.0.0)
     globalid (0.3.0)
       activesupport (>= 4.1.0)
+    hashr (0.0.22)
     hike (1.2.3)
     httparty (0.13.3)
       json (~> 1.8)
@@ -219,6 +220,9 @@ GEM
       rdoc (~> 4.0)
     shoulda-matchers (2.7.0)
       activesupport (>= 3.0.0)
+    simple_states (1.0.1)
+      activesupport
+      hashr (~> 0.0.10)
     slop (3.6.0)
     spring (1.2.0)
     sprockets (2.12.3)
@@ -289,6 +293,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   shoulda-matchers
+  simple_states
   spring
   uglifier (>= 1.3.0)
   unicorn

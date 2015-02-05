@@ -12,6 +12,9 @@ Rails.application.routes.draw do
     collection do
       post 'solicitors_search'
     end
+    member do
+      put  'close'
+    end
   end
 
 end
