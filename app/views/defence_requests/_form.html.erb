@@ -78,7 +78,7 @@
     $(document).ready(function () {
 
       // Clear solicitor search results on ESC keypress
-      $(document).on('keyup', function(event) {
+      $(document).on('keydown', function(event) {
         if($('.solicitor_results_list *').length > 0 && event.keyCode === 27){
           $('.solicitor_results_list').empty();
         }
