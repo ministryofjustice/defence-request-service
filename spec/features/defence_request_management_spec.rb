@@ -26,8 +26,7 @@ RSpec.feature 'defence request creation' do
           end
 
           within '.detainee' do
-            fill_in 'Detainee Surname', with: 'Mannie'
-            fill_in 'Detainee First Name', with: 'Badder'
+            fill_in 'Detainee Name', with: 'Mannie Badder'
             choose 'Male'
             check 'defence_request[adult]'
             select('1976', from: 'defence_request_date_of_birth_1i')
@@ -43,7 +42,7 @@ RSpec.feature 'defence request creation' do
         expect(page).to have_content 'Defence Request successfully created'
       end
 
-      scenario 'selecting own solicior and choosing from search box', js: true do
+      scenario 'selecting own solicitor and choosing from search box', js: true do
         stub_solicitor_search_for_bob_smith
         visit root_path
         click_link 'New Defence Request'
@@ -171,8 +170,7 @@ RSpec.feature 'defence request creation' do
           select('00', from: 'defence_request_time_of_arrival_5i')
 
 
-          fill_in 'Detainee Surname', with: 'Annie'
-          fill_in 'Detainee First Name', with: 'Nother'
+          fill_in 'Detainee Name', with: 'Annie Nother'
           choose 'Female'
           uncheck 'defence_request[adult]'
           select('1986', from: 'defence_request_date_of_birth_1i')
@@ -186,7 +184,7 @@ RSpec.feature 'defence request creation' do
         within "#defence_request_#{dr_1.id}" do
           expect(page).to have_content('Dave Smith')
           expect(page).to have_content('Broken Solicitors')
-          expect(page).to have_content('442072849999')
+          expect(page).to have_content('02072849999')
           expect(page).to have_content('#CUST-9876')
           expect(page).to have_content('BadMurder')
           expect(page).to have_content('10:00')

@@ -4,8 +4,7 @@ class AddAttributesToDefenceRequest < ActiveRecord::Migration
     add_column :defence_requests, :solicitor_firm, :string
     add_column :defence_requests, :scheme, :string
     add_column :defence_requests, :phone_number, :string
-    add_column :defence_requests, :detainee_surname, :string
-    add_column :defence_requests, :detainee_first_name, :string
+    add_column :defence_requests, :detainee_name, :string
     add_column :defence_requests, :gender, :string
     add_column :defence_requests, :adult, :string
     add_column :defence_requests, :date_of_birth, :datetime

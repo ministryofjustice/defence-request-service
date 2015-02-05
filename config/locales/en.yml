@@ -13,9 +13,7 @@ en:
   delete: "Delete"
   details: "Details"
   detainee: "Detainee"
-  detainee_first_name: "Detainee First Name"
-  detainee_name: "Detainee Surname"
-  detainee_surname: "Detainee Surname"
+  detainee_name: "Detainee Name"
   duty: 'Duty'
   enter_solicitor_firm_name: "Enter solicitor/firm name..."
   error: error
