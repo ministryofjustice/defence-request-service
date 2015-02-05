@@ -76,6 +76,14 @@
 <% if @defence_request.new_record? %>
   <script>
     $(document).ready(function () {
+
+      // Clear solicitor search results on ESC keypress
+      $(document).on('keydown', function(event) {
+        if($('.solicitor_results_list *').length > 0 && event.keyCode === 27){
+          $('.solicitor_results_list').empty();
+        }
+      });
+
       var ownSolicitor_checked = ($("input[type='radio']#defence_request_solicitor_type_own:checked").length > 0);
 
       var own_setup = function () {

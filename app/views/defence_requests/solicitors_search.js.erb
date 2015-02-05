@@ -1,4 +1,8 @@
-$('.solicitor_results_list').html('');
+$('.solicitor_results_list').html('<a data-fn="btn-solicitor-results-close" href="#">Close</a>');
+
+$('.solicitor_results_list [data-fn="btn-solicitor-results-close"]').bind('click', function() {
+  $('.solicitor_results_list').html('');
+});
 
 <% if @solicitors.empty? %>
   $('.solicitor_results_list').append("<p class='list-group-item'>\

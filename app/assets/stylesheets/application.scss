@@ -48,9 +48,17 @@
 
 .solicitor_results_list{
   padding-left: 14px;
+  position: absolute;
+  margin-top: 60px;
+  z-index: 1;
 }
 
 td.actions{
   text-align: center;
 }
 
+[data-fn="btn-solicitor-results-close"] {
+  position: absolute;
+  right: 20px;
+  z-index: 10;
+}
