@@ -68,7 +68,6 @@
   <% if @defence_request.new_record? %>
     <%= link_to t('cancel'), defence_requests_path, class: 'btn btn-default cancel' %>
   <% else %>
-    <%= link_to t('delete'), defence_request_path(@defence_request), method: :delete, data: {confirm: t('confirm')}, class: 'btn btn-danger' %>
     <%= link_to t('cancel'), defence_requests_path, class: 'btn btn-default cancel' %>
   <% end %>
 

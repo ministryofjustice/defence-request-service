@@ -85,9 +85,5 @@ class DefenceRequestsController < BaseController
                                           :time_of_arrival)
   end
 
-  def find_defence_request
-    @defence_request = DefenceRequest.find(params[:id])
-  end
-
 end
 
