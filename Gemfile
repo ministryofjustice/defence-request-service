@@ -21,11 +21,16 @@ gem 'pundit'
 gem 'rails_config'
 gem 'httparty'
 gem 'audited-activerecord'
-gem 'simple_states'
+gem 'transitions', require: ['transitions', 'active_model/transitions']
 
 group :test do
   gem 'webmock'
   gem 'factory_girl_rails'
+end
+
+group :development do
+  gem 'guard-rspec', require: false
+  gem 'terminal-notifier-guard'
 end
 
 group :development, :test do

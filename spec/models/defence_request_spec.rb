@@ -15,9 +15,36 @@ RSpec.describe DefenceRequest, type: :model do
   end
 
   describe 'states' do
-    specify { expect(subject.state).to eql 'open' }
-
-    specify { expect{ subject.close }.to_not raise_error }
-    specify { expect{ subject.close; subject.close }.to raise_error(SimpleStates::TransitionException) }
+    it 'allows for correct transitions' do
+      # state = created
+      expect(subject.current_state).to eql :created
+      expect(subject.can_transition? :open).to eq true
+      expect(subject.can_transition? :close).to eq true
+      expect(subject.can_transition? :created).to eq false
+      expect(subject.can_transition? :finish).to eq false
+      # state = open
+      expect{ subject.open }.to_not raise_error
+      expect(subject.current_state).to eql :open
+      expect(subject.can_transition? :open).to eq false
+      expect(subject.can_transition? :close).to eq true
+      expect(subject.can_transition? :created).to eq false
+      expect(subject.can_transition? :finish).to eq true
+      # state = closed
+      expect{ subject.close }.to_not raise_error
+      expect(subject.current_state).to eql :closed
+      expect(subject.can_transition? :open).to eq false
+      expect(subject.can_transition? :close).to eq false
+      expect(subject.can_transition? :created).to eq false
+      expect(subject.can_transition? :finish).to eq false
+      # state = finished
+      expect{ subject.finish }.to raise_error(Transitions::InvalidTransition)
+      subject.update_current_state(:open)
+      expect{ subject.finish }.to_not raise_error
+      expect(subject.current_state).to eql :finished
+      expect(subject.can_transition? :open).to eq false
+      expect(subject.can_transition? :close).to eq false
+      expect(subject.can_transition? :created).to eq false
+      expect(subject.can_transition? :finish).to eq false
+    end
   end
 end
