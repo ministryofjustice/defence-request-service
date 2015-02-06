@@ -30,3 +30,15 @@ User.where(email: 'cco4@example.com').first_or_create(
   email: 'cco4@example.com', password: 'password', role: :cco)
 User.where(email: 'cco5@example.com').first_or_create(
   email: 'cco5@example.com', password: 'password', role: :cco)
+
+#Solicitor test users
+User.where(email: 'solicitor1@example.com').first_or_create(
+  email: 'solicitor@example.com', password: 'password', role: :solicitor)
+User.where(email: 'solicitor2@example.com').first_or_create(
+  email: 'solicitor@example.com', password: 'password', role: :solicitor)
+User.where(email: 'solicitor3@example.com').first_or_create(
+  email: 'solicitor@example.com', password: 'password', role: :solicitor)
+User.where(email: 'solicitor4@example.com').first_or_create(
+  email: 'solicitor@example.com', password: 'password', role: :solicitor)
+User.where(email: 'solicitor5@example.com').first_or_create(
+  email: 'solicitor@example.com', password: 'password', role: :solicitor)
