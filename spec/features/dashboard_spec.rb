@@ -118,8 +118,8 @@ RSpec.feature 'Defence request dashboard' do
     let!(:dr_open) { create(:defence_request, :open) }
 
     scenario 'i am redirected to my dashboard at login' do
-      expect(page).to have_content('CCO Dashboard')
-      expect(page).to_not have_content('CSO Dashboard')
+      expect(page).to have_content('Call Center Operative Dashboard')
+      expect(page).to_not have_content('Custody Suite Officer Dashboard')
     end
 
     scenario 'i see a tables of "new" and "open" DR`s`' do
@@ -170,6 +170,7 @@ RSpec.feature 'Defence request dashboard' do
       within ".new_defence_requests" do
         click_link 'Edit'
       end
+      
       within '.details' do
         fill_in 'Solicitor Name', with: 'Bob Smith'
       end

@@ -6,6 +6,7 @@
 <div class="row new_defence_request">
   <%= link_to t('new_defence_request'), new_defence_request_path, class: 'btn btn-default' %>
 </div>
+<% end %>
 
 <% if policy(:defence_request).index? %>
   <h3><%= t('new_defence_request') %></h3>
