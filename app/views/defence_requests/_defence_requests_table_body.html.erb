@@ -1,4 +1,4 @@
-<% @defence_requests.each_with_index do |def_req, ind| %>
+<% requests.each_with_index do |def_req, ind| %>
   <%= content_tag_for(:tr, def_req) do %>
     <th scope="row"><%= ind %></th>
     <td><%= def_req.solicitor_type %></td>

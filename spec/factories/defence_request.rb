@@ -15,4 +15,12 @@ FactoryGirl.define do
     adult [nil, true, false].sample
     appropriate_adult [true, false].sample
   end
+
+  trait :created do
+    state 'created'
+  end
+
+  trait :open do
+    state 'open'
+  end
 end

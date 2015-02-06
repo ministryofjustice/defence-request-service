@@ -6,31 +6,25 @@
 <div class="row new_defence_request">
   <%= link_to t('new_defence_request'), new_defence_request_path, class: 'btn btn-default' %>
 </div>
+
+<% if policy(:defence_request).index? %>
+  <h3><%= t('new_defence_request') %></h3>
+  <div class="row">
+    <table class="table table-striped table-bordered new_defence_requests">
+      <%= render 'defence_requests_table_head' %>
+      <tbody>
+      <%= render 'defence_requests_table_body', requests: @new_requests %>
+      </tbody>
+    </table>
+  </div>
 <% end %>
 
+<h3><%= t('open_defence_request') %></h3>
 <div class="row">
-  <table class="table table-striped table-bordered defence_requests">
-    <thead>
-    <tr>
-      <th>#</th>
-      <th><%= t('solicitor_type') %></th>
-      <th><%= t('solicitor_name') %></th>
-      <th><%= t('solicitor_firm') %></th>
-      <th><%= t('scheme') %></th>
-      <th><%= t('phone_number') %></th>
-      <th><%= t('detainee_name') %></th>
-      <th><%= t('gender') %></th>
-      <th><%= t('adult') %></th>
-      <th><%= t('appropriate_adult') %></th>
-      <th><%= t('custody_number') %></th>
-      <th><%= t('allegations') %></th>
-      <th><%= t('comments') %></th>
-      <th><%= t('time_of_arrival') %></th>
-      <th><%= t('actions') %></th>
-    </tr>
-    </thead>
+  <table class="table table-striped table-bordered open_defence_requests">
+    <%= render 'defence_requests_table_head' %>
     <tbody>
-    <%= render 'table_body' %>
+    <%= render 'defence_requests_table_body', requests: @open_requests %>
     </tbody>
   </table>
 </div>
@@ -46,5 +40,4 @@
       url: "defence_requests/refresh_dashboard"
     })
   }
-
 </script>
