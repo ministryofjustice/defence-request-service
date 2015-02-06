@@ -22,15 +22,18 @@ class DefenceRequest < ActiveRecord::Base
 
   before_save :format_phone_number
 
-  validates :solicitor_name,
-            :solicitor_firm,
-            :detainee_name,
+  validates :detainee_name,
             :allegations,
-            :phone_number,
             :gender,
             :date_of_birth,
             :time_of_arrival,
             :custody_number, presence: true
+
+  validates :scheme, presence: true, if: :duty_solicitor?
+
+  validates :solicitor_name,
+            :solicitor_firm,
+            :phone_number, presence: true, if: :own_solicitor?
 
   audited
 
@@ -39,11 +42,18 @@ class DefenceRequest < ActiveRecord::Base
               'Brighton Scheme 2',
               'Brighton Scheme 3']
 
+  def duty_solicitor?
+    solicitor_type == "duty"
+  end
+
+  def own_solicitor?
+    solicitor_type == "own"
+  end
+
   private
 
   def format_phone_number
     self.phone_number = self.phone_number.gsub(/\D/, '')
   end
-
 
 end
