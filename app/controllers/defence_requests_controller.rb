@@ -37,6 +37,8 @@ class DefenceRequestsController < BaseController
   end
 
   def update
+    @defence_request.open if current_user.cco?
+
     if @defence_request.update_attributes(defence_request_params)
       redirect_to(defence_requests_path, notice: t('models.update', model: @defence_request.class))
     else
