@@ -3,12 +3,12 @@ class DefenceRequestsController < BaseController
   before_action :find_defence_request, only: [:edit, :update, :close]
 
   def index
-    @defence_requests = DefenceRequest.open.order(created_at: :asc)
+    @defence_requests = policy_scope(DefenceRequest).order(created_at: :asc)
   end
 
   def new
     @defence_request = DefenceRequest.new
-    @solicitor = DefenceRequest.new
+    authorize @defence_request
   end
 
   def solicitors_search

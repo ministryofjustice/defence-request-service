@@ -1,4 +1,23 @@
-class DefenceRequestsControllerPolicy < Struct.new(:user, :defense_request_controller)
+class DefenceRequestPolicy < ApplicationPolicy
+  class Scope
+    attr_reader :user, :scope
+
+    def initialize(user, scope)
+      @user = user
+      @scope = scope
+    end
+
+    def resolve
+      if user.cso?
+        scope.open
+      elsif user.cco?
+        scope.open
+      elsif user.solicitor?
+        []
+      end
+    end
+  end
+
   def index?
     user.cso? || user.cco? || user.solicitor?
   end
