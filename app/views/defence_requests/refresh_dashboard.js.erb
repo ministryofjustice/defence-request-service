@@ -1,1 +1,2 @@
-$('.defence_requests tbody').html("<%= escape_javascript(render 'table_body', defence_requests: @defence_requests) %>");
+$('.new_defence_requests tbody').html("<%= escape_javascript(render 'defence_requests_table_body', requests: @new_requests) %>");
+$('.open_defence_requests tbody').html("<%= escape_javascript(render 'defence_requests_table_body', requests: @open_requests) %>");

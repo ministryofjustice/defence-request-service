@@ -9,9 +9,9 @@ class DefenceRequestPolicy < ApplicationPolicy
 
     def resolve
       if user.cso?
-        scope.open
+        scope.all
       elsif user.cco?
-        scope.open
+        scope.all
       elsif user.solicitor?
         []
       end
@@ -31,11 +31,11 @@ class DefenceRequestPolicy < ApplicationPolicy
   end
 
   def edit?
-    user.cso?
+    user.cso? || user.cco?
   end
 
   def update?
-    user.cso?
+    user.cso? || user.cco?
   end
 
   def solicitors_search?

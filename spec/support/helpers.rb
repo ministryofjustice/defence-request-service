@@ -1,10 +1,10 @@
 module HelperMethods
 
-  def create_cso_and_login
+  def create_role_and_login(role)
     password = '123456789'
-    cso_user = User.create(email: 'cso@example.com', password: password, role: :cso)
+    user = User.create(email: 'cso@example.com', password: password, role: role.to_sym)
     visit new_user_session_path
-    fill_in 'user_email', with: cso_user.email
+    fill_in 'user_email', with: user.email
     fill_in 'user_password', with: password
     click_button 'Sign in'
   end

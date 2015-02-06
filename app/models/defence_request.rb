@@ -1,11 +1,24 @@
 class DefenceRequest < ActiveRecord::Base
-  include SimpleStates
+  include ActiveModel::Transitions
 
-  self.initial_state = :open
-  states :open, :closed
-  event :close,  :from => :open, :to => :closed
+  state_machine auto_scopes: true do
+    state :created # first one is initial state
+    state :open
+    state :closed
+    state :finished
 
-  scope :open, -> { where(state: :open) }
+    event :open do
+      transitions from: [:created], to: :open
+    end
+
+    event :finish do
+      transitions from: [:open], to: :finished
+    end
+
+    event :close do
+      transitions from: [:created, :open], to: :closed
+    end
+  end
 
   before_save :format_phone_number
 
@@ -26,10 +39,11 @@ class DefenceRequest < ActiveRecord::Base
               'Brighton Scheme 2',
               'Brighton Scheme 3']
 
-
   private
 
   def format_phone_number
     self.phone_number = self.phone_number.gsub(/\D/, '')
   end
+
+
 end

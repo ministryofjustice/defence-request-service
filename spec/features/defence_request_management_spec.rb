@@ -6,7 +6,7 @@ RSpec.feature 'defence request creation' do
   context 'Create' do
     context 'as cso' do
       before :each do
-        create_cso_and_login
+        create_role_and_login('cso')
       end
       scenario 'Filling in form manually for own solicitor', js: true do
         visit root_path
@@ -148,7 +148,7 @@ RSpec.feature 'defence request creation' do
     context 'as cso' do
 
       before :each do
-        create_cso_and_login
+        create_role_and_login('cso')
       end
 
       let!(:dr_1) { create(:defence_request) }
