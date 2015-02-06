@@ -1,8 +1,8 @@
 <div class="row">
-  <h1><%= "#{current_user.role.upcase}  #{t('dashboard')}"%></h1>
+  <h1><%= "#{t(current_user.role)}  #{t('dashboard')}"%></h1>
 </div>
 
-<% if policy(:defence_requests_controller).create? %>
+<% if policy(:defence_request).create? %>
 <div class="row new_defence_request">
   <%= link_to t('new_defence_request'), new_defence_request_path, class: 'btn btn-default' %>
 </div>

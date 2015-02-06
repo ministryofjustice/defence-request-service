@@ -11,4 +11,8 @@ class User < ActiveRecord::Base
     self.role.to_sym == :cco
   end
 
+  def solicitor?
+    self.role.to_sym == :solicitor
+  end
+
 end
