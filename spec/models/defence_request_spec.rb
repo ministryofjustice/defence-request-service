@@ -1,17 +1,34 @@
 require 'rails_helper'
 
 RSpec.describe DefenceRequest, type: :model do
-  describe 'states' do
+  describe 'validations' do
 
     it { expect(subject).to validate_presence_of :gender }
     it { expect(subject).to validate_presence_of :date_of_birth }
     it { expect(subject).to validate_presence_of :time_of_arrival }
     it { expect(subject).to validate_presence_of :custody_number }
-    it { expect(subject).to validate_presence_of :phone_number }
-    it { expect(subject).to validate_presence_of :solicitor_name }
-    it { expect(subject).to validate_presence_of :solicitor_firm }
     it { expect(subject).to validate_presence_of :detainee_name }
     it { expect(subject).to validate_presence_of :allegations }
+
+    context 'own_solicitor' do
+      before do
+        subject.solicitor_type = "own"
+      end
+      it { expect(subject).to validate_presence_of :solicitor_name }
+      it { expect(subject).to validate_presence_of :solicitor_firm }
+      it { expect(subject).to validate_presence_of :phone_number }
+      it { expect(subject).to_not validate_presence_of :scheme }
+    end
+
+    context 'duty solicitor' do
+      before do
+        subject.solicitor_type = "duty"
+      end
+      it { expect(subject).to validate_presence_of :scheme }
+      it { expect(subject).to_not validate_presence_of :solicitor_name }
+      it { expect(subject).to_not validate_presence_of :solicitor_firm }
+      it { expect(subject).to_not validate_presence_of :phone_number }
+    end
   end
 
   describe 'states' do
