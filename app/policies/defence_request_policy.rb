@@ -13,7 +13,7 @@ class DefenceRequestPolicy < ApplicationPolicy
       elsif user.cco?
         scope.all
       elsif user.solicitor?
-        []
+        scope.none
       end
     end
   end
