@@ -1,54 +1,28 @@
-@import "bootstrap-sprockets";
-@import "bootstrap";
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require govuk_elements_extensions
+ */
 
 .phase-banner{
   background-color: #d53880;
   padding: 10px 0 8px 0;
   border-bottom: 1px solid #bfc1c3;
-  p {
-    margin: 0;
-    color: #000;
-  }
-  span {
-    display: inline-block;
-    width: 75%;
-    vertical-align: top;
-  }
 }
 
-.phase-tag{
-  color: #FFF;
-}
-
-.navbar{
-  margin-bottom: 0px;
-}
-
-.navbar-default {
-  background-color: #000;
-  border-color: #e7e7e7;
-}
-
-.main_content{
-  padding-top: 40px;
-}
-
-.new_defence_request{
-  padding-bottom: 20px;
-}
-
-.flash_message{
-  padding-top: 40px;
-}
-
-.time-select{
-  display: inline-block;
-  width: auto;
+fieldset.time-select select{
+  display: inline;
 }
 
 .solicitor_results_list{
   padding-left: 14px;
-  position: absolute;
   margin-top: 60px;
   z-index: 1;
 }
@@ -58,7 +32,19 @@ td.actions{
 }
 
 [data-fn="btn-solicitor-results-close"] {
-  position: absolute;
   right: 20px;
   z-index: 10;
+}
+
+.solicitor_result {
+  font-family: "nta", Arial, sans-serif;
+  font-size: 19px;
+  line-height: 1.31579;
+  font-weight: 400;
+  text-transform: none;
+}
+
+.flash.success {
+  background-color: #FFE1E1;
+  border: 3px red solid;
 }

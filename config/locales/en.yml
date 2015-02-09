@@ -30,6 +30,7 @@ en:
   solicitor_firm: "Solicitor Firm"
   solicitor_name: "Solicitor Name"
   solicitor_type: "Solicitor Type"
+
   time_of_arrival: "Time of Arrival"
   update: "Update"
   cso: "Custody Suite Officer"
@@ -55,5 +56,6 @@ en:
   activerecord:
     models:
       defence_request: "Defence Request"
-  new_defence_request: "New Defence Requests"
+  new_defence_request: "New Defence Request"
+  new_defence_requests: "New Defence Requests"
   open_defence_request: "Open Defence Requests"

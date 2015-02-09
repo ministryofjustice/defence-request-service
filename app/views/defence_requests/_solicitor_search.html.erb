@@ -1,13 +1,14 @@
-<div class="search_box row-fluid">
-  <%= bootstrap_form_tag(url: solicitors_search_defence_requests_path, remote: true, class: 'solicitor_search') do |f| %>
-    <%= label_tag 'q', t('search'), class: 'col-md-12' %>
-    <div class='col-md-10'>
-      <%= text_field_tag 'q', nil, placeholder: t('enter_solicitor_firm_name'), autocomplete: "off", class: 'form-control' %>
+<div class="search_box">
+  <%= form_tag(solicitors_search_defence_requests_path, remote: true, class: 'solicitor_search') do %>
+    <div class="form-group">
+      <%= label_tag 'q', t('search'), class: 'form-label-bold' %>
+      <p class="form-hint">Search for own solicitor</p>
+      <%= text_field_tag 'q', nil, placeholder: t('enter_solicitor_firm_name'), autocomplete: "off", class: "form-control" %>
+      <%= submit_tag 'Search', class: 'pull-right' %>
     </div>
-    <%= f.submit 'Search', class: 'btn btn-primary col-md-2 pull-right' %>
   <% end %>
-  <div class="row">
-    <div class="list-group solicitor_results_list col-md-10">
+  <div class="">
+    <div class="solicitor_results_list">
     </div>
   </div>
 </div>

@@ -13,9 +13,15 @@ Rails.application.routes.draw do
       post 'solicitors_search'
     end
     member do
-      put  'close'
-      put  'open'
+      put 'close'
+      put 'open'
     end
   end
 
+  get '/help', controller: :static, action: :help, as: :help
+  get '/maintenance', controller: :static, action: :maintenance, as: :maintenance
+  get '/cookies', controller: :static, action: :cookies, as: :cookies
+  get '/accessibility', controller: :static, action: :accessibility, as: :accessibility
+  get '/terms', controller: :static, action: :terms, as: :terms
+  get '/expired', controller: :static, action: :expired, as: :expired
 end

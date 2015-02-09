@@ -28,7 +28,7 @@ RSpec.feature 'Defence request dashboard' do
     end
 
     scenario 'i can see the dashboard with refreshed data after a period', js: true do
-      Settings.dsds.dashboard_refresh_seconds = 200
+      Settings.dsds.dashboard_refresh_seconds = 3000
       visit defence_requests_path
 
       within "#defence_request_#{dr_created.id}" do
@@ -135,7 +135,7 @@ RSpec.feature 'Defence request dashboard' do
     end
 
     scenario 'i can see the dashboard with refreshed data after a period', js: true do
-      Settings.dsds.dashboard_refresh_seconds = 200
+      Settings.dsds.dashboard_refresh_seconds = 3000
       visit defence_requests_path
 
       within "#defence_request_#{dr_created.id}" do

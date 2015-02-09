@@ -1,3 +1,3 @@
-<%= button_to "Close", close_defence_request_path(def_req), method: :put, class: "btn btn-default btn-xs" if policy(def_req).close? %>
-<%= link_to 'Edit', edit_defence_request_path(def_req), class: 'btn btn-default btn-xs'  if policy(def_req).edit? %>
-<%= button_to 'Open', open_defence_request_path(def_req), method: :put, class: 'btn btn-default btn-xs' if policy(def_req).open? %>
+<%= button_to 'Close', close_defence_request_path(def_req), method: :put if policy(def_req).close? %>
+<%= link_to 'Edit', edit_defence_request_path(def_req) if policy(def_req).edit? %>
+<%= button_to 'Open', open_defence_request_path(def_req), method: :put if policy(def_req).open? %>

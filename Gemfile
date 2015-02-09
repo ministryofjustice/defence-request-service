@@ -12,8 +12,13 @@ gem 'uglifier', '>= 1.3.0'
 gem 'unicorn'
 
 # Gov.uk styles
-gem 'bootstrap-sass', '~> 3.3.3'
-gem 'bootstrap_form'
+gem 'govuk_frontend_toolkit', '>= 2.0.1'
+gem 'govuk_elements_rails', '>= 0.1.1'
+
+# MOJ styles
+gem 'moj_template'
+gem 'simple_form'
+
 
 gem 'dotenv-rails'
 gem 'devise'

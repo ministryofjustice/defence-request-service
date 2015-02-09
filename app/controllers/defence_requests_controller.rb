@@ -30,6 +30,7 @@ class DefenceRequestsController < BaseController
     if @defence_request.save
       redirect_to(defence_requests_path, notice: flash_message(:create, DefenceRequest))
     else
+      set_errors
       render :new
     end
   end
@@ -41,6 +42,7 @@ class DefenceRequestsController < BaseController
     if @defence_request.update_attributes(defence_request_params)
       redirect_to(defence_requests_path, notice: flash_message(:update, DefenceRequest))
     else
+      set_errors
       render :edit
     end
   end
@@ -73,6 +75,11 @@ class DefenceRequestsController < BaseController
   end
 
   private
+
+  def set_errors
+    @errors = @defence_request.errors
+    @error_messages = @errors.messages
+  end
 
   def find_defence_request
     @defence_request = DefenceRequest.find(params[:id])
