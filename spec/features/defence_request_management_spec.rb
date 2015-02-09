@@ -193,6 +193,31 @@ RSpec.feature 'defence request creation' do
         end
       end
     end
+
+    context 'as cco' do
+      before :each do
+        create_role_and_login('cco')
+        create(:defence_request)
+      end
+
+      let!(:dr_1) { create(:defence_request) }
+
+      scenario 'editing a DR' do
+        visit root_path
+        within "#defence_request_#{dr_1.id}" do
+          click_link 'Edit'
+        end
+        fill_in 'DSCC Number', with: 'NUMBERWANG'
+        click_button 'Update Defence Request'
+        expect(page).to have_content 'Defence Request successfully updated'
+        within "#defence_request_#{dr_1.id}" do
+          click_link 'Edit'
+        end
+        expect(page).to have_field 'DSCC Number', with: 'NUMBERWANG'
+      end
+
+    end
+
   end
 end
 

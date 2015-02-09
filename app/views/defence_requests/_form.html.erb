@@ -62,6 +62,15 @@
     </div>
   </div>
 
+    <div class="panel panel-default DSCC number">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= t('dscc_number') %></h3>
+      </div>
+      <div class="panel-body">
+        <%= f.text_field :dscc_number, label: t('dscc_number'), readonly: !policy(@defence_request).dscc_number_edit? %>
+      </div>
+    </div>
+
   <%= f.submit class: 'btn btn-primary' %>
 
   <% if @defence_request.new_record? %>

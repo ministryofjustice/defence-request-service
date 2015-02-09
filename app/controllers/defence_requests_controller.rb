@@ -40,7 +40,7 @@ class DefenceRequestsController < BaseController
     @defence_request.open if current_user.cco?
 
     if @defence_request.update_attributes(defence_request_params)
-      redirect_to(defence_requests_path, notice: t('models.update', model: @defence_request.class))
+      redirect_to(defence_requests_path, notice: flash_message(:update, DefenceRequest))
     else
       render :edit
     end
@@ -72,20 +72,21 @@ class DefenceRequestsController < BaseController
 
   def defence_request_params
     params.require(:defence_request).permit(:solicitor_type,
-                                          :solicitor_name,
-                                          :solicitor_firm,
-                                          :scheme,
-                                          :phone_number,
-                                          :detainee_name,
-                                          :time_of_arrival,
-                                          :gender,
-                                          :adult,
-                                          :date_of_birth,
-                                          :appropriate_adult,
-                                          :custody_number,
-                                          :allegations,
-                                          :comments,
-                                          :time_of_arrival)
+                                            :solicitor_name,
+                                            :solicitor_firm,
+                                            :scheme,
+                                            :phone_number,
+                                            :detainee_name,
+                                            :time_of_arrival,
+                                            :gender,
+                                            :adult,
+                                            :date_of_birth,
+                                            :appropriate_adult,
+                                            :custody_number,
+                                            :allegations,
+                                            :comments,
+                                            :time_of_arrival,
+                                            :dscc_number)
   end
 
 end

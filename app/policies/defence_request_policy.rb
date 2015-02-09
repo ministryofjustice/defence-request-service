@@ -50,4 +50,8 @@ class DefenceRequestPolicy < ApplicationPolicy
     user.cso?
   end
 
+  def dscc_number_edit?
+    user.cco?
+  end
+
 end
