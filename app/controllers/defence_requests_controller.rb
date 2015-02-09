@@ -1,6 +1,7 @@
 class DefenceRequestsController < BaseController
 
-  before_action :find_defence_request, only: [:edit, :update, :close]
+  before_action :find_defence_request, only: [:edit, :update, :close, :open]
+  before_action ->(c) { authorize defence_request, "#{c.action_name}?" }
 
   def index
     @open_requests = policy_scope(DefenceRequest).opened.order(created_at: :asc)
@@ -68,6 +69,10 @@ class DefenceRequestsController < BaseController
 
   def find_defence_request
     @defence_request = DefenceRequest.find(params[:id])
+  end
+
+  def defence_request
+    @defence_request ||= DefenceRequest.new
   end
 
   def defence_request_params
