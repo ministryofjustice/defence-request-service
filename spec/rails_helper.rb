@@ -10,6 +10,12 @@ require 'webmock/rspec'
 require 'shoulda-matchers'
 require 'database_cleaner'
 
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app, {
+    phantomjs_logger: File.open("#{Rails.root}/log/test_phantomjs.log", "a"),
+  })
+end
+
 Capybara.javascript_driver = :poltergeist
 
 WebMock.disable_net_connect!(:allow_localhost => true)
