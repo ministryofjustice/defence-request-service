@@ -38,8 +38,6 @@ class DefenceRequestsController < BaseController
   end
 
   def update
-    @defence_request.open if policy(@defence_request).open?
-
     if @defence_request.update_attributes(defence_request_params)
       redirect_to(defence_requests_path, notice: flash_message(:update, DefenceRequest))
     else
@@ -53,6 +51,15 @@ class DefenceRequestsController < BaseController
 
     respond_to do |format|
       format.js
+    end
+  end
+
+  def open
+    @defence_request.open
+    if @defence_request.save
+      redirect_to(defence_requests_path, notice: flash_message(:open, DefenceRequest))
+    else
+      redirect_to(defence_requests_path, notice: flash_message(:failed_open, DefenceRequest))
     end
   end
 
