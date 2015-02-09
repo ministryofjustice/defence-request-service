@@ -35,6 +35,7 @@ en:
   cso: "Custody Suite Officer"
   cco: "Call Center Operative"
   solicitor: "Solicitor"
+  dscc_number: "DSCC Number"
 
   models:
     create: "%{model} successfully created"
