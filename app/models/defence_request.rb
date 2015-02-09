@@ -3,20 +3,20 @@ class DefenceRequest < ActiveRecord::Base
 
   state_machine auto_scopes: true do
     state :created # first one is initial state
-    state :open
+    state :opened
     state :closed
     state :finished
 
     event :open do
-      transitions from: [:created], to: :open
+      transitions from: [:created], to: :opened
     end
 
     event :finish do
-      transitions from: [:open], to: :finished
+      transitions from: [:opened], to: :finished
     end
 
     event :close do
-      transitions from: [:created, :open], to: :closed
+      transitions from: [:created, :opened], to: :closed
     end
   end
 

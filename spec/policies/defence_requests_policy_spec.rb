@@ -22,7 +22,7 @@ RSpec.describe DefenceRequestPolicy do
   context "Call Center Operatives" do
     let(:user) { FactoryGirl.create(:cco_user)}
 
-    [:index, :refresh_dashboard, :dscc_number_edit].each do |action|
+    [:index, :refresh_dashboard, :dscc_number_edit, :open].each do |action|
       specify { expect(subject).to permit_action(action) }
     end
 

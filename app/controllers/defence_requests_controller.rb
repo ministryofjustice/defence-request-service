@@ -3,7 +3,7 @@ class DefenceRequestsController < BaseController
   before_action :find_defence_request, only: [:edit, :update, :close]
 
   def index
-    @open_requests = policy_scope(DefenceRequest).open.order(created_at: :asc)
+    @open_requests = policy_scope(DefenceRequest).opened.order(created_at: :asc)
     @new_requests = policy_scope(DefenceRequest).created.order(created_at: :asc)
   end
 
@@ -37,7 +37,7 @@ class DefenceRequestsController < BaseController
   end
 
   def update
-    @defence_request.open if current_user.cco?
+    @defence_request.open if policy(@defence_request).open?
 
     if @defence_request.update_attributes(defence_request_params)
       redirect_to(defence_requests_path, notice: flash_message(:update, DefenceRequest))
@@ -47,7 +47,7 @@ class DefenceRequestsController < BaseController
   end
 
   def refresh_dashboard
-    @open_requests = policy_scope(DefenceRequest).open.order(created_at: :asc)
+    @open_requests = policy_scope(DefenceRequest).opened.order(created_at: :asc)
     @new_requests = policy_scope(DefenceRequest).created.order(created_at: :asc)
 
     respond_to do |format|

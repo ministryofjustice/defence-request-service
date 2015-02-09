@@ -41,7 +41,7 @@ RSpec.describe DefenceRequest, type: :model do
       expect(subject.can_transition? :finish).to eq false
       # state = open
       expect{ subject.open }.to_not raise_error
-      expect(subject.current_state).to eql :open
+      expect(subject.current_state).to eql :opened
       expect(subject.can_transition? :open).to eq false
       expect(subject.can_transition? :close).to eq true
       expect(subject.can_transition? :created).to eq false
@@ -55,7 +55,7 @@ RSpec.describe DefenceRequest, type: :model do
       expect(subject.can_transition? :finish).to eq false
       # state = finished
       expect{ subject.finish }.to raise_error(Transitions::InvalidTransition)
-      subject.update_current_state(:open)
+      subject.update_current_state(:opened)
       expect{ subject.finish }.to_not raise_error
       expect(subject.current_state).to eql :finished
       expect(subject.can_transition? :open).to eq false
