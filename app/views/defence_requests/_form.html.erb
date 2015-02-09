@@ -43,12 +43,12 @@
       <%= f.check_box :adult, label: t('adult') %>
 
       <%= f.date_select :date_of_birth, {
-          start_year: Date.today.year,
-          end_year: 120.years.ago.year,
-          label: t('date_of_birth')
+        start_year: Date.today.year,
+        end_year: 120.years.ago.year,
+        label: t('date_of_birth')
       }, {
-                            class: 'time-select'
-                        } %>
+        class: 'time-select'
+      } %>
       <%= f.check_box :appropriate_adult, label: t('appropriate_adult') %>
     </div>
   </div>
