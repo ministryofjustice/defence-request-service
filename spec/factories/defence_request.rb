@@ -20,7 +20,7 @@ FactoryGirl.define do
     state 'created'
   end
 
-  trait :open do
-    state 'open'
+  trait :opened do
+    state 'opened'
   end
 end

@@ -54,4 +54,8 @@ class DefenceRequestPolicy < ApplicationPolicy
     user.cco?
   end
 
+  def open?
+    user.cco? && record.can_transition?(:open)
+  end
+
 end

@@ -202,7 +202,7 @@ RSpec.feature 'defence request creation' do
 
       let!(:dr_1) { create(:defence_request) }
 
-      scenario 'editing a DR' do
+      scenario 'editing a DR (multiple times)' do
         visit root_path
         within "#defence_request_#{dr_1.id}" do
           click_link 'Edit'
@@ -214,6 +214,9 @@ RSpec.feature 'defence request creation' do
           click_link 'Edit'
         end
         expect(page).to have_field 'DSCC Number', with: 'NUMBERWANG'
+        fill_in 'DSCC Number', with: 'T-1000'
+        click_button 'Update Defence Request'
+        expect(page).to have_content 'Defence Request successfully updated'
       end
 
     end

@@ -8,8 +8,8 @@ RSpec.feature 'Defence request dashboard' do
     end
 
     let!(:dr_created) { create(:defence_request, :created) }
-    let!(:dr_open1) { create(:defence_request, :open) }
-    let!(:dr_open2) { create(:defence_request, :open) }
+    let!(:dr_open1) { create(:defence_request, :opened) }
+    let!(:dr_open2) { create(:defence_request, :opened) }
 
     scenario 'i am redirected to my dashboard at login' do
       expect(page).to have_content('Custody Suite Officer Dashboard')
@@ -115,7 +115,7 @@ RSpec.feature 'Defence request dashboard' do
     end
 
     let!(:dr_created) { create(:defence_request, :created) }
-    let!(:dr_open) { create(:defence_request, :open) }
+    let!(:dr_open) { create(:defence_request, :opened) }
 
     scenario 'i am redirected to my dashboard at login' do
       expect(page).to have_content('Call Center Operative Dashboard')
@@ -170,7 +170,7 @@ RSpec.feature 'Defence request dashboard' do
       within ".new_defence_requests" do
         click_link 'Edit'
       end
-      
+
       within '.details' do
         fill_in 'Solicitor Name', with: 'Bob Smith'
       end
