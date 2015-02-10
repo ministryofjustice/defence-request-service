@@ -8,7 +8,7 @@ RSpec.describe DefenceRequestPolicy do
   context "Custody Suite Officers" do
     let(:user) { FactoryGirl.create(:cso_user) }
 
-    [:index, :new, :create, :refresh_dashboard, :edit, :update].each do |action|
+    [:index, :new, :create, :refresh_dashboard, :edit, :update, :dashboard_view].each do |action|
       specify { expect(subject).to permit_action(action) }
     end
 
@@ -22,7 +22,7 @@ RSpec.describe DefenceRequestPolicy do
   context "Call Center Operatives" do
     let(:user) { FactoryGirl.create(:cco_user)}
 
-    [:index, :refresh_dashboard, :dscc_number_edit, :open].each do |action|
+    [:index, :refresh_dashboard, :dscc_number_edit, :open, :dashboard_view].each do |action|
       specify { expect(subject).to permit_action(action) }
     end
 

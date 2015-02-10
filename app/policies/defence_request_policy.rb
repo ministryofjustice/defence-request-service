@@ -58,4 +58,8 @@ class DefenceRequestPolicy < ApplicationPolicy
     user.cco? && record.can_transition?(:open)
   end
 
+  def dashboard_view?
+    user.cco? || user.cso?
+  end
+
 end
