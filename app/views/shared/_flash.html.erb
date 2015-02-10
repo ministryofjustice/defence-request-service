@@ -1,14 +1,14 @@
 <% flash.each do |name, message| %>
   <% unless name == 'error' %>
-    <section class="flash success">
-      <h3>
+    <section class="success-summary">
+      <p>
         <%= message %>
-      </h3>
+      </p>
     </section>
   <% end %>
 <% end %>
 <% if flash[:error] %>
-  <section class="flash error-summary">
+  <section class="error-summary">
     <h3>
       <%= flash[:error] %>
     </h3>

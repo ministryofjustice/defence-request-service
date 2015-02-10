@@ -17,4 +17,3 @@ module ApplicationHelper
     params[:action] == action
   end
 end
-

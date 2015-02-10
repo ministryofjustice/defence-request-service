@@ -1,10 +1,10 @@
-<% if @errors %>
-  <section class="flash error-summary" id="form_errors" tabindex="-1">
+<% if object.errors %>
+  <section class="error-summary" id="form_errors" tabindex="-1">
     <h3 id="page-error-heading">You need to fix the errors on this page before continuing.</h3>
     <p>See highlighted errors below.</p>
     <span class="visuallyhidden">Errors are listed as links below, click to select the field that needs correcting.</span>
     <ul>
-      <% @error_messages.each do |field, message| %>
+      <% object.errors.messages.each do |field, message| %>
         <li>
           <%= "#{field}: #{message.is_a?(Array) ? message.first : message}" %>
         </li>
