@@ -197,20 +197,34 @@ RSpec.feature 'defence request creation' do
     context 'as cco' do
       before :each do
         create_role_and_login('cco')
-        create(:defence_request)
       end
 
-      let!(:dr_1) { create(:defence_request, :opened) }
+      let!(:dr) { create(:defence_request) }
+      let!(:opened_dr) { create(:defence_request, :opened) }
+
+      scenario 'must open a Defence Request before editing' do
+        visit root_path
+        within "#defence_request_#{dr.id}" do
+          expect(page).not_to have_link('Edit')
+          click_button 'Open'
+        end
+
+        within "#defence_request_#{dr.id}" do
+          expect(page).to have_link('Edit')
+          click_link 'Edit'
+        end
+        expect(current_path).to eq(edit_defence_request_path(dr))
+      end
 
       scenario 'editing a DR (multiple times)' do
         visit root_path
-        within "#defence_request_#{dr_1.id}" do
+        within "#defence_request_#{opened_dr.id}" do
           click_link 'Edit'
         end
         fill_in 'DSCC Number', with: 'NUMBERWANG'
         click_button 'Update Defence Request'
         expect(page).to have_content 'Defence Request successfully updated'
-        within "#defence_request_#{dr_1.id}" do
+        within "#defence_request_#{opened_dr.id}" do
           click_link 'Edit'
         end
         expect(page).to have_field 'DSCC Number', with: 'NUMBERWANG'
