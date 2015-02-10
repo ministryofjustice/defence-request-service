@@ -8,27 +8,29 @@
 </div>
 <% end %>
 
-<% if policy(:defence_request).index? %>
-  <h3><%= t('new_defence_request') %></h3>
+<% if policy(:defence_request).dashboard_view? %>
+  <% if policy(:defence_request).index? %>
+    <h3><%= t('new_defence_request') %></h3>
+    <div class="row">
+      <table class="table table-striped table-bordered new_defence_requests">
+        <%= render 'defence_requests_table_head' %>
+        <tbody>
+          <%= render 'defence_requests_table_body', requests: @new_requests %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+
+  <h3><%= t('open_defence_request') %></h3>
   <div class="row">
-    <table class="table table-striped table-bordered new_defence_requests">
+    <table class="table table-striped table-bordered open_defence_requests">
       <%= render 'defence_requests_table_head' %>
       <tbody>
-      <%= render 'defence_requests_table_body', requests: @new_requests %>
+        <%= render 'defence_requests_table_body', requests: @open_requests %>
       </tbody>
     </table>
   </div>
 <% end %>
-
-<h3><%= t('open_defence_request') %></h3>
-<div class="row">
-  <table class="table table-striped table-bordered open_defence_requests">
-    <%= render 'defence_requests_table_head' %>
-    <tbody>
-    <%= render 'defence_requests_table_body', requests: @open_requests %>
-    </tbody>
-  </table>
-</div>
 
 <script>
   $(document).ready(function () {
