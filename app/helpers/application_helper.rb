@@ -1,6 +1,10 @@
 module ApplicationHelper
   include ActiveModel
 
+  def js_partial
+    params[:controller] + '/' + params[:controller] + '_' + params[:action] + '.js.erb'
+  end
+
   def is_dashboard?
     is_controller?('defence_requests') && is_action?('index')
   end

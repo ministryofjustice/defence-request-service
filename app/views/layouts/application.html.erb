@@ -1,5 +1,5 @@
 <% content_for :page_title do %>
-  <%= "#{Settings.dsds.app_title}" %>
+  <%= Settings.dsds.app_title %>
 <% end %>
 <% content_for :stylesheets do %>
   <%= stylesheet_link_tag('application', media: 'all') %>
@@ -28,11 +28,14 @@
         <span>This is a new service - <%= link_to('your feedback', config_item(:feedback_url)) %> will help us to improve it.  If you need help with using the online service, we can offer <%= link_to('technical help', '#') %>.</span>
       </p>
     </div>
-    <%= render 'shared/user_profile_links' %>
     <%= yield %>
   </main>
 <% end %>
-<% content_for :footer_app_links do %>
+<% content_for :proposition_links do %>
+  <%= render 'shared/user_profile_links' %>
+<% end %>
+
+<% content_for :footer_support_links do %>
   <li>
     <ul>
       <li>
@@ -43,6 +46,10 @@
       </li>
     </ul>
   </li>
+<% end %>
+
+<% content_for :body_end do %>
+  <%= render js_partial rescue nil %>
 <% end %>
 
 <%= render template: 'layouts/moj_template' %>

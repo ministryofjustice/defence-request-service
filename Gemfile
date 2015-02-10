@@ -12,6 +12,9 @@ gem 'uglifier', '>= 1.3.0'
 gem 'unicorn'
 
 # Gov.uk styles
+# group :assets do
+#   gem 'govuk_frontend_toolkit', git: 'https://github.com/alphagov/govuk_frontend_toolkit_gem.git', submodules: true
+# end
 gem 'govuk_frontend_toolkit', '>= 2.0.1'
 gem 'govuk_elements_rails', '>= 0.1.1'
 

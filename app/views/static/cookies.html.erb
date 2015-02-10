@@ -1,7 +1,7 @@
 <header class="page-header group">
   <ul class="breadcrumb">
-    <li>#{link_to 'Home', '..'}</li>
-    <li>#{link_to 'Help', 'help'}</li>
+    <%= link_to 'Home', '/' %>
+    <%= link_to 'Help', '/help' %>
   </ul>
   <h1>
     <span>Help</span>
@@ -19,7 +19,7 @@
     <em>GOV.UK cookies aren't used to identify you personally.</em>
   </p>
   <p>You'll normally see a message on the site before we store a cookie on your computer.</p>
-  <p>Find out more about #{link_to 'how to manage cookies', 'http://www.aboutcookies.org/', :class => 'external', :rel => 'external'}.</p>
+  <p>Find out more about <%= link_to 'how to manage cookies', 'http://www.aboutcookies.org/', :class => 'external', :rel => 'external' %>.</p>
   <h2>How cookies are used on GOV.UK</h2>
   <h3>Measuring website usage (Google Analytics)</h3>
   We use Google Analytics software to collect information about how you use GOV.UK. We do this to help make sure the site is meeting the needs of its users and to help us make improvements.
@@ -30,7 +30,7 @@
     <li>what you click on while you're visiting the site.</li>
   </ul>
   <p>
-    <em>We don't collect or store your personal information so this information can't be used to identify who you are. For more information visit our #{link_to 'Privacy policy', :terms}.</em>
+    <em>We don't collect or store your personal information so this information can't be used to identify who you are. For more information visit our <%= link_to 'Privacy policy', :terms %>.</em>
   </p>
   <p>We don't allow Google to use or share our analytics data.</p>
   <p>Google Analytics sets the following cookies:</p>
@@ -107,7 +107,7 @@
     </tr>
     </tbody>
   </table>
-  <p>You can #{link_to 'opt out of Google Analytics cookies','https://tools.google.com/dlpage/gaoptout', :class => 'external', :rel => 'external'}.</p>
+  <p>You can <%= link_to 'opt out of Google Analytics cookies','https://tools.google.com/dlpage/gaoptout', :class => 'external', :rel => 'external' %>.</p>
   <h2>Our introductory message</h2>
   <p>You may see a pop-up welcome message when you first visit GOV.UK. We'll store a cookie so that your computer knows you've seen it and knows not to show it again.</p>
   <table class="border">
