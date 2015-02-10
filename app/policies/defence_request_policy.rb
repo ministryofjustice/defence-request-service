@@ -31,11 +31,11 @@ class DefenceRequestPolicy < ApplicationPolicy
   end
 
   def edit?
-    user.cso? || user.cco?
+    (user.cso? && record.created?) || (user.cco? && record.opened?)
   end
 
   def update?
-    user.cso? || user.cco?
+    edit?
   end
 
   def solicitors_search?
@@ -47,11 +47,11 @@ class DefenceRequestPolicy < ApplicationPolicy
   end
 
   def close?
-    user.cso?
+    user.cso? && record.can_transition?(:close)
   end
 
   def dscc_number_edit?
-    user.cco?
+    user.cco? && record.opened?
   end
 
   def open?

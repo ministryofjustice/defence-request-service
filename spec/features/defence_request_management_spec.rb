@@ -200,7 +200,7 @@ RSpec.feature 'defence request creation' do
         create(:defence_request)
       end
 
-      let!(:dr_1) { create(:defence_request) }
+      let!(:dr_1) { create(:defence_request, :opened) }
 
       scenario 'editing a DR (multiple times)' do
         visit root_path
