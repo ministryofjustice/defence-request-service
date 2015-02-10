@@ -44,6 +44,8 @@ en:
     failed_destroy: "%{model} was not deleted"
     close: "%{model} successfully closed"
     failed_close: "%{model} was not closed"
+    open: "%{model} successfully opened"
+    failed_open: "%{model} was not opened"
 
   helpers:
     submit:

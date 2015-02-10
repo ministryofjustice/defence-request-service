@@ -1,6 +1,7 @@
 class DefenceRequestsController < BaseController
 
-  before_action :find_defence_request, only: [:edit, :update, :close]
+  before_action :find_defence_request, only: [:edit, :update, :close, :open]
+  before_action ->(c) { authorize defence_request, "#{c.action_name}?" }
 
   def index
     @open_requests = policy_scope(DefenceRequest).opened.order(created_at: :asc)
@@ -37,8 +38,6 @@ class DefenceRequestsController < BaseController
   end
 
   def update
-    @defence_request.open if policy(@defence_request).open?
-
     if @defence_request.update_attributes(defence_request_params)
       redirect_to(defence_requests_path, notice: flash_message(:update, DefenceRequest))
     else
@@ -55,6 +54,15 @@ class DefenceRequestsController < BaseController
     end
   end
 
+  def open
+    @defence_request.open
+    if @defence_request.save
+      redirect_to(defence_requests_path, notice: flash_message(:open, DefenceRequest))
+    else
+      redirect_to(defence_requests_path, notice: flash_message(:failed_open, DefenceRequest))
+    end
+  end
+
   def close
     @defence_request.close
     if @defence_request.save
@@ -68,6 +76,10 @@ class DefenceRequestsController < BaseController
 
   def find_defence_request
     @defence_request = DefenceRequest.find(params[:id])
+  end
+
+  def defence_request
+    @defence_request ||= DefenceRequest.new
   end
 
   def defence_request_params

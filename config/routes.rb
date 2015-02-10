@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     end
     member do
       put  'close'
+      put  'open'
     end
   end
 

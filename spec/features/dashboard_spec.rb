@@ -168,17 +168,11 @@ RSpec.feature 'Defence request dashboard' do
       end
 
       within ".new_defence_requests" do
-        click_link 'Edit'
+        click_button 'Open'
       end
-
-      within '.details' do
-        fill_in 'Solicitor Name', with: 'Bob Smith'
-      end
-
-      click_button 'Update Defence Request'
 
       within ".open_defence_requests" do
-        expect(page).to have_content('Bob Smith')
+        expect(page).to have_content(dr_created.solicitor_name)
       end
 
     end

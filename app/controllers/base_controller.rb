@@ -3,8 +3,7 @@ class BaseController < ApplicationController
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
-  before_action ->(c) { authorize controller_name.classify.constantize, "#{c.action_name}?" }
-  after_action :verify_authorized
+  after_action :verify_authorized, except: :index
 
   private
   def user_not_authorized
