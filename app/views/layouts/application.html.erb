@@ -1,23 +1,55 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>DefenceSolicitor</title>
-  <%= stylesheet_link_tag 'application', media: 'all' %>
+<% content_for :page_title do %>
+  <%= Settings.dsds.app_title %>
+<% end %>
+<% content_for :stylesheets do %>
+  <%= stylesheet_link_tag('application', media: 'all') %>
+  <!--[if IE 6]>
+  <%= stylesheet_link_tag "govuk_elements_extensions_ie6", media: "all" %>
+  <![endif]-->
+  <!--[if IE 7]>
+  <%= stylesheet_link_tag "govuk_elements_extensions_ie7", media: "all" %>
+  <![endif]-->
+  <!--[if IE 8]>
+  <%= stylesheet_link_tag "govuk_elements_extensions_ie8", media: "all" %>
+  <![endif]-->
+<% end %>
+<% content_for :javascripts do %>
   <%= javascript_include_tag 'application' %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-  <div class="main-content">
-      <div class="col-md-12">
-        <%= render 'shared/head' %>
-        <%= render 'shared/phase_banner' %>
-        <%= render 'shared/flash_messages' if flash.any? %>
-        <% if is_dashboard? %>
-          <%= render 'shared/dashboard' %>
-        <% else %>
-          <%= render 'shared/main_content' %>
-        <% end %>
-      </div>
-  </div>
-</body>
-</html>
+<% end %>
+<% content_for :head do %>
+  <%= csrf_meta_tag %>
+<% end %>
+<%= content_for :cookie_message, "" %>
+<%= content_for :js_gt_ie, '6' %>
+<% content_for :content_override do %>
+  <main id="page-container" role="main">
+    <div class="phase-banner">
+      <p>
+        <span>This is a new service - <%= link_to('your feedback', config_item(:feedback_url)) %> will help us to improve it.  If you need help with using the online service, we can offer <%= link_to('technical help', '#') %>.</span>
+      </p>
+    </div>
+    <%= yield %>
+  </main>
+<% end %>
+<% content_for :proposition_links do %>
+  <%= render 'shared/user_profile_links' %>
+<% end %>
+
+<% content_for :footer_support_links do %>
+  <li>
+    <ul>
+      <li>
+        <%= link_to 'Help', :help %>
+      </li>
+      <li>
+        <%= link_to 'Cookies', :cookies %>
+      </li>
+    </ul>
+  </li>
+<% end %>
+
+<% content_for :body_end do %>
+  <%= render js_partial rescue nil %>
+<% end %>
+
+<%= render template: 'layouts/moj_template' %>

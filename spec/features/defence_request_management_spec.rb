@@ -50,6 +50,7 @@ RSpec.feature 'defence request creation' do
         fill_in 'q', with: "Bob Smith"
 
         click_button 'Search'
+        sleep(1)
         expect(page).to have_content 'Bobson Smith'
         expect(page).to have_content 'Bobby Bob Smithson'
 

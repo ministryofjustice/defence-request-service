@@ -43,16 +43,9 @@ GEM
     audited-activerecord (4.0.0)
       activerecord (~> 4.0)
       audited (= 4.0.0)
-    autoprefixer-rails (5.0.0.3)
-      execjs
-      json
     bcrypt (3.1.9)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
-    bootstrap-sass (3.3.3)
-      autoprefixer-rails (>= 5.0.0.1)
-      sass (>= 3.2.19)
-    bootstrap_form (2.2.0)
     builder (3.2.2)
     capybara (2.4.4)
       mime-types (>= 1.16)
@@ -97,6 +90,12 @@ GEM
     formatador (0.2.5)
     globalid (0.3.0)
       activesupport (>= 4.1.0)
+    govuk_elements_rails (0.2.1)
+      rails (~> 4.1, >= 4.1.0)
+      sass (~> 3.2, >= 3.2.0)
+    govuk_frontend_toolkit (3.1.0)
+      rails (>= 3.1.0)
+      sass (>= 3.2.0)
     guard (2.11.1)
       formatador (>= 0.2.4)
       listen (~> 2.7)
@@ -141,6 +140,8 @@ GEM
     mime-types (2.4.3)
     mini_portile (0.6.2)
     minitest (5.5.1)
+    moj_template (0.23.0)
+      rails (>= 3.1)
     multi_json (1.10.1)
     multi_xml (0.5.5)
     nenv (0.2.0)
@@ -243,6 +244,9 @@ GEM
     shellany (0.0.1)
     shoulda-matchers (2.7.0)
       activesupport (>= 3.0.0)
+    simple_form (3.1.0)
+      actionpack (~> 4.0)
+      activemodel (~> 4.0)
     slop (3.6.0)
     spring (1.2.0)
     sprockets (2.12.3)
@@ -291,19 +295,20 @@ PLATFORMS
 
 DEPENDENCIES
   audited-activerecord
-  bootstrap-sass (~> 3.3.3)
-  bootstrap_form
   capybara
   coffee-rails (~> 4.1.0)
   database_cleaner
   devise
   dotenv-rails
   factory_girl_rails
+  govuk_elements_rails (>= 0.1.1)
+  govuk_frontend_toolkit (>= 2.0.1)
   guard-rspec
   httparty
   jbuilder (~> 2.0)
   jquery-rails
   launchy
+  moj_template
   pg
   poltergeist
   pry
@@ -317,6 +322,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   shoulda-matchers
+  simple_form
   spring
   terminal-notifier-guard
   transitions

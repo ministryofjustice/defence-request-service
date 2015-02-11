@@ -43,11 +43,11 @@ class DefenceRequest < ActiveRecord::Base
               'Brighton Scheme 3']
 
   def duty_solicitor?
-    solicitor_type == "duty"
+    solicitor_type == 'duty'
   end
 
   def own_solicitor?
-    solicitor_type == "own"
+    solicitor_type == 'own'
   end
 
   private

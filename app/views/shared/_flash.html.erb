@@ -1,0 +1,16 @@
+<% flash.each do |name, message| %>
+  <% unless name == 'error' %>
+    <section class="success-summary">
+      <p>
+        <%= message %>
+      </p>
+    </section>
+  <% end %>
+<% end %>
+<% if flash[:error] %>
+  <section class="error-summary">
+    <h3>
+      <%= flash[:error] %>
+    </h3>
+  </section>
+<% end %>
