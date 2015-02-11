@@ -1,5 +1,4 @@
 module ApplicationHelper
-  include ActiveModel
 
   def js_partial
     params[:controller] + '/' + params[:controller] + '_' + params[:action] + '.js.erb'
