@@ -1,5 +1,5 @@
 <script>
 $(document).ready(function () {
-  setInterval(refreshPartial, <%= Settings.dsds.dashboard_refresh_seconds %>);
+  setInterval(refreshPartial, <%= Rails.env.development? ? 2000000 : Settings.dsds.dashboard_refresh_seconds  %>);
 });
 </script>

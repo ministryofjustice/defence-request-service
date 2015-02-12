@@ -67,6 +67,17 @@ fieldset, .sub-panel
   @include media(mobile)
     width: 40%
 
+.alert-summary
+  @extend .validation-summary
+  h3
+    margin-top: 10px
+
+.notice-summary
+  @extend .validation-summary
+  border: 3px solid $green
+  h3
+    margin-top: 10px
+
 .error-summary
   @extend .validation-summary
   h3

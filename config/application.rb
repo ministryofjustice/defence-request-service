@@ -31,10 +31,10 @@ module DefenceSolicitor
     config.relative_url_root = ENV['RAILS_RELATIVE_URL_ROOT'] || ''
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
-    config.action_view.field_error_proc = Proc.new { |html_tag, instance|
-      html_tag
-    }
-
+    # config.action_view.field_error_proc = Proc.new { |html_tag, instance|
+    #   html_tag
+    # }
+    config.use_govuk_elements_form_builder = true
     # app title appears in the header bar
     config.proposition_title = 'Defence Solicitor Deployment Service'
     # phase governs text indicators and highlight colours
