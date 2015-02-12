@@ -76,7 +76,7 @@
     <%= f.text_area :comments, label: t('comments'), rows: '5' %>
   </div>
 
-  <%- if policy(@defence_request).dscc_number_edit? # can only add a DSCC number when editing a DR, not when creating %>
+  <%- if policy(@defence_request).dscc_number_edit? %>
     <!-- dscc_number -->
     <div class="form-group">
       <label class="form-label-bold" for="solicitor-name"><%= t('dscc_number') %></label>
