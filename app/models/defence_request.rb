@@ -65,6 +65,7 @@ class DefenceRequest < ActiveRecord::Base
   end
 
   def notify_solicitor
+    Mailer.notify_interview_start_change(self, solicitor).deliver_now if solicitor
   end
 
 end
