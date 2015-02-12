@@ -1,0 +1,11 @@
+<h1>Close the Defence Request</h1>
+<%= render 'shared/flash_messages' %>
+<%= render 'shared/error_messages', object: @defence_request %>
+<%= form_for @defence_request, url: close_feedback_defence_request_path, method: :patch do |f| %>
+  <div class="form-group">
+    <fieldset>
+      <%= f.text_area :feedback, rows: '10' %>
+    </fieldset>
+  </div>
+  <%= f.submit(t('close')) %>
+<% end %>

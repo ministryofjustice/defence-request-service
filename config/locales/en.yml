@@ -57,6 +57,7 @@ en:
     submit:
       create: "Create %{model}"
       update: "Update %{model}"
+      close: "Close %{model}"
 
   activerecord:
     models:
@@ -65,3 +66,4 @@ en:
   new_defence_requests: "New Defence Requests"
   open_defence_request: "Open Defence Requests"
   open: "Open"
+  feedback: "Feedback"

@@ -16,17 +16,17 @@ RSpec.feature 'defence request creation' do
         within '.new_defence_request' do
           choose 'Own'
           within '.details' do
-            fill_in 'Solicitor Name', with: 'Bob Smith'
-            fill_in 'Solicitor Firm', with: 'Acme Solicitors'
-            fill_in 'Phone Number', with: '0207 284 0000'
-            fill_in 'Custody Number', with: '#CUST-01234'
+            fill_in 'Solicitor name', with: 'Bob Smith'
+            fill_in 'Solicitor firm', with: 'Acme Solicitors'
+            fill_in 'Phone number', with: '0207 284 0000'
+            fill_in 'Custody number', with: '#CUST-01234'
             fill_in 'Allegations', with: 'BadMurder'
             select('09', from: 'defence_request_time_of_arrival_4i')
             select('30', from: 'defence_request_time_of_arrival_5i')
           end
 
           within '.detainee' do
-            fill_in 'Detainee Name', with: 'Mannie Badder'
+            fill_in 'Detainee name', with: 'Mannie Badder'
             choose 'Male'
             check 'defence_request[adult]'
             select('1976', from: 'defence_request_date_of_birth_1i')
@@ -56,9 +56,9 @@ RSpec.feature 'defence request creation' do
 
         click_link 'Bobson Smith'
         expect(page).to_not have_content 'Bobby Bob Smithson'
-        expect(page).to have_field 'Solicitor Name', with: 'Bobson Smith'
-        expect(page).to have_field 'Solicitor Firm', with: 'Kreiger LLC'
-        expect(page).to have_field 'Phone Number', with: '248.412.8095'
+        expect(page).to have_field 'Solicitor name', with: 'Bobson Smith'
+        expect(page).to have_field 'Solicitor firm', with: 'Kreiger LLC'
+        expect(page).to have_field 'Phone number', with: '248.412.8095'
       end
 
       scenario 'performing multiple own solicitor searches', js: true do
@@ -132,8 +132,8 @@ RSpec.feature 'defence request creation' do
         click_link 'Bobson Smith'
         choose 'Duty'
 
-        expect(page).to have_field 'Solicitor Name', with: "", disabled: true
-        expect(page).to have_field 'Solicitor Firm', with: "", disabled: true
+        expect(page).to have_field 'Solicitor name', with: "", disabled: true
+        expect(page).to have_field 'Solicitor firm', with: "", disabled: true
         expect(page).to have_field 'Scheme', with: "No Scheme", disabled: false
         expect(page).to_not have_content 'Bobson Smith'
 
@@ -143,6 +143,77 @@ RSpec.feature 'defence request creation' do
       end
     end
 
+  end
+
+  context 'close' do
+    context 'as cso' do
+      before :each do
+        create_role_and_login('cso')
+      end
+
+      let!(:dr_created) { create(:defence_request) }
+
+      scenario 'closing a DR from the dashboard' do
+        visit root_path
+        within "#defence_request_#{dr_created.id}" do
+          click_link 'Close'
+        end
+        expect(page).to have_content('Close the Defence Request')
+        click_button 'Close'
+        expect(page).to have_content("feedback: can't be blank")
+        expect(page).to have_content('Close the Defence Request')
+
+        fill_in 'Feedback', with: 'I just cant take it any more...'
+        click_button 'Close'
+        expect(page).to have_content('Defence Request successfully closed')
+        expect(page).to have_content('Custody Suite Officer Dashboard')
+        dr_created.reload
+        expect(dr_created.state).to eq 'closed'
+      end
+      scenario 'closing a DR from the edit' do
+        visit root_path
+        within "#defence_request_#{dr_created.id}" do
+          click_link 'Edit'
+        end
+        click_link 'Close'
+        expect(page).to have_content('Close the Defence Request')
+        click_button 'Close'
+        expect(page).to have_content("feedback: can't be blank")
+        expect(page).to have_content('Close the Defence Request')
+
+        fill_in 'Feedback', with: 'I just cant take it any more...'
+        click_button 'Close'
+        expect(page).to have_content('Defence Request successfully closed')
+        expect(page).to have_content('Custody Suite Officer Dashboard')
+        dr_created.reload
+        expect(dr_created.state).to eq 'closed'
+      end
+    end
+    context 'as cco' do
+      before :each do
+        create_role_and_login('cco')
+      end
+
+      let!(:dr_created) { create(:defence_request) }
+
+      scenario 'closing a DR from the dashboard' do
+        visit root_path
+        within "#defence_request_#{dr_created.id}" do
+          click_link 'Close'
+        end
+        expect(page).to have_content('Close the Defence Request')
+        click_button 'Close'
+        expect(page).to have_content("feedback: can't be blank")
+        expect(page).to have_content('Close the Defence Request')
+
+        fill_in 'Feedback', with: 'I just cant take it any more...'
+        click_button 'Close'
+        expect(page).to have_content('Defence Request successfully closed')
+        expect(page).to have_content('Call Center Operative Dashboard')
+        dr_created.reload
+        expect(dr_created.state).to eq 'closed'
+      end
+    end
   end
 
   context 'Edit' do
@@ -162,16 +233,16 @@ RSpec.feature 'defence request creation' do
         expect(page).to have_content ('Edit Defence Request')
 
         within '.edit_defence_request' do
-          fill_in 'Solicitor Name', with: 'Dave Smith'
-          fill_in 'Solicitor Firm', with: 'Broken Solicitors'
-          fill_in 'Phone Number', with: '0207 284 9999'
-          fill_in 'Custody Number', with: '#CUST-9876'
+          fill_in 'Solicitor name', with: 'Dave Smith'
+          fill_in 'Solicitor firm', with: 'Broken Solicitors'
+          fill_in 'Phone number', with: '0207 284 9999'
+          fill_in 'Custody number', with: '#CUST-9876'
           fill_in 'Allegations', with: 'BadMurder'
           select('10', from: 'defence_request_time_of_arrival_4i')
           select('00', from: 'defence_request_time_of_arrival_5i')
 
 
-          fill_in 'Detainee Name', with: 'Annie Nother'
+          fill_in 'Detainee name', with: 'Annie Nother'
           choose 'Female'
           uncheck 'defence_request[adult]'
           select('1986', from: 'defence_request_date_of_birth_1i')
@@ -222,14 +293,14 @@ RSpec.feature 'defence request creation' do
         within "#defence_request_#{opened_dr.id}" do
           click_link 'Edit'
         end
-        fill_in 'DSCC Number', with: 'NUMBERWANG'
+        fill_in 'Dscc number', with: 'NUMBERWANG'
         click_button 'Update Defence Request'
         expect(page).to have_content 'Defence Request successfully updated'
         within "#defence_request_#{opened_dr.id}" do
           click_link 'Edit'
         end
-        expect(page).to have_field 'DSCC Number', with: 'NUMBERWANG'
-        fill_in 'DSCC Number', with: 'T-1000'
+        expect(page).to have_field 'Dscc number', with: 'NUMBERWANG'
+        fill_in 'Dscc number', with: 'T-1000'
         click_button 'Update Defence Request'
         expect(page).to have_content 'Defence Request successfully updated'
       end

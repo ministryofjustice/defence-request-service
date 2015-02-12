@@ -88,6 +88,7 @@
     <%= link_to t('cancel'), defence_requests_path %>
   <% else %>
     <%= link_to t('cancel'), defence_requests_path %>
+    <%= link_to t('close'), close_defence_request_path(@defence_request) if policy(@defence_request).close? %>
   <% end %>
 
 <% end %>

@@ -64,7 +64,7 @@ RSpec.feature 'Defence request dashboard' do
         click_link 'Edit'
       end
       within '.details' do
-        fill_in 'Solicitor Name', with: 'Bob Smith'
+        fill_in 'Solicitor name', with: 'Bob Smith'
       end
 
       click_button 'Update Defence Request'
@@ -75,36 +75,6 @@ RSpec.feature 'Defence request dashboard' do
 
       within ".open_defence_requests" do
         expect(page).to_not have_content('Bob Smith')
-      end
-    end
-
-    context 'created case' do
-      scenario 'can be closed' do
-        visit defence_requests_path
-
-        expect(page).to have_content dr_created.solicitor_name
-
-        within "#defence_request_#{dr_created.id}" do
-          click_button 'Close'
-        end
-
-        expect(page).to have_content "Defence Request successfully closed"
-        expect(page).to_not have_content dr_created.solicitor_name
-      end
-    end
-
-    context 'open case' do
-      scenario 'can be closed' do
-        visit defence_requests_path
-
-        expect(page).to have_content dr_open1.solicitor_name
-
-        within "#defence_request_#{dr_open1.id}" do
-          click_button 'Close'
-        end
-
-        expect(page).to have_content "Defence Request successfully closed"
-        expect(page).to_not have_content dr_open1.solicitor_name
       end
     end
   end
