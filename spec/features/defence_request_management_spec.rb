@@ -288,7 +288,27 @@ RSpec.feature 'defence request creation' do
         expect(current_path).to eq(edit_defence_request_path(dr))
       end
 
-      scenario 'editing a DR (multiple times)' do
+      scenario 'manually changing a solicitors details' do
+        visit root_path
+        within "#defence_request_#{opened_dr.id}" do
+          click_link 'Edit'
+        end
+
+        fill_in 'Solicitor Name', with: 'Henry Billy Bob'
+        fill_in 'Solicitor Firm', with: 'Cheap Skate Law'
+        fill_in 'Phone Number', with: '00112233445566'
+
+        click_button 'Update Defence Request'
+        expect(current_path).to eq(defence_requests_path)
+
+        within "#defence_request_#{opened_dr.id}" do
+          expect(page).to have_content 'Henry Billy Bob'
+          expect(page).to have_content 'Cheap Skate Law'
+          expect(page).to have_content '00112233445566'
+        end
+      end
+
+      scenario 'editing a DR DSCC number (multiple times)' do
         visit root_path
         within "#defence_request_#{opened_dr.id}" do
           click_link 'Edit'
