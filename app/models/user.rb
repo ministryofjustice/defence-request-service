@@ -3,6 +3,10 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable
 
+  has_many :defence_requests
+
+  scope :solicitors, -> { where(role: :solicitor) }
+
   def cso?
     self.role.to_sym == :cso
   end

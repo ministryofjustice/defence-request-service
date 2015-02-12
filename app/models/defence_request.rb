@@ -1,6 +1,10 @@
 class DefenceRequest < ActiveRecord::Base
   include ActiveModel::Transitions
 
+  belongs_to :solicitor, :class_name => :User
+
+  delegate :email, to: :solicitor, prefix: true, allow_nil: true
+
   state_machine auto_scopes: true do
     state :created # first one is initial state
     state :opened
