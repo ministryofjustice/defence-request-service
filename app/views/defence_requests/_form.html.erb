@@ -31,6 +31,9 @@
     <%= f.text_field :phone_number, label: t('phone_number'), class: 'form-control' %>
     <%= f.text_field :custody_number, label: t('custody_number'), class: 'form-control' %>
     <%= f.text_field :allegations, label: t('allegations'), class: 'form-control' %>
+    <% if policy(@defence_request).interview_start_time_edit? %>
+      <%= f.time_select :interview_start_time, { label: t('interview_start_time') }, { class: 'time-select' } %>
+    <% end %>
     <%= f.label :time_of_arrival, t('time_of_arrival'), class: 'form-label-bold' %>
     <fieldset class="inline time-select">
       <%= f.time_select(:time_of_arrival) %>
