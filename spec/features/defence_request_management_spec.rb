@@ -8,6 +8,14 @@ RSpec.feature 'defence request creation' do
       before :each do
         create_role_and_login('cso')
       end
+
+      scenario 'Does not see the DSCC field on the Defence Request form' do
+        visit root_path
+        click_link 'New Defence Request'
+
+        expect(page).not_to have_field('DSCC Number')
+      end
+
       scenario 'Filling in form manually for own solicitor', js: true do
         visit root_path
         click_link 'New Defence Request'
