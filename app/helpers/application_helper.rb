@@ -12,7 +12,7 @@ module ApplicationHelper
   end
 
   def js_partial
-    params[:controller] + '/' + params[:controller] + '_' + params[:action] + '.js.erb'
+    params[:controller] + '/' + params[:controller] + '_' + params[:action] + '_js.html.erb'
   end
 
   def is_dashboard?

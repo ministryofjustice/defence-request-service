@@ -76,11 +76,14 @@
     <%= f.text_area :comments, label: t('comments'), rows: '5' %>
   </div>
 
-  <!-- dscc_number -->
-  <div class="form-group">
-    <label class="form-label-bold" for="solicitor-name"><%= t('dscc_number') %></label>
-    <%= f.text_field :dscc_number, label: t('dscc_number'), class: 'form-control', readonly: !policy(@defence_request).dscc_number_edit? %>
-  </div>
+  <%- if policy(@defence_request).dscc_number_edit? %>
+    <!-- dscc_number -->
+    <div class="form-group">
+      <label class="form-label-bold" for="solicitor-name"><%= t('dscc_number') %></label>
+      <%= f.label :dscc_number, t('dscc_number'), class: 'form-label-bold' %>
+      <%= f.text_field :dscc_number, class: 'form-control', readonly: !policy(@defence_request).dscc_number_edit? %>
+    </div>
+  <%- end %>
 
   <%= f.submit class: 'button' %>
 
