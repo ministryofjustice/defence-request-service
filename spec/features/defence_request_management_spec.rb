@@ -302,9 +302,9 @@ RSpec.feature 'defence request creation' do
           click_link 'Edit'
         end
 
-        fill_in 'Solicitor Name', with: 'Henry Billy Bob'
-        fill_in 'Solicitor Firm', with: 'Cheap Skate Law'
-        fill_in 'Phone Number', with: '00112233445566'
+        fill_in 'Solicitor name', with: 'Henry Billy Bob'
+        fill_in 'Solicitor firm', with: 'Cheap Skate Law'
+        fill_in 'Phone number', with: '00112233445566'
 
         click_button 'Update Defence Request'
         expect(current_path).to eq(defence_requests_path)
