@@ -1,11 +1,11 @@
-<%= render 'shared/flash' %>
+<%= render 'shared/flash_messages' %>
 <%= render 'shared/error_messages', object: @defence_request %>
 
 <% if @defence_request.new_record? %>
   <%= render 'solicitor_search' %>
 <% end %>
 
-<%= simple_form_for(@defence_request) do |f| %>
+<%= form_for(@defence_request) do |f| %>
   <% if @defence_request.new_record? %>
     <div class="form-group">
       <fieldset class="inline">
@@ -23,18 +23,13 @@
   <!-- details -->
   <div class="form-group details">
     <label class="form-label-bold" for="solicitor-name">Solicitor Details</label>
-    <%= f.label :solicitor_name, t('solicitor_name'), class: 'form-label-bold' %>
-    <%= f.text_field :solicitor_name, autofocus: true, class: 'form-control' %>
-    <%= f.label :solicitor_firm, t('solicitor_firm'), class: 'form-label-bold' %>
-    <%= f.text_field :solicitor_firm, class: 'form-control' %>
+    <%= f.text_field :solicitor_name, label: t('solicitor_name'), autofocus: true, class: 'form-control' %>
+    <%= f.text_field :solicitor_firm, label: t('solicitor_firm'), class: 'form-control' %>
     <%= f.label :scheme, t('scheme'), class: 'form-label-bold' %>
     <%= f.select :scheme, solicitor_schemes, class: 'form-control' %>
-    <%= f.label :phone_number, t('phone_number'), class: 'form-label-bold' %>
-    <%= f.text_field :phone_number, class: 'form-control' %>
-    <%= f.label :custody_number, t('custody_number'), class: 'form-label-bold' %>
-    <%= f.text_field :custody_number, class: 'form-control' %>
-    <%= f.label :allegations, t('allegations'), class: 'form-label-bold' %>
-    <%= f.text_field :allegations, class: 'form-control' %>
+    <%= f.text_field :phone_number, label: t('phone_number'), class: 'form-control' %>
+    <%= f.text_field :custody_number, label: t('custody_number'), class: 'form-control' %>
+    <%= f.text_field :allegations, label: t('allegations'), class: 'form-control' %>
     <%= f.label :time_of_arrival, t('time_of_arrival'), class: 'form-label-bold' %>
     <fieldset class="inline time-select">
       <%= f.time_select(:time_of_arrival) %>
@@ -44,8 +39,7 @@
   <!-- detainee -->
   <div class="form-group detainee">
     <label class="form-label-bold" for="solicitor-name"><%= t('detainee') %></label>
-    <%= f.label :detainee_name, t('detainee_name'), class: 'form-label-bold' %>
-    <%= f.text_field :detainee_name, class: 'form-control' %>
+    <%= f.text_field :detainee_name, label: t('detainee_name'), class: 'form-control' %>
     <fieldset class="inline">
       <label class="block-label" for="defence_request_gender_male">
         <%= f.radio_button :gender, :male, name: 'defence_request[gender]', class: 'solicitor_gender_radio', checked: true %>
@@ -79,15 +73,13 @@
   <!-- comments -->
   <div class="form-group">
     <label class="form-label-bold" for="solicitor-name">Detainee Details</label>
-    <%= f.label :comments, t('comments'), class: 'form-label-bold' %>
-    <%= f.text_area :comments, rows: '5' %>
+    <%= f.text_area :comments, label: t('comments'), rows: '5' %>
   </div>
 
   <!-- dscc_number -->
   <div class="form-group">
     <label class="form-label-bold" for="solicitor-name"><%= t('dscc_number') %></label>
-    <%= f.label :dscc_number, t('dscc_number'), class: 'form-label-bold' %>
-    <%= f.text_field :dscc_number, class: 'form-control', readonly: !policy(@defence_request).dscc_number_edit? %>
+    <%= f.text_field :dscc_number, label: t('dscc_number'), class: 'form-control', readonly: !policy(@defence_request).dscc_number_edit? %>
   </div>
 
   <%= f.submit class: 'button' %>
@@ -96,6 +88,7 @@
     <%= link_to t('cancel'), defence_requests_path %>
   <% else %>
     <%= link_to t('cancel'), defence_requests_path %>
+    <%= link_to t('close'), close_defence_request_path(@defence_request) if policy(@defence_request).close? %>
   <% end %>
 
 <% end %>

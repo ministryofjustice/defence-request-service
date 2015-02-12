@@ -46,8 +46,12 @@ class DefenceRequestPolicy < ApplicationPolicy
     user.cso? || user.cco?
   end
 
+  def feedback?
+    (user.cso? || user.cco?) && record.can_transition?(:close)
+  end
+
   def close?
-    user.cso? && record.can_transition?(:close)
+    (user.cso? || user.cco?) && record.can_transition?(:close)
   end
 
   def dscc_number_edit?

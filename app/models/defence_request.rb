@@ -35,6 +35,8 @@ class DefenceRequest < ActiveRecord::Base
             :solicitor_firm,
             :phone_number, presence: true, if: :own_solicitor?
 
+  validates :feedback, feedback: true
+
   audited
 
   SCHEMES = [ 'No Scheme',

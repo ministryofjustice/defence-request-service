@@ -20,7 +20,6 @@ gem 'govuk_elements_rails', '>= 0.1.1'
 
 # MOJ styles
 gem 'moj_template'
-gem 'simple_form'
 
 
 gem 'dotenv-rails'

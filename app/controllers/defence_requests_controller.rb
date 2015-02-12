@@ -1,6 +1,6 @@
 class DefenceRequestsController < BaseController
 
-  before_action :find_defence_request, only: [:edit, :update, :close, :open]
+  before_action :find_defence_request, only: [:edit, :update, :feedback, :close, :open]
   before_action ->(c) { authorize defence_request, "#{c.action_name}?" }
 
   def index
@@ -63,13 +63,15 @@ class DefenceRequestsController < BaseController
     end
   end
 
-  def close
-    @defence_request.close
-    if @defence_request.save
+  def feedback
+    if @defence_request.update_attributes(defence_request_params) && close_and_save_defence_request
       redirect_to(defence_requests_path, notice: flash_message(:close, DefenceRequest))
     else
-      redirect_to(defence_requests_path, notice: flash_message(:failed_close, DefenceRequest))
+      render :close
     end
+  end
+
+  def close
   end
 
   private
@@ -98,7 +100,12 @@ class DefenceRequestsController < BaseController
                                             :allegations,
                                             :comments,
                                             :time_of_arrival,
-                                            :dscc_number)
+                                            :dscc_number,
+                                            :feedback)
+  end
+
+  def close_and_save_defence_request
+    @defence_request.close && @defence_request.save
   end
 
 end

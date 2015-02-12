@@ -1,3 +1,3 @@
-<%= button_to t('close'), close_defence_request_path(def_req), method: :put if policy(def_req).close? %>
+<%= link_to t('close'), close_defence_request_path(def_req) if policy(def_req).close? %>
 <%= link_to t('edit'), edit_defence_request_path(def_req) if policy(def_req).edit? %>
 <%= button_to t('open'), open_defence_request_path(def_req), method: :put if policy(def_req).open? %>
