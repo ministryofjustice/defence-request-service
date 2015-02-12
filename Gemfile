@@ -29,6 +29,7 @@ gem 'rails_config'
 gem 'httparty'
 gem 'audited-activerecord'
 gem 'transitions', require: ['transitions', 'active_model/transitions']
+gem 'faker'
 
 group :test do
   gem 'webmock'
