@@ -9,9 +9,15 @@ RSpec.describe DefenceRequestPolicy do
     let(:user)          { FactoryGirl.create(:cso_user) }
     let(:group_actions) { [:index, :new, :create, :refresh_dashboard, :solicitors_search, :dashboard_view] }
 
+    context "with a new DR" do
+      let (:defreq) { FactoryGirl.build(:defence_request) }
+      let (:actions) { group_actions + [:edit, :update, :close, :feedback] }
+      specify{ expect(subject).to permit_actions_and_forbid_all_others actions }
+    end
+
     context "with a created DR" do
       let (:defreq) { FactoryGirl.create(:defence_request) }
-      let (:actions) { group_actions + [:edit, :update, :close, :feedback] }
+      let (:actions) { group_actions + [:edit, :update, :close, :feedback, :interview_start_time_edit] }
       specify{ expect(subject).to permit_actions_and_forbid_all_others actions }
     end
 

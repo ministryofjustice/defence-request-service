@@ -42,3 +42,20 @@ User.where(email: 'solicitor4@example.com').first_or_create(
   email: 'solicitor4@example.com', password: 'password', role: :solicitor)
 User.where(email: 'solicitor5@example.com').first_or_create(
   email: 'solicitor5@example.com', password: 'password', role: :solicitor)
+
+
+NUMBER_OF_FIRMS = 100
+SOLICITORS_PER_FIRM = 25
+NUMBER_OF_SOLICITORS = NUMBER_OF_FIRMS * SOLICITORS_PER_FIRM
+
+srand(100)
+
+solicitor_emails = Array.new(NUMBER_OF_SOLICITORS) { Faker::Internet.safe_email }.to_enum
+
+(1..NUMBER_OF_SOLICITORS).each do
+  solicitor_email = solicitor_emails.next
+  User.where(email: solicitor_email ).first_or_create(
+    email: solicitor_email,
+    password: 'password',
+    role: :solicitor)
+end

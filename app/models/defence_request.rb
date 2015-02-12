@@ -1,6 +1,12 @@
 class DefenceRequest < ActiveRecord::Base
   include ActiveModel::Transitions
 
+  belongs_to :solicitor, :class_name => :User
+
+  delegate :email, to: :solicitor, prefix: true, allow_nil: true
+
+  after_update :notify_solicitor, if: :interview_start_time_changed?
+
   state_machine auto_scopes: true do
     state :created # first one is initial state
     state :opened
@@ -56,6 +62,10 @@ class DefenceRequest < ActiveRecord::Base
 
   def format_phone_number
     self.phone_number = self.phone_number.gsub(/\D/, '')
+  end
+
+  def notify_solicitor
+    Mailer.notify_interview_start_change(self, solicitor).deliver_now if solicitor
   end
 
 end

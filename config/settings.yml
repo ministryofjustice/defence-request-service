@@ -3,6 +3,16 @@ devise:
   salt: <%= ENV["DEVISE_SALT"] %>
 rails:
   secret_key_base: <%= ENV["SECRET_KEY_BASE"] %>
+action_mailer:
+  smtp_settings:
+    address: smtp.sendgrid.net
+    port: 587
+    domain: em.email.dsds.dsd.io
+    authentication: plain
+    user_name: <%= ENV["EMAIL_USERNAME"] %>
+    password: <%= ENV["EMAIL_PASSWORD"] %>
+    enable_starttls_auto: false
+
 dsds:
   app_title: 'Defence Solicitor Deployment Service'
   dashboard_refresh_seconds: 3000

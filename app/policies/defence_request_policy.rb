@@ -58,6 +58,10 @@ class DefenceRequestPolicy < ApplicationPolicy
     user.cco? && record.opened?
   end
 
+  def interview_start_time_edit?
+    user.cso? && !record.new_record? && record.created?
+  end
+
   def open?
     user.cco? && record.can_transition?(:open)
   end

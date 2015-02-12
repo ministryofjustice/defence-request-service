@@ -29,6 +29,7 @@ gem 'rails_config'
 gem 'httparty'
 gem 'audited-activerecord'
 gem 'transitions', require: ['transitions', 'active_model/transitions']
+gem 'faker'
 
 group :test do
   gem 'webmock'
@@ -45,7 +46,6 @@ group :development, :test do
   gem 'pry'
   gem 'rspec'
   gem 'rspec-rails', '~> 3.0.0'
-  gem 'spring'
   gem 'web-console', '~> 2.0'
   gem 'shoulda-matchers'
   # Stops each asset request being logged in dev / test
