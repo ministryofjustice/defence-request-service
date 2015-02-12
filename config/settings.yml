@@ -13,6 +13,9 @@ action_mailer:
     password: <%= ENV["EMAIL_PASSWORD"] %>
     enable_starttls_auto: false
 
+sandbox_email: <%= ENV["SANDBOX_EMAIL"] %>
+sandbox_email_address: 'iamadefencesolicitor@gmail.com'
+
 dsds:
   app_title: 'Defence Solicitor Deployment Service'
   dashboard_refresh_seconds: 3000
