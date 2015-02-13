@@ -50,6 +50,8 @@
 
 <% content_for :body_end do %>
   <%= render js_partial rescue nil %>
+  <%= render partial: 'shared/ga' %>
 <% end %>
 
 <%= render template: 'layouts/moj_template' %>
+
