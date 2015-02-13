@@ -18,6 +18,7 @@
 <% end %>
 <% content_for :head do %>
   <%= csrf_meta_tag %>
+  <%= render partial: 'shared/ga' %>
 <% end %>
 <%= content_for :cookie_message, "" %>
 <%= content_for :js_gt_ie, '6' %>
@@ -50,7 +51,6 @@
 
 <% content_for :body_end do %>
   <%= render js_partial rescue nil %>
-  <%= render partial: 'shared/ga' %>
 <% end %>
 
 <%= render template: 'layouts/moj_template' %>
