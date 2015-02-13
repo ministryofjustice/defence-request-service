@@ -57,8 +57,7 @@ RSpec.feature 'defence request creation' do
         choose 'Own'
         fill_in 'q', with: "Bob Smith"
 
-        click_button 'Search'
-        sleep(1)
+        find('.solicitor-search', match: :first).click
         expect(page).to have_content 'Bobson Smith'
         expect(page).to have_content 'Bobby Bob Smithson'
 
@@ -77,14 +76,15 @@ RSpec.feature 'defence request creation' do
         click_link 'New Defence Request'
         choose 'Own'
         fill_in 'q', with: "Bob Smith"
-        click_button 'Search'
+        find('.solicitor-search', match: :first).click
+
         expect(page).to have_content 'Bobson Smith'
 
         fill_in 'q', with: "Barry Jones"
         click_button 'Search'
 
+        find_link('Barry Jones').visible?
         expect(page).to_not have_content 'Bobson Smith'
-        expect(page).to have_content 'Barry Jones'
       end
 
       scenario "searching for someone who doesn't exist", js: true do
@@ -94,7 +94,7 @@ RSpec.feature 'defence request creation' do
         click_link 'New Defence Request'
         choose 'Own'
         fill_in 'q', with: "Mystery Man"
-        click_button 'Search'
+        find('.solicitor-search', match: :first).click
 
         expect(page).to have_content 'No results found'
       end
@@ -105,8 +105,7 @@ RSpec.feature 'defence request creation' do
         click_link 'New Defence Request'
         choose 'Own'
         fill_in 'q', with: "Bob Smith"
-
-        click_button 'Search'
+        find('.solicitor-search', match: :first).click
         expect(page).to have_content 'Bobson Smith'
 
         within('.solicitor_results_list') do
@@ -122,7 +121,7 @@ RSpec.feature 'defence request creation' do
         choose 'Own'
         fill_in 'q', with: "Bob Smith"
 
-        click_button 'Search'
+        find('.solicitor-search', match: :first).click
         expect(page).to have_content 'Bobson Smith'
 
         page.execute_script("$('body').trigger($.Event(\"keydown\", { keyCode: 27 }))")
@@ -136,7 +135,7 @@ RSpec.feature 'defence request creation' do
         click_link 'New Defence Request'
         choose 'Own'
         fill_in 'q', with: "Bob Smith"
-        click_button 'Search'
+        find('.solicitor-search', match: :first).click
         click_link 'Bobson Smith'
         choose 'Duty'
 
