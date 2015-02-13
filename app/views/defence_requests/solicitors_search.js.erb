@@ -33,6 +33,7 @@ $('.solicitor_results_list [data-fn="btn-solicitor-results-close"]').bind('click
     $('.solicitor_results_list').html('');
     $('#defence_request_solicitor_name').val('<%= solicitor['name'] %>')
     $('#defence_request_solicitor_firm').val('<%= solicitor['firm_name'] %>')
+    $('#defence_request_solicitor_email').val('<%= solicitor['email'] %>')
     $('#defence_request_phone_number').val('<%= solicitor['mobile'] %>')
   });
 <% end %>

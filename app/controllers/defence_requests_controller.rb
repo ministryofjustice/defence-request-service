@@ -85,23 +85,30 @@ class DefenceRequestsController < BaseController
   end
 
   def defence_request_params
-    params.require(:defence_request).permit(:solicitor_type,
-                                            :solicitor_name,
-                                            :solicitor_firm,
-                                            :scheme,
-                                            :phone_number,
-                                            :detainee_name,
-                                            :time_of_arrival,
-                                            :gender,
-                                            :adult,
-                                            :date_of_birth,
-                                            :appropriate_adult,
-                                            :custody_number,
-                                            :allegations,
-                                            :comments,
-                                            :time_of_arrival,
-                                            :dscc_number,
-                                            :feedback)
+    raw_params = params.require(:defence_request).permit(:solicitor_type,
+                                                         :solicitor_name,
+                                                         :solicitor_firm,
+                                                         :solicitor_email,
+                                                         :scheme,
+                                                         :phone_number,
+                                                         :detainee_name,
+                                                         :time_of_arrival,
+                                                         :gender,
+                                                         :adult,
+                                                         :date_of_birth,
+                                                         :appropriate_adult,
+                                                         :custody_number,
+                                                         :allegations,
+                                                         :comments,
+                                                         :interview_start_time,
+                                                         :time_of_arrival,
+                                                         :dscc_number,
+                                                         :feedback)
+    raw_params.tap do |p|
+      email = p.delete("solicitor_email")
+      solicitor = User.solicitors.find_by_email email
+      p["solicitor_id"] = solicitor.id if solicitor
+    end
   end
 
   def close_and_save_defence_request

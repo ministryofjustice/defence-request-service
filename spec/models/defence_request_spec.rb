@@ -64,4 +64,23 @@ RSpec.describe DefenceRequest, type: :model do
       expect(subject.can_transition? :finish).to eq false
     end
   end
+
+  describe 'callbacks' do
+    before do
+      @persisted_request = FactoryGirl.create(:defence_request)
+    end
+
+    context 'interview time changes' do
+      it 'notifies the solicitor'  do
+        expect(@persisted_request).to receive(:notify_solicitor).and_call_original
+        @persisted_request.update_attribute(:interview_start_time, Time.now)
+      end
+    end
+    context 'save happens without change' do
+      it 'does not notify the solicitor' do
+        expect(@persisted_request).to_not receive(:notify_solicitor)
+        @persisted_request.update_attribute(:detainee_name, "Eamonn Holmes")
+      end
+    end
+  end
 end
