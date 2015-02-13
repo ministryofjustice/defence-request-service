@@ -59,8 +59,8 @@ ActiveRecord::Schema.define(version: 20150212121554) do
     t.datetime "updated_at"
     t.string   "dscc_number"
     t.text     "feedback"
-    t.integer  "solicitor_id"
     t.datetime "interview_start_time"
+    t.integer  "solicitor_id"
   end
 
   add_index "defence_requests", ["solicitor_id"], name: "index_defence_requests_on_solicitor_id", using: :btree
