@@ -105,7 +105,6 @@ RSpec.feature 'Defence request dashboard' do
     end
 
     scenario 'i can see the dashboard with refreshed data after a period', js: true do
-      Settings.dsds.dashboard_refresh_seconds = 3000
       visit defence_requests_path
 
       within "#defence_request_#{dr_created.id}" do
@@ -118,8 +117,9 @@ RSpec.feature 'Defence request dashboard' do
 
       dr_created.update(solicitor_name: 'New Solicitor')
       dr_open.update(solicitor_name: 'New Solicitor2')
-
-      sleep(Settings.dsds.dashboard_refresh_seconds/1000)
+      #Wait for dashboard refresh + 1
+      sleep(4)
+      wait_for_ajax
 
       within "#defence_request_#{dr_created.id}" do
         expect(page).to have_content('New Solicitor')

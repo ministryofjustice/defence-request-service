@@ -55,4 +55,6 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
   config.disable_monkey_patching!
+
+  config.include WaitForAjax, type: :feature
 end
