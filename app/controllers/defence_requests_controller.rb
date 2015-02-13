@@ -1,11 +1,12 @@
 class DefenceRequestsController < BaseController
 
-  before_action :find_defence_request, only: [:edit, :update, :feedback, :close, :open]
+  before_action :find_defence_request, only: [:edit, :update, :feedback, :close, :open, :accepted]
   before_action ->(c) { authorize defence_request, "#{c.action_name}?" }
 
   def index
     @open_requests = policy_scope(DefenceRequest).opened.order(created_at: :asc)
     @new_requests = policy_scope(DefenceRequest).created.order(created_at: :asc)
+    @accepted_requests = policy_scope(DefenceRequest).accepted.order(created_at: :asc)
   end
 
   def new
@@ -38,7 +39,9 @@ class DefenceRequestsController < BaseController
   end
 
   def update
-    if @defence_request.update_attributes(defence_request_params)
+    if params[:commit] == 'Update and Accepted' && (@defence_request.update_attributes(defence_request_params) && accepted_and_save_defence_request)
+      redirect_to(defence_requests_path, notice: flash_message(:updated_and_updated, DefenceRequest))
+    elsif @defence_request.update_attributes(defence_request_params)
       redirect_to(defence_requests_path, notice: flash_message(:update, DefenceRequest))
     else
       render :edit
@@ -72,6 +75,16 @@ class DefenceRequestsController < BaseController
   end
 
   def close
+  end
+
+  def accepted
+    binding.pry
+    @defence_request.accept
+    if @defence_request.save
+      redirect_to(defence_requests_path, notice: flash_message(:accepted, DefenceRequest))
+    else
+      redirect_to(defence_requests_path, notice: flash_message(:failed_accepted, DefenceRequest))
+    end
   end
 
   private
@@ -113,6 +126,10 @@ class DefenceRequestsController < BaseController
 
   def close_and_save_defence_request
     @defence_request.close && @defence_request.save
+  end
+
+  def accepted_and_save_defence_request
+    @defence_request.accept && @defence_request.save
   end
 
 end

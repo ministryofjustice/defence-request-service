@@ -331,9 +331,67 @@ RSpec.feature 'defence request creation' do
         click_button 'Update Defence Request'
         expect(page).to have_content 'Defence Request successfully updated'
       end
+      ##############
+      scenario 'I cant see an accepted button for created DR`s' do
+        visit root_path
+        within ".new_defence_requests" do
+          expect(page).to_not have_button 'Accepted'
+        end
+      end
 
+      scenario 'I cant see an accepted button for open DR`s without a DSCC number' do
+        visit root_path
+        within ".open_defence_requests" do
+          expect(page).to_not have_button 'Accepted'
+        end
+      end
+
+      scenario 'I see an accepted button for open DR`s with a DSCC number' do
+        opened_dr.update(dscc_number: '012345')
+        visit root_path
+        within "#defence_request_#{opened_dr.id}" do
+          click_button 'Accepted'
+        end
+        within ".accepted_defence_requests" do
+          expect(page).to have_content(opened_dr.solicitor_name)
+        end
+      end
+
+      scenario 'can choose update and mark accepted from the edit page' do
+        opened_dr.update(dscc_number: '012345')
+        visit root_path
+
+        within "#defence_request_#{opened_dr.id}" do
+          click_link 'Edit'
+        end
+
+        click_button 'Update and Accept'
+        saop
+        within ".accepted_defence_requests" do
+          expect(page).to have_content(opened_dr.solicitor_name)
+        end
+      end
+
+
+      xscenario 'can NOT mark a dr as "solicitor accepted" without solicitor details' do
+
+      end
+      xscenario 'can NOT mark a dr as "solicitor accepted" without DSCC number' do
+
+      end
+
+      xscenario 'solicitor receives a notification with a link to the case show' do
+
+      end
+
+      xscenario 'solicitor can see the show page of case they "own"' do
+
+      end
+
+      xscenario 'solicitor can sees the feedback page for a closed DR and "call Call Centre"' do
+
+      end
     end
-
   end
 end
 

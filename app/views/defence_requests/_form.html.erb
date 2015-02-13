@@ -93,6 +93,8 @@
   <%- end %>
 
   <%= f.submit class: 'button' %>
+  <%= f.submit(t('update_and_accept'), class: 'button small') if policy(@defence_request).accept? %>
+
 
   <% if @defence_request.new_record? %>
     <%= link_to t('cancel'), defence_requests_path %>

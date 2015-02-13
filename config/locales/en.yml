@@ -46,12 +46,15 @@ en:
   models:
     create: "%{model} successfully created"
     update: "%{model} successfully updated"
+    updated_and_updated: "%{model} successfully updated and marked as accepted"
     destroy: "%{model} successfully deleted"
     failed_destroy: "%{model} was not deleted"
     close: "%{model} successfully closed"
     failed_close: "%{model} was not closed"
     open: "%{model} successfully opened"
     failed_open: "%{model} was not opened"
+    accepted: "%{model} was not marked as accepted"
+    failed_accepted: "%{model} was not marked as accepted"
 
   helpers:
     submit:
@@ -67,3 +70,6 @@ en:
   open_defence_request: "Open Defence Requests"
   open: "Open"
   feedback: "Feedback"
+  accepted: "Accepted"
+  accepted_defence_request: "Accepted Defence Requests"
+  update_and_accept: "Update and Accept"

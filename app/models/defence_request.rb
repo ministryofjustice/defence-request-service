@@ -10,11 +10,16 @@ class DefenceRequest < ActiveRecord::Base
   state_machine auto_scopes: true do
     state :created # first one is initial state
     state :opened
+    state :accepted
     state :closed
     state :finished
 
     event :open do
       transitions from: [:created], to: :opened
+    end
+
+    event :accept do
+      transitions from: [:opened], to: :accepted
     end
 
     event :finish do
@@ -67,5 +72,4 @@ class DefenceRequest < ActiveRecord::Base
   def notify_solicitor
     Mailer.notify_interview_start_change(self, solicitor).deliver_now if solicitor
   end
-
 end
