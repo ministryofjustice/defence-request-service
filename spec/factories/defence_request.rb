@@ -32,6 +32,12 @@ FactoryGirl.define do
     state 'opened'
   end
 
+  trait :closed do
+    dscc_number '123456'
+    feedback 'This has been closed for a reason.'
+    state 'closed'
+  end
+
   trait :with_dscc_number do
     state 'opened'
     dscc_number '123456'

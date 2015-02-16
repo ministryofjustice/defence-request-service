@@ -331,7 +331,7 @@ RSpec.feature 'defence request creation' do
           click_button 'Update Defence Request'
           expect(page).to have_content 'Defence Request successfully updated'
         end
-        ##############
+
         scenario 'I cant see an accepted button for created DR`s' do
           visit root_path
           within ".new_defence_requests" do
@@ -415,13 +415,53 @@ RSpec.feature 'defence request creation' do
           expect(page).to have_content('Defence Request successfully updated and marked as accepted')
         end
       end
+    end
 
-      xscenario 'solicitor can see the show page of case they "own"' do
+  end
 
+  context 'Show' do
+    context 'as solicitor' do
+      before :each do
+        create_role_and_login('solicitor')
+        solicitor = User.first
+        dr.update(solicitor: solicitor)
+        closed_dr.update(solicitor: solicitor)
+      end
+      let!(:dr) { create(:defence_request, :with_dscc_number) }
+      let!(:dr2) { create(:defence_request, :with_dscc_number) }
+      let!(:closed_dr) { create(:defence_request, :closed) }
+      scenario 'solicitor can see the show page of case they "own"' do
+        #TODO: this should be done through the frontend when the dash in implemeted
+        # visit root_path
+        #
+        # within "#defence_request_#{dr.id}" do
+        #   click_link 'Show'
+        # end
+
+        visit defence_request_path(dr)
+        expect(page).to have_content('Case Details')
+        expect(page).to have_content(dr.solicitor_name)
+        expect(page).to have_link('Dashboard')
       end
 
-      xscenario 'solicitor can sees the feedback page for a closed DR and "call Call Centre" message' do
+      scenario 'solicitor can NOT see the show page of case they "own"' do
+        #TODO: this should be done through the frontend when the dash in implemeted
+        # visit root_path
+        #
+        # within "#defence_request_#{dr.id}" do
+        #   click_link 'Show'
+        # end
+        expect{ visit defence_request_path(dr2) }.to raise_error(ActiveRecord::RecordNotFound)
+      end
 
+      scenario 'solicitor can sees the feedback page for a closed DR and "call Call Centre" message' do
+        visit defence_request_path(closed_dr)
+        expect(page).to_not have_content('Case Details')
+        expect(page).to_not have_content(closed_dr.solicitor_name)
+        expect(page).to have_link('Dashboard')
+        expect(page).to have_content('This case has been closed with the following feedback')
+        expect(page).to have_content(closed_dr.feedback)
+        expect(page).to have_content('Please call the Call Centre on 0999 999 9999') #TODO: this needs filling in
       end
     end
   end

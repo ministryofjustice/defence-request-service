@@ -1,3 +1,5 @@
-<h1> An interview start time has changed! <h1>
+<h1>Update from <%= Settings.dsds.app_title %></h1>
 
-<p>The interview start time for a defence request you are assigned to has been changed, it is now <%= @defence_request.interview_start_time.strftime '%R'  %>, you can view the request at (a show url is totally going here when it is actually implemented)</p>
+<p>The interview start time for a defence request you are assigned to has been changed, it is
+  now:<%= @defence_request.interview_start_time.strftime '%R' %></p>
+<%= link_to t('view_the_case_details'), defence_request_url(@defence_request) %>

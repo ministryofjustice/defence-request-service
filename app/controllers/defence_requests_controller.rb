@@ -9,6 +9,10 @@ class DefenceRequestsController < BaseController
     @accepted_requests = policy_scope(DefenceRequest).accepted.order(created_at: :asc)
   end
 
+  def show
+    @defence_request = policy_scope(DefenceRequest).find(params[:id])
+  end
+
   def new
     @defence_request = DefenceRequest.new
     authorize @defence_request

@@ -5,7 +5,9 @@ class DefenceRequest < ActiveRecord::Base
 
   delegate :email, to: :solicitor, prefix: true, allow_nil: true
 
-  after_update :notify_solicitor, if: :interview_start_time_changed?
+  after_update :notify_interview_start_change, if: :interview_start_time_changed?
+
+  scope :has_solicitor, ->(solicitor) { where(solicitor: solicitor) }
 
   state_machine auto_scopes: true do
     state :created # first one is initial state
@@ -18,16 +20,16 @@ class DefenceRequest < ActiveRecord::Base
       transitions from: [:created], to: :opened
     end
 
-    event :accept do
+    event :accept, success: :send_solicitor_case_details do
       transitions from: [:opened], to: :accepted
     end
 
     event :finish do
-      transitions from: [:opened], to: :finished
+      transitions from: [:opened, :accepted], to: :finished
     end
 
     event :close do
-      transitions from: [:created, :opened], to: :closed
+      transitions from: [:created, :opened, :accepted], to: :closed
     end
   end
 
@@ -69,7 +71,11 @@ class DefenceRequest < ActiveRecord::Base
     self.phone_number = self.phone_number.gsub(/\D/, '')
   end
 
-  def notify_solicitor
+  def notify_interview_start_change
     Mailer.notify_interview_start_change(self, solicitor).deliver_now if solicitor
+  end
+
+  def send_solicitor_case_details
+    Mailer.send_solicitor_case_details(self, solicitor).deliver_now if solicitor
   end
 end

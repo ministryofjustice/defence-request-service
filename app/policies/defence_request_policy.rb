@@ -13,12 +13,16 @@ class DefenceRequestPolicy < ApplicationPolicy
       elsif user.cco?
         scope.all
       elsif user.solicitor?
-        scope.none
+        scope.has_solicitor(user)
       end
     end
   end
 
   def index?
+    user.cso? || user.cco? || user.solicitor?
+  end
+
+  def show?
     user.cso? || user.cco? || user.solicitor?
   end
 
@@ -77,5 +81,4 @@ class DefenceRequestPolicy < ApplicationPolicy
   def dashboard_view?
     user.cco? || user.cso?
   end
-
 end

@@ -7,7 +7,7 @@ RSpec.describe DefenceRequestPolicy do
 
   context "Custody Suite Officers" do
     let(:user)          { FactoryGirl.create(:cso_user) }
-    let(:group_actions) { [:index, :new, :create, :refresh_dashboard, :solicitors_search, :dashboard_view] }
+    let(:group_actions) { [:index, :show, :new, :create, :refresh_dashboard, :solicitors_search, :dashboard_view] }
 
     context "with a new DR" do
       let (:defreq) { FactoryGirl.build(:defence_request) }
@@ -37,7 +37,7 @@ RSpec.describe DefenceRequestPolicy do
 
   context "Call Center Operatives" do
     let(:user) { FactoryGirl.create(:cco_user)}
-    let(:group_actions) { [:index, :refresh_dashboard, :dashboard_view] }
+    let(:group_actions) { [:index, :show, :refresh_dashboard, :dashboard_view] }
 
     context "with a created DR" do
       let (:defreq) { FactoryGirl.create(:defence_request) }
@@ -69,16 +69,17 @@ RSpec.describe DefenceRequestPolicy do
     let (:defreq) { FactoryGirl.create(:defence_request) }
     let(:user) { FactoryGirl.create(:solicitor_user)}
 
-    [:index].each do |action|
+    [:index, :show].each do |action|
       specify { expect(subject).to permit_action(action) }
     end
 
     describe "scope" do
       let (:defreq) { FactoryGirl.create(:defence_request) }
-      # I expect we will return all the requests assigned to a solicitor in
-      # the future, but for now we have no notion of such a thing.
+      let (:defreq2) { FactoryGirl.create(:defence_request) }
+
       it "returns empty list" do
-        expect(Pundit.policy_scope(user, DefenceRequest)).to eq []
+        defreq.update(solicitor: user)
+        expect(Pundit.policy_scope(user, DefenceRequest)).to eq [defreq]
       end
     end
   end

@@ -33,9 +33,12 @@ RSpec.describe DefenceRequest, type: :model do
 
   describe 'states' do
     it 'allows for correct transitions' do
+      expect(DefenceRequest.available_states).to eq [:accepted, :closed, :created, :finished, :opened]
+
       # state = created
       expect(subject.current_state).to eql :created
       expect(subject.can_transition? :open).to eq true
+      expect(subject.can_transition? :accept).to eq false
       expect(subject.can_transition? :close).to eq true
       expect(subject.can_transition? :created).to eq false
       expect(subject.can_transition? :finish).to eq false
@@ -43,6 +46,15 @@ RSpec.describe DefenceRequest, type: :model do
       expect{ subject.open }.to_not raise_error
       expect(subject.current_state).to eql :opened
       expect(subject.can_transition? :open).to eq false
+      expect(subject.can_transition? :accept).to eq true
+      expect(subject.can_transition? :close).to eq true
+      expect(subject.can_transition? :created).to eq false
+      expect(subject.can_transition? :finish).to eq true
+      # state = accepted
+      expect{ subject.accept }.to_not raise_error
+      expect(subject.current_state).to eql :accepted
+      expect(subject.can_transition? :open).to eq false
+      expect(subject.can_transition? :accept).to eq false
       expect(subject.can_transition? :close).to eq true
       expect(subject.can_transition? :created).to eq false
       expect(subject.can_transition? :finish).to eq true
@@ -50,6 +62,7 @@ RSpec.describe DefenceRequest, type: :model do
       expect{ subject.close }.to_not raise_error
       expect(subject.current_state).to eql :closed
       expect(subject.can_transition? :open).to eq false
+      expect(subject.can_transition? :accept).to eq false
       expect(subject.can_transition? :close).to eq false
       expect(subject.can_transition? :created).to eq false
       expect(subject.can_transition? :finish).to eq false
@@ -59,6 +72,7 @@ RSpec.describe DefenceRequest, type: :model do
       expect{ subject.finish }.to_not raise_error
       expect(subject.current_state).to eql :finished
       expect(subject.can_transition? :open).to eq false
+      expect(subject.can_transition? :accept).to eq false
       expect(subject.can_transition? :close).to eq false
       expect(subject.can_transition? :created).to eq false
       expect(subject.can_transition? :finish).to eq false
@@ -66,20 +80,31 @@ RSpec.describe DefenceRequest, type: :model do
   end
 
   describe 'callbacks' do
+    context 'marked as accepted' do
+      before do
+        @dr_with_dscc = FactoryGirl.create(:defence_request, :with_dscc_number, :opened)
+      end
+
+      it 'notifies the solicitor'  do
+        expect(@dr_with_dscc).to receive(:send_solicitor_case_details).and_call_original
+        @dr_with_dscc.accept
+      end
+    end
+
     before do
       @persisted_request = FactoryGirl.create(:defence_request)
     end
 
     context 'interview time changes' do
       it 'notifies the solicitor'  do
-        expect(@persisted_request).to receive(:notify_solicitor).and_call_original
+        expect(@persisted_request).to receive(:notify_interview_start_change).and_call_original
         @persisted_request.update_attribute(:interview_start_time, Time.now)
       end
     end
     context 'save happens without change' do
       it 'does not notify the solicitor' do
-        expect(@persisted_request).to_not receive(:notify_solicitor)
-        @persisted_request.update_attribute(:detainee_name, "Eamonn Holmes")
+        expect(@persisted_request).to_not receive(:notify_interview_start_change)
+        @persisted_request.update_attribute(:detainee_name, 'Eamonn Holmes')
       end
     end
   end
