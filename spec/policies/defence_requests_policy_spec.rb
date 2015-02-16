@@ -47,7 +47,13 @@ RSpec.describe DefenceRequestPolicy do
 
     context "with an opened DR" do
       let (:defreq) { FactoryGirl.create(:defence_request, :opened) }
-      let (:actions) { group_actions + [:edit, :dscc_number_edit, :update, :close, :feedback, :accepted] }
+      let (:actions) { group_actions + [:edit, :dscc_number_edit, :update, :close, :feedback] }
+      specify { expect(subject).to permit_actions_and_forbid_all_others actions }
+    end
+
+    context "with a DR with dscc number" do
+      let (:defreq) { FactoryGirl.create(:defence_request, :with_dscc_number) }
+      let (:actions) { group_actions + [:edit, :dscc_number_edit, :update, :close, :feedback, :accepted, :accept] }
       specify { expect(subject).to permit_actions_and_forbid_all_others actions }
     end
 

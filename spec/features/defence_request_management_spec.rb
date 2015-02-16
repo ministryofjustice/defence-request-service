@@ -278,117 +278,149 @@ RSpec.feature 'defence request creation' do
         create_role_and_login('cco')
       end
 
-      let!(:dr) { create(:defence_request) }
-      let!(:opened_dr) { create(:defence_request, :opened) }
+      context 'for "own" solicitor' do
+        let!(:dr) { create(:own_solicitor) }
+        let!(:opened_dr) { create(:defence_request, :opened) }
+        scenario 'must open a Defence Request before editing' do
+          visit root_path
+          within "#defence_request_#{dr.id}" do
+            expect(page).not_to have_link('Edit')
+            click_button 'Open'
+          end
 
-      scenario 'must open a Defence Request before editing' do
-        visit root_path
-        within "#defence_request_#{dr.id}" do
-          expect(page).not_to have_link('Edit')
-          click_button 'Open'
+          within "#defence_request_#{dr.id}" do
+            expect(page).to have_link('Edit')
+            click_link 'Edit'
+          end
+          expect(current_path).to eq(edit_defence_request_path(dr))
         end
 
-        within "#defence_request_#{dr.id}" do
-          expect(page).to have_link('Edit')
-          click_link 'Edit'
+        scenario 'manually changing a solicitors details' do
+          visit root_path
+          within "#defence_request_#{opened_dr.id}" do
+            click_link 'Edit'
+          end
+
+          fill_in 'Solicitor name', with: 'Henry Billy Bob'
+          fill_in 'Solicitor firm', with: 'Cheap Skate Law'
+          fill_in 'Phone number', with: '00112233445566'
+
+          click_button 'Update Defence Request'
+          expect(current_path).to eq(defence_requests_path)
+
+          within "#defence_request_#{opened_dr.id}" do
+            expect(page).to have_content 'Henry Billy Bob'
+            expect(page).to have_content 'Cheap Skate Law'
+            expect(page).to have_content '00112233445566'
+          end
         end
-        expect(current_path).to eq(edit_defence_request_path(dr))
+
+        scenario 'editing a DR DSCC number (multiple times)' do
+          visit root_path
+          within "#defence_request_#{opened_dr.id}" do
+            click_link 'Edit'
+          end
+          fill_in 'Dscc number', with: 'NUMBERWANG'
+          click_button 'Update Defence Request'
+          expect(page).to have_content 'Defence Request successfully updated'
+          within "#defence_request_#{opened_dr.id}" do
+            click_link 'Edit'
+          end
+          expect(page).to have_field 'Dscc number', with: 'NUMBERWANG'
+          fill_in 'Dscc number', with: 'T-1000'
+          click_button 'Update Defence Request'
+          expect(page).to have_content 'Defence Request successfully updated'
+        end
+        ##############
+        scenario 'I cant see an accepted button for created DR`s' do
+          visit root_path
+          within ".new_defence_requests" do
+            expect(page).to_not have_button 'Accepted'
+          end
+        end
+
+        scenario 'I CANT see an accepted button for open DR`s without a DSCC number' do
+          visit root_path
+          within ".open_defence_requests" do
+            expect(page).to_not have_button 'Accepted'
+          end
+        end
+
+        scenario 'I see an accepted button for open DR`s with a DSCC number' do
+          opened_dr.update(dscc_number: '012345')
+          visit root_path
+          within "#defence_request_#{opened_dr.id}" do
+            click_button 'Accepted'
+          end
+          within ".accepted_defence_requests" do
+            expect(page).to have_content(opened_dr.solicitor_name)
+          end
+        end
+
+        scenario 'can choose "Update and Accept" from the edit page after adding a dscc number' do
+          visit root_path
+
+          within "#defence_request_#{opened_dr.id}" do
+            click_link 'Edit'
+          end
+          fill_in 'Dscc number', with: '123456'
+
+          click_button 'Update and Accept'
+          within ".accepted_defence_requests" do
+            expect(page).to have_content(opened_dr.solicitor_name)
+          end
+        end
+
+        scenario 'can NOT choose "Update and Accept" from the edit page without adding a dscc number' do
+          visit root_path
+
+          within "#defence_request_#{opened_dr.id}" do
+            click_link 'Edit'
+          end
+
+          click_button 'Update and Accept'
+          expect(page).to have_content('A Valid DSCC number is required to update and accept a Defence Request')
+        end
       end
 
-      scenario 'manually changing a solicitors details' do
-        visit root_path
-        within "#defence_request_#{opened_dr.id}" do
-          click_link 'Edit'
+      context 'for "duty" solicitor' do
+        let!(:duty_solicitor_dr) { create(:defence_request, :duty_solicitor, :opened) }
+        scenario 'can NOT mark a dr as "solicitor accepted" without solicitor details from the DASHBOARD' do
+          visit root_path
+          within ".open_defence_requests" do
+            expect(page).to_not have_button 'Accepted'
+          end
         end
+        scenario 'can NOT mark a dr as "solicitor accepted" without solicitor details from the EDIT' do
+          visit root_path
 
-        fill_in 'Solicitor name', with: 'Henry Billy Bob'
-        fill_in 'Solicitor firm', with: 'Cheap Skate Law'
-        fill_in 'Phone number', with: '00112233445566'
+          within "#defence_request_#{duty_solicitor_dr.id}" do
+            click_link 'Edit'
+          end
+          click_button 'Update and Accept'
+          expect(page).to have_content('Valid solicitor details are required to update and accept a Defence Request')
 
-        click_button 'Update Defence Request'
-        expect(current_path).to eq(defence_requests_path)
+          fill_in 'Solicitor name', with: 'Dodgy Dave'
+          click_button 'Update and Accept'
+          expect(page).to have_content('Valid solicitor details are required to update and accept a Defence Request')
+          fill_in 'Solicitor name', with: 'Dodgy Dave'
+          fill_in 'Solicitor firm', with: 'Innocent your honour'
+          click_button 'Update and Accept'
 
-        within "#defence_request_#{opened_dr.id}" do
-          expect(page).to have_content 'Henry Billy Bob'
-          expect(page).to have_content 'Cheap Skate Law'
-          expect(page).to have_content '00112233445566'
+          expect(page).to have_content('A Valid DSCC number is required to update and accept a Defence Request')
+          fill_in 'Solicitor name', with: 'Dodgy Dave'
+          fill_in 'Solicitor firm', with: 'Innocent your honour'
+          fill_in 'Dscc number', with: '123456'
+          click_button 'Update and Accept'
+          expect(page).to have_content('Defence Request successfully updated and marked as accepted')
         end
-      end
-
-      scenario 'editing a DR DSCC number (multiple times)' do
-        visit root_path
-        within "#defence_request_#{opened_dr.id}" do
-          click_link 'Edit'
-        end
-        fill_in 'Dscc number', with: 'NUMBERWANG'
-        click_button 'Update Defence Request'
-        expect(page).to have_content 'Defence Request successfully updated'
-        within "#defence_request_#{opened_dr.id}" do
-          click_link 'Edit'
-        end
-        expect(page).to have_field 'Dscc number', with: 'NUMBERWANG'
-        fill_in 'Dscc number', with: 'T-1000'
-        click_button 'Update Defence Request'
-        expect(page).to have_content 'Defence Request successfully updated'
-      end
-      ##############
-      scenario 'I cant see an accepted button for created DR`s' do
-        visit root_path
-        within ".new_defence_requests" do
-          expect(page).to_not have_button 'Accepted'
-        end
-      end
-
-      scenario 'I cant see an accepted button for open DR`s without a DSCC number' do
-        visit root_path
-        within ".open_defence_requests" do
-          expect(page).to_not have_button 'Accepted'
-        end
-      end
-
-      scenario 'I see an accepted button for open DR`s with a DSCC number' do
-        opened_dr.update(dscc_number: '012345')
-        visit root_path
-        within "#defence_request_#{opened_dr.id}" do
-          click_button 'Accepted'
-        end
-        within ".accepted_defence_requests" do
-          expect(page).to have_content(opened_dr.solicitor_name)
-        end
-      end
-
-      scenario 'can choose update and mark accepted from the edit page' do
-        opened_dr.update(dscc_number: '012345')
-        visit root_path
-
-        within "#defence_request_#{opened_dr.id}" do
-          click_link 'Edit'
-        end
-
-        click_button 'Update and Accept'
-        saop
-        within ".accepted_defence_requests" do
-          expect(page).to have_content(opened_dr.solicitor_name)
-        end
-      end
-
-
-      xscenario 'can NOT mark a dr as "solicitor accepted" without solicitor details' do
-
-      end
-      xscenario 'can NOT mark a dr as "solicitor accepted" without DSCC number' do
-
-      end
-
-      xscenario 'solicitor receives a notification with a link to the case show' do
-
       end
 
       xscenario 'solicitor can see the show page of case they "own"' do
 
       end
 
-      xscenario 'solicitor can sees the feedback page for a closed DR and "call Call Centre"' do
+      xscenario 'solicitor can sees the feedback page for a closed DR and "call Call Centre" message' do
 
       end
     end

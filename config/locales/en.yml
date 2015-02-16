@@ -55,6 +55,8 @@ en:
     failed_open: "%{model} was not opened"
     accepted: "%{model} was not marked as accepted"
     failed_accepted: "%{model} was not marked as accepted"
+    dscc_number_required: "A Valid DSCC number is required to update and accept a %{model}"
+    solicitor_details_required: "Valid solicitor details are required to update and accept a %{model}"
 
   helpers:
     submit:

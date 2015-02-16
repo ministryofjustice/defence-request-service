@@ -16,6 +16,14 @@ FactoryGirl.define do
     appropriate_adult [true, false].sample
   end
 
+  trait :duty_solicitor do
+    solicitor_type 'duty'
+    solicitor_name nil
+    solicitor_firm nil
+    scheme 'No Scheme'
+    phone_number ''
+  end
+
   trait :created do
     state 'created'
   end
@@ -23,4 +31,10 @@ FactoryGirl.define do
   trait :opened do
     state 'opened'
   end
+
+  trait :with_dscc_number do
+    state 'opened'
+    dscc_number '123456'
+  end
+
 end

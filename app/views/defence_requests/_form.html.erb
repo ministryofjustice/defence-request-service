@@ -93,7 +93,7 @@
   <%- end %>
 
   <%= f.submit class: 'button' %>
-  <%= f.submit(t('update_and_accept'), class: 'button small') if policy(@defence_request).accept? %>
+  <%= f.submit(t('update_and_accept'), class: 'button small') if policy(@defence_request).dscc_number_edit? %>
 
 
   <% if @defence_request.new_record? %>
