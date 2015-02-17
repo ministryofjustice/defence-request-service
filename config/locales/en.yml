@@ -4,6 +4,7 @@ en:
   allegations: "Allegations"
   appropriate_adult: "Appropriate Adult"
   cancel: "Cancel"
+  cancel_and_delete_all_details: "Cancel and delete all details"
   change_password: "Change Password"
   comments: "Comments"
   confirm: "Confirm"
@@ -13,7 +14,7 @@ en:
   delete: "Delete"
   details: "Details"
   detainee: "Detainee"
-  detainee_name: "Detainee Name"
+  full_name: "Full Name"
   duty: 'Duty'
   enter_solicitor_firm_name: "Enter solicitor/firm name..."
   error: error
@@ -23,17 +24,18 @@ en:
   no_results_found: 'No results found - Contact DSCC'
   not_authorized: "You are not authorised to perform this action"
   own: 'Own'
-  phone_number: "Phone Number"
+  telephone_number: "Telephone number"
   prohibit_save: Please review the following %{count}
   scheme: "Scheme"
   search: "Search"
-  solicitor_firm: "Solicitor Firm"
-  solicitor_name: "Solicitor Name"
-  firm_name: "Firm Name"
+  name_of_firm: "Name of firm"
+  full_name: "Full name"
   solicitor_type: "Solicitor Type"
   close: Close
   edit: Edit
   email: Email
+  appropriate_adult_required: "Appropriate adult required?"
+  continue: "Continue"
 
 
   time_of_arrival: "Time of Arrival"

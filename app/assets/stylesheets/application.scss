@@ -21,6 +21,15 @@ fieldset.time-select select{
   display: inline;
 }
 
+
+.panel {
+  border: 1px solid #bfc1c3;
+  padding-top: 45px;
+  padding-right: 30px;
+  padding-bottom: 30px;
+  padding-left: 30px;
+}
+
 .solicitor_results_list{
   padding-left: 14px;
   margin-top: 60px;
@@ -79,14 +88,82 @@ a.user-links {
   float: left;
   clear: both;
 }
+
 h3.dashboard{
   float: left;
   padding-top: 20px;
 }
+
 h5.user-role{
   color: white;
   display: inline;
   font-weight: 800;
   float: right;
   margin: -1px;
+}
+
+.hour {
+  width: 2.75em;
+}
+
+.minute {
+  width: 2.75em;
+}
+
+.day {
+  width: 2.75em;
+}
+
+.month {
+  width: 2.75em;
+}
+
+.year {
+  width: 4.25em;
+}
+
+.age {
+  width: 4.25em;
+}
+
+.custody-number {
+  width: 40%;
+}
+
+.date_field_wrapper {
+ display: inline-block;
+ margin-right: 1em;
+}
+
+.time_field_wrapper {
+ display: inline-block;
+ margin-right: 1em;
+}
+
+label + input, label + textarea {
+  width: 100%;
+}
+
+.text-field {
+  text-transform: none;
+  border: 1px solid #bbb;
+  margin: 0 0 1em;
+  padding: 0.5em;
+}
+
+.solicitor_search_wrapper {
+  border-left: #bfc1c3 solid 4px;
+  padding: 0 0 0 14px;
+  margin-bottom: 1em;
+  clear: both;
+}
+
+.search-text-field {
+  width: 80%;
+  margin-bottom: 0;
+  margin-right: 14px;
+}
+
+.hidden {
+  display: none;
 }
