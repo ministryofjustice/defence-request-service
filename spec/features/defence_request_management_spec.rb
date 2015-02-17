@@ -318,11 +318,13 @@ RSpec.feature 'defence request creation' do
             click_link 'Edit'
           end
 
-          fill_in 'Solicitor name', with: 'Henry Billy Bob'
-          fill_in 'Solicitor firm', with: 'Cheap Skate Law'
-          fill_in 'Phone number', with: '00112233445566'
+          within '#solicitor-details' do
+            fill_in 'Full name', with: 'Henry Billy Bob'
+            fill_in 'Name of firm', with: 'Cheap Skate Law'
+            fill_in 'Telephone number', with: '00112233445566'
+          end
 
-          click_button 'Update Defence Request'
+          click_button 'Continue'
           expect(current_path).to eq(defence_requests_path)
 
           within "#defence_request_#{opened_dr.id}" do
@@ -337,15 +339,15 @@ RSpec.feature 'defence request creation' do
           within "#defence_request_#{opened_dr.id}" do
             click_link 'Edit'
           end
-          fill_in 'Dscc number', with: 'NUMBERWANG'
-          click_button 'Update Defence Request'
+          fill_in 'DSCC number', with: 'NUMBERWANG'
+          click_button 'Continue'
           expect(page).to have_content 'Defence Request successfully updated'
           within "#defence_request_#{opened_dr.id}" do
             click_link 'Edit'
           end
-          expect(page).to have_field 'Dscc number', with: 'NUMBERWANG'
-          fill_in 'Dscc number', with: 'T-1000'
-          click_button 'Update Defence Request'
+          expect(page).to have_field 'DSCC number', with: 'NUMBERWANG'
+          fill_in 'DSCC number', with: 'T-1000'
+          click_button 'Continue'
           expect(page).to have_content 'Defence Request successfully updated'
         end
 
@@ -362,15 +364,6 @@ RSpec.feature 'defence request creation' do
             expect(page).to_not have_button 'Accepted'
           end
         end
-
-        within '#solicitor-details' do
-          fill_in 'Full name', with: 'Henry Billy Bob'
-          fill_in 'Name of firm', with: 'Cheap Skate Law'
-          fill_in 'Telephone number', with: '00112233445566'
-        end
-
-        click_button 'Continue'
-        expect(current_path).to eq(defence_requests_path)
 
         scenario 'I see an accepted button for open DR`s with a DSCC number' do
           opened_dr.update(dscc_number: '012345')
@@ -389,7 +382,7 @@ RSpec.feature 'defence request creation' do
           within "#defence_request_#{opened_dr.id}" do
             click_link 'Edit'
           end
-          fill_in 'Dscc number', with: '123456'
+          fill_in 'DSCC number', with: '123456'
 
           click_button 'Update and Accept'
           within ".accepted_defence_requests" do
@@ -407,16 +400,6 @@ RSpec.feature 'defence request creation' do
           click_button 'Update and Accept'
           expect(page).to have_content('A Valid DSCC number is required to update and accept a Defence Request')
         end
-        fill_in 'DSCC number', with: 'NUMBERWANG'
-        click_button 'Continue'
-        expect(page).to have_content 'Defence Request successfully updated'
-        within "#defence_request_#{opened_dr.id}" do
-          click_link 'Edit'
-        end
-        expect(page).to have_field 'DSCC number', with: 'NUMBERWANG'
-        fill_in 'DSCC number', with: 'T-1000'
-        click_button 'Continue'
-        expect(page).to have_content 'Defence Request successfully updated'
       end
 
       context 'for "duty" solicitor' do
@@ -436,17 +419,23 @@ RSpec.feature 'defence request creation' do
           click_button 'Update and Accept'
           expect(page).to have_content('Valid solicitor details are required to update and accept a Defence Request')
 
-          fill_in 'Solicitor name', with: 'Dodgy Dave'
+          within '#solicitor-details' do
+            fill_in 'Full name', with: 'Dodgy Dave'
+          end
           click_button 'Update and Accept'
           expect(page).to have_content('Valid solicitor details are required to update and accept a Defence Request')
-          fill_in 'Solicitor name', with: 'Dodgy Dave'
-          fill_in 'Solicitor firm', with: 'Innocent your honour'
+          within '#solicitor-details' do
+            fill_in 'Full name', with: 'Dodgy Dave'
+            fill_in 'Name of firm', with: 'Innocent your honour'
+          end
           click_button 'Update and Accept'
 
           expect(page).to have_content('A Valid DSCC number is required to update and accept a Defence Request')
-          fill_in 'Solicitor name', with: 'Dodgy Dave'
-          fill_in 'Solicitor firm', with: 'Innocent your honour'
-          fill_in 'Dscc number', with: '123456'
+          within '#solicitor-details' do
+            fill_in 'Full name', with: 'Dodgy Dave'
+            fill_in 'Name of firm', with: 'Innocent your honour'
+          end
+          fill_in 'DSCC number', with: '123456'
           click_button 'Update and Accept'
           expect(page).to have_content('Defence Request successfully updated and marked as accepted')
         end

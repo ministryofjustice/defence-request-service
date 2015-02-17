@@ -46,8 +46,8 @@ en:
   solicitor: "Solicitor"
   dscc_number: "DSCC number"
   what_type_is_being_requested: "What type of solicitor is being requested?"
-  solicitor_details: "Solcitor details"
-  detainee_details: "Solcitor details"
+  solicitor_details: "Solicitor details"
+  detainee_details: "Detainee details"
   case_details: "Case details"
   open: "Open"
   feedback: "Feedback"
@@ -57,9 +57,16 @@ en:
   view_the_case_details: "View the case details"
   case_details: "Case Details"
   solicitor_email: "Solicitor Email"
+  solicitor_name: "Solicitor Name"
+  solicitor_firm: "Solicitor Firm"
   show: "Show"
   interview_start_time: "Interview Start Time"
   case_closed: "This case has been closed with the following feedback"
+  phone_number: "Phone number"
+  detainee_name: "Detainee name"
+  age: "Age"
+  "yes": "Yes"
+  "no": "No"
 
 
   models:
