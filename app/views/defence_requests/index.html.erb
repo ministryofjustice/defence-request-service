@@ -8,23 +8,24 @@
 <div class="dashboard">
   <div class="fullwidth">
 
-    <% if policy(:defence_request).cso_view? || policy(:defence_request).cco_view? %>
+    <% if policy(:defence_request).view_new_requests? %>
       <h3 class="dashboard"><%= t('new_defence_requests') %></h3>
       <%= render 'dashboard', requests: @new_requests, type: 'new' %>
     <% end %>
 
-    <% if policy(:defence_request).cso_view? || policy(:defence_request).cco_view? %>
+    <% if policy(:defence_request).view_open_requests? %>
       <% if policy(:defence_request).index? %>
         <h3 class="dashboard"><%= t('open_defence_request') %></h3>
         <%= render 'dashboard', requests: @open_requests, type: 'open' %>
       <% end %>
     <% end %>
 
-    <% if policy(:defence_request).cso_view? || policy(:defence_request).cco_view? || policy(:defence_request).solicitor_view? %>
+    <% if policy(:defence_request).view_accepted_requests? %>
       <% if policy(:defence_request).index? %>
         <h3 class="dashboard"><%= t('accepted_defence_request') %></h3>
         <%= render 'dashboard', requests: @accepted_requests, type: 'accepted' %>
       <% end %>
     <% end %>
+
   </div>
 </div>
