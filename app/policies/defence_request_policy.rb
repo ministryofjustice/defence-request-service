@@ -81,4 +81,16 @@ class DefenceRequestPolicy < ApplicationPolicy
   def dashboard_view?
     user.cco? || user.cso?
   end
+
+  def cso_view?
+    user.cso?
+  end
+
+  def cco_view?
+    user.cco?
+  end
+
+  def solicitor_view?
+    user.solicitor?
+  end
 end

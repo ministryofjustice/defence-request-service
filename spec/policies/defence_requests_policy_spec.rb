@@ -11,19 +11,19 @@ RSpec.describe DefenceRequestPolicy do
 
     context "with a new DR" do
       let (:defreq) { FactoryGirl.build(:defence_request) }
-      let (:actions) { group_actions + [:edit, :update, :close, :feedback] }
+      let (:actions) { group_actions + [:edit, :update, :close, :feedback, :cso_view] }
       specify{ expect(subject).to permit_actions_and_forbid_all_others actions }
     end
 
     context "with a created DR" do
       let (:defreq) { FactoryGirl.create(:defence_request) }
-      let (:actions) { group_actions + [:edit, :update, :close, :feedback, :interview_start_time_edit] }
+      let (:actions) { group_actions + [:edit, :update, :close, :feedback, :interview_start_time_edit, :cso_view] }
       specify{ expect(subject).to permit_actions_and_forbid_all_others actions }
     end
 
     context "with an opened DR" do
       let (:defreq) { FactoryGirl.create(:defence_request, :opened) }
-      let (:actions) { group_actions + [:close, :feedback] }
+      let (:actions) { group_actions + [:close, :feedback, :cso_view] }
       specify{ expect(subject).to permit_actions_and_forbid_all_others actions }
     end
 
@@ -41,19 +41,19 @@ RSpec.describe DefenceRequestPolicy do
 
     context "with a created DR" do
       let (:defreq) { FactoryGirl.create(:defence_request) }
-      let (:actions) { group_actions + [:open, :close, :feedback] }
+      let (:actions) { group_actions + [:open, :close, :feedback, :cco_view] }
       specify { expect(subject).to permit_actions_and_forbid_all_others actions }
     end
 
     context "with an opened DR" do
       let (:defreq) { FactoryGirl.create(:defence_request, :opened) }
-      let (:actions) { group_actions + [:edit, :dscc_number_edit, :update, :close, :feedback] }
+      let (:actions) { group_actions + [:edit, :dscc_number_edit, :update, :close, :feedback, :cco_view] }
       specify { expect(subject).to permit_actions_and_forbid_all_others actions }
     end
 
     context "with a DR with dscc number" do
       let (:defreq) { FactoryGirl.create(:defence_request, :with_dscc_number) }
-      let (:actions) { group_actions + [:edit, :dscc_number_edit, :update, :close, :feedback, :accepted, :accept] }
+      let (:actions) { group_actions + [:edit, :dscc_number_edit, :update, :close, :feedback, :accepted, :accept, :cco_view] }
       specify { expect(subject).to permit_actions_and_forbid_all_others actions }
     end
 
@@ -69,7 +69,7 @@ RSpec.describe DefenceRequestPolicy do
     let (:defreq) { FactoryGirl.create(:defence_request) }
     let(:user) { FactoryGirl.create(:solicitor_user)}
 
-    [:index, :show].each do |action|
+    [:index, :show, :solicitor_view].each do |action|
       specify { expect(subject).to permit_action(action) }
     end
 
