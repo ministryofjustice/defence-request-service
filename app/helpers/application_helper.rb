@@ -34,4 +34,16 @@ module ApplicationHelper
   def date_and_time_formatter(date)
     date ? date.strftime("%F - %R") : ''
   end
+
+  def boolean_formatter(val)
+    (val ? "&#10003;" : "&#10007;").html_safe
+  end
+
+  def dashboard_limit_formatter(val, len)
+    if len == 0
+      val[0].upcase
+    else
+      val[0..len].upcase
+    end
+  end
 end

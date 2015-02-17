@@ -279,7 +279,6 @@ RSpec.feature 'defence request creation' do
 
         within "#defence_request_#{dr_1.id}" do
           expect(page).to have_content('Dave Smith')
-          expect(page).to have_content('Broken Solicitors')
           expect(page).to have_content('02072849999')
           expect(page).to have_content('#CUST-9876')
           expect(page).to have_content('BadMurder')
@@ -329,7 +328,6 @@ RSpec.feature 'defence request creation' do
 
           within "#defence_request_#{opened_dr.id}" do
             expect(page).to have_content 'Henry Billy Bob'
-            expect(page).to have_content 'Cheap Skate Law'
             expect(page).to have_content '00112233445566'
           end
         end
@@ -353,14 +351,14 @@ RSpec.feature 'defence request creation' do
 
         scenario 'I cant see an accepted button for created DR`s' do
           visit root_path
-          within ".new_defence_requests" do
+          within ".created_defence_request" do
             expect(page).to_not have_button 'Accepted'
           end
         end
 
         scenario 'I CANT see an accepted button for open DR`s without a DSCC number' do
           visit root_path
-          within ".open_defence_requests" do
+          within ".open_defence_request" do
             expect(page).to_not have_button 'Accepted'
           end
         end
@@ -371,7 +369,7 @@ RSpec.feature 'defence request creation' do
           within "#defence_request_#{opened_dr.id}" do
             click_button 'Accepted'
           end
-          within ".accepted_defence_requests" do
+          within ".accepted_defence_request" do
             expect(page).to have_content(opened_dr.solicitor_name)
           end
         end
@@ -385,7 +383,7 @@ RSpec.feature 'defence request creation' do
           fill_in 'DSCC number', with: '123456'
 
           click_button 'Update and Accept'
-          within ".accepted_defence_requests" do
+          within ".accepted_defence_request" do
             expect(page).to have_content(opened_dr.solicitor_name)
           end
         end
@@ -406,7 +404,7 @@ RSpec.feature 'defence request creation' do
         let!(:duty_solicitor_dr) { create(:defence_request, :duty_solicitor, :opened) }
         scenario 'can NOT mark a dr as "solicitor accepted" without solicitor details from the DASHBOARD' do
           visit root_path
-          within ".open_defence_requests" do
+          within ".open_defence_request" do
             expect(page).to_not have_button 'Accepted'
           end
         end

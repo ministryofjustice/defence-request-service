@@ -47,7 +47,7 @@ class DefenceRequestPolicy < ApplicationPolicy
   end
 
   def refresh_dashboard?
-    user.cso? || user.cco?
+    user.cso? || user.cco? || user.solicitor?
   end
 
   def feedback?
@@ -82,7 +82,7 @@ class DefenceRequestPolicy < ApplicationPolicy
     user.cco? || user.cso?
   end
 
-  def view_new_requests?
+  def view_created_requests?
     user.cco? || user.cso?
   end
 

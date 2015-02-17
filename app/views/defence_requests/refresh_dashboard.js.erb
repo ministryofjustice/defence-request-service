@@ -1,2 +1,4 @@
-$('.new_defence_requests tbody').html("<%= escape_javascript(render 'defence_requests_table_body', requests: @new_requests) %>");
-$('.open_defence_requests tbody').html("<%= escape_javascript(render 'defence_requests_table_body', requests: @open_requests) %>");
+$('.dashboard tbody').html('');
+$('.dashboard tbody').append("<%= escape_javascript(render 'defence_requests_table_body', requests: @created_requests, type: 'created') %>");
+$('.dashboard tbody').append("<%= escape_javascript(render 'defence_requests_table_body', requests: @open_requests, type: 'open') %>");
+$('.dashboard tbody').append("<%= escape_javascript(render 'defence_requests_table_body', requests: @accepted_requests, type: 'accepted') %>");

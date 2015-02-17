@@ -10,7 +10,7 @@ RSpec.describe DefenceRequestPolicy do
     let(:group_actions) {
       [:index, :show, :new, :create, :refresh_dashboard,
        :solicitors_search, :view_open_requests,
-       :view_new_requests, :view_accepted_requests]
+       :view_created_requests, :view_accepted_requests]
     }
 
     context "with a new DR" do
@@ -43,7 +43,7 @@ RSpec.describe DefenceRequestPolicy do
     let(:user) { FactoryGirl.create(:cco_user)}
     let(:group_actions) {
       [:index, :show, :refresh_dashboard, :view_open_requests,
-       :view_new_requests, :view_accepted_requests]
+       :view_created_requests, :view_accepted_requests]
     }
 
     context "with a created DR" do

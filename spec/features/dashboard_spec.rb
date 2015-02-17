@@ -18,11 +18,11 @@ RSpec.feature 'Defence request dashboard' do
     scenario 'i can see all active DR`s in chronological order' do
       visit defence_requests_path
 
-      within ".new_defence_requests" do
+      within "#defence_request_#{dr_created.id}" do
         expect(page).to have_content(dr_created.solicitor_name)
       end
 
-      within ".open_defence_requests" do
+      within "#defence_request_#{dr_created.id}" do
         expect(element_order_correct?("defence_request_#{dr_open1.id}", "defence_request_#{dr_open2.id}")).to eq true
       end
     end
@@ -53,14 +53,14 @@ RSpec.feature 'Defence request dashboard' do
 
     end
 
-    scenario 'any update to the "created" DR by the cso results in it NOT moving to "new" after the refresh' do
+    scenario 'any update to the "created" DR by the cso results in it NOT moving to "created" after the refresh' do
       visit defence_requests_path
 
-      within ".new_defence_requests" do
+      within "#defence_request_#{dr_created.id}" do
         expect(page).to have_content(dr_created.solicitor_name)
       end
 
-      within ".new_defence_requests" do
+      within "#defence_request_#{dr_created.id}" do
         click_link 'Edit'
       end
       within '#solicitor-details' do
@@ -69,13 +69,11 @@ RSpec.feature 'Defence request dashboard' do
 
       click_button 'Continue'
 
-      within ".new_defence_requests" do
+      within ".created_defence_request#defence_request_#{dr_created.id}" do
         expect(page).to have_content('Bob Smith')
       end
 
-      within ".open_defence_requests" do
-        expect(page).to_not have_content('Bob Smith')
-      end
+      expect(page).to_not have_selector(".open_defence_request#defence_request_#{dr_created.id}")
     end
   end
 
@@ -92,13 +90,13 @@ RSpec.feature 'Defence request dashboard' do
       expect(page).to_not have_content('Custody Suite Officer Dashboard')
     end
 
-    scenario 'i see a tables of "new" and "open" DR`s`' do
+    scenario 'i see a tables of "created" and "open" DR`s`' do
       visit defence_requests_path
 
-      within ".new_defence_requests" do
+      within ".created_defence_request" do
         expect(page).to have_content(dr_created.solicitor_name)
       end
-      within ".open_defence_requests" do
+      within ".open_defence_request" do
         expect(page).to have_content(dr_open.solicitor_name)
       end
 
@@ -130,21 +128,18 @@ RSpec.feature 'Defence request dashboard' do
 
     end
 
-    scenario 'any update to the "created" DR by the cco results in it moving to "new" after the refresh' do
+    scenario 'any update to the "created" DR by the cco results in it moving to "created" after the refresh' do
       visit defence_requests_path
 
-      within ".new_defence_requests" do
+      within ".created_defence_request#defence_request_#{dr_created.id}" do
         expect(page).to have_content(dr_created.solicitor_name)
       end
 
-      within ".new_defence_requests" do
+      within ".created_defence_request#defence_request_#{dr_created.id}" do
         click_button 'Open'
       end
 
-      within ".open_defence_requests" do
-        expect(page).to have_content(dr_created.solicitor_name)
-      end
-
+      expect(page).to_not have_selector(".created_defence_requests#defence_request_#{dr_created.id}")
     end
   end
 
