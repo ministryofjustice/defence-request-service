@@ -46,5 +46,6 @@ module DefenceSolicitor
     # Feedback URL (URL for feedback link in phase banner)
     # Use 'auto_add_path' for it to add a path link to the new_feedback route
     config.feedback_url = config.relative_url_root + '/feedback/new'
+    config.action_mailer.default_url_options = { host: Settings.dsds.default_mail_host }
   end
 end

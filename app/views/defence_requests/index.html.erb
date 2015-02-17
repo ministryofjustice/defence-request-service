@@ -28,5 +28,17 @@
         </table>
       <% end %>
     <% end %>
+
+    <% if policy(:defence_request).dashboard_view? %>
+      <% if policy(:defence_request).index? %>
+        <h3 class="dashboard"><%= t('accepted_defence_request') %></h3>
+        <table class="accepted_defence_requests">
+          <%= render 'defence_requests_table_head' %>
+          <tbody>
+          <%= render 'defence_requests_table_body', requests: @accepted_requests %>
+          </tbody>
+        </table>
+      <% end %>
+    <% end %>
   </div>
 </div>

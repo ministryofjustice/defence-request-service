@@ -26,4 +26,12 @@ module ApplicationHelper
   def is_action?(action)
     params[:action] == action
   end
+
+  def date_formatter(date)
+    date ? date.strftime("%F") : ''
+  end
+
+  def date_and_time_formatter(date)
+    date ? date.strftime("%F - %R") : ''
+  end
 end

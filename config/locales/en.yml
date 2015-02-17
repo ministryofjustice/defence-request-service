@@ -46,12 +46,17 @@ en:
   models:
     create: "%{model} successfully created"
     update: "%{model} successfully updated"
+    updated_and_updated: "%{model} successfully updated and marked as accepted"
     destroy: "%{model} successfully deleted"
     failed_destroy: "%{model} was not deleted"
     close: "%{model} successfully closed"
     failed_close: "%{model} was not closed"
     open: "%{model} successfully opened"
     failed_open: "%{model} was not opened"
+    accepted: "%{model} was not marked as accepted"
+    failed_accepted: "%{model} was not marked as accepted"
+    dscc_number_required: "A Valid DSCC number is required to update and accept a %{model}"
+    solicitor_details_required: "Valid solicitor details are required to update and accept a %{model}"
 
   helpers:
     submit:
@@ -67,3 +72,12 @@ en:
   open_defence_request: "Open Defence Requests"
   open: "Open"
   feedback: "Feedback"
+  accepted: "Accepted"
+  accepted_defence_request: "Accepted Defence Requests"
+  update_and_accept: "Update and Accept"
+  view_the_case_details: "View the case details"
+  case_details: "Case Details"
+  solicitor_email: "Solicitor Email"
+  show: "Show"
+  interview_start_time: "Interview Start Time"
+  case_closed: "This case has been closed with the following feedback"

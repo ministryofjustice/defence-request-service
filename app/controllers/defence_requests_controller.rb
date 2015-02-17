@@ -1,11 +1,16 @@
 class DefenceRequestsController < BaseController
 
-  before_action :find_defence_request, only: [:edit, :update, :feedback, :close, :open]
+  before_action :find_defence_request, only: [:edit, :update, :feedback, :close, :open, :accepted]
   before_action ->(c) { authorize defence_request, "#{c.action_name}?" }
 
   def index
     @open_requests = policy_scope(DefenceRequest).opened.order(created_at: :asc)
     @new_requests = policy_scope(DefenceRequest).created.order(created_at: :asc)
+    @accepted_requests = policy_scope(DefenceRequest).accepted.order(created_at: :asc)
+  end
+
+  def show
+    @defence_request = policy_scope(DefenceRequest).find(params[:id])
   end
 
   def new
@@ -38,10 +43,14 @@ class DefenceRequestsController < BaseController
   end
 
   def update
-    if @defence_request.update_attributes(defence_request_params)
-      redirect_to(defence_requests_path, notice: flash_message(:update, DefenceRequest))
+    if update_and_accept?
+      update_and_accept
     else
-      render :edit
+      if @defence_request.update_attributes(defence_request_params)
+        redirect_to(defence_requests_path, notice: flash_message(:update, DefenceRequest))
+      else
+        render :edit
+      end
     end
   end
 
@@ -74,7 +83,39 @@ class DefenceRequestsController < BaseController
   def close
   end
 
+  def accepted
+    @defence_request.accept
+    if @defence_request.save
+      redirect_to(defence_requests_path, notice: flash_message(:accepted, DefenceRequest))
+    else
+      redirect_to(defence_requests_path, notice: flash_message(:failed_accepted, DefenceRequest))
+    end
+  end
+
   private
+
+  def update_and_accept?
+    params[:commit] == 'Update and Accept'
+  end
+
+  def update_and_accept
+    case
+      when solicitor_details_missing?
+        redirect_to(edit_defence_request_path, alert: flash_message(:solicitor_details_required, DefenceRequest))
+      when dscc_number_missing?
+        redirect_to(edit_defence_request_path, alert: flash_message(:dscc_number_required, DefenceRequest))
+      when @defence_request.update_attributes(defence_request_params) && accepted_and_save_defence_request
+        redirect_to(defence_requests_path, notice: flash_message(:updated_and_updated, DefenceRequest))
+    end
+  end
+
+  def solicitor_details_missing?
+     defence_request_params[:solicitor_name].blank? || defence_request_params[:solicitor_firm].blank?
+  end
+
+  def dscc_number_missing?
+    defence_request_params[:dscc_number].blank?
+  end
 
   def find_defence_request
     @defence_request = DefenceRequest.find(params[:id])
@@ -115,5 +156,8 @@ class DefenceRequestsController < BaseController
     @defence_request.close && @defence_request.save
   end
 
+  def accepted_and_save_defence_request
+    @defence_request.accept && @defence_request.save
+  end
 end
 

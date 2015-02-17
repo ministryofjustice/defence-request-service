@@ -13,12 +13,16 @@ class DefenceRequestPolicy < ApplicationPolicy
       elsif user.cco?
         scope.all
       elsif user.solicitor?
-        scope.none
+        scope.has_solicitor(user)
       end
     end
   end
 
   def index?
+    user.cso? || user.cco? || user.solicitor?
+  end
+
+  def show?
     user.cso? || user.cco? || user.solicitor?
   end
 
@@ -66,8 +70,15 @@ class DefenceRequestPolicy < ApplicationPolicy
     user.cco? && record.can_transition?(:open)
   end
 
+  def accept?
+    user.cco? && record.can_transition?(:accept) && record.dscc_number?
+  end
+
+  def accepted?
+    user.cco? && record.can_transition?(:accept) && record.dscc_number?
+  end
+
   def dashboard_view?
     user.cco? || user.cso?
   end
-
 end
