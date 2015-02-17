@@ -20,6 +20,7 @@ dsds:
   app_title: 'Defence Solicitor Deployment Service'
   dashboard_refresh_seconds: 3000
   solicitor_search_domain: "http://solicitor-search.herokuapp.com"
+  default_mail_host: <%= ENV["DEFAULT_MAIL_HOST"] %>
 
 analytics:
   google_ua: <%= ENV["GOOGLE_ANALYTICS_UA"] %>
