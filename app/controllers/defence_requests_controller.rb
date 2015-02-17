@@ -133,22 +133,50 @@ class DefenceRequestsController < BaseController
                                                          :scheme,
                                                          :phone_number,
                                                          :detainee_name,
+                                                         :detainee_age,
                                                          :time_of_arrival,
                                                          :gender,
                                                          :adult,
-                                                         :date_of_birth,
+                                                         :date_of_birth_day,
+                                                         :date_of_birth_month,
+                                                         :date_of_birth_year,
                                                          :appropriate_adult,
                                                          :custody_number,
                                                          :allegations,
                                                          :comments,
-                                                         :interview_start_time,
-                                                         :time_of_arrival,
+                                                         :interview_start_time_hour,
+                                                         :interview_start_time_minute,
+                                                         :time_of_arrival_hour,
+                                                         :time_of_arrival_minute,
                                                          :dscc_number,
                                                          :feedback)
     raw_params.tap do |p|
       email = p.delete("solicitor_email")
       solicitor = User.solicitors.find_by_email email
       p["solicitor_id"] = solicitor.id if solicitor
+
+      year = p.delete('date_of_birth_year')
+      month = p.delete('date_of_birth_month')
+      day = p.delete('date_of_birth_day')
+      if !(day.blank? || month.blank? && year.blank?)
+        p["date_of_birth"] = DateTime.new year.to_i, month.to_i, day.to_i
+      end
+
+      current_year = DateTime.now.year
+      current_month = DateTime.now.month
+      current_day = DateTime.now.day
+
+      arrival_hour = p.delete('time_of_arrival_hour')
+      arrival_minute = p.delete('time_of_arrival_minute')
+      if arrival_hour && arrival_minute
+        p['time_of_arrival'] = DateTime.new current_year, current_month, current_day, arrival_hour.to_i, arrival_minute.to_i
+      end
+
+      interview_hour = p.delete('interview_start_time_hour')
+      interview_minute = p.delete('interview_start_time_minute')
+      if interview_hour && interview_minute
+        p['interview_start_time'] = DateTime.new current_year, current_month, current_day, interview_hour.to_i, interview_minute.to_i
+      end
     end
   end
 

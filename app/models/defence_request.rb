@@ -38,7 +38,7 @@ class DefenceRequest < ActiveRecord::Base
   validates :detainee_name,
             :allegations,
             :gender,
-            :date_of_birth,
+            :detainee_age,
             :time_of_arrival,
             :custody_number, presence: true
 
@@ -63,6 +63,26 @@ class DefenceRequest < ActiveRecord::Base
 
   def own_solicitor?
     solicitor_type == 'own'
+  end
+
+  def date_of_birth_day
+    date_of_birth.day if date_of_birth
+  end
+
+  def date_of_birth_month
+    date_of_birth.month if date_of_birth
+  end
+
+  def date_of_birth_year
+    date_of_birth.year if date_of_birth
+  end
+
+  def time_of_arrival_hour
+    time_of_arrival.hour if time_of_arrival
+  end
+
+  def time_of_arrival_minute
+    time_of_arrival.min if time_of_arrival
   end
 
   private

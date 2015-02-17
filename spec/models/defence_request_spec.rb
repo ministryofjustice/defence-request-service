@@ -4,7 +4,7 @@ RSpec.describe DefenceRequest, type: :model do
   describe 'validations' do
 
     it { expect(subject).to validate_presence_of :gender }
-    it { expect(subject).to validate_presence_of :date_of_birth }
+    it { expect(subject).to validate_presence_of :detainee_age }
     it { expect(subject).to validate_presence_of :time_of_arrival }
     it { expect(subject).to validate_presence_of :custody_number }
     it { expect(subject).to validate_presence_of :detainee_name }
