@@ -7,7 +7,11 @@ RSpec.describe DefenceRequestPolicy do
 
   context "Custody Suite Officers" do
     let(:user)          { FactoryGirl.create(:cso_user) }
-    let(:group_actions) { [:index, :show, :new, :create, :refresh_dashboard, :solicitors_search, :dashboard_view] }
+    let(:group_actions) {
+      [:index, :show, :new, :create, :refresh_dashboard,
+       :solicitors_search, :view_open_requests,
+       :view_new_requests, :view_accepted_requests]
+    }
 
     context "with a new DR" do
       let (:defreq) { FactoryGirl.build(:defence_request) }
@@ -37,7 +41,10 @@ RSpec.describe DefenceRequestPolicy do
 
   context "Call Center Operatives" do
     let(:user) { FactoryGirl.create(:cco_user)}
-    let(:group_actions) { [:index, :show, :refresh_dashboard, :dashboard_view] }
+    let(:group_actions) {
+      [:index, :show, :refresh_dashboard, :view_open_requests,
+       :view_new_requests, :view_accepted_requests]
+    }
 
     context "with a created DR" do
       let (:defreq) { FactoryGirl.create(:defence_request) }
@@ -69,7 +76,7 @@ RSpec.describe DefenceRequestPolicy do
     let (:defreq) { FactoryGirl.create(:defence_request) }
     let(:user) { FactoryGirl.create(:solicitor_user)}
 
-    [:index, :show].each do |action|
+    [:index, :show, :view_accepted_requests].each do |action|
       specify { expect(subject).to permit_action(action) }
     end
 

@@ -78,7 +78,16 @@ class DefenceRequestPolicy < ApplicationPolicy
     user.cco? && record.can_transition?(:accept) && record.dscc_number?
   end
 
-  def dashboard_view?
+  def view_open_requests?
     user.cco? || user.cso?
   end
+
+  def view_new_requests?
+    user.cco? || user.cso?
+  end
+
+  def view_accepted_requests?
+    user.cco? || user.cso? || user.solicitor?
+  end
+
 end
