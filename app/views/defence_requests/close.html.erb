@@ -4,6 +4,7 @@
 <%= form_for @defence_request, url: close_feedback_defence_request_path, method: :patch do |f| %>
   <div class="form-group">
     <fieldset>
+      <%= f.label :feedback, t('feedback') %>
       <%= f.text_area :feedback, rows: '10' %>
     </fieldset>
   </div>

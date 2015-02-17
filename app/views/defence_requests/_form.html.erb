@@ -1,13 +1,12 @@
 <%= render 'shared/flash_messages' %>
 <%= render 'shared/error_messages', object: @defence_request %>
 
-<h3>Legal advice request<h3>
-
+<h3><%= t('legal_advice_request')%><h3>
 
 <%= form_for(@defence_request) do |f| %>
   <% if @defence_request.new_record? %>
     <div class="form-group panel">
-      <legend>What type of solicitor is being requested?</legend>
+      <legend><%= t('what_type_is_being_requested') %></legend>
       <fieldset class="inline">
         <label class="block-label" for="defence_request_solicitor_type_own">
           <%= f.radio_button :solicitor_type, :own, name: 'defence_request[solicitor_type]', class: 'solicitor_type_radio' %>
@@ -29,7 +28,7 @@
   <div id='main-form-body' <%= "class=hidden" if @defence_request.new_record?%>>
     <!-- details -->
     <div id='solicitor-details' <%= "class=hidden" if @defence_request.new_record? %>>
-      <h3>Solicitor details</h3>
+      <h3><% t('solicitor_details') %></h3>
       <div class="form-group details panel">
         <div class="">
           <%= f.label :solicitor_name, t('full_name')%>
@@ -54,7 +53,7 @@
 
 =======
     <!-- detainee -->
-    <h3>Detainee details</h3>
+    <h3><%= t('detainee_details') %></h3>
     <div class="form-group detainee panel">
       <div class="form-group">
         <%= f.label :detainee_name, t('full_name') %>
@@ -118,8 +117,8 @@
     </div>
 
     <!-- case details -->
-    <h3>Case details</h3>
-    <div class="form-group panel">
+    <h3><%= t('case_details') %></h3>
+    <div class="form-group case_details panel">
       <div class="form-group">
         <fieldset class="inline">
           <label for>

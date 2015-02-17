@@ -19,31 +19,34 @@ RSpec.feature 'defence request creation' do
       scenario 'Filling in form manually for own solicitor', js: true do
         visit root_path
         click_link 'New Defence Request'
-        expect(page).to have_content ('New Defence Request')
+        expect(page).to have_content ('Defence solicitor request')
 
         within '.new_defence_request' do
           choose 'Own'
-          within '.details' do
-            fill_in 'Solicitor name', with: 'Bob Smith'
-            fill_in 'Solicitor firm', with: 'Acme Solicitors'
-            fill_in 'Phone number', with: '0207 284 0000'
+          within '#solicitor-details' do
+            fill_in 'Full name', with: 'Bob Smith'
+            fill_in 'Name of firm', with: 'Acme Solicitors'
+            fill_in 'Telephone number', with: '0207 284 0000'
+          end
+
+          within '.case_details' do
             fill_in 'Custody number', with: '#CUST-01234'
             fill_in 'Allegations', with: 'BadMurder'
-            select('09', from: 'defence_request_time_of_arrival_4i')
-            select('30', from: 'defence_request_time_of_arrival_5i')
+            fill_in 'Hour', with: '09'
+            fill_in 'Min', with: '30'
           end
 
           within '.detainee' do
-            fill_in 'Detainee name', with: 'Mannie Badder'
+            fill_in 'Full name', with: 'Mannie Badder'
             choose 'Male'
-            check 'defence_request[adult]'
-            select('1976', from: 'defence_request_date_of_birth_1i')
-            select('January', from: 'defence_request_date_of_birth_2i')
-            select('1', from: 'defence_request_date_of_birth_3i')
-            check 'defence_request[appropriate_adult]'
+            fill_in 'Age', with: '39'
+            fill_in 'Year', with: '1976'
+            fill_in 'Month', with: '1'
+            fill_in 'Day', with: '1'
+            choose 'No'
           end
           fill_in 'Comments', with: 'This is a very bad man. Send him down...'
-          click_button 'Create Defence Request'
+          click_button 'Continue'
         end
         an_audit_should_exist_for_the_defence_request_creation
         expect(page).to have_content 'Bob Smith'
@@ -63,9 +66,11 @@ RSpec.feature 'defence request creation' do
 
         click_link 'Bobson Smith'
         expect(page).to_not have_content 'Bobby Bob Smithson'
-        expect(page).to have_field 'Solicitor name', with: 'Bobson Smith'
-        expect(page).to have_field 'Solicitor firm', with: 'Kreiger LLC'
-        expect(page).to have_field 'Phone number', with: '248.412.8095'
+        within '#solicitor-details' do
+          expect(page).to have_field 'Full name', with: 'Bobson Smith'
+          expect(page).to have_field 'Name of firm', with: 'Kreiger LLC'
+          expect(page).to have_field 'Telephone number', with: '248.412.8095'
+        end
       end
 
       scenario 'performing multiple own solicitor searches', js: true do
@@ -139,13 +144,9 @@ RSpec.feature 'defence request creation' do
         click_link 'Bobson Smith'
         choose 'Duty'
 
-        expect(page).to have_field 'Solicitor name', with: "", disabled: true
-        expect(page).to have_field 'Solicitor firm', with: "", disabled: true
-        expect(page).to have_field 'Scheme', with: "No Scheme", disabled: false
         expect(page).to_not have_content 'Bobson Smith'
 
         choose 'Own'
-        expect(page).to have_field 'Scheme', with: "No Scheme", disabled: true
         expect(page).to have_field 'q', with: ''
       end
     end
@@ -237,27 +238,43 @@ RSpec.feature 'defence request creation' do
         within "#defence_request_#{dr_1.id}" do
           click_link 'Edit'
         end
-        expect(page).to have_content ('Edit Defence Request')
+        expect(page).to have_content ('Defence solicitor request')
 
         within '.edit_defence_request' do
-          fill_in 'Solicitor name', with: 'Dave Smith'
-          fill_in 'Solicitor firm', with: 'Broken Solicitors'
-          fill_in 'Phone number', with: '0207 284 9999'
-          fill_in 'Custody number', with: '#CUST-9876'
-          fill_in 'Allegations', with: 'BadMurder'
-          select('10', from: 'defence_request_time_of_arrival_4i')
-          select('00', from: 'defence_request_time_of_arrival_5i')
+          within '#solicitor-details' do
+            fill_in 'Full name', with: 'Dave Smith'
+            fill_in 'Name of firm', with: 'Broken Solicitors'
+            fill_in 'Telephone number', with: '0207 284 9999'
+          end
 
+          within '.case_details' do
+            fill_in 'Custody number', with: '#CUST-9876'
+            fill_in 'Allegations', with: 'BadMurder'
+            fill_in 'Hour', with: '10'
+            fill_in 'Min', with: '0'
+          end
 
-          fill_in 'Detainee name', with: 'Annie Nother'
-          choose 'Female'
-          uncheck 'defence_request[adult]'
-          select('1986', from: 'defence_request_date_of_birth_1i')
-          select('December', from: 'defence_request_date_of_birth_2i')
-          select('31', from: 'defence_request_date_of_birth_3i')
-          check 'defence_request[appropriate_adult]'
+          within '.detainee' do
+            fill_in 'Full name', with: 'Mannie Badder'
+            choose 'Male'
+            fill_in 'Age', with: '39'
+            fill_in 'Year', with: '1976'
+            fill_in 'Month', with: '1'
+            fill_in 'Day', with: '1'
+            choose 'No'
+          end
+
+          within '.detainee' do
+            fill_in 'Full name', with: 'Annie Nother'
+            choose 'Female'
+            fill_in 'Age', with: '28'
+            fill_in 'Year', with: '1986'
+            fill_in 'Month', with: '12'
+            fill_in 'Day', with: '31'
+            choose 'Yes'
+          end
           fill_in 'Comments', with: 'I fought the law...'
-          click_button 'Update Defence Request'
+          click_button 'Continue'
         end
 
         within "#defence_request_#{dr_1.id}" do
@@ -346,6 +363,15 @@ RSpec.feature 'defence request creation' do
           end
         end
 
+        within '#solicitor-details' do
+          fill_in 'Full name', with: 'Henry Billy Bob'
+          fill_in 'Name of firm', with: 'Cheap Skate Law'
+          fill_in 'Telephone number', with: '00112233445566'
+        end
+
+        click_button 'Continue'
+        expect(current_path).to eq(defence_requests_path)
+
         scenario 'I see an accepted button for open DR`s with a DSCC number' do
           opened_dr.update(dscc_number: '012345')
           visit root_path
@@ -381,6 +407,16 @@ RSpec.feature 'defence request creation' do
           click_button 'Update and Accept'
           expect(page).to have_content('A Valid DSCC number is required to update and accept a Defence Request')
         end
+        fill_in 'DSCC number', with: 'NUMBERWANG'
+        click_button 'Continue'
+        expect(page).to have_content 'Defence Request successfully updated'
+        within "#defence_request_#{opened_dr.id}" do
+          click_link 'Edit'
+        end
+        expect(page).to have_field 'DSCC number', with: 'NUMBERWANG'
+        fill_in 'DSCC number', with: 'T-1000'
+        click_button 'Continue'
+        expect(page).to have_content 'Defence Request successfully updated'
       end
 
       context 'for "duty" solicitor' do
