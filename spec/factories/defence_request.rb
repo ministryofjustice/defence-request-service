@@ -44,4 +44,9 @@ FactoryGirl.define do
     dscc_number '123456'
   end
 
+  trait :accepted do
+    state 'accepted'
+    dscc_number '123456'
+  end
+
 end

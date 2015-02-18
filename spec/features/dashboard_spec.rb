@@ -148,6 +148,34 @@ RSpec.feature 'Defence request dashboard' do
     end
   end
 
+  context 'as a solicitor' do
+    before :each do
+      create_role_and_login('solicitor')
+      solicitor = User.find_by(email: 'solicitor@example.com')
+      solicitor_dr.update(solicitor: solicitor)
+      other_solicitor_dr.update(solicitor: other_solicitor)
+    end
+
+    scenario 'i am redirected to my dashboard at login' do
+      expect(page).to have_content('Solicitor Dashboard')
+      expect(page).to_not have_content('Custody Suite Officer Dashboard')
+    end
+
+    let!(:solicitor_dr) { create(:defence_request, :accepted) }
+    let!(:other_solicitor_dr) { create(:defence_request, :accepted) }
+    let!(:other_solicitor) { create(:solicitor_user) }
+
+    scenario 'i see only MY "accepted" DR`s`' do
+      visit defence_requests_path
+      within ".accepted_defence_requests" do
+        expect(page).to have_content(solicitor_dr.solicitor_name)
+      end
+      within ".accepted_defence_requests" do
+        expect(page).to_not have_content(other_solicitor_dr.solicitor_name)
+      end
+    end
+  end
+
   def element_order_correct?(first_element, second_element)
     !!(/#{first_element}.*#{second_element}/m =~ page.body)
   end
