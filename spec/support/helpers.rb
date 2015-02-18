@@ -42,4 +42,8 @@ module HelperMethods
     end
   end
 
+  def an_email_has_been_sent
+    expect(ActionMailer::Base.deliveries.size).to eq 1
+  end
+
 end

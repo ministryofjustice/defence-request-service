@@ -87,6 +87,7 @@ RSpec.feature 'Defence request dashboard' do
       page.execute_script "window.confirm"
 
       expect(page).to have_content("Details successfully sent")
+      an_email_has_been_sent
     end
   end
 
@@ -166,6 +167,7 @@ RSpec.feature 'Defence request dashboard' do
       page.execute_script "window.confirm"
 
       expect(page).to have_content("Details successfully sent")
+      an_email_has_been_sent
     end
   end
 
