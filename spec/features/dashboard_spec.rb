@@ -77,12 +77,14 @@ RSpec.feature 'Defence request dashboard' do
       expect(page).to_not have_selector(".open_defence_request#defence_request_#{dr_created.id}")
     end
 
-    scenario 'resending case details' do
+    scenario 'resending case details', js: true do
       visit defence_requests_path
 
       within ".accepted_defence_request" do
         click_button 'Resend details'
       end
+
+      page.execute_script "window.confirm"
 
       expect(page).to have_content("Details successfully sent")
     end
@@ -154,12 +156,14 @@ RSpec.feature 'Defence request dashboard' do
       expect(page).to_not have_selector(".created_defence_requests#defence_request_#{dr_created.id}")
     end
 
-    scenario 'resending case details' do
+    scenario 'resending case details', js: true do
       visit defence_requests_path
 
       within ".accepted_defence_request" do
         click_button 'Resend details'
       end
+
+      page.execute_script "window.confirm"
 
       expect(page).to have_content("Details successfully sent")
     end
