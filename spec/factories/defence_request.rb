@@ -33,6 +33,11 @@ FactoryGirl.define do
     state 'opened'
   end
 
+  trait :accepted do
+    state 'accepted'
+    association :solicitor, factory: :solicitor_user
+  end
+
   trait :closed do
     dscc_number '123456'
     feedback 'This has been closed for a reason.'

@@ -31,6 +31,12 @@ RSpec.describe DefenceRequestPolicy do
       specify { expect(subject).to permit_actions_and_forbid_all_others actions }
     end
 
+    context "with an accepted DR" do
+      let (:defreq) { FactoryGirl.create(:defence_request, :accepted) }
+      let (:actions) { group_actions + [:close, :feedback, :resend_details] }
+      specify { expect(subject).to permit_actions_and_forbid_all_others actions }
+    end
+
     describe "scope" do
       let (:defreq) { FactoryGirl.create(:defence_request) }
       it "returns all of the requests" do
@@ -61,6 +67,12 @@ RSpec.describe DefenceRequestPolicy do
     context "with a DR with dscc number" do
       let (:defreq) { FactoryGirl.create(:defence_request, :with_dscc_number) }
       let (:actions) { group_actions + [:edit, :dscc_number_edit, :update, :close, :feedback, :accepted, :accept] }
+      specify { expect(subject).to permit_actions_and_forbid_all_others actions }
+    end
+
+    context "with an accepted DR" do
+      let (:defreq) { FactoryGirl.create(:defence_request, :accepted) }
+      let (:actions) { group_actions + [:close, :feedback, :resend_details] }
       specify { expect(subject).to permit_actions_and_forbid_all_others actions }
     end
 

@@ -90,4 +90,8 @@ class DefenceRequestPolicy < ApplicationPolicy
     user.cco? || user.cso? || user.solicitor?
   end
 
+  def resend_details?
+    (user.cco? || user.cso?) && record.accepted?
+  end
+
 end

@@ -85,6 +85,10 @@ class DefenceRequest < ActiveRecord::Base
     time_of_arrival.min if time_of_arrival
   end
 
+  def resend_details
+    send_solicitor_case_details
+  end
+
   private
 
   def format_phone_number
@@ -98,4 +102,5 @@ class DefenceRequest < ActiveRecord::Base
   def send_solicitor_case_details
     Mailer.send_solicitor_case_details(self, solicitor).deliver_now if solicitor
   end
+
 end
