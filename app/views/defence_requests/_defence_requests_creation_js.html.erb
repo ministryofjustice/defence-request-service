@@ -56,11 +56,11 @@
     }
 
     var adjust_form_for_request_type = function () {
-      var ownSolicitor_checked = ($("input[type='radio']#defence_request_solicitor_type_own:checked").length > 0);
-      var dutySolicitor_checked = ($("input[type='radio']#defence_request_solicitor_type_duty:checked").length > 0);
-      if (ownSolicitor_checked) {
+      var own_solicitor_checked = ($("input[type='radio']#defence_request_solicitor_type_own:checked").length > 0);
+      var duty_solicitor_checked = ($("input[type='radio']#defence_request_solicitor_type_duty:checked").length > 0);
+      if (own_solicitor_checked) {
         own_setup()
-        } else if(dutySolicitor_checked) {
+        } else if(duty_solicitor_checked) {
         duty_setup()
       }
     }
