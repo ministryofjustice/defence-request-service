@@ -1,19 +1,14 @@
-<% requests.each_with_index do |def_req, ind| %>
-  <%= content_tag_for(:tr, def_req) do %>
-    <th scope="row"><%= ind %></th>
-    <td><%= def_req.solicitor_type %></td>
-    <td><%= def_req.solicitor_name %></td>
-    <td><%= def_req.solicitor_firm %></td>
-    <td><%= def_req.scheme %></td>
+<% requests.each do |def_req| %>
+  <%= content_tag_for(:tr, def_req, class: type+"_defence_request") do %>
+    <td><%= dashboard_limit_formatter(def_req.state, 2) %></td>
+    <td class="sol-name"><%= truncate(def_req.solicitor_name, length: 40) %></td>
     <td><%= def_req.phone_number %></td>
-    <td><%= def_req.detainee_name %></td>
-    <td><%= def_req.gender %></td>
-    <td><%= def_req.adult %></td>
-    <td><%= def_req.appropriate_adult %></td>
+    <td class="det-name"><%= truncate(def_req.detainee_name, length: 40) %></td>
+    <td class="gender"><%= dashboard_limit_formatter(def_req.gender, 0) %></td>
+    <td class="adult"><%= boolean_formatter(def_req.adult) %></td>
     <td><%= def_req.custody_number %></td>
-    <td><%= def_req.allegations %></td>
-    <td><%= def_req.comments %></td>
-    <td><%= def_req.time_of_arrival %></td>
+    <td class="allegation"><%= truncate(def_req.allegations, length: 50) %></td>
+    <td><%= date_and_time_formatter(def_req.time_of_arrival) %></td>
     <td class='actions'><%= render 'actions', def_req: def_req %></td>
     </td>
   <% end %>

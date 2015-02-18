@@ -11,16 +11,15 @@
  *= require govuk_elements_extensions
  */
 
-.phase-banner{
+.phase-banner {
   background-color: #d53880;
   padding: 10px 0 8px 0;
   border-bottom: 1px solid #bfc1c3;
 }
 
-fieldset.time-select select{
+fieldset.time-select select {
   display: inline;
 }
-
 
 .panel {
   border: 1px solid #bfc1c3;
@@ -30,13 +29,13 @@ fieldset.time-select select{
   padding-left: 30px;
 }
 
-.solicitor_results_list{
+.solicitor_results_list {
   padding-left: 14px;
   margin-top: 60px;
   z-index: 1;
 }
 
-td.actions{
+td.actions {
   text-align: center;
 }
 
@@ -66,35 +65,16 @@ a.user-links {
   text-decoration: none;
 }
 
-
-.dashboard {
-  position: relative;
-  top: 20%;
-  right: 0;
-  left: 0;
-  margin: auto;
-  height: 100%;
+h1 {
+  font-size: 28px;
 }
 
-.fullwidth{
-  width: 100%;
-//  left: 12.5%;
-  right: 20%;
-  border: 20px solid white;
-  border-radius: 10px;
-  background-color: white;
-  text-align: center;
-  position: relative;
-  float: left;
-  clear: both;
-}
-
-h3.dashboard{
+h3.dashboard {
   float: left;
   padding-top: 20px;
 }
 
-h5.user-role{
+h5.user-role {
   color: white;
   display: inline;
   font-weight: 800;
@@ -131,13 +111,13 @@ h5.user-role{
 }
 
 .date_field_wrapper {
- display: inline-block;
- margin-right: 1em;
+  display: inline-block;
+  margin-right: 1em;
 }
 
 .time_field_wrapper {
- display: inline-block;
- margin-right: 1em;
+  display: inline-block;
+  margin-right: 1em;
 }
 
 label + input, label + textarea {
@@ -166,4 +146,76 @@ label + input, label + textarea {
 
 .hidden {
   display: none;
+}
+
+tr.accepted_defence_request {
+  border-left: #F47738 4px solid;
+}
+
+tr.created_defence_request {
+  border-left: #912B88 4px solid;
+}
+
+tr.open_defence_request {
+  border-left: #D53880 4px solid;
+}
+
+//tr.accepted_defence_request {
+//  border-left: #F47738 4px solid;
+//  background-color: rgba(242, 118, 56, 0.18);
+//}
+//
+//tr.created_defence_request {
+//  border-left: #912B88 4px solid;
+//  background-color: rgba(143, 43, 134, 0.17);
+//}
+//
+//tr.open_defence_request {
+//  border-left: #D53880 4px solid;
+//  border-left: rgba(212, 57, 129, 0.18);
+//}
+
+table.dashboard {
+  width: 100%;
+}
+
+table.dashboard th {
+  font-size: 15px;
+}
+
+table.dashboard td {
+  font-size: 15px;
+  white-space: nowrap;
+  width: 10px;
+}
+
+table.dashboard td.actions {
+  font-size: 15px;
+  white-space: normal;
+}
+
+table.dashboard td.sol-name {
+  white-space: normal;
+}
+
+table.dashboard td.det-name {
+  white-space: normal;
+}
+
+table.dashboard td.allegation {
+  white-space: normal;
+}
+
+table.dashboard td.gender {
+  text-align: center;
+}
+
+table.dashboard td.adult {
+  text-align: center;
+}
+
+table.dashboard tr {
+  font-size: 15px;
+  white-space: nowrap;
+  width: 10px;
 }

@@ -24,7 +24,7 @@ RSpec.feature 'defence request creation' do
         within '.new_defence_request' do
           choose 'Own'
           within '#solicitor-details' do
-            fill_in 'Full name', with: 'Bob Smith'
+            fill_in 'Full Name', with: 'Bob Smith'
             fill_in 'Name of firm', with: 'Acme Solicitors'
             fill_in 'Telephone number', with: '0207 284 0000'
           end
@@ -37,7 +37,7 @@ RSpec.feature 'defence request creation' do
           end
 
           within '.detainee' do
-            fill_in 'Full name', with: 'Mannie Badder'
+            fill_in 'Full Name', with: 'Mannie Badder'
             choose 'Male'
             fill_in 'Age', with: '39'
             fill_in 'Year', with: '1976'
@@ -67,7 +67,7 @@ RSpec.feature 'defence request creation' do
         click_link 'Bobson Smith'
         expect(page).to_not have_content 'Bobby Bob Smithson'
         within '#solicitor-details' do
-          expect(page).to have_field 'Full name', with: 'Bobson Smith'
+          expect(page).to have_field 'Full Name', with: 'Bobson Smith'
           expect(page).to have_field 'Name of firm', with: 'Kreiger LLC'
           expect(page).to have_field 'Telephone number', with: '248.412.8095'
         end
@@ -242,7 +242,7 @@ RSpec.feature 'defence request creation' do
 
         within '.edit_defence_request' do
           within '#solicitor-details' do
-            fill_in 'Full name', with: 'Dave Smith'
+            fill_in 'Full Name', with: 'Dave Smith'
             fill_in 'Name of firm', with: 'Broken Solicitors'
             fill_in 'Telephone number', with: '0207 284 9999'
           end
@@ -255,7 +255,7 @@ RSpec.feature 'defence request creation' do
           end
 
           within '.detainee' do
-            fill_in 'Full name', with: 'Mannie Badder'
+            fill_in 'Full Name', with: 'Mannie Badder'
             choose 'Male'
             fill_in 'Age', with: '39'
             fill_in 'Year', with: '1976'
@@ -265,7 +265,7 @@ RSpec.feature 'defence request creation' do
           end
 
           within '.detainee' do
-            fill_in 'Full name', with: 'Annie Nother'
+            fill_in 'Full Name', with: 'Annie Nother'
             choose 'Female'
             fill_in 'Age', with: '28'
             fill_in 'Year', with: '1986'
@@ -279,7 +279,6 @@ RSpec.feature 'defence request creation' do
 
         within "#defence_request_#{dr_1.id}" do
           expect(page).to have_content('Dave Smith')
-          expect(page).to have_content('Broken Solicitors')
           expect(page).to have_content('02072849999')
           expect(page).to have_content('#CUST-9876')
           expect(page).to have_content('BadMurder')
@@ -319,7 +318,7 @@ RSpec.feature 'defence request creation' do
           end
 
           within '#solicitor-details' do
-            fill_in 'Full name', with: 'Henry Billy Bob'
+            fill_in 'Full Name', with: 'Henry Billy Bob'
             fill_in 'Name of firm', with: 'Cheap Skate Law'
             fill_in 'Telephone number', with: '00112233445566'
           end
@@ -329,7 +328,6 @@ RSpec.feature 'defence request creation' do
 
           within "#defence_request_#{opened_dr.id}" do
             expect(page).to have_content 'Henry Billy Bob'
-            expect(page).to have_content 'Cheap Skate Law'
             expect(page).to have_content '00112233445566'
           end
         end
@@ -353,14 +351,14 @@ RSpec.feature 'defence request creation' do
 
         scenario 'I cant see an accepted button for created DR`s' do
           visit root_path
-          within ".new_defence_requests" do
+          within ".created_defence_request" do
             expect(page).to_not have_button 'Accepted'
           end
         end
 
         scenario 'I CANT see an accepted button for open DR`s without a DSCC number' do
           visit root_path
-          within ".open_defence_requests" do
+          within ".open_defence_request" do
             expect(page).to_not have_button 'Accepted'
           end
         end
@@ -371,7 +369,7 @@ RSpec.feature 'defence request creation' do
           within "#defence_request_#{opened_dr.id}" do
             click_button 'Accepted'
           end
-          within ".accepted_defence_requests" do
+          within ".accepted_defence_request" do
             expect(page).to have_content(opened_dr.solicitor_name)
           end
         end
@@ -385,7 +383,7 @@ RSpec.feature 'defence request creation' do
           fill_in 'DSCC number', with: '123456'
 
           click_button 'Update and Accept'
-          within ".accepted_defence_requests" do
+          within ".accepted_defence_request" do
             expect(page).to have_content(opened_dr.solicitor_name)
           end
         end
@@ -406,7 +404,7 @@ RSpec.feature 'defence request creation' do
         let!(:duty_solicitor_dr) { create(:defence_request, :duty_solicitor, :opened) }
         scenario 'can NOT mark a dr as "solicitor accepted" without solicitor details from the DASHBOARD' do
           visit root_path
-          within ".open_defence_requests" do
+          within ".open_defence_request" do
             expect(page).to_not have_button 'Accepted'
           end
         end
@@ -420,19 +418,19 @@ RSpec.feature 'defence request creation' do
           expect(page).to have_content('Valid solicitor details are required to update and accept a Defence Request')
 
           within '#solicitor-details' do
-            fill_in 'Full name', with: 'Dodgy Dave'
+            fill_in 'Full Name', with: 'Dodgy Dave'
           end
           click_button 'Update and Accept'
           expect(page).to have_content('Valid solicitor details are required to update and accept a Defence Request')
           within '#solicitor-details' do
-            fill_in 'Full name', with: 'Dodgy Dave'
+            fill_in 'Full Name', with: 'Dodgy Dave'
             fill_in 'Name of firm', with: 'Innocent your honour'
           end
           click_button 'Update and Accept'
 
           expect(page).to have_content('A Valid DSCC number is required to update and accept a Defence Request')
           within '#solicitor-details' do
-            fill_in 'Full name', with: 'Dodgy Dave'
+            fill_in 'Full Name', with: 'Dodgy Dave'
             fill_in 'Name of firm', with: 'Innocent your honour'
           end
           fill_in 'DSCC number', with: '123456'
@@ -458,7 +456,7 @@ RSpec.feature 'defence request creation' do
       let!(:closed_dr) { create(:defence_request, :closed) }
       scenario 'solicitor can see the show page of case they "own"' do
         visit defence_requests_path
-        within ".accepted_defence_requests" do
+        within ".accepted_defence_request" do
           click_link('Show')
         end
 

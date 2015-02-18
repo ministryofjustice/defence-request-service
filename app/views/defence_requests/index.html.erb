@@ -2,30 +2,24 @@
 <h1><%= "#{t(current_user.role)}  #{t('dashboard')}" %></h1>
 <% if policy(:defence_request).create? %>
   <div class="new_defence_request">
-    <%= link_to t('new_defence_request'), new_defence_request_path, class: 'btn btn-default' %>
+    <%= link_to t('new_defence_request'), new_defence_request_path, role: 'button', class: 'button' %>
   </div>
 <% end %>
-<div class="dashboard">
-  <div class="fullwidth">
-
-    <% if policy(:defence_request).view_new_requests? %>
-      <h3 class="dashboard"><%= t('new_defence_requests') %></h3>
-      <%= render 'dashboard', requests: @new_requests, type: 'new' %>
+<table class="dashboard">
+  <%= render 'defence_requests_table_head' %>
+  <tbody>
+    <% if policy(:defence_request).view_created_requests? %>
+      <%= render 'dashboard', requests: @created_requests, type: 'created' %>
     <% end %>
-
     <% if policy(:defence_request).view_open_requests? %>
       <% if policy(:defence_request).index? %>
-        <h3 class="dashboard"><%= t('open_defence_request') %></h3>
         <%= render 'dashboard', requests: @open_requests, type: 'open' %>
       <% end %>
     <% end %>
-
     <% if policy(:defence_request).view_accepted_requests? %>
       <% if policy(:defence_request).index? %>
-        <h3 class="dashboard"><%= t('accepted_defence_request') %></h3>
         <%= render 'dashboard', requests: @accepted_requests, type: 'accepted' %>
       <% end %>
     <% end %>
-
-  </div>
-</div>
+  </tbody>
+</table>

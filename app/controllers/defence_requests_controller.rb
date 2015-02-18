@@ -5,7 +5,7 @@ class DefenceRequestsController < BaseController
 
   def index
     @open_requests = policy_scope(DefenceRequest).opened.order(created_at: :asc)
-    @new_requests = policy_scope(DefenceRequest).created.order(created_at: :asc)
+    @created_requests = policy_scope(DefenceRequest).created.order(created_at: :asc)
     @accepted_requests = policy_scope(DefenceRequest).accepted.order(created_at: :asc)
   end
 
@@ -56,7 +56,8 @@ class DefenceRequestsController < BaseController
 
   def refresh_dashboard
     @open_requests = policy_scope(DefenceRequest).opened.order(created_at: :asc)
-    @new_requests = policy_scope(DefenceRequest).created.order(created_at: :asc)
+    @created_requests = policy_scope(DefenceRequest).created.order(created_at: :asc)
+    @accepted_requests = policy_scope(DefenceRequest).accepted.order(created_at: :asc)
 
     respond_to do |format|
       format.js
