@@ -35,6 +35,7 @@ FactoryGirl.define do
 
   trait :accepted do
     state 'accepted'
+    dscc_number '123456'
     association :solicitor, factory: :solicitor_user
   end
 
@@ -46,11 +47,6 @@ FactoryGirl.define do
 
   trait :with_dscc_number do
     state 'opened'
-    dscc_number '123456'
-  end
-
-  trait :accepted do
-    state 'accepted'
     dscc_number '123456'
   end
 

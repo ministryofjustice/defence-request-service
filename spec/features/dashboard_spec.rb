@@ -10,6 +10,7 @@ RSpec.feature 'Defence request dashboard' do
     let!(:dr_created) { create(:defence_request, :created) }
     let!(:dr_open1) { create(:defence_request, :opened) }
     let!(:dr_open2) { create(:defence_request, :opened) }
+    let!(:dr_accepted) { create(:defence_request, :accepted) }
 
     scenario 'i am redirected to my dashboard at login' do
       expect(page).to have_content('Custody Suite Officer Dashboard')
@@ -75,6 +76,16 @@ RSpec.feature 'Defence request dashboard' do
 
       expect(page).to_not have_selector(".open_defence_request#defence_request_#{dr_created.id}")
     end
+
+    scenario 'resending case details' do
+      visit defence_requests_path
+
+      within ".accepted_defence_request" do
+        click_button 'Resend details'
+      end
+
+      expect(page).to have_content("Details successfully sent")
+    end
   end
 
   context 'as a cco' do
@@ -84,6 +95,7 @@ RSpec.feature 'Defence request dashboard' do
 
     let!(:dr_created) { create(:defence_request, :created) }
     let!(:dr_open) { create(:defence_request, :opened) }
+    let!(:dr_accepted) { create(:defence_request, :accepted) }
 
     scenario 'i am redirected to my dashboard at login' do
       expect(page).to have_content('Call Center Operative Dashboard')
@@ -141,14 +153,21 @@ RSpec.feature 'Defence request dashboard' do
 
       expect(page).to_not have_selector(".created_defence_requests#defence_request_#{dr_created.id}")
     end
+
+    scenario 'resending case details' do
+      visit defence_requests_path
+
+      within ".accepted_defence_request" do
+        click_button 'Resend details'
+      end
+
+      expect(page).to have_content("Details successfully sent")
+    end
   end
 
   context 'as a solicitor' do
     before :each do
       create_role_and_login('solicitor')
-      solicitor = User.find_by(email: 'solicitor@example.com')
-      solicitor_dr.update(solicitor: solicitor)
-      other_solicitor_dr.update(solicitor: other_solicitor)
     end
 
     scenario 'i am redirected to my dashboard at login' do

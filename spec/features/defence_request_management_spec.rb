@@ -446,9 +446,6 @@ RSpec.feature 'defence request creation' do
     context 'as solicitor' do
       before :each do
         create_role_and_login('solicitor')
-        solicitor = User.find_by(email: 'solicitor@example.com')
-        solicitor_dr.update(solicitor: solicitor)
-        closed_dr.update(solicitor: solicitor)
       end
 
       let!(:solicitor_dr) { create(:defence_request, :accepted) }
