@@ -444,16 +444,14 @@ RSpec.feature 'defence request creation' do
 
   context 'Show' do
     context 'as solicitor' do
-      before :each do
-        create_role_and_login('solicitor')
-        solicitor = User.find_by(email: 'solicitor@example.com')
-        solicitor_dr.update(solicitor: solicitor)
-        closed_dr.update(solicitor: solicitor)
-      end
-
       let!(:solicitor_dr) { create(:defence_request, :accepted) }
       let!(:dr2) { create(:defence_request, :accepted) }
-      let!(:closed_dr) { create(:defence_request, :closed) }
+      let!(:closed_dr) { create(:defence_request, :closed, solicitor: solicitor_dr.solicitor) }
+
+      before :each do
+        login_as_user(solicitor_dr.solicitor.email)
+      end
+
       scenario 'solicitor can see the show page of case they "own"' do
         visit defence_requests_path
         within ".accepted_defence_request" do

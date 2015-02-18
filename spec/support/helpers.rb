@@ -13,6 +13,13 @@ module HelperMethods
     click_button 'Sign in'
   end
 
+  def login_as_user(email)
+    visit new_user_session_path
+    fill_in 'user_email', with: email
+    fill_in 'user_password', with: 'password'
+    click_button 'Sign in'
+  end
+
   def create_a_defence_request
     visit new_defence_request_path
     within '.new_defence_request' do
@@ -40,6 +47,10 @@ module HelperMethods
       fill_in 'Comments', with: 'This is a very bad man. Send him down...'
       click_button 'Create Defence Request'
     end
+  end
+
+  def an_email_has_been_sent
+    expect(ActionMailer::Base.deliveries.size).to eq 1
   end
 
 end

@@ -1,6 +1,6 @@
 class DefenceRequestsController < BaseController
 
-  before_action :find_defence_request, only: [:edit, :update, :feedback, :close, :open, :accepted]
+  before_action :find_defence_request, only: [:edit, :update, :feedback, :close, :open, :accepted, :resend_details]
   before_action ->(c) { authorize defence_request, "#{c.action_name}?" }
 
   def index
@@ -90,6 +90,14 @@ class DefenceRequestsController < BaseController
       redirect_to(defence_requests_path, notice: flash_message(:accepted, DefenceRequest))
     else
       redirect_to(defence_requests_path, notice: flash_message(:failed_accepted, DefenceRequest))
+    end
+  end
+
+  def resend_details
+    if @defence_request.resend_details
+      redirect_to(defence_requests_path, notice: flash_message(:details_sent, DefenceRequest))
+    else
+      redirect_to(defence_requests_path, notice: flash_message(:failed_details_sent, DefenceRequest))
     end
   end
 

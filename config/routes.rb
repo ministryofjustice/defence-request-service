@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       patch 'close' => 'defence_requests#feedback', as: 'close_feedback'
       put 'open'
       patch 'accepted' => 'defence_requests#accepted', as: 'accepted'
+      post 'resend_details'
     end
   end
 

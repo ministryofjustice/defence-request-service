@@ -10,6 +10,7 @@ RSpec.feature 'Defence request dashboard' do
     let!(:dr_created) { create(:defence_request, :created) }
     let!(:dr_open1) { create(:defence_request, :opened) }
     let!(:dr_open2) { create(:defence_request, :opened) }
+    let!(:dr_accepted) { create(:defence_request, :accepted) }
 
     scenario 'i am redirected to my dashboard at login' do
       expect(page).to have_content('Custody Suite Officer Dashboard')
@@ -75,6 +76,19 @@ RSpec.feature 'Defence request dashboard' do
 
       expect(page).to_not have_selector(".open_defence_request#defence_request_#{dr_created.id}")
     end
+
+    scenario 'resending case details', js: true do
+      visit defence_requests_path
+
+      within ".accepted_defence_request" do
+        click_button 'Resend details'
+      end
+
+      page.execute_script "window.confirm"
+
+      expect(page).to have_content("Details successfully sent")
+      an_email_has_been_sent
+    end
   end
 
   context 'as a cco' do
@@ -84,6 +98,7 @@ RSpec.feature 'Defence request dashboard' do
 
     let!(:dr_created) { create(:defence_request, :created) }
     let!(:dr_open) { create(:defence_request, :opened) }
+    let!(:dr_accepted) { create(:defence_request, :accepted) }
 
     scenario 'i am redirected to my dashboard at login' do
       expect(page).to have_content('Call Center Operative Dashboard')
@@ -141,24 +156,34 @@ RSpec.feature 'Defence request dashboard' do
 
       expect(page).to_not have_selector(".created_defence_requests#defence_request_#{dr_created.id}")
     end
+
+    scenario 'resending case details', js: true do
+      visit defence_requests_path
+
+      within ".accepted_defence_request" do
+        click_button 'Resend details'
+      end
+
+      page.execute_script "window.confirm"
+
+      expect(page).to have_content("Details successfully sent")
+      an_email_has_been_sent
+    end
   end
 
   context 'as a solicitor' do
+    let!(:solicitor_dr) { create(:defence_request, :accepted) }
+    let!(:other_solicitor_dr) { create(:defence_request, :accepted) }
+    let!(:other_solicitor) { create(:solicitor_user) }
+
     before :each do
-      create_role_and_login('solicitor')
-      solicitor = User.find_by(email: 'solicitor@example.com')
-      solicitor_dr.update(solicitor: solicitor)
-      other_solicitor_dr.update(solicitor: other_solicitor)
+      login_as_user(solicitor_dr.solicitor.email)
     end
 
     scenario 'i am redirected to my dashboard at login' do
       expect(page).to have_content('Solicitor Dashboard')
       expect(page).to_not have_content('Custody Suite Officer Dashboard')
     end
-
-    let!(:solicitor_dr) { create(:defence_request, :accepted) }
-    let!(:other_solicitor_dr) { create(:defence_request, :accepted) }
-    let!(:other_solicitor) { create(:solicitor_user) }
 
     scenario 'i see only MY "accepted" DR`s`' do
       visit defence_requests_path
