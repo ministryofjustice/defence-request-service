@@ -2,9 +2,9 @@ $('.solicitor_results_list').html("<a data-fn='btn-solicitor-results-close' href
                                     <table> \
                                      <thead>\
                                      <tr>\
-                                     <th scope='col'><%= t('solicitor_name') %></th>\
-                                     <th scope='col'><%= t('firm_name') %></th>\
-                                     <th class='numeric' scope='col'><%= t('phone_number') %></th>\
+                                     <th scope='col'><%= t('full_name') %></th>\
+                                     <th scope='col'><%= t('name_of_firm') %></th>\
+                                     <th class='numeric' scope='col'><%= t('telephone_number') %></th>\
                                      <th class='numeric' scope='col'><%= t('email') %></th>\
                                      </tr>\
                                      </thead>\
@@ -37,3 +37,4 @@ $('.solicitor_results_list [data-fn="btn-solicitor-results-close"]').bind('click
     $('#defence_request_phone_number').val('<%= solicitor['mobile'] %>')
   });
 <% end %>
+

@@ -8,6 +8,7 @@ FactoryGirl.define do
     sequence(:detainee_name) { |n| "detainee_name-#{n}" }
     gender %w(male female).sample
     date_of_birth Date.current - 21.years
+    detainee_age 21
     sequence(:custody_number) { |n| "custody_number-#{n}" }
     allegations ['Murder','Theft','Drunk','Hate Crime'].sample
     time_of_arrival DateTime.current
