@@ -49,5 +49,4 @@ FactoryGirl.define do
     state 'opened'
     dscc_number '123456'
   end
-
 end
