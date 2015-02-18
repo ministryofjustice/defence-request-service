@@ -16,19 +16,19 @@ RSpec.describe DefenceRequestPolicy do
     context "with a new DR" do
       let (:defreq) { FactoryGirl.build(:defence_request) }
       let (:actions) { group_actions + [:edit, :update, :close, :feedback] }
-      specify{ expect(subject).to permit_actions_and_forbid_all_others actions }
+      specify { expect(subject).to permit_actions_and_forbid_all_others actions }
     end
 
     context "with a created DR" do
       let (:defreq) { FactoryGirl.create(:defence_request) }
       let (:actions) { group_actions + [:edit, :update, :close, :feedback, :interview_start_time_edit] }
-      specify{ expect(subject).to permit_actions_and_forbid_all_others actions }
+      specify { expect(subject).to permit_actions_and_forbid_all_others actions }
     end
 
     context "with an opened DR" do
       let (:defreq) { FactoryGirl.create(:defence_request, :opened) }
       let (:actions) { group_actions + [:close, :feedback] }
-      specify{ expect(subject).to permit_actions_and_forbid_all_others actions }
+      specify { expect(subject).to permit_actions_and_forbid_all_others actions }
     end
 
     describe "scope" do
