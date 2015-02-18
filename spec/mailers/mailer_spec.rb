@@ -26,6 +26,7 @@ RSpec.describe Mailer, type: :mailer do
 
     it 'contains a link to the request' do
       expect(@response.body).to have_link 'View the case details'
+      expect(@response.body).to have_content defence_request.dscc_number
     end
   end
 end
