@@ -24,7 +24,7 @@ RSpec.feature 'defence request creation' do
         within '.new_defence_request' do
           choose 'Own'
           within '#solicitor-details' do
-            fill_in 'Full name', with: 'Bob Smith'
+            fill_in 'Full Name', with: 'Bob Smith'
             fill_in 'Name of firm', with: 'Acme Solicitors'
             fill_in 'Telephone number', with: '0207 284 0000'
           end
@@ -37,7 +37,7 @@ RSpec.feature 'defence request creation' do
           end
 
           within '.detainee' do
-            fill_in 'Full name', with: 'Mannie Badder'
+            fill_in 'Full Name', with: 'Mannie Badder'
             choose 'Male'
             fill_in 'Age', with: '39'
             fill_in 'Year', with: '1976'
@@ -67,7 +67,7 @@ RSpec.feature 'defence request creation' do
         click_link 'Bobson Smith'
         expect(page).to_not have_content 'Bobby Bob Smithson'
         within '#solicitor-details' do
-          expect(page).to have_field 'Full name', with: 'Bobson Smith'
+          expect(page).to have_field 'Full Name', with: 'Bobson Smith'
           expect(page).to have_field 'Name of firm', with: 'Kreiger LLC'
           expect(page).to have_field 'Telephone number', with: '248.412.8095'
         end
@@ -242,7 +242,7 @@ RSpec.feature 'defence request creation' do
 
         within '.edit_defence_request' do
           within '#solicitor-details' do
-            fill_in 'Full name', with: 'Dave Smith'
+            fill_in 'Full Name', with: 'Dave Smith'
             fill_in 'Name of firm', with: 'Broken Solicitors'
             fill_in 'Telephone number', with: '0207 284 9999'
           end
@@ -255,7 +255,7 @@ RSpec.feature 'defence request creation' do
           end
 
           within '.detainee' do
-            fill_in 'Full name', with: 'Mannie Badder'
+            fill_in 'Full Name', with: 'Mannie Badder'
             choose 'Male'
             fill_in 'Age', with: '39'
             fill_in 'Year', with: '1976'
@@ -265,7 +265,7 @@ RSpec.feature 'defence request creation' do
           end
 
           within '.detainee' do
-            fill_in 'Full name', with: 'Annie Nother'
+            fill_in 'Full Name', with: 'Annie Nother'
             choose 'Female'
             fill_in 'Age', with: '28'
             fill_in 'Year', with: '1986'
@@ -318,7 +318,7 @@ RSpec.feature 'defence request creation' do
           end
 
           within '#solicitor-details' do
-            fill_in 'Full name', with: 'Henry Billy Bob'
+            fill_in 'Full Name', with: 'Henry Billy Bob'
             fill_in 'Name of firm', with: 'Cheap Skate Law'
             fill_in 'Telephone number', with: '00112233445566'
           end
@@ -418,19 +418,19 @@ RSpec.feature 'defence request creation' do
           expect(page).to have_content('Valid solicitor details are required to update and accept a Defence Request')
 
           within '#solicitor-details' do
-            fill_in 'Full name', with: 'Dodgy Dave'
+            fill_in 'Full Name', with: 'Dodgy Dave'
           end
           click_button 'Update and Accept'
           expect(page).to have_content('Valid solicitor details are required to update and accept a Defence Request')
           within '#solicitor-details' do
-            fill_in 'Full name', with: 'Dodgy Dave'
+            fill_in 'Full Name', with: 'Dodgy Dave'
             fill_in 'Name of firm', with: 'Innocent your honour'
           end
           click_button 'Update and Accept'
 
           expect(page).to have_content('A Valid DSCC number is required to update and accept a Defence Request')
           within '#solicitor-details' do
-            fill_in 'Full name', with: 'Dodgy Dave'
+            fill_in 'Full Name', with: 'Dodgy Dave'
             fill_in 'Name of firm', with: 'Innocent your honour'
           end
           fill_in 'DSCC number', with: '123456'
@@ -456,7 +456,7 @@ RSpec.feature 'defence request creation' do
       let!(:closed_dr) { create(:defence_request, :closed) }
       scenario 'solicitor can see the show page of case they "own"' do
         visit defence_requests_path
-        within ".accepted_defence_requests" do
+        within ".accepted_defence_request" do
           click_link('Show')
         end
 

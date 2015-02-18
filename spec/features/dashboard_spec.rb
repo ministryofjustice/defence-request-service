@@ -64,7 +64,7 @@ RSpec.feature 'Defence request dashboard' do
         click_link 'Edit'
       end
       within '#solicitor-details' do
-        fill_in 'Full name', with: 'Bob Smith'
+        fill_in 'Full Name', with: 'Bob Smith'
       end
 
       click_button 'Continue'
@@ -162,10 +162,10 @@ RSpec.feature 'Defence request dashboard' do
 
     scenario 'i see only MY "accepted" DR`s`' do
       visit defence_requests_path
-      within ".accepted_defence_requests" do
+      within ".accepted_defence_request" do
         expect(page).to have_content(solicitor_dr.solicitor_name)
       end
-      within ".accepted_defence_requests" do
+      within ".accepted_defence_request" do
         expect(page).to_not have_content(other_solicitor_dr.solicitor_name)
       end
     end
