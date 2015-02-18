@@ -177,6 +177,13 @@ class DefenceRequestsController < BaseController
       if interview_hour && interview_minute
         p['interview_start_time'] = DateTime.new current_year, current_month, current_day, interview_hour.to_i, interview_minute.to_i
       end
+
+
+      appropriate_adult = p.delete 'appropriate_adult'
+      if appropriate_adult
+        p['appropriate_adult'] = appropriate_adult == 'yes'
+      end
+
     end
   end
 
