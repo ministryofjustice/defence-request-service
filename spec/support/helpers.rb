@@ -13,6 +13,13 @@ module HelperMethods
     click_button 'Sign in'
   end
 
+  def login_as_user(email)
+    visit new_user_session_path
+    fill_in 'user_email', with: email
+    fill_in 'user_password', with: 'password'
+    click_button 'Sign in'
+  end
+
   def create_a_defence_request
     visit new_defence_request_path
     within '.new_defence_request' do

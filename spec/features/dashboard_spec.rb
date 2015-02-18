@@ -172,18 +172,18 @@ RSpec.feature 'Defence request dashboard' do
   end
 
   context 'as a solicitor' do
+    let!(:solicitor_dr) { create(:defence_request, :accepted) }
+    let!(:other_solicitor_dr) { create(:defence_request, :accepted) }
+    let!(:other_solicitor) { create(:solicitor_user) }
+
     before :each do
-      create_role_and_login('solicitor')
+      login_as_user(solicitor_dr.solicitor.email)
     end
 
     scenario 'i am redirected to my dashboard at login' do
       expect(page).to have_content('Solicitor Dashboard')
       expect(page).to_not have_content('Custody Suite Officer Dashboard')
     end
-
-    let!(:solicitor_dr) { create(:defence_request, :accepted) }
-    let!(:other_solicitor_dr) { create(:defence_request, :accepted) }
-    let!(:other_solicitor) { create(:solicitor_user) }
 
     scenario 'i see only MY "accepted" DR`s`' do
       visit defence_requests_path
