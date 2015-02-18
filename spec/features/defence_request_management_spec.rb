@@ -423,34 +423,26 @@ RSpec.feature 'defence request creation' do
     context 'as solicitor' do
       before :each do
         create_role_and_login('solicitor')
-        solicitor = User.first
-        dr.update(solicitor: solicitor)
+        solicitor = User.find_by(email: 'solicitor@example.com')
+        solicitor_dr.update(solicitor: solicitor)
         closed_dr.update(solicitor: solicitor)
       end
-      let!(:dr) { create(:defence_request, :with_dscc_number) }
-      let!(:dr2) { create(:defence_request, :with_dscc_number) }
+
+      let!(:solicitor_dr) { create(:defence_request, :accepted) }
+      let!(:dr2) { create(:defence_request, :accepted) }
       let!(:closed_dr) { create(:defence_request, :closed) }
       scenario 'solicitor can see the show page of case they "own"' do
-        #TODO: this should be done through the frontend when the dash in implemeted
-        # visit root_path
-        #
-        # within "#defence_request_#{dr.id}" do
-        #   click_link 'Show'
-        # end
+        visit defence_requests_path
+        within ".accepted_defence_requests" do
+          click_link('Show')
+        end
 
-        visit defence_request_path(dr)
         expect(page).to have_content('Case Details')
-        expect(page).to have_content(dr.solicitor_name)
+        expect(page).to have_content(solicitor_dr.solicitor_name)
         expect(page).to have_link('Dashboard')
       end
 
       scenario 'solicitor can NOT see the show page of case they "own"' do
-        #TODO: this should be done through the frontend when the dash in implemeted
-        # visit root_path
-        #
-        # within "#defence_request_#{dr.id}" do
-        #   click_link 'Show'
-        # end
         expect{ visit defence_request_path(dr2) }.to raise_error(ActiveRecord::RecordNotFound)
       end
 

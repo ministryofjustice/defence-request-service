@@ -5,15 +5,15 @@ FactoryGirl.define do
     user.password_confirmation  "password"
   end
 
-  factory :cso_user, :parent => :user do
+  factory :cso_user, parent: :user do
     role :cso
   end
 
-  factory :cco_user, :parent => :user do
+  factory :cco_user, parent: :user do
     role :cco
   end
 
-  factory :solicitor_user, :parent => :user do
+  factory :solicitor_user, parent: :user do
     role :solicitor
   end
 end
