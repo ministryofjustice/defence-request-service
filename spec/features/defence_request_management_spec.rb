@@ -442,7 +442,7 @@ RSpec.feature 'defence request creation' do
         expect(page).to have_link('Dashboard')
       end
 
-      scenario 'solicitor can NOT see the show page of case they "own"' do
+      scenario 'solicitor can NOT see the show page of case they do not "own"' do
         expect{ visit defence_request_path(dr2) }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
