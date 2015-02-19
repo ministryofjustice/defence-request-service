@@ -66,6 +66,22 @@ class DefenceRequestPolicy < ApplicationPolicy
     user.cso? && !record.new_record? && record.created?
   end
 
+  def case_details_edit?
+    user.cso? || (user.cco? && !record.created?)
+  end
+
+  def detainee_details_edit?
+    user.cso? || (user.cco? && !record.created?)
+  end
+
+  def edit_all_details?
+    user.cso? && record.created?
+  end
+
+  def solicitor_details_edit?
+    user.cco? && record.duty_solicitor? && !record.created?
+  end
+
   def open?
     user.cco? && record.can_transition?(:open)
   end

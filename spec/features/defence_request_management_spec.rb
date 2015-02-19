@@ -296,7 +296,7 @@ RSpec.feature 'defence request creation' do
 
       context 'for "own" solicitor' do
         let!(:dr) { create(:own_solicitor) }
-        let!(:opened_dr) { create(:defence_request, :opened, cco: User.first) }
+        let!(:opened_dr) { create(:defence_request, :opened, :with_solicitor, cco: User.first) }
         scenario 'must open a Defence Request before editing' do
           visit root_path
           within "#defence_request_#{dr.id}" do
@@ -309,27 +309,6 @@ RSpec.feature 'defence request creation' do
             click_link 'Edit'
           end
           expect(current_path).to eq(edit_defence_request_path(dr))
-        end
-
-        scenario 'manually changing a solicitors details' do
-          visit root_path
-          within "#defence_request_#{opened_dr.id}" do
-            click_link 'Edit'
-          end
-
-          within '#solicitor-details' do
-            fill_in 'Full Name', with: 'Henry Billy Bob'
-            fill_in 'Name of firm', with: 'Cheap Skate Law'
-            fill_in 'Telephone number', with: '00112233445566'
-          end
-
-          click_button 'Continue'
-          expect(current_path).to eq(defence_requests_path)
-
-          within "#defence_request_#{opened_dr.id}" do
-            expect(page).to have_content 'Henry Billy Bob'
-            expect(page).to have_content '00112233445566'
-          end
         end
 
         scenario 'editing a DR DSCC number (multiple times)' do

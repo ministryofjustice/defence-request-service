@@ -124,7 +124,7 @@ class DefenceRequestsController < BaseController
   end
 
   def solicitor_details_missing?
-     defence_request_params[:solicitor_name].blank? || defence_request_params[:solicitor_firm].blank?
+    !@defence_request.solicitor && (defence_request_params[:solicitor_name].blank? || defence_request_params[:solicitor_firm].blank?)
   end
 
   def dscc_number_missing?

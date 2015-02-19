@@ -1,0 +1,98 @@
+<%= render 'shared/flash_messages' %>
+<%= render 'shared/error_messages', object: @defence_request %>
+
+<h1><%= "Defence solicitor request" %></h1>
+
+<h3><%= t('legal_advice_request')%></h3>
+
+
+<%= form_for(@defence_request) do |f| %>
+  <%- if policy(@defence_request).solicitor_details_edit? %>
+    <div id='solicitor-details'>
+      <h3><%= t('solicitor_details') %></h3>
+      <div class="details panel">
+        <div class="">
+          <%= f.label :solicitor_name, t('full_name')%>
+          <%= f.text_field :solicitor_name, class: 'text-field' %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :solicitor_firm, t('name_of_firm')%>
+          <%= f.text_field :solicitor_firm, class: 'text-field' %>
+        </div>
+
+        <div class="form-group">
+          <%= f.text_field :solicitor_email %>
+          <%= f.text_field :solicitor_email, class: 'text-field' %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :phone_number, t('telephone_number') %>
+          <%= f.text_field :phone_number, class: 'text-field' %>
+        </div>
+      </div>
+    </div>
+  <%- end %>
+
+  <h3><%= t('detainee_details') %></h3>
+  <%- if policy(@defence_request).detainee_details_edit? %>
+    <div class="detainee panel">
+      <div class="form-group">
+        <%= f.label :detainee_name, t('full_name') %>
+        <%= f.text_field :detainee_name, class: 'text-field' %>
+      </div>
+      <div class="form-group">
+        <fieldset class="inline">
+          <%= f.label :gender, t('gender') %>
+          <label class="block-label" for="defence_request_gender_male">
+            <%= f.radio_button :gender, :male, name: 'defence_request[gender]' %>
+            <%= t('male') %>
+          </label>
+          <label class="block-label" for="defence_request_gender_female">
+            <%= f.radio_button :gender, :female, name: 'defence_request[gender]' %>
+            <%= t('female') %>
+          </label>
+        </fieldset>
+      </div>
+    </div>
+  <%-end%>
+
+  <h3><%= t('case_details') %></h3>
+  <div class="case_details panel">
+    <div class="form-group">
+      <fieldset class="inline">
+        <label for>
+          Interview start time
+          <span class='hint block'>eg. 23 10</span>
+          <div class="date_field_wrapper">
+            <%= f.label :interview_start_time_hour, 'Hour' %>
+            <%= f.text_field :interview_start_time_hour, class: 'hour text-field'%>
+          </div>
+          <div class="date_field_wrapper">
+            <%= f.label :interview_start_time_minute, 'Min' %>
+            <%= f.text_field :interview_start_time_minute, class: 'minute text-field'%>
+          </div>
+        </fieldset>
+      </div>
+
+      <%- if policy(@defence_request).case_details_edit? %>
+        <div class="form-group">
+          <%= f.label :comments, t('comments') %>
+          <%= f.text_area :comments, label: t('comments'), rows: '5', class: 'text-field' %>
+        </div>
+
+        <%- if policy(@defence_request).dscc_number_edit? %>
+          <div class="form-group">
+            <%= f.label :dscc_number, t('dscc_number'), class: 'form-label-bold' %>
+            <%= f.text_field :dscc_number, readonly: !policy(@defence_request).dscc_number_edit?, class: 'text-field' %>
+          </div>
+        <%- end %>
+      <%- end %>
+    </div>
+  </div>
+
+  <%= link_to t('cancel'), defence_requests_path %>
+  <%= link_to t('close'), close_defence_request_path(@defence_request) if policy(@defence_request).close? %>
+  <%= f.submit t('continue'), class: 'button' %>
+  <%= f.submit(t('update_and_accept'), class: 'button small') if policy(@defence_request).dscc_number_edit? %>
+<% end %>
