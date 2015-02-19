@@ -97,10 +97,10 @@ class DefenceRequest < ActiveRecord::Base
   end
 
   def notify_interview_start_change
-    Mailer.notify_interview_start_change(self, solicitor).deliver_now if solicitor
+    Mailer.notify_interview_start_change(self, solicitor).deliver_later if solicitor
   end
 
   def send_solicitor_case_details
-    Mailer.send_solicitor_case_details(self, solicitor).deliver_now if solicitor
+    Mailer.send_solicitor_case_details(self, solicitor).deliver_later if solicitor
   end
 end
