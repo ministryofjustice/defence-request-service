@@ -46,7 +46,7 @@ RSpec.describe DefenceRequestPolicy do
   end
 
   context "Call Center Operatives" do
-    let(:user) { FactoryGirl.create(:cco_user)}
+    let(:user) { FactoryGirl.create(:cco_user) }
     let(:group_actions) {
       [:index, :show, :refresh_dashboard, :view_open_requests,
        :view_created_requests, :view_accepted_requests]
@@ -59,13 +59,15 @@ RSpec.describe DefenceRequestPolicy do
     end
 
     context "with an opened DR" do
-      let (:defreq) { FactoryGirl.create(:defence_request, :opened) }
+      subject { DefenceRequestPolicy.new(User.first, defreq) }
+      let! (:defreq) { FactoryGirl.create(:defence_request, :opened) }
       let (:actions) { group_actions + [:edit, :dscc_number_edit, :update, :close, :feedback] }
       specify { expect(subject).to permit_actions_and_forbid_all_others actions }
     end
 
     context "with a DR with dscc number" do
-      let (:defreq) { FactoryGirl.create(:defence_request, :with_dscc_number) }
+      subject { DefenceRequestPolicy.new(User.first, defreq) }
+      let! (:defreq) { FactoryGirl.create(:defence_request, :with_dscc_number) }
       let (:actions) { group_actions + [:edit, :dscc_number_edit, :update, :close, :feedback, :accepted, :accept] }
       specify { expect(subject).to permit_actions_and_forbid_all_others actions }
     end

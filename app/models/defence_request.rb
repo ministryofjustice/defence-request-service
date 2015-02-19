@@ -1,7 +1,8 @@
 class DefenceRequest < ActiveRecord::Base
   include ActiveModel::Transitions
 
-  belongs_to :solicitor, :class_name => :User
+  belongs_to :solicitor, class_name: :User
+  belongs_to :cco, class_name: :User
 
   delegate :email, to: :solicitor, prefix: true, allow_nil: true
 
@@ -102,5 +103,4 @@ class DefenceRequest < ActiveRecord::Base
   def send_solicitor_case_details
     Mailer.send_solicitor_case_details(self, solicitor).deliver_now if solicitor
   end
-
 end

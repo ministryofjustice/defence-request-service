@@ -296,7 +296,7 @@ RSpec.feature 'defence request creation' do
 
       context 'for "own" solicitor' do
         let!(:dr) { create(:own_solicitor) }
-        let!(:opened_dr) { create(:defence_request, :opened) }
+        let!(:opened_dr) { create(:defence_request, :opened, cco: User.first) }
         scenario 'must open a Defence Request before editing' do
           visit root_path
           within "#defence_request_#{dr.id}" do
@@ -401,7 +401,7 @@ RSpec.feature 'defence request creation' do
       end
 
       context 'for "duty" solicitor' do
-        let!(:duty_solicitor_dr) { create(:defence_request, :duty_solicitor, :opened) }
+        let!(:duty_solicitor_dr) { create(:defence_request, :duty_solicitor, :opened, cco: User.first) }
         scenario 'can NOT mark a dr as "solicitor accepted" without solicitor details from the DASHBOARD' do
           visit root_path
           within ".open_defence_request" do

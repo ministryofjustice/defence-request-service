@@ -99,6 +99,7 @@ RSpec.feature 'Defence request dashboard' do
     let!(:dr_created) { create(:defence_request, :created) }
     let!(:dr_open) { create(:defence_request, :opened) }
     let!(:dr_accepted) { create(:defence_request, :accepted) }
+    let(:cco_user2){ create :cco_user }
 
     scenario 'i am redirected to my dashboard at login' do
       expect(page).to have_content('Call Center Operative Dashboard')
@@ -168,6 +169,28 @@ RSpec.feature 'Defence request dashboard' do
 
       expect(page).to have_content("Details successfully sent")
       an_email_has_been_sent
+    end
+
+    scenario 'an unassigned cco cannot edit a dr' do
+      cco_user = User.find_by(email: 'cco@example.com')
+      visit defence_requests_path
+      within ".created_defence_request#defence_request_#{dr_created.id}" do
+        click_button 'Open'
+      end
+
+      within ".open_defence_request#defence_request_#{dr_created.id}" do
+        expect(page).to have_link('Edit')
+      end
+      dr_created.reload
+      expect(dr_created.cco).to eq cco_user
+
+      sign_out
+
+      login_as_user(cco_user2.email)
+
+      within ".open_defence_request#defence_request_#{dr_created.id}" do
+        expect(page).to_not have_link('Edit')
+      end
     end
   end
 

@@ -66,6 +66,7 @@ class DefenceRequestsController < BaseController
 
   def open
     @defence_request.open
+    associate_cco
     if @defence_request.save
       redirect_to(defence_requests_path, notice: flash_message(:open, DefenceRequest))
     else
@@ -102,6 +103,10 @@ class DefenceRequestsController < BaseController
   end
 
   private
+
+  def associate_cco
+    @defence_request.cco = current_user
+  end
 
   def update_and_accept?
     params[:commit] == 'Update and Accept'
