@@ -68,7 +68,7 @@ RSpec.describe DefenceRequestPolicy do
 
     context "with a DR with dscc number" do
       subject { DefenceRequestPolicy.new(User.first, defreq) }
-      let (:defreq) { FactoryGirl.create(:defence_request, :with_dscc_number) }
+      let! (:defreq) { FactoryGirl.create(:defence_request, :with_dscc_number) }
       let (:actions) { group_actions + [:edit, :dscc_number_edit, :update, :close, :feedback, :accepted, :accept, :case_details_edit, :detainee_details_edit] }
       specify { expect(subject).to permit_actions_and_forbid_all_others actions }
     end

@@ -35,7 +35,7 @@ class DefenceRequestPolicy < ApplicationPolicy
   end
 
   def edit?
-    (user.cso? && record.created?) || (record.opened? && record.cco == uer) || (record.accepted? && record.solicitor == user)
+    (user.cso? && record.created?) || (record.opened? && record.cco == user) || (record.accepted? && record.solicitor == user)
   end
 
   def update?
