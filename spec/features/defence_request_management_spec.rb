@@ -442,6 +442,24 @@ RSpec.feature 'defence request creation' do
         expect(page).to have_link('Dashboard')
       end
 
+      scenario 'solicitor can edit the interview time of a case they "own"' do
+        visit defence_requests_path
+        within ".accepted_defence_request" do
+          click_link('Edit')
+        end
+
+        fill_in "Hour", with: "08"
+        fill_in "Min", with: "00"
+        click_button "Continue"
+
+        expect(page).to have_content("Defence Request successfully updated")
+        within ".accepted_defence_request" do
+          click_link('Show')
+        end
+        expect(page).to have_content('08')
+        expect(page).to have_content('00')
+      end
+
       scenario 'solicitor can NOT see the show page of case they do not "own"' do
         expect{ visit defence_request_path(dr2) }.to raise_error(ActiveRecord::RecordNotFound)
       end

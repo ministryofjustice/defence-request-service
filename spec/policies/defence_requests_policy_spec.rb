@@ -90,9 +90,12 @@ RSpec.describe DefenceRequestPolicy do
   context "Solicitors" do
     let (:defreq) { FactoryGirl.create(:defence_request) }
     let(:user) { FactoryGirl.create(:solicitor_user)}
+    let(:group_actions) { [:index, :view_accepted_requests, :refresh_dashboard] }
 
-    [:index, :show, :view_accepted_requests].each do |action|
-      specify { expect(subject).to permit_action(action) }
+    context "with an assigned DR" do
+      let (:defreq) { FactoryGirl.create(:defence_request, :accepted, solicitor: user) }
+      let (:actions) { group_actions + [:show, :edit, :update] }
+      specify { expect(subject).to permit_actions_and_forbid_all_others actions }
     end
 
     describe "scope" do
