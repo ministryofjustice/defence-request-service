@@ -53,4 +53,7 @@ module HelperMethods
     expect(ActionMailer::Base.deliveries.size).to eq 1
   end
 
+  def sign_out
+    click_link('Sign out')
+  end
 end
