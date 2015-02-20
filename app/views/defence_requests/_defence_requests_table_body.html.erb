@@ -8,7 +8,7 @@
     <td class="adult"><%= boolean_formatter(def_req.adult) %></td>
     <td><%= def_req.custody_number %></td>
     <td class="allegation"><%= truncate(def_req.allegations, length: 50) %></td>
-    <td><%= date_and_time_formatter(def_req.time_of_arrival) %></td>
+    <td><%= date_and_time_formatter(def_req.solicitor_time_of_arrival) %></td>
     <td class='actions'><%= render 'actions', def_req: def_req %></td>
     </td>
   <% end %>
