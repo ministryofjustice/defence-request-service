@@ -94,7 +94,7 @@ RSpec.describe DefenceRequestPolicy do
 
     context "with an assigned DR" do
       let (:defreq) { FactoryGirl.create(:defence_request, :accepted, solicitor: user) }
-      let (:actions) { group_actions + [:show, :edit, :update] }
+      let (:actions) { group_actions + [:show, :solicitor_time_of_arrival] }
       specify { expect(subject).to permit_actions_and_forbid_all_others actions }
     end
 

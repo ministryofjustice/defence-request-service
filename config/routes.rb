@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       put 'open'
       patch 'accepted' => 'defence_requests#accepted', as: 'accepted'
       post 'resend_details'
+      patch 'solicitor_time_of_arrival' => 'defence_requests#solicitor_time_of_arrival', as: 'solicitor_time_of_arrival'
     end
   end
 

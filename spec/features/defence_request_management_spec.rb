@@ -442,22 +442,27 @@ RSpec.feature 'defence request creation' do
         expect(page).to have_link('Dashboard')
       end
 
-      scenario 'solicitor can edit the interview time of a case they "own"' do
+      scenario 'solicitor can edit the expected arrival time of a case they "own" form the show page' do
         visit defence_requests_path
-        within ".accepted_defence_request" do
-          click_link('Edit')
-        end
-
-        fill_in "Hour", with: "08"
-        fill_in "Min", with: "00"
-        click_button "Continue"
-
-        expect(page).to have_content("Defence Request successfully updated")
-        within ".accepted_defence_request" do
+        within '.accepted_defence_request' do
           click_link('Show')
         end
-        expect(page).to have_content('08')
-        expect(page).to have_content('00')
+
+        within '.time-of-arrival' do
+          select('2010', from: 'defence_request_solicitor_time_of_arrival_1i')
+          select('January', from: 'defence_request_solicitor_time_of_arrival_2i')
+          select('1', from: 'defence_request_solicitor_time_of_arrival_3i')
+          select('12', from: 'defence_request_solicitor_time_of_arrival_4i')
+          select('00', from: 'defence_request_solicitor_time_of_arrival_5i')
+
+          click_button "Add"
+        end
+
+        expect(page).to have_content("Defence Request successfully updated with solicitor estimated time of arrival")
+
+        within "tr.solicitor-time-of-arrival" do
+          expect(page).to have_content('2010-01-01 - 12:00')
+        end
       end
 
       scenario 'solicitor can NOT see the show page of case they do not "own"' do

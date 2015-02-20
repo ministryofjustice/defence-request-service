@@ -1,9 +1,12 @@
+<%= render partial: 'shared/flash_messages' %>
 <div class="inner group">
   <br/>
   <%= link_to t('dashboard'), defence_requests_path %>
   <% if @defence_request.feedback? %>
     <h2 id="case-details"><%= t('case_closed') %></h2>
+
     <p><%= @defence_request.feedback %></p>
+
     <p>Please call the Call Centre on 0999 999 9999</p>
   <% else %>
     <h2 id="case-details"><%= t('case_details') %></h2>
@@ -57,7 +60,30 @@
         <td><%= t('interview_start_time') %></td>
         <td><%= date_and_time_formatter(@defence_request.interview_start_time) %></td>
       </tr>
+      <tr>
+        <td><%= t('solicitor_name') %></td>
+        <td><%= @defence_request.solicitor_name %></td>
+      </tr>
+      <tr class="solicitor-time-of-arrival">
+        <td><%= t('solicitor_time_of_arrival') %></td>
+        <td><%= date_and_time_formatter(@defence_request.solicitor_time_of_arrival) %></td>
+      </tr>
       </tbody>
     </table>
+    <br/>
+
+    <div class="panel time-of-arrival">
+      <%= form_tag(solicitor_time_of_arrival_defence_request_path, method: :patch) do %>
+        <%= label :solicitor_time_of_arrival, t('solicitor_time_of_arrival'), class: 'form-label-bold' %>
+        <fieldset class="inline time-select">
+          <%= datetime_select('defence_request', 'solicitor_time_of_arrival') %>
+        </fieldset>
+        <%= submit_tag(t('add_expected_time_of_arrival'), class: 'button') %>
+      <% end %>
+    </div>
   <% end %>
 </div>
+
+
+
+

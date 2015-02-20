@@ -35,7 +35,7 @@ class DefenceRequestPolicy < ApplicationPolicy
   end
 
   def edit?
-    (user.cso? && record.created?) || (record.opened? && record.cco == user) || (record.accepted? && record.solicitor == user)
+    (user.cso? && record.created?) || (record.opened? && record.cco == user)
   end
 
   def update?
@@ -108,6 +108,10 @@ class DefenceRequestPolicy < ApplicationPolicy
 
   def resend_details?
     (user.cco? || user.cso?) && record.accepted?
+  end
+
+  def solicitor_time_of_arrival?
+    record.solicitor == user
   end
 
 end
