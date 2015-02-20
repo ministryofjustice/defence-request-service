@@ -1,12 +1,12 @@
 <%= form_for(@defence_request) do |f| %>
-  <%= render('defence_requests/form_partials/solicitor', f: f) if policy(@defence_request).solicitor_details_edit? || policy(@defence_request).solicitor_time_of_arrival? %>
+  <%= render('defence_requests/form_partials/solicitor', f: f) if @policy.solicitor_details_edit? || @policy.solicitor_time_of_arrival? %>
 
-  <%= render('defence_requests/form_partials/detainee', f: f) if policy(@defence_request).detainee_details_edit? %>
+  <%= render('defence_requests/form_partials/detainee', f: f) if @policy.detainee_details_edit? %>
 
-  <%= render('defence_requests/form_partials/case', f: f) if policy(@defence_request).case_details_edit? || policy(@defence_request).dscc_number_edit?%>
+  <%= render('defence_requests/form_partials/case', f: f) if @policy.case_details_edit? || @policy.dscc_number_edit?%>
 
   <%= link_to t('cancel'), defence_requests_path %>
-  <%= link_to t('close'), close_defence_request_path(@defence_request) if policy(@defence_request).close? %>
+  <%= link_to t('close'), close_defence_request_path(@defence_request) if @policy.close? %>
   <%= f.submit t('continue'), class: 'button' %>
-  <%= f.submit(t('update_and_accept'), class: 'button small') if policy(@defence_request).dscc_number_edit? %>
+  <%= f.submit(t('update_and_accept'), class: 'button small') if @policy.dscc_number_edit? %>
 <% end %>

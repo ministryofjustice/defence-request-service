@@ -2,4 +2,4 @@
 <%= render 'shared/error_messages', object: @defence_request %>
 
 <h3><%= t('legal_advice_request')%></h3>
-<%= render 'new_form' if policy(@defence_request).new? %>
+<%= render 'new_form' if @policy.new? %>

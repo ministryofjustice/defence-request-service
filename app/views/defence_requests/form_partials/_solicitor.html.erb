@@ -1,7 +1,7 @@
 <div id='solicitor-details'>
   <h3><%= t('solicitor_details') %></h3>
   <div class="details panel">
-    <%= render('defence_requests/form_partials/solicitor_details', f: f) if policy(@defence_request).solicitor_details_edit? %>
-    <%= render('defence_requests/form_partials/solicitor_time_of_arrival', f: f) if policy(@defence_request).solicitor_time_of_arrival? %>
+    <%= render('defence_requests/form_partials/solicitor_details', f: f) if @policy.solicitor_details_edit? %>
+    <%= render('defence_requests/form_partials/solicitor_time_of_arrival', f: f) if @policy.solicitor_time_of_arrival? %>
   </div>
 </div>
