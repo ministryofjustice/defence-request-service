@@ -147,10 +147,6 @@ class DefenceRequestsController < BaseController
     @defence_request ||= DefenceRequest.new
   end
 
-  # def solicitor_time_of_arrival_params
-  #   params.require(:defence_request).permit(:solicitor_time_of_arrival)
-  # end
-
   def defence_request_params
     raw_params = params.require(:defence_request).permit(:solicitor_type,
                                                          :solicitor_name,

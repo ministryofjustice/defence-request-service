@@ -1,0 +1,19 @@
+<div class="form-group">
+  <%= f.label :allegations, t('allegations') %>
+  <%= f.text_field :allegations, class: 'text-field' %>
+</div>
+
+<div class="form-group hidden" id='scheme-field'>
+  <%= f.label :scheme, t('scheme'), class: 'form-label-bold' %>
+  <%= f.text_field :scheme, class: 'text-field' %>
+</div>
+
+<div class="form-group">
+  <%= f.label :custody_number, t('custody_number') %>
+  <%= f.text_field :custody_number, label: t('custody_number'), class: 'text-field custody-number' %>
+</div>
+
+<div class="form-group">
+  <%= f.label :comments, t('comments') %>
+  <%= f.text_area :comments, label: t('comments'), rows: '5', class: 'text-field' %>
+</div>

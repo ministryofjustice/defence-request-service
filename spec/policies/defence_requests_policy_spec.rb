@@ -14,27 +14,65 @@ RSpec.describe DefenceRequestPolicy do
     }
 
     context "with a new DR" do
+      let (:allowed_actions) { [
+        :edit,
+        :update,
+        :close,
+        :feedback,
+        :case_details_edit,
+        :detainee_details_edit,
+        :solicitor_details_edit
+      ] }
       let (:defreq) { FactoryGirl.build(:defence_request) }
-      let (:actions) { group_actions + [:edit, :update, :close, :feedback, :case_details_edit, :detainee_details_edit, :edit_all_details] }
+      let (:actions) { group_actions + allowed_actions }
       specify{ expect(subject).to permit_actions_and_forbid_all_others actions }
     end
 
     context "with a created DR" do
+      let (:allowed_actions) { [
+        :edit,
+        :update,
+        :close,
+        :feedback,
+        :interview_start_time_edit,
+        :case_details_edit,
+        :detainee_details_edit,
+        :solicitor_details_edit
+      ] }
       let (:defreq) { FactoryGirl.create(:defence_request) }
-      let (:actions) { group_actions + [:edit, :update, :close, :feedback, :interview_start_time_edit, :case_details_edit, :detainee_details_edit, :edit_all_details] }
+      let (:actions) { group_actions + allowed_actions }
       specify{ expect(subject).to permit_actions_and_forbid_all_others actions }
     end
 
     context "with an opened DR" do
+      let (:allowed_actions) { [
+        :edit,
+        :update,
+        :close,
+        :feedback,
+        :case_details_edit,
+        :detainee_details_edit,
+        :solicitor_details_edit
+      ] }
       let (:defreq) { FactoryGirl.create(:defence_request, :opened) }
-      let (:actions) { group_actions + [:close, :feedback, :case_details_edit, :detainee_details_edit] }
+      let (:actions) { group_actions + allowed_actions }
       specify { expect(subject).to permit_actions_and_forbid_all_others actions }
     end
 
     context "with an accepted DR" do
+      let (:allowed_actions) { [
+        :edit,
+        :update,
+        :close,
+        :feedback,
+        :resend_details,
+        :case_details_edit,
+        :detainee_details_edit,
+        :solicitor_details_edit,
+        :solicitor_time_of_arrival
+      ] }
       let (:defreq) { FactoryGirl.create(:defence_request, :accepted) }
-      let (:actions) { group_actions + [:close, :feedback, :resend_details] }
-      let (:actions) { group_actions + [:close, :feedback, :resend_details, :case_details_edit, :detainee_details_edit] }
+      let (:actions) { group_actions + allowed_actions }
       specify{ expect(subject).to permit_actions_and_forbid_all_others actions }
     end
 
@@ -54,28 +92,65 @@ RSpec.describe DefenceRequestPolicy do
     }
 
     context "with a created DR" do
+      let (:allowed_actions) { [
+        :open,
+        :close,
+        :feedback,
+        :solicitor_details_edit
+      ] }
       let (:defreq) { FactoryGirl.create(:defence_request) }
-      let (:actions) { group_actions + [:open, :close, :feedback] }
+      let (:actions) { group_actions + allowed_actions }
       specify { expect(subject).to permit_actions_and_forbid_all_others actions }
     end
 
     context "with an opened DR" do
+      let (:allowed_actions) { [
+        :edit,
+        :dscc_number_edit,
+        :update,
+        :close,
+        :feedback,
+        :case_details_edit,
+        :detainee_details_edit,
+        :solicitor_details_edit
+      ] }
       subject { DefenceRequestPolicy.new(User.first, defreq) }
       let! (:defreq) { FactoryGirl.create(:defence_request, :opened) }
-      let (:actions) { group_actions + [:edit, :dscc_number_edit, :update, :close, :feedback, :case_details_edit, :detainee_details_edit] }
+      let (:actions) { group_actions + allowed_actions }
       specify { expect(subject).to permit_actions_and_forbid_all_others actions }
     end
 
     context "with a DR with dscc number" do
+      let (:allowed_actions) { [
+        :edit,
+        :dscc_number_edit,
+        :update,
+        :close,
+        :feedback,
+        :accepted,
+        :accept,
+        :case_details_edit,
+        :detainee_details_edit,
+        :solicitor_details_edit
+      ] }
       subject { DefenceRequestPolicy.new(User.first, defreq) }
       let! (:defreq) { FactoryGirl.create(:defence_request, :with_dscc_number) }
-      let (:actions) { group_actions + [:edit, :dscc_number_edit, :update, :close, :feedback, :accepted, :accept, :case_details_edit, :detainee_details_edit] }
+      let (:actions) { group_actions + allowed_actions }
       specify { expect(subject).to permit_actions_and_forbid_all_others actions }
     end
 
     context "with an accepted DR" do
+      let (:allowed_actions) { [
+        :close,
+        :feedback,
+        :resend_details,
+        :detainee_details_edit,
+        :case_details_edit,
+        :solicitor_details_edit,
+        :solicitor_time_of_arrival
+      ] }
       let (:defreq) { FactoryGirl.create(:defence_request, :accepted) }
-      let (:actions) { group_actions + [:close, :feedback, :resend_details, :detainee_details_edit, :case_details_edit] }
+      let (:actions) { group_actions + allowed_actions }
       specify { expect(subject).to permit_actions_and_forbid_all_others actions }
     end
 
@@ -93,8 +168,12 @@ RSpec.describe DefenceRequestPolicy do
     let(:group_actions) { [:index, :view_accepted_requests, :refresh_dashboard] }
 
     context "with an assigned DR" do
+      let (:allowed_actions) { [
+        :show,
+        :solicitor_time_of_arrival
+      ] }
       let (:defreq) { FactoryGirl.create(:defence_request, :accepted, solicitor: user) }
-      let (:actions) { group_actions + [:show, :solicitor_time_of_arrival] }
+      let (:actions) { group_actions + allowed_actions }
       specify { expect(subject).to permit_actions_and_forbid_all_others actions }
     end
 

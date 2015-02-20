@@ -1,0 +1,8 @@
+<h3><%= t('case_details') %></h3>
+<div class="case_details panel">
+  <%= render('defence_requests/form_partials/case_interview_start_time', f: f) %>
+
+  <%= render('defence_requests/form_partials/case_details', f: f) if policy(@defence_request).case_details_edit? %>
+
+  <%= render('defence_requests/form_partials/case_dscc_number', f: f) if policy(@defence_request).dscc_number_edit? %>
+</div>

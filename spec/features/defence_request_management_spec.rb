@@ -16,10 +16,17 @@ RSpec.feature 'defence request creation' do
         expect(page).not_to have_field('DSCC Number')
       end
 
+      scenario 'Does not see the solicitor_time_of_arrival field on the Defence Request form' do
+        visit root_path
+        click_link 'New Defence Request'
+
+        expect(page).not_to have_field('Expected Solicitor Time of Arrival')
+      end
+
       scenario 'Filling in form manually for own solicitor', js: true do
         visit root_path
         click_link 'New Defence Request'
-        expect(page).to have_content ('Defence solicitor request')
+        expect(page).to have_content ('Legal advice request')
 
         within '.new_defence_request' do
           choose 'Own'
@@ -238,13 +245,14 @@ RSpec.feature 'defence request creation' do
         within "#defence_request_#{dr_1.id}" do
           click_link 'Edit'
         end
-        expect(page).to have_content ('Defence solicitor request')
+        expect(page).to have_content ('Legal advice request')
 
         within '.edit_defence_request' do
           within '#solicitor-details' do
             fill_in 'Full Name', with: 'Dave Smith'
             fill_in 'Name of firm', with: 'Broken Solicitors'
             fill_in 'Telephone number', with: '0207 284 9999'
+            expect(page).to_not have_selector('defence_request_solicitor_time_of_arrival_1i')
           end
 
           within '.case_details' do
@@ -282,7 +290,6 @@ RSpec.feature 'defence request creation' do
           expect(page).to have_content('02072849999')
           expect(page).to have_content('#CUST-9876')
           expect(page).to have_content('BadMurder')
-          expect(page).to have_content('10:00')
           expect(page).to have_content('Annie')
           expect(page).to have_content('Nother')
         end
@@ -376,6 +383,45 @@ RSpec.feature 'defence request creation' do
 
           click_button 'Update and Accept'
           expect(page).to have_content('A Valid DSCC number is required to update and accept a Defence Request')
+        end
+
+        scenario 'editing a DR expected_solicitor_time for accepted DR' do
+          visit root_path
+
+          within "#defence_request_#{opened_dr.id}" do
+            click_link 'Edit'
+          end
+
+          within '#solicitor-details' do
+            expect(page).to_not have_selector('defence_request_solicitor_time_of_arrival_1i')
+          end
+
+          fill_in 'DSCC number', with: '123456'
+
+          click_button 'Update and Accept'
+
+          within ".accepted_defence_request" do
+            expect(page).to have_content(opened_dr.solicitor_name)
+          end
+
+          within ".accepted_defence_request" do
+            click_link 'Edit'
+          end
+
+          within '#solicitor-details' do
+            select('2010', from: 'defence_request_solicitor_time_of_arrival_1i')
+            select('January', from: 'defence_request_solicitor_time_of_arrival_2i')
+            select('1', from: 'defence_request_solicitor_time_of_arrival_3i')
+            select('12', from: 'defence_request_solicitor_time_of_arrival_4i')
+            select('00', from: 'defence_request_solicitor_time_of_arrival_5i')
+          end
+          click_button 'Continue'
+          expect(page).to have_content 'Defence Request successfully updated'
+          within ".accepted_defence_request" do
+            click_link 'Show'
+          end
+          expect(page).to have_content('2010-01-01 - 12:00')
+
         end
       end
 

@@ -1,8 +1,3 @@
-<%= render 'shared/flash_messages' %>
-<%= render 'shared/error_messages', object: @defence_request %>
-
-<h3><%= t('legal_advice_request')%></h3>
-
 <%= form_for(@defence_request) do |f| %>
   <% if @defence_request.new_record? %>
     <div class="panel">
@@ -46,6 +41,14 @@
           <%= f.label :phone_number, t('telephone_number') %>
           <%= f.text_field :phone_number, class: 'text-field' %>
         </div>
+        <% if policy(@defence_request).solicitor_time_of_arrival? %>
+        <div class="form-group">
+          <%= label :solicitor_time_of_arrival, t('solicitor_time_of_arrival'), class: 'form-label-bold' %>
+          <fieldset class="inline time-select">
+            <%= datetime_select('defence_request', 'solicitor_time_of_arrival') %>
+          </fieldset>
+        </div>
+        <% end %>
       </div>
     </div>
 

@@ -35,7 +35,7 @@ class DefenceRequestPolicy < ApplicationPolicy
   end
 
   def edit?
-    (user.cso? && record.created?) || (record.opened? && record.cco == user)
+    (user.cso?) || (record.cco == user)
   end
 
   def update?
@@ -74,12 +74,8 @@ class DefenceRequestPolicy < ApplicationPolicy
     user.cso? || (user.cco? && !record.created?)
   end
 
-  def edit_all_details?
-    user.cso? && record.created?
-  end
-
   def solicitor_details_edit?
-    user.cco? && record.duty_solicitor? && !record.created?
+   (user.cso? || user.cco?)
   end
 
   def open?
@@ -111,7 +107,7 @@ class DefenceRequestPolicy < ApplicationPolicy
   end
 
   def solicitor_time_of_arrival?
-    record.solicitor == user
+    record.solicitor == user || (record.accepted? && (user.cco? || user.cso?))
   end
 
 end

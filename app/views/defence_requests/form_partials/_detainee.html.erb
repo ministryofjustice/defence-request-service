@@ -1,0 +1,4 @@
+<h3><%= t('detainee_details') %></h3>
+<div class="detainee panel">
+  <%= render('defence_requests/form_partials/detainee_details', f: f) if policy(@defence_request).detainee_details_edit? %>
+</div>
