@@ -14,7 +14,7 @@ action_mailer:
     enable_starttls_auto: false
 
 sandbox_email: <%= ENV["SANDBOX_EMAIL"] %>
-sandbox_email_address: 'iamadefencesolicitor@gmail.com'
+sandbox_email_address: <%= ENV['SANDBOX_EMAIL_ADDRESS'] || 'iamadefencesolicitor@gmail.com' %> 
 
 dsds:
   app_title: 'Defence Solicitor Deployment Service'
