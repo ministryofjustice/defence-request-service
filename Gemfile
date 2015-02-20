@@ -1,35 +1,33 @@
 source 'https://rubygems.org'
 ruby '2.1.5'
 
+gem 'audited-activerecord', '~> 4.0.0'
 gem 'coffee-rails', '~> 4.1.0'
+gem 'devise', '~> 3.4.1'
+gem 'dotenv-rails', '~> 1.0.2'
+gem 'faker', '~> 1.4.3'
+gem 'httparty', '~> 0.13.3'
 gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
 gem 'pg'
+gem 'pundit', '~> 0.3.0'
 gem 'rails', '4.2.0'
+gem 'rails_config', '~> 0.4.2'
 gem 'sass-rails', '~> 5.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
+gem 'sucker_punch', '~> 1.0'
+gem 'transitions', require: ['transitions', 'active_model/transitions']
 gem 'uglifier', '>= 1.3.0'
-gem 'unicorn'
-
-# Gov.uk styles
-# group :assets do
-#   gem 'govuk_frontend_toolkit', git: 'https://github.com/alphagov/govuk_frontend_toolkit_gem.git', submodules: true
-# end
-gem 'govuk_frontend_toolkit', '>= 2.0.1'
-gem 'govuk_elements_rails', '>= 0.1.1'
+gem 'unicorn', '~> 4.8.3'
 
 # MOJ styles
-gem 'moj_template'
+gem 'moj_template', '~> 0.23.0'
+gem 'govuk_frontend_toolkit', '~> 2.0.1'
+gem 'govuk_elements_rails', '~> 0.1.1'
 
-
-gem 'dotenv-rails'
-gem 'devise'
-gem 'pundit'
-gem 'rails_config'
-gem 'httparty'
-gem 'audited-activerecord'
-gem 'transitions', require: ['transitions', 'active_model/transitions']
-gem 'faker'
+group :production do
+  gem 'rails_12factor'
+end
 
 group :test do
   gem 'webmock'
@@ -54,5 +52,3 @@ group :development, :test do
   gem 'poltergeist'
   gem 'database_cleaner'
 end
-
-gem 'rails_12factor', group: :production
