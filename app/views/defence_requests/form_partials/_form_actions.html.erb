@@ -1,0 +1,13 @@
+<% if @defence_request.new_record? %>
+  <%= f.submit class: 'button' %>
+  <div class="form-links">
+    <%= link_to t('cancel_and_delete_all_details'), defence_requests_path %>
+  </div>
+<% else %>
+  <%= f.submit class: 'button' %>
+  <%= f.submit(t('update_and_accept'), class: 'button small') if @policy.dscc_number_edit? %>
+  <div class="form-links">
+    <%= link_to t('cancel'), defence_requests_path %>
+    <%= link_to t('close'), close_defence_request_path(@defence_request) if @policy.close? %>
+  </div>
+<% end %>

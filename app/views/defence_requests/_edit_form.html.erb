@@ -5,8 +5,7 @@
 
   <%= render('defence_requests/form_partials/case', f: f) if @policy.case_details_edit? || @policy.dscc_number_edit?%>
 
-  <%= link_to t('cancel'), defence_requests_path %>
-  <%= link_to t('close'), close_defence_request_path(@defence_request) if @policy.close? %>
-  <%= f.submit t('continue'), class: 'button' %>
-  <%= f.submit(t('update_and_accept'), class: 'button small') if @policy.dscc_number_edit? %>
+  <%= render('defence_requests/form_partials/form_actions', f: f) %>
 <% end %>
+
+
