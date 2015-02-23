@@ -170,7 +170,8 @@ RSpec.describe DefenceRequestPolicy do
     context "with an assigned DR" do
       let (:allowed_actions) { [
         :show,
-        :solicitor_time_of_arrival
+        :solicitor_time_of_arrival,
+        :solicitor_time_of_arrival_from_show
       ] }
       let (:defreq) { FactoryGirl.create(:defence_request, :accepted, solicitor: user) }
       let (:actions) { group_actions + allowed_actions }

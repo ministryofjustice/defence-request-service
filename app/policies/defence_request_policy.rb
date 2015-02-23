@@ -110,6 +110,10 @@ class DefenceRequestPolicy < ApplicationPolicy
     record.solicitor == user || (record.accepted? && (cco || cso))
   end
 
+  def solicitor_time_of_arrival_from_show?
+    record.solicitor == user
+  end
+
   private
 
   def can_transition?(state)

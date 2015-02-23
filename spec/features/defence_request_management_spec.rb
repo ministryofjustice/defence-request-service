@@ -468,6 +468,38 @@ RSpec.feature 'defence request creation' do
   end
 
   context 'Show' do
+    context 'as cco' do
+      before :each do
+        create_role_and_login('cso')
+      end
+      let!(:accepted_dr) { create(:defence_request, :accepted) }
+
+      scenario 'can not edit the expected arrival time from show page' do
+        visit defence_requests_path
+        within '.accepted_defence_request' do
+          click_link('Show')
+        end
+
+        expect(page).to_not have_selector('.time-of-arrival')
+      end
+    end
+
+    context 'as cso' do
+      before :each do
+        create_role_and_login('cso')
+      end
+      let!(:accepted_dr) { create(:defence_request, :accepted) }
+
+      scenario 'can not edit the expected arrival time from show page' do
+        visit defence_requests_path
+        within '.accepted_defence_request' do
+          click_link('Show')
+        end
+
+        expect(page).to_not have_selector('.time-of-arrival')
+      end
+    end
+
     context 'as solicitor' do
       let!(:solicitor_dr) { create(:defence_request, :accepted) }
       let!(:dr2) { create(:defence_request, :accepted) }
@@ -477,7 +509,7 @@ RSpec.feature 'defence request creation' do
         login_as_user(solicitor_dr.solicitor.email)
       end
 
-      scenario 'solicitor can see the show page of case they "own"' do
+      scenario 'can see the show page of case they "own"' do
         visit defence_requests_path
         within ".accepted_defence_request" do
           click_link('Show')
@@ -488,7 +520,7 @@ RSpec.feature 'defence request creation' do
         expect(page).to have_link('Dashboard')
       end
 
-      scenario 'solicitor can edit the expected arrival time of a case they "own" form the show page' do
+      scenario 'can edit the expected arrival time of a case they "own" form the show page' do
         visit defence_requests_path
         within '.accepted_defence_request' do
           click_link('Show')
@@ -501,7 +533,7 @@ RSpec.feature 'defence request creation' do
           select('12', from: 'defence_request_solicitor_time_of_arrival_4i')
           select('00', from: 'defence_request_solicitor_time_of_arrival_5i')
 
-          click_button "Add"
+          click_button "Add Expected Time of Arrival"
         end
 
         expect(page).to have_content("Defence Request successfully updated with solicitor estimated time of arrival")
@@ -511,11 +543,11 @@ RSpec.feature 'defence request creation' do
         end
       end
 
-      scenario 'solicitor can NOT see the show page of case they do not "own"' do
+      scenario 'can NOT see the show page of case they do not "own"' do
         expect{ visit defence_request_path(dr2) }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
-      scenario 'solicitor can sees the feedback page for a closed DR and "call Call Centre" message' do
+      scenario 'can sees the feedback page for a closed DR and "call Call Centre" message' do
         visit defence_request_path(closed_dr)
         expect(page).to_not have_content('Case Details')
         expect(page).to_not have_content(closed_dr.solicitor_name)

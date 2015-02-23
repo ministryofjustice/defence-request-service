@@ -12,6 +12,7 @@ class DefenceRequestsController < BaseController
 
   def show
     @defence_request = policy_scope(DefenceRequest).find(params[:id])
+    set_policy
   end
 
   def new
@@ -105,7 +106,7 @@ class DefenceRequestsController < BaseController
   end
 
   def solicitor_time_of_arrival
-    if AddSolicitorTimeOfArrival.new(@defence_request, defence_request_params).call
+    if AddSolicitorTimeOfArrival.new(@defence_request, solicitor_time_of_arrival_param).call
       redirect_to(defence_request_path(@defence_request), notice: flash_message(:solicitor_time_of_arrival_added, DefenceRequest))
     else
       redirect_to(defence_request_path(@defence_request), alert: flash_message(:solicitor_time_of_arrival_not_added, DefenceRequest))
@@ -151,6 +152,10 @@ class DefenceRequestsController < BaseController
 
   def defence_request
     @defence_request ||= DefenceRequest.new
+  end
+
+  def solicitor_time_of_arrival_param
+    defence_request_params.select { |key, value| key.to_s.match(/^solicitor_time_of_arrival\(\d.*/) }
   end
 
   def defence_request_params

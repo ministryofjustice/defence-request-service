@@ -71,16 +71,17 @@
       </tbody>
     </table>
     <br/>
-
-    <div class="panel time-of-arrival">
-      <%= form_tag(solicitor_time_of_arrival_defence_request_path, method: :patch) do %>
-        <%= label :solicitor_time_of_arrival, t('solicitor_time_of_arrival'), class: 'form-label-bold' %>
-        <fieldset class="inline time-select">
-          <%= datetime_select('defence_request', 'solicitor_time_of_arrival') %>
-        </fieldset>
-        <%= submit_tag(t('add_expected_time_of_arrival'), class: 'button') %>
-      <% end %>
-    </div>
+    <% if @policy.solicitor_time_of_arrival_from_show? %>
+      <div class="panel time-of-arrival">
+        <%= form_tag(solicitor_time_of_arrival_defence_request_path, method: :patch) do %>
+          <%= label :solicitor_time_of_arrival, t('solicitor_time_of_arrival'), class: 'form-label-bold' %>
+          <fieldset class="inline time-select">
+            <%= datetime_select('defence_request', 'solicitor_time_of_arrival', include_blank: true) %>
+          </fieldset>
+          <%= submit_tag(t('add_expected_time_of_arrival'), class: 'button') %>
+        <% end %>
+      </div>
+    <% end %>
   <% end %>
 </div>
 
