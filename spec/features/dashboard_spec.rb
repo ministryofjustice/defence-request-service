@@ -199,6 +199,8 @@ RSpec.feature 'Defence request dashboard' do
     let!(:solicitor_dr) { create(:defence_request, :accepted) }
     let!(:other_solicitor_dr) { create(:defence_request, :accepted) }
     let!(:other_solicitor) { create(:solicitor_user) }
+    let!(:solicitor_dr_not_accepted) { create(:defence_request, :opened, dscc_number: '98765', solicitor: solicitor_dr.solicitor) }
+    let!(:created_dr) { create(:defence_request, :created, dscc_number: '98765', solicitor: solicitor_dr.solicitor) }
 
     before :each do
       login_as_user(solicitor_dr.solicitor.email)
@@ -217,6 +219,28 @@ RSpec.feature 'Defence request dashboard' do
       within ".accepted_defence_request" do
         expect(page).to_not have_content(other_solicitor_dr.solicitor_name)
       end
+    end
+
+    scenario 'after the refresh i can still see ONLY the correct data', js: true do
+      visit defence_requests_path
+
+      within ".accepted_defence_request" do
+        expect(page).to have_content(solicitor_dr.detainee_name)
+        expect(page).to_not have_content(solicitor_dr_not_accepted.detainee_name)
+      end
+      expect(page).to_not have_selector(".created_defence_request")
+      expect(page).to_not have_selector(".open_defence_request")
+
+      sleep(4)
+      wait_for_ajax
+
+      within ".accepted_defence_request" do
+        expect(page).to have_content(solicitor_dr.detainee_name)
+        expect(page).to_not have_content(solicitor_dr_not_accepted.detainee_name)
+      end
+
+      expect(page).to_not have_selector(".created_defence_request")
+      expect(page).to_not have_selector(".open_defence_request")
     end
   end
 
