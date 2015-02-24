@@ -22,6 +22,10 @@ class DefenceRequestPolicy < ApplicationPolicy
     cso || cco || solicitor
   end
 
+  def refresh_dashboard?
+    index?
+  end
+
   def show?
     cso || cco || solicitor
   end
@@ -44,10 +48,6 @@ class DefenceRequestPolicy < ApplicationPolicy
 
   def solicitors_search?
     cso
-  end
-
-  def refresh_dashboard?
-    cso || cco || solicitor
   end
 
   def feedback?
