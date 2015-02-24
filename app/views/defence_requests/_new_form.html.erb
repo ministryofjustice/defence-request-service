@@ -153,17 +153,6 @@
       <%- end %>
     </div>
 
-    <%= f.submit t('continue'), class: 'button' %>
-
-    <% if @defence_request.new_record? %>
-      <%= link_to t('cancel_and_delete_all_details'), defence_requests_path %>
-    <% else %>
-      <%= link_to t('cancel'), defence_requests_path %>
-      <%= link_to t('close'), close_defence_request_path(@defence_request) if @policy.close? %>
-      <%= f.submit class: 'button' %>
-      <%= f.submit(t('update_and_accept'), class: 'button small') if @policy.dscc_number_edit? %>
-    <% end %>
+    <%= render('defence_requests/form_partials/form_actions', f: f) %>
   </div>
-
 <% end %>
-

@@ -53,7 +53,7 @@ RSpec.feature 'defence request creation' do
             choose 'No'
           end
           fill_in 'Comments', with: 'This is a very bad man. Send him down...'
-          click_button 'Continue'
+          click_button 'Create Defence Request'
         end
         an_audit_should_exist_for_the_defence_request_creation
         expect(page).to have_content 'Bob Smith'
@@ -282,7 +282,7 @@ RSpec.feature 'defence request creation' do
             choose 'Yes'
           end
           fill_in 'Comments', with: 'I fought the law...'
-          click_button 'Continue'
+          click_button 'Update Defence Request'
         end
 
         within "#defence_request_#{dr_1.id}" do
@@ -318,20 +318,41 @@ RSpec.feature 'defence request creation' do
           expect(current_path).to eq(edit_defence_request_path(dr))
         end
 
+        scenario 'manually changing a solicitors details' do
+          visit root_path
+          within "#defence_request_#{opened_dr.id}" do
+            click_link 'Edit'
+          end
+
+          within '#solicitor-details' do
+            fill_in 'Full Name', with: 'Henry Billy Bob'
+            fill_in 'Name of firm', with: 'Cheap Skate Law'
+            fill_in 'Telephone number', with: '00112233445566'
+          end
+
+          click_button 'Update Defence Request'
+          expect(current_path).to eq(defence_requests_path)
+
+          within "#defence_request_#{opened_dr.id}" do
+            expect(page).to have_content 'Henry Billy Bob'
+            expect(page).to have_content '00112233445566'
+          end
+        end
+
         scenario 'editing a DR DSCC number (multiple times)' do
           visit root_path
           within "#defence_request_#{opened_dr.id}" do
             click_link 'Edit'
           end
           fill_in 'DSCC number', with: 'NUMBERWANG'
-          click_button 'Continue'
+          click_button 'Update Defence Request'
           expect(page).to have_content 'Defence Request successfully updated'
           within "#defence_request_#{opened_dr.id}" do
             click_link 'Edit'
           end
           expect(page).to have_field 'DSCC number', with: 'NUMBERWANG'
           fill_in 'DSCC number', with: 'T-1000'
-          click_button 'Continue'
+          click_button 'Update Defence Request'
           expect(page).to have_content 'Defence Request successfully updated'
         end
 
@@ -415,7 +436,7 @@ RSpec.feature 'defence request creation' do
             select('12', from: 'defence_request_solicitor_time_of_arrival_4i')
             select('00', from: 'defence_request_solicitor_time_of_arrival_5i')
           end
-          click_button 'Continue'
+          click_button 'Update Defence Request'
           expect(page).to have_content 'Defence Request successfully updated'
           within ".accepted_defence_request" do
             click_link 'Show'

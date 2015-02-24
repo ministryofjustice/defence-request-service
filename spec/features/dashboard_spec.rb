@@ -69,7 +69,7 @@ RSpec.feature 'Defence request dashboard' do
         fill_in 'Full Name', with: 'Bob Smith'
       end
 
-      click_button 'Continue'
+      click_button 'Update Defence Request'
 
       within ".created_defence_request#defence_request_#{dr_created.id}" do
         expect(page).to have_content('Bob Smith')
