@@ -16,10 +16,17 @@ RSpec.feature 'defence request creation' do
         expect(page).not_to have_field('DSCC Number')
       end
 
+      scenario 'Does not see the solicitor_time_of_arrival field on the Defence Request form' do
+        visit root_path
+        click_link 'New Defence Request'
+
+        expect(page).not_to have_field('Expected Solicitor Time of Arrival')
+      end
+
       scenario 'Filling in form manually for own solicitor', js: true do
         visit root_path
         click_link 'New Defence Request'
-        expect(page).to have_content ('Defence solicitor request')
+        expect(page).to have_content ('Legal advice request')
 
         within '.new_defence_request' do
           choose 'Own'
@@ -238,13 +245,14 @@ RSpec.feature 'defence request creation' do
         within "#defence_request_#{dr_1.id}" do
           click_link 'Edit'
         end
-        expect(page).to have_content ('Defence solicitor request')
+        expect(page).to have_content ('Legal advice request')
 
         within '.edit_defence_request' do
           within '#solicitor-details' do
             fill_in 'Full Name', with: 'Dave Smith'
             fill_in 'Name of firm', with: 'Broken Solicitors'
             fill_in 'Telephone number', with: '0207 284 9999'
+            expect(page).to_not have_selector('defence_request_solicitor_time_of_arrival_1i')
           end
 
           within '.case_details' do
@@ -282,7 +290,6 @@ RSpec.feature 'defence request creation' do
           expect(page).to have_content('02072849999')
           expect(page).to have_content('#CUST-9876')
           expect(page).to have_content('BadMurder')
-          expect(page).to have_content('10:00')
           expect(page).to have_content('Annie')
           expect(page).to have_content('Nother')
         end
@@ -296,7 +303,7 @@ RSpec.feature 'defence request creation' do
 
       context 'for "own" solicitor' do
         let!(:dr) { create(:own_solicitor) }
-        let!(:opened_dr) { create(:defence_request, :opened, cco: User.first) }
+        let!(:opened_dr) { create(:defence_request, :opened, :with_solicitor, cco: User.first) }
         scenario 'must open a Defence Request before editing' do
           visit root_path
           within "#defence_request_#{dr.id}" do
@@ -309,27 +316,6 @@ RSpec.feature 'defence request creation' do
             click_link 'Edit'
           end
           expect(current_path).to eq(edit_defence_request_path(dr))
-        end
-
-        scenario 'manually changing a solicitors details' do
-          visit root_path
-          within "#defence_request_#{opened_dr.id}" do
-            click_link 'Edit'
-          end
-
-          within '#solicitor-details' do
-            fill_in 'Full Name', with: 'Henry Billy Bob'
-            fill_in 'Name of firm', with: 'Cheap Skate Law'
-            fill_in 'Telephone number', with: '00112233445566'
-          end
-
-          click_button 'Continue'
-          expect(current_path).to eq(defence_requests_path)
-
-          within "#defence_request_#{opened_dr.id}" do
-            expect(page).to have_content 'Henry Billy Bob'
-            expect(page).to have_content '00112233445566'
-          end
         end
 
         scenario 'editing a DR DSCC number (multiple times)' do
@@ -398,6 +384,45 @@ RSpec.feature 'defence request creation' do
           click_button 'Update and Accept'
           expect(page).to have_content('A Valid DSCC number is required to update and accept a Defence Request')
         end
+
+        scenario 'editing a DR expected_solicitor_time for accepted DR' do
+          visit root_path
+
+          within "#defence_request_#{opened_dr.id}" do
+            click_link 'Edit'
+          end
+
+          within '#solicitor-details' do
+            expect(page).to_not have_selector('defence_request_solicitor_time_of_arrival_1i')
+          end
+
+          fill_in 'DSCC number', with: '123456'
+
+          click_button 'Update and Accept'
+
+          within ".accepted_defence_request" do
+            expect(page).to have_content(opened_dr.solicitor_name)
+          end
+
+          within ".accepted_defence_request" do
+            click_link 'Edit'
+          end
+
+          within '#solicitor-details' do
+            select('2010', from: 'defence_request_solicitor_time_of_arrival_1i')
+            select('January', from: 'defence_request_solicitor_time_of_arrival_2i')
+            select('1', from: 'defence_request_solicitor_time_of_arrival_3i')
+            select('12', from: 'defence_request_solicitor_time_of_arrival_4i')
+            select('00', from: 'defence_request_solicitor_time_of_arrival_5i')
+          end
+          click_button 'Continue'
+          expect(page).to have_content 'Defence Request successfully updated'
+          within ".accepted_defence_request" do
+            click_link 'Show'
+          end
+          expect(page).to have_content('2010-01-01 - 12:00')
+
+        end
       end
 
       context 'for "duty" solicitor' do
@@ -443,6 +468,38 @@ RSpec.feature 'defence request creation' do
   end
 
   context 'Show' do
+    context 'as cco' do
+      before :each do
+        create_role_and_login('cso')
+      end
+      let!(:accepted_dr) { create(:defence_request, :accepted) }
+
+      scenario 'can not edit the expected arrival time from show page' do
+        visit defence_requests_path
+        within '.accepted_defence_request' do
+          click_link('Show')
+        end
+
+        expect(page).to_not have_selector('.time-of-arrival')
+      end
+    end
+
+    context 'as cso' do
+      before :each do
+        create_role_and_login('cso')
+      end
+      let!(:accepted_dr) { create(:defence_request, :accepted) }
+
+      scenario 'can not edit the expected arrival time from show page' do
+        visit defence_requests_path
+        within '.accepted_defence_request' do
+          click_link('Show')
+        end
+
+        expect(page).to_not have_selector('.time-of-arrival')
+      end
+    end
+
     context 'as solicitor' do
       let!(:solicitor_dr) { create(:defence_request, :accepted) }
       let!(:dr2) { create(:defence_request, :accepted) }
@@ -452,7 +509,7 @@ RSpec.feature 'defence request creation' do
         login_as_user(solicitor_dr.solicitor.email)
       end
 
-      scenario 'solicitor can see the show page of case they "own"' do
+      scenario 'can see the show page of case they "own"' do
         visit defence_requests_path
         within ".accepted_defence_request" do
           click_link('Show')
@@ -463,11 +520,34 @@ RSpec.feature 'defence request creation' do
         expect(page).to have_link('Dashboard')
       end
 
-      scenario 'solicitor can NOT see the show page of case they "own"' do
+      scenario 'can edit the expected arrival time of a case they "own" form the show page' do
+        visit defence_requests_path
+        within '.accepted_defence_request' do
+          click_link('Show')
+        end
+
+        within '.time-of-arrival' do
+          select('2010', from: 'defence_request_solicitor_time_of_arrival_1i')
+          select('January', from: 'defence_request_solicitor_time_of_arrival_2i')
+          select('1', from: 'defence_request_solicitor_time_of_arrival_3i')
+          select('12', from: 'defence_request_solicitor_time_of_arrival_4i')
+          select('00', from: 'defence_request_solicitor_time_of_arrival_5i')
+
+          click_button "Add Expected Time of Arrival"
+        end
+
+        expect(page).to have_content("Defence Request successfully updated with solicitor estimated time of arrival")
+
+        within "tr.solicitor-time-of-arrival" do
+          expect(page).to have_content('2010-01-01 - 12:00')
+        end
+      end
+
+      scenario 'can NOT see the show page of case they do not "own"' do
         expect{ visit defence_request_path(dr2) }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
-      scenario 'solicitor can sees the feedback page for a closed DR and "call Call Centre" message' do
+      scenario 'can sees the feedback page for a closed DR and "call Call Centre" message' do
         visit defence_request_path(closed_dr)
         expect(page).to_not have_content('Case Details')
         expect(page).to_not have_content(closed_dr.solicitor_name)

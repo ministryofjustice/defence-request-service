@@ -1,1 +1,6 @@
-<%= render 'shared/form_template', form_type: 'edit'%>
+
+<%= render 'shared/flash_messages' %>
+<%= render 'shared/error_messages', object: @defence_request %>
+
+<h3><%= t('legal_advice_request')%></h3>
+<%= render 'edit_form' if @policy.edit? %>

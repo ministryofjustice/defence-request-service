@@ -90,6 +90,14 @@ class DefenceRequest < ActiveRecord::Base
     send_solicitor_case_details
   end
 
+  def interview_start_time_minute
+    interview_start_time.min if interview_start_time
+  end
+
+  def interview_start_time_hour
+    interview_start_time.hour if interview_start_time
+  end
+
   private
 
   def format_phone_number

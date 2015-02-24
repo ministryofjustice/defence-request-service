@@ -1,6 +1,7 @@
 class DefenceRequestsController < BaseController
 
-  before_action :find_defence_request, only: [:edit, :update, :feedback, :close, :open, :accepted, :resend_details]
+  before_action :find_defence_request, :set_policy, only: [:solicitor_time_of_arrival, :edit, :update, :feedback, :close, :open, :accepted, :resend_details]
+
   before_action ->(c) { authorize defence_request, "#{c.action_name}?" }
 
   def index
@@ -11,10 +12,12 @@ class DefenceRequestsController < BaseController
 
   def show
     @defence_request = policy_scope(DefenceRequest).find(params[:id])
+    set_policy
   end
 
   def new
     @defence_request = DefenceRequest.new
+    set_policy
     authorize @defence_request
   end
 
@@ -102,6 +105,14 @@ class DefenceRequestsController < BaseController
     end
   end
 
+  def solicitor_time_of_arrival
+    if AddSolicitorTimeOfArrival.new(@defence_request, solicitor_time_of_arrival_param).call
+      redirect_to(defence_request_path(@defence_request), notice: flash_message(:solicitor_time_of_arrival_added, DefenceRequest))
+    else
+      redirect_to(defence_request_path(@defence_request), alert: flash_message(:solicitor_time_of_arrival_not_added, DefenceRequest))
+    end
+  end
+
   private
 
   def associate_cco
@@ -124,7 +135,7 @@ class DefenceRequestsController < BaseController
   end
 
   def solicitor_details_missing?
-     defence_request_params[:solicitor_name].blank? || defence_request_params[:solicitor_firm].blank?
+    !@defence_request.solicitor && (defence_request_params[:solicitor_name].blank? || defence_request_params[:solicitor_firm].blank?)
   end
 
   def dscc_number_missing?
@@ -135,8 +146,16 @@ class DefenceRequestsController < BaseController
     @defence_request = DefenceRequest.find(params[:id])
   end
 
+  def set_policy
+    @policy ||= policy(@defence_request)
+  end
+
   def defence_request
     @defence_request ||= DefenceRequest.new
+  end
+
+  def solicitor_time_of_arrival_param
+    defence_request_params.select { |key, value| key.to_s.match(/^solicitor_time_of_arrival\(\d.*/) }
   end
 
   def defence_request_params
@@ -163,7 +182,8 @@ class DefenceRequestsController < BaseController
                                                          :time_of_arrival_hour,
                                                          :time_of_arrival_minute,
                                                          :dscc_number,
-                                                         :feedback)
+                                                         :feedback,
+                                                         :solicitor_time_of_arrival)
     raw_params.tap do |p|
       email = p.delete("solicitor_email")
       solicitor = User.solicitors.find_by_email email

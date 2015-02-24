@@ -1,35 +1,11 @@
-<%= render 'shared/flash_messages' %>
-<%= render 'shared/error_messages', object: @defence_request %>
-
-<h3><%= t('legal_advice_request')%><h3>
-
 <%= form_for(@defence_request) do |f| %>
-  <% if @defence_request.new_record? %>
-    <div class="form-group panel">
-      <legend><%= t('what_type_is_being_requested') %></legend>
-      <fieldset class="inline">
-        <label class="block-label" for="defence_request_solicitor_type_own">
-          <%= f.radio_button :solicitor_type, :own, name: 'defence_request[solicitor_type]', class: 'solicitor_type_radio' %>
-          <%= t('own') %>
-        </label>
-        <label class="block-label" for="defence_request_solicitor_type_duty">
-          <%= f.radio_button :solicitor_type, :duty, name: 'defence_request[solicitor_type]', class: 'solicitor_type_radio' %>
-          <%= t('duty') %>
-        </label>
-      </fieldset>
-      <% if @defence_request.new_record? %>
-        <div class="form-group">
-          <%= render 'solicitor_search' %>
-        </div>
-      <% end %>
-    </div>
-  <% end %>
+  <%= render('defence_requests/form_partials/solicitor_request', f: f) if @defence_request.new_record? %>
 
   <div id='main-form-body' <%= "class=hidden" if @defence_request.new_record?%>>
     <!-- details -->
     <div id='solicitor-details' <%= "class=hidden" if @defence_request.new_record? %>>
       <h3><%= t('solicitor_details') %></h3>
-      <div class="form-group details panel">
+      <div class="details panel">
         <div class="">
           <%= f.label :solicitor_name, t('full_name')%>
           <%= f.text_field :solicitor_name, class: 'text-field' %>
@@ -46,12 +22,20 @@
           <%= f.label :phone_number, t('telephone_number') %>
           <%= f.text_field :phone_number, class: 'text-field' %>
         </div>
+        <% if @policy.solicitor_time_of_arrival? %>
+        <div class="form-group">
+          <%= label :solicitor_time_of_arrival, t('solicitor_time_of_arrival'), class: 'form-label-bold' %>
+          <fieldset class="inline time-select">
+            <%= datetime_select('defence_request', 'solicitor_time_of_arrival') %>
+          </fieldset>
+        </div>
+        <% end %>
       </div>
     </div>
 
     <!-- detainee -->
     <h3><%= t('detainee_details') %></h3>
-    <div class="form-group detainee panel">
+    <div class="detainee panel">
       <div class="form-group">
         <%= f.label :detainee_name, t('full_name') %>
         <%= f.text_field :detainee_name, class: 'text-field' %>
@@ -114,7 +98,7 @@
 
     <!-- case details -->
     <h3><%= t('case_details') %></h3>
-    <div class="form-group case_details panel">
+    <div class="case_details panel">
       <div class="form-group">
         <fieldset class="inline">
           <label for>
@@ -147,7 +131,7 @@
         <%= f.text_field :custody_number, label: t('custody_number'), class: 'text-field custody-number' %>
       </div>
 
-      <% if policy(@defence_request).interview_start_time_edit? %>
+      <% if @policy.interview_start_time_edit? %>
         <div class="form-group">
           <%= f.label :interview_start_time, t('interview_start_time'), class: 'form-label-bold' %>
           <fieldset class="inline time-select">
@@ -161,10 +145,10 @@
         <%= f.text_area :comments, label: t('comments'), rows: '5', class: 'text-field' %>
       </div>
 
-      <%- if policy(@defence_request).dscc_number_edit? %>
+      <%- if @policy.dscc_number_edit? %>
         <div class="form-group">
           <%= f.label :dscc_number, t('dscc_number'), class: 'form-label-bold' %>
-          <%= f.text_field :dscc_number, readonly: !policy(@defence_request).dscc_number_edit?, class: 'text-field' %>
+          <%= f.text_field :dscc_number, readonly: !@policy.dscc_number_edit?, class: 'text-field' %>
         </div>
       <%- end %>
     </div>
@@ -175,9 +159,9 @@
       <%= link_to t('cancel_and_delete_all_details'), defence_requests_path %>
     <% else %>
       <%= link_to t('cancel'), defence_requests_path %>
-      <%= link_to t('close'), close_defence_request_path(@defence_request) if policy(@defence_request).close? %>
+      <%= link_to t('close'), close_defence_request_path(@defence_request) if @policy.close? %>
       <%= f.submit class: 'button' %>
-      <%= f.submit(t('update_and_accept'), class: 'button small') if policy(@defence_request).dscc_number_edit? %>
+      <%= f.submit(t('update_and_accept'), class: 'button small') if @policy.dscc_number_edit? %>
     <% end %>
   </div>
 

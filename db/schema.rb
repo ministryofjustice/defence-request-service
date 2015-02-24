@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150219111207) do
+ActiveRecord::Schema.define(version: 20150219162644) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 20150219111207) do
   add_index "audits", ["user_id", "user_type"], name: "user_index", using: :btree
 
   create_table "defence_requests", force: :cascade do |t|
-    t.string   "solicitor_type",                       null: false
+    t.string   "solicitor_type",                            null: false
     t.string   "solicitor_name"
     t.string   "solicitor_firm"
     t.string   "scheme"
@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 20150219111207) do
     t.datetime "time_of_arrival"
     t.text     "comments"
     t.boolean  "adult"
-    t.boolean  "appropriate_adult",    default: false, null: false
+    t.boolean  "appropriate_adult",         default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "state"
@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(version: 20150219111207) do
     t.integer  "solicitor_id"
     t.integer  "detainee_age"
     t.integer  "cco_id"
+    t.datetime "solicitor_time_of_arrival"
   end
 
   add_index "defence_requests", ["solicitor_id"], name: "index_defence_requests_on_solicitor_id", using: :btree

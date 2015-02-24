@@ -86,6 +86,8 @@ en:
     solicitor_details_required: "Valid solicitor details are required to update and accept a %{model}"
     update: "%{model} successfully updated"
     updated_and_updated: "%{model} successfully updated and marked as accepted"
+    solicitor_time_of_arrival_added: "%{model} successfully updated with solicitor estimated time of arrival"
+    solicitor_time_of_arrival_not_added: "%{model} not updated with solicitor estimated time of arrival"
 
   helpers:
     submit:
@@ -98,3 +100,6 @@ en:
       defence_request: "Defence Request"
 
 
+  solicitor_time_of_arrival: "Solicitor Expected Time of Arrival"
+  add_expected_time_of_arrival: "Add Expected Time of Arrival"
+  expected_time_of_arrival: "Solicitor Time of Arrival"
