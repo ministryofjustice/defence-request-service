@@ -1,5 +1,3 @@
-<h1>Update from <%= Settings.dsds.app_title %></h1>
-
-<p>The interview start time for a defence request you are assigned to has been changed, it is
-  now:<%= @defence_request.interview_start_time.strftime '%R' %></p>
-<%= link_to t('view_the_case_details'), defence_request_url(@defence_request) %>
+<%= render 'mailer/content/interview_start_time' %>
+<h1><%= t('update_from') +' '+ Settings.dsds.app_title %></h1>
+<%= yield(:interview_start_time) %>
