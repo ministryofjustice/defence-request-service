@@ -1,0 +1,73 @@
+
+h3.dashboard {
+  float: left;
+  padding-top: 20px;
+}
+
+td.actions {
+  text-align: center;
+}
+
+tr.accepted_defence_request {
+  border-left: #F47738 4px solid;
+}
+
+tr.created_defence_request {
+  border-left: #912B88 4px solid;
+}
+
+tr.open_defence_request {
+  border-left: #D53880 4px solid;
+}
+
+table.dashboard {
+  width: 100%;
+}
+
+table.dashboard th {
+  font-size: 15px;
+}
+
+table.dashboard td {
+  font-size: 15px;
+  white-space: nowrap;
+  width: 10px;
+}
+
+table.dashboard td.actions {
+  font-size: 15px;
+  white-space: normal;
+}
+
+table.dashboard td.sol-name {
+  white-space: normal;
+}
+
+table.dashboard td.det-name {
+  white-space: normal;
+}
+
+table.dashboard td.allegation {
+  white-space: normal;
+}
+
+table.dashboard td.gender {
+  text-align: center;
+}
+
+table.dashboard td.adult {
+  text-align: center;
+}
+
+table.dashboard tr {
+  font-size: 15px;
+  white-space: nowrap;
+  width: 10px;
+}
+
+.form-links {
+  display: inline-block;
+  padding-top: 14px;
+}
+
+

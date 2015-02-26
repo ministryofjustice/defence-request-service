@@ -1,0 +1,64 @@
+
+.solicitor_results_list {
+  padding-left: 14px;
+  margin-top: 60px;
+  z-index: 1;
+}
+
+.solicitor_result {
+  font-family: "nta", Arial, sans-serif;
+  font-size: 19px;
+  line-height: 1.31579;
+  font-weight: 400;
+  text-transform: none;
+}
+
+.hour {
+  width: 2.75em;
+}
+
+.minute {
+  width: 2.75em;
+}
+
+.day {
+  width: 2.75em;
+}
+
+.month {
+  width: 2.75em;
+}
+
+.year {
+  width: 4.25em;
+}
+
+.age {
+  width: 4.25em;
+}
+
+.custody-number {
+  width: 40%;
+}
+
+.solicitor_search_wrapper {
+  border-left: #bfc1c3 solid 4px;
+  padding: 0 0 0 14px;
+  margin-bottom: 1em;
+  clear: both;
+}
+
+[data-fn="btn-solicitor-results-close"] {
+  right: 20px;
+  z-index: 10;
+}
+
+.search-text-field {
+  width: 80%;
+  margin-bottom: 0;
+  margin-right: 14px;
+}
+
+a.close-search {
+  float: right;
+}
