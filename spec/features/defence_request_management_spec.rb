@@ -26,7 +26,7 @@ RSpec.feature 'defence request creation' do
       scenario 'Filling in form manually for own solicitor', js: true do
         visit root_path
         click_link 'New Defence Request'
-        expect(page).to have_content ('Legal advice request')
+        expect(page).to have_content ('New Defence Request')
 
         within '.new_defence_request' do
           choose 'Own'
@@ -245,7 +245,7 @@ RSpec.feature 'defence request creation' do
         within "#defence_request_#{dr_1.id}" do
           click_link 'Edit'
         end
-        expect(page).to have_content ('Legal advice request')
+        expect(page).to have_content ('Edit Defence Request')
 
         within '.edit_defence_request' do
           within '#solicitor-details' do
@@ -441,7 +441,7 @@ RSpec.feature 'defence request creation' do
           within ".accepted_defence_request" do
             click_link 'Show'
           end
-          expect(page).to have_content('2010-01-01 - 12:00')
+          expect(page).to have_content('1 January 2010 - 12:00')
 
         end
       end
@@ -560,7 +560,7 @@ RSpec.feature 'defence request creation' do
         expect(page).to have_content("Defence Request successfully updated with solicitor estimated time of arrival")
 
         within "tr.solicitor-time-of-arrival" do
-          expect(page).to have_content('2010-01-01 - 12:00')
+          expect(page).to have_content('1 January 2010 - 12:00')
         end
       end
 

@@ -25,11 +25,7 @@
 <%# TODO: convert banner to i18n? %>
 <% content_for :content_override do %>
   <main id="page-container" role="main">
-    <div class="phase-banner">
-      <p>
-        <span>This is a new service - <%= link_to('your feedback', config_item(:feedback_url)) %> will help us to improve it.  If you need help with using the online service, we can offer <%= link_to('technical help', '#') %>.</span>
-      </p>
-    </div>
+    <%= render 'shared/banner' %>
     <%= yield %>
   </main>
 <% end %>
