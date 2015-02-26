@@ -38,6 +38,7 @@ en:
   dscc_number: "DSCC number"
   duty: 'Duty'
   edit: Edit
+  edit_defence_request: "Edit Defence Request"
   email: Email
   enter_solicitor_firm_name: "Enter solicitor/firm name..."
   error: error
@@ -122,6 +123,3 @@ en:
   activerecord:
     models:
       defence_request: "Defence Request"
-
-
-

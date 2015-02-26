@@ -5,7 +5,7 @@
     <!-- details -->
     <div id='solicitor-details' <%= "class=hidden" if @defence_request.new_record? %>>
       <h3><%= t('solicitor_details') %></h3>
-      <div class="details panel">
+      <div class="details">
         <div class="">
           <%= f.label :solicitor_name, t('full_name')%>
           <%= f.text_field :solicitor_name, class: 'text-field' %>
@@ -35,7 +35,7 @@
 
     <!-- detainee -->
     <h3><%= t('detainee_details') %></h3>
-    <div class="detainee panel">
+    <div class="detainee">
       <div class="form-group">
         <%= f.label :detainee_name, t('full_name') %>
         <%= f.text_field :detainee_name, class: 'text-field' %>
@@ -98,7 +98,7 @@
 
     <!-- case details -->
     <h3><%= t('case_details') %></h3>
-    <div class="case_details panel">
+    <div class="case_details">
       <div class="form-group">
         <fieldset class="inline">
           <label for>

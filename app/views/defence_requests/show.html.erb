@@ -3,13 +3,13 @@
   <br/>
   <%= link_to t('dashboard'), defence_requests_path %>
   <% if @defence_request.feedback? %>
-    <h2 id="case-details"><%= t('case_closed') %></h2>
+    <h1><%= t('case_closed') %></h1>
 
     <p><%= @defence_request.feedback %></p>
 
     <p><%= t('call_call_center') %></p>
   <% else %>
-    <h2 id="case-details"><%= t('case_details') %></h2>
+    <h1><%= t('case_details') %></h1>
     <table>
       <tbody>
       <tr>
