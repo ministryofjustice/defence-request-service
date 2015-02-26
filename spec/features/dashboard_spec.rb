@@ -65,7 +65,7 @@ RSpec.feature 'Defence request dashboard' do
         click_link 'Edit'
       end
 
-      within '#solicitor-details' do
+      within '.solicitor-details' do
         fill_in 'Full Name', with: 'Bob Smith'
       end
 

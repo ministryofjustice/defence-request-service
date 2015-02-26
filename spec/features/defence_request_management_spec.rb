@@ -30,7 +30,7 @@ RSpec.feature 'defence request creation' do
 
         within '.new_defence_request' do
           choose 'Own'
-          within '#solicitor-details' do
+          within '.solicitor-details' do
             fill_in 'Full Name', with: 'Bob Smith'
             fill_in 'Name of firm', with: 'Acme Solicitors'
             fill_in 'Telephone number', with: '0207 284 0000'
@@ -73,7 +73,7 @@ RSpec.feature 'defence request creation' do
 
         click_link 'Bobson Smith'
         expect(page).to_not have_content 'Bobby Bob Smithson'
-        within '#solicitor-details' do
+        within '.solicitor-details' do
           expect(page).to have_field 'Full Name', with: 'Bobson Smith'
           expect(page).to have_field 'Name of firm', with: 'Kreiger LLC'
           expect(page).to have_field 'Telephone number', with: '248.412.8095'
@@ -248,7 +248,7 @@ RSpec.feature 'defence request creation' do
         expect(page).to have_content ('Edit Defence Request')
 
         within '.edit_defence_request' do
-          within '#solicitor-details' do
+          within '.solicitor-details' do
             fill_in 'Full Name', with: 'Dave Smith'
             fill_in 'Name of firm', with: 'Broken Solicitors'
             fill_in 'Telephone number', with: '0207 284 9999'
@@ -324,7 +324,7 @@ RSpec.feature 'defence request creation' do
             click_link 'Edit'
           end
 
-          within '#solicitor-details' do
+          within '.solicitor-details' do
             fill_in 'Full Name', with: 'Henry Billy Bob'
             fill_in 'Name of firm', with: 'Cheap Skate Law'
             fill_in 'Telephone number', with: '00112233445566'
@@ -413,7 +413,7 @@ RSpec.feature 'defence request creation' do
             click_link 'Edit'
           end
 
-          within '#solicitor-details' do
+          within '.solicitor-details' do
             expect(page).to_not have_selector('defence_request_solicitor_time_of_arrival_1i')
           end
 
@@ -429,7 +429,7 @@ RSpec.feature 'defence request creation' do
             click_link 'Edit'
           end
 
-          within '#solicitor-details' do
+          within '.solicitor-details' do
             select('2010', from: 'defence_request_solicitor_time_of_arrival_1i')
             select('January', from: 'defence_request_solicitor_time_of_arrival_2i')
             select('1', from: 'defence_request_solicitor_time_of_arrival_3i')
@@ -463,19 +463,19 @@ RSpec.feature 'defence request creation' do
           click_button 'Update and Accept'
           expect(page).to have_content('Valid solicitor details are required to update and accept a Defence Request')
 
-          within '#solicitor-details' do
+          within '.solicitor-details' do
             fill_in 'Full Name', with: 'Dodgy Dave'
           end
           click_button 'Update and Accept'
           expect(page).to have_content('Valid solicitor details are required to update and accept a Defence Request')
-          within '#solicitor-details' do
+          within '.solicitor-details' do
             fill_in 'Full Name', with: 'Dodgy Dave'
             fill_in 'Name of firm', with: 'Innocent your honour'
           end
           click_button 'Update and Accept'
 
           expect(page).to have_content('A Valid DSCC number is required to update and accept a Defence Request')
-          within '#solicitor-details' do
+          within '.solicitor-details' do
             fill_in 'Full Name', with: 'Dodgy Dave'
             fill_in 'Name of firm', with: 'Innocent your honour'
           end
