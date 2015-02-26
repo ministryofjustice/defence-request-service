@@ -175,7 +175,7 @@ RSpec.feature 'defence request creation' do
         end
         expect(page).to have_content('Close the Defence Request')
         click_button 'Close'
-        expect(page).to have_content("feedback: can't be blank")
+        expect(page).to have_content("Feedback: can't be blank")
         expect(page).to have_content('Close the Defence Request')
 
         fill_in 'Feedback', with: 'I just cant take it any more...'
@@ -193,7 +193,7 @@ RSpec.feature 'defence request creation' do
         click_link 'Close'
         expect(page).to have_content('Close the Defence Request')
         click_button 'Close'
-        expect(page).to have_content("feedback: can't be blank")
+        expect(page).to have_content("Feedback: can't be blank")
         expect(page).to have_content('Close the Defence Request')
 
         fill_in 'Feedback', with: 'I just cant take it any more...'
@@ -218,7 +218,7 @@ RSpec.feature 'defence request creation' do
         end
         expect(page).to have_content('Close the Defence Request')
         click_button 'Close'
-        expect(page).to have_content("feedback: can't be blank")
+        expect(page).to have_content("Feedback: can't be blank")
         expect(page).to have_content('Close the Defence Request')
 
         fill_in 'Feedback', with: 'I just cant take it any more...'
