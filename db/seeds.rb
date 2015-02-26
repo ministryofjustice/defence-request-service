@@ -50,7 +50,8 @@ NUMBER_OF_SOLICITORS = NUMBER_OF_FIRMS * SOLICITORS_PER_FIRM
 
 srand(100)
 
-solicitor_emails = Array.new(NUMBER_OF_SOLICITORS) { Faker::Internet.safe_email }.to_enum
+solicitor_names = Array.new(NUMBER_OF_SOLICITORS) { Faker::Name.name }
+solicitor_emails = solicitor_names.map { |name| Faker::Internet.safe_email name }.to_enum
 
 (1..NUMBER_OF_SOLICITORS).each do
   solicitor_email = solicitor_emails.next
