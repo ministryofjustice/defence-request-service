@@ -35,6 +35,7 @@ class DefenceRequestsController < BaseController
 
   def create
     @defence_request = DefenceRequest.new(defence_request_params)
+    set_policy
     if @defence_request.save
       redirect_to(defence_requests_path, notice: flash_message(:create, DefenceRequest))
     else

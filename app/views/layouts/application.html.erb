@@ -22,6 +22,7 @@
 <% end %>
 <%= content_for :cookie_message, "" %>
 <%= content_for :js_gt_ie, '6' %>
+<%# TODO: convert banner to i18n? %>
 <% content_for :content_override do %>
   <main id="page-container" role="main">
     <div class="phase-banner">
@@ -40,10 +41,16 @@
   <li>
     <ul>
       <li>
-        <%= link_to 'Help', :help %>
+        <%= link_to t('help'), :help %>
       </li>
       <li>
-        <%= link_to 'Cookies', :cookies %>
+        <%= link_to t('accessibility'), :accessibility %>
+      </li>
+      <li>
+        <%= link_to t('cookies'), :cookies %>
+      </li>
+      <li>
+        <%= link_to t('terms'), :terms %>
       </li>
     </ul>
   </li>

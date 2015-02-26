@@ -4,7 +4,7 @@ class Mailer < ApplicationMailer
   def notify_interview_start_change(defence_request, solicitor)
     @defence_request = defence_request
     mail(to: solicitor.email,
-         subject: 'Interview start time change',
+         subject: t('interview_start_time_change'),
          content_type: 'text/html',
          importance: 'High'
         )
@@ -13,7 +13,7 @@ class Mailer < ApplicationMailer
   def send_solicitor_case_details(defence_request, solicitor)
     @defence_request = defence_request
     mail(to: solicitor.email,
-         subject: 'Case Details',
+         subject: t('case_details'),
          content_type: 'text/html',
          importance: 'High'
     )
