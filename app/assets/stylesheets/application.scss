@@ -120,15 +120,15 @@ h5.user-role {
   margin-right: 1em;
 }
 
-label + input, label + textarea {
-  width: 80%;
-}
-
 .text-field {
   text-transform: none;
   border: 1px solid #bbb;
   margin: 0 0 1em;
   padding: 0.5em;
+}
+
+.text-field-wide {
+  width: 80%;
 }
 
 .solicitor_search_wrapper {

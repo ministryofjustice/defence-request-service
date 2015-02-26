@@ -8,19 +8,19 @@
       <div class="details panel">
         <div class="">
           <%= f.label :solicitor_name, t('full_name')%>
-          <%= f.text_field :solicitor_name, class: 'text-field' %>
+          <%= f.text_field :solicitor_name, class: 'text-field text-field-wide' %>
         </div>
 
         <div class="form-group">
           <%= f.label :solicitor_firm, t('name_of_firm')%>
-          <%= f.text_field :solicitor_firm, class: 'text-field' %>
+          <%= f.text_field :solicitor_firm, class: 'text-field text-field-wide' %>
         </div>
 
         <%= f.text_field :solicitor_email, type: :hidden %>
 
         <div class="form-group">
           <%= f.label :phone_number, t('telephone_number') %>
-          <%= f.text_field :phone_number, class: 'text-field' %>
+          <%= f.text_field :phone_number, class: 'text-field text-field-wide' %>
         </div>
         <% if @policy.solicitor_time_of_arrival? %>
         <div class="form-group">
@@ -38,7 +38,7 @@
     <div class="detainee panel">
       <div class="form-group">
         <%= f.label :detainee_name, t('full_name') %>
-        <%= f.text_field :detainee_name, class: 'text-field' %>
+        <%= f.text_field :detainee_name, class: 'text-field text-field-wide' %>
       </div>
 
       <div class="form-group">
@@ -118,12 +118,12 @@
 
       <div class="form-group">
         <%= f.label :allegations, t('allegations') %>
-        <%= f.text_field :allegations, class: 'text-field' %>
+        <%= f.text_field :allegations, class: 'text-field text-field-wide' %>
       </div>
 
       <div class="form-group hidden" id='scheme-field'>
         <%= f.label :scheme, t('scheme'), class: 'form-label-bold' %>
-        <%= f.text_field :scheme, class: 'text-field' %>
+        <%= f.text_field :scheme, class: 'text-field text-field-wide' %>
       </div>
 
       <div class="form-group">
@@ -142,13 +142,13 @@
 
       <div class="form-group">
         <%= f.label :comments, t('comments') %>
-        <%= f.text_area :comments, label: t('comments'), rows: '5', class: 'text-field' %>
+        <%= f.text_area :comments, label: t('comments'), rows: '5', class: 'text-field text-field-wide' %>
       </div>
 
       <%- if @policy.dscc_number_edit? %>
         <div class="form-group">
           <%= f.label :dscc_number, t('dscc_number'), class: 'form-label-bold' %>
-          <%= f.text_field :dscc_number, readonly: !@policy.dscc_number_edit?, class: 'text-field' %>
+          <%= f.text_field :dscc_number, readonly: !@policy.dscc_number_edit?, class: 'text-field text-field-wide' %>
         </div>
       <%- end %>
     </div>
