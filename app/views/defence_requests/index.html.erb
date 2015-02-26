@@ -1,5 +1,5 @@
 <%= render partial: 'shared/flash_messages' %>
-<h3><%= "#{t(current_user.role)}  #{t('dashboard')}" %></h3>
+<h1><%= "#{t(current_user.role)}  #{t('dashboard')}" %></h1>
 <% if policy(:defence_request).create? %>
   <div class="new_defence_request">
     <%= link_to t('new_defence_request'), new_defence_request_path, role: 'button', class: 'button' %>
