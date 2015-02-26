@@ -24,8 +24,8 @@
 
     // Clear solicitor search results on ESC keypress
     $(document).on('keydown', function (event) {
-      if ($('.solicitor_results_list *').length > 0 && event.keyCode === 27) {
-        $('.solicitor_results_list').empty();
+      if ($('.solicitor-results-list *').length > 0 && event.keyCode === 27) {
+        $('.solicitor-results-list').empty();
       }
     });
 
@@ -51,7 +51,7 @@
       $('#defence_request_solicitor_name').val("");
       $('#scheme-field').removeClass("hidden")
       $('#defence_request_scheme').removeAttr("disabled");
-      $('.solicitor_results_list').html("")
+      $('.solicitor-results-list').html("")
       $('#q').val("")
     }
 

@@ -71,7 +71,7 @@ RSpec.feature 'Defence request dashboard' do
 
       click_button 'Update Defence Request'
 
-      within ".created_defence_request#defence_request_#{dr_created.id}" do
+      within ".created-defence-request#defence_request_#{dr_created.id}" do
         expect(page).to have_content('Bob Smith')
       end
 
@@ -81,7 +81,7 @@ RSpec.feature 'Defence request dashboard' do
     scenario 'resending case details', js: true do
       visit defence_requests_path
 
-      within ".accepted_defence_request" do
+      within ".accepted-defence-request" do
         click_button 'Resend details'
       end
 
@@ -110,10 +110,10 @@ RSpec.feature 'Defence request dashboard' do
     scenario 'i see a tables of "created" and "open" DR`s`' do
       visit defence_requests_path
 
-      within ".created_defence_request" do
+      within ".created-defence-request" do
         expect(page).to have_content(dr_created.solicitor_name)
       end
-      within ".open_defence_request" do
+      within ".open-defence-request" do
         expect(page).to have_content(dr_open.solicitor_name)
       end
 
@@ -148,21 +148,21 @@ RSpec.feature 'Defence request dashboard' do
     scenario 'any update to the "created" DR by the cco results in it moving to "created" after the refresh' do
       visit defence_requests_path
 
-      within ".created_defence_request#defence_request_#{dr_created.id}" do
+      within ".created-defence-request#defence_request_#{dr_created.id}" do
         expect(page).to have_content(dr_created.solicitor_name)
       end
 
-      within ".created_defence_request#defence_request_#{dr_created.id}" do
+      within ".created-defence-request#defence_request_#{dr_created.id}" do
         click_button 'Open'
       end
 
-      expect(page).to_not have_selector(".created_defence_requests#defence_request_#{dr_created.id}")
+      expect(page).to_not have_selector(".created-defence-requests#defence_request_#{dr_created.id}")
     end
 
     scenario 'resending case details', js: true do
       visit defence_requests_path
 
-      within ".accepted_defence_request" do
+      within ".accepted-defence-request" do
         click_button 'Resend details'
       end
 
@@ -175,11 +175,11 @@ RSpec.feature 'Defence request dashboard' do
     scenario 'an unassigned cco cannot edit a dr' do
       cco_user = User.find_by(email: 'cco@example.com')
       visit defence_requests_path
-      within ".created_defence_request#defence_request_#{dr_created.id}" do
+      within ".created-defence-request#defence_request_#{dr_created.id}" do
         click_button 'Open'
       end
 
-      within ".open_defence_request#defence_request_#{dr_created.id}" do
+      within ".open-defence-request#defence_request_#{dr_created.id}" do
         expect(page).to have_link('Edit')
       end
       dr_created.reload
@@ -189,7 +189,7 @@ RSpec.feature 'Defence request dashboard' do
 
       login_as_user(cco_user2.email)
 
-      within ".open_defence_request#defence_request_#{dr_created.id}" do
+      within ".open-defence-request#defence_request_#{dr_created.id}" do
         expect(page).to_not have_link('Edit')
       end
     end
@@ -213,10 +213,10 @@ RSpec.feature 'Defence request dashboard' do
 
     scenario 'i see only MY "accepted" DR`s`' do
       visit defence_requests_path
-      within ".accepted_defence_request" do
+      within ".accepted-defence-request" do
         expect(page).to have_content(solicitor_dr.solicitor_name)
       end
-      within ".accepted_defence_request" do
+      within ".accepted-defence-request" do
         expect(page).to_not have_content(other_solicitor_dr.solicitor_name)
       end
     end
@@ -224,23 +224,23 @@ RSpec.feature 'Defence request dashboard' do
     scenario 'after the refresh i can still see ONLY the correct data', js: true do
       visit defence_requests_path
 
-      within ".accepted_defence_request" do
+      within ".accepted-defence-request" do
         expect(page).to have_content(solicitor_dr.detainee_name)
         expect(page).to_not have_content(solicitor_dr_not_accepted.detainee_name)
       end
-      expect(page).to_not have_selector(".created_defence_request")
-      expect(page).to_not have_selector(".open_defence_request")
+      expect(page).to_not have_selector(".created-defence-request")
+      expect(page).to_not have_selector(".open-defence-request")
 
       sleep(4)
       wait_for_ajax
 
-      within ".accepted_defence_request" do
+      within ".accepted-defence-request" do
         expect(page).to have_content(solicitor_dr.detainee_name)
         expect(page).to_not have_content(solicitor_dr_not_accepted.detainee_name)
       end
 
-      expect(page).to_not have_selector(".created_defence_request")
-      expect(page).to_not have_selector(".open_defence_request")
+      expect(page).to_not have_selector(".created-defence-request")
+      expect(page).to_not have_selector(".open-defence-request")
     end
   end
 

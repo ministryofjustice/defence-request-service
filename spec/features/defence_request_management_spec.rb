@@ -36,7 +36,7 @@ RSpec.feature 'defence request creation' do
             fill_in 'Telephone number', with: '0207 284 0000'
           end
 
-          within '.case_details' do
+          within '.case-details' do
             fill_in 'Custody number', with: '#CUST-01234'
             fill_in 'Allegations', with: 'BadMurder'
             fill_in 'Hour', with: '09'
@@ -120,7 +120,7 @@ RSpec.feature 'defence request creation' do
         find('.solicitor-search', match: :first).click
         expect(page).to have_content 'Bobson Smith'
 
-        within('.solicitor_results_list') do
+        within('.solicitor-results-list') do
         click_link("Close")
         end
         expect(page).not_to have_content 'Bobson Smith'
@@ -255,7 +255,7 @@ RSpec.feature 'defence request creation' do
             expect(page).to_not have_selector('defence_request_solicitor_time_of_arrival_1i')
           end
 
-          within '.case_details' do
+          within '.case-details' do
             fill_in 'Custody number', with: '#CUST-9876'
             fill_in 'Allegations', with: 'BadMurder'
             fill_in 'Hour', with: '10'
@@ -358,14 +358,14 @@ RSpec.feature 'defence request creation' do
 
         scenario 'I cant see an accepted button for created DR`s' do
           visit root_path
-          within ".created_defence_request" do
+          within ".created-defence-request" do
             expect(page).to_not have_button 'Accepted'
           end
         end
 
         scenario 'I CANT see an accepted button for open DR`s without a DSCC number' do
           visit root_path
-          within ".open_defence_request" do
+          within ".open-defence-request" do
             expect(page).to_not have_button 'Accepted'
           end
         end
@@ -376,7 +376,7 @@ RSpec.feature 'defence request creation' do
           within "#defence_request_#{opened_dr.id}" do
             click_button 'Accepted'
           end
-          within ".accepted_defence_request" do
+          within ".accepted-defence-request" do
             expect(page).to have_content(opened_dr.solicitor_name)
           end
         end
@@ -390,7 +390,7 @@ RSpec.feature 'defence request creation' do
           fill_in 'DSCC number', with: '123456'
 
           click_button 'Update and Accept'
-          within ".accepted_defence_request" do
+          within ".accepted-defence-request" do
             expect(page).to have_content(opened_dr.solicitor_name)
           end
         end
@@ -421,11 +421,11 @@ RSpec.feature 'defence request creation' do
 
           click_button 'Update and Accept'
 
-          within ".accepted_defence_request" do
+          within ".accepted-defence-request" do
             expect(page).to have_content(opened_dr.solicitor_name)
           end
 
-          within ".accepted_defence_request" do
+          within ".accepted-defence-request" do
             click_link 'Edit'
           end
 
@@ -438,7 +438,7 @@ RSpec.feature 'defence request creation' do
           end
           click_button 'Update Defence Request'
           expect(page).to have_content 'Defence Request successfully updated'
-          within ".accepted_defence_request" do
+          within ".accepted-defence-request" do
             click_link 'Show'
           end
           expect(page).to have_content('1 January 2010 - 12:00')
@@ -450,7 +450,7 @@ RSpec.feature 'defence request creation' do
         let!(:duty_solicitor_dr) { create(:defence_request, :duty_solicitor, :opened, cco: User.first) }
         scenario 'can NOT mark a dr as "solicitor accepted" without solicitor details from the DASHBOARD' do
           visit root_path
-          within ".open_defence_request" do
+          within ".open-defence-request" do
             expect(page).to_not have_button 'Accepted'
           end
         end
@@ -497,7 +497,7 @@ RSpec.feature 'defence request creation' do
 
       scenario 'can not edit the expected arrival time from show page' do
         visit defence_requests_path
-        within '.accepted_defence_request' do
+        within '.accepted-defence-request' do
           click_link('Show')
         end
 
@@ -513,7 +513,7 @@ RSpec.feature 'defence request creation' do
 
       scenario 'can not edit the expected arrival time from show page' do
         visit defence_requests_path
-        within '.accepted_defence_request' do
+        within '.accepted-defence-request' do
           click_link('Show')
         end
 
@@ -532,7 +532,7 @@ RSpec.feature 'defence request creation' do
 
       scenario 'can see the show page of case they "own"' do
         visit defence_requests_path
-        within ".accepted_defence_request" do
+        within ".accepted-defence-request" do
           click_link('Show')
         end
 
@@ -543,7 +543,7 @@ RSpec.feature 'defence request creation' do
 
       scenario 'can edit the expected arrival time of a case they "own" form the show page' do
         visit defence_requests_path
-        within '.accepted_defence_request' do
+        within '.accepted-defence-request' do
           click_link('Show')
         end
 

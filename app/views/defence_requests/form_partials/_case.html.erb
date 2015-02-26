@@ -1,5 +1,5 @@
 <h3><%= t('case_details') %></h3>
-<div class="case_details">
+<div class="case-details">
   <%= render('defence_requests/form_partials/case_interview_start_time', f: f) %>
 
   <%= render('defence_requests/form_partials/case_details', f: f) if @policy.case_details_edit? %>
