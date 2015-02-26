@@ -18,19 +18,19 @@
 <div class="form-group">
   <fieldset class="inline">
     <label for>
-      Prisoner date of birth (optional)
-      <span class='hint block'>eg. 28 04 1996</span>
+      <%= t('prisoner_dob') %>
+      <span class='hint block'><%= t('date_hint') %></span>
     </label>
     <div class="date_field_wrapper">
-      <%= f.label :date_of_birth_day, 'Day' %>
+      <%= f.label :date_of_birth_day, t('day') %>
       <%= f.text_field :date_of_birth_day, class: 'day text-field'%>
     </div>
     <div class="date_field_wrapper">
-      <%= f.label :date_of_birth_month, 'Month' %>
+      <%= f.label :date_of_birth_month, t('month') %>
       <%= f.text_field :date_of_birth_month, class: 'month text-field'%>
     </div>
     <div class="date_field_wrapper">
-      <%= f.label :date_of_birth_year, 'Year' %>
+      <%= f.label :date_of_birth_year, t('year') %>
       <%= f.text_field :date_of_birth_year, class: 'year text-field'%>
     </div>
   </fieldset>
