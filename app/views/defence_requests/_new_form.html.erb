@@ -58,19 +58,19 @@
       <div class="form-group">
         <fieldset class="inline">
           <label for>
-            Prisoner date of birth (optional)
-            <span class='hint block'>eg. 28 04 1996</span>
+            <%= t('prisoner_dob') %>
+            <span class='hint block'><%= t('date_hint') %></span>
           </label>
           <div class="date_field_wrapper">
-            <%= f.label :date_of_birth_day, 'Day' %>
+            <%= f.label :date_of_birth_day, t('day') %>
             <%= f.text_field :date_of_birth_day, class: 'day text-field'%>
           </div>
           <div class="date_field_wrapper">
-            <%= f.label :date_of_birth_month, 'Month' %>
+            <%= f.label :date_of_birth_month, t('month') %>
             <%= f.text_field :date_of_birth_month, class: 'month text-field'%>
           </div>
           <div class="date_field_wrapper">
-            <%= f.label :date_of_birth_year, 'Year' %>
+            <%= f.label :date_of_birth_year, t('year') %>
             <%= f.text_field :date_of_birth_year, class: 'year text-field'%>
           </div>
         </fieldset>
@@ -102,15 +102,15 @@
       <div class="form-group">
         <fieldset class="inline">
           <label for>
-            Time of arrival
-            <span class='hint block'>eg. 23 10</span>
+            <%= t('time_of_arrival') %>
+            <span class='hint block'><%= t('time_hint') %></span>
           </label>
           <div class="date_field_wrapper">
-            <%= f.label :time_of_arrival_hour, 'Hour' %>
+            <%= f.label :time_of_arrival_hour, t('hour') %>
             <%= f.text_field :time_of_arrival_hour, class: 'hour text-field'%>
           </div>
           <div class="date_field_wrapper">
-            <%= f.label :time_of_arrival_minute, 'Min' %>
+            <%= f.label :time_of_arrival_minute, t('min') %>
             <%= f.text_field :time_of_arrival_minute, class: 'minute text-field'%>
           </div>
         </fieldset>

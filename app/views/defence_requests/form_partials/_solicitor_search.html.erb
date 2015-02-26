@@ -1,8 +1,8 @@
 <div class="hidden" id='search-box'>
   <div class="form-group solicitor_search_wrapper">
-    <p class="form-hint">You can search for a solicitor or firm using the search box below,<br> or enter manually.</p>
+    <p class="form-hint"><%= t('solicitor_search').html_safe %></p>
     <%= text_field_tag 'q', nil, autocomplete: "off", autofocus: true, class: "no-enter-submit search-text-field text-field" %>
-    <%= button_tag 'Search', class: 'button solicitor-search' %>
+    <%= button_tag t('search'), class: 'button solicitor-search' %>
   </div>
   <div class="solicitor_results_list">
   </div>
