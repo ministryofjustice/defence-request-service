@@ -142,33 +142,6 @@ label + input, label + textarea {
   display: none;
 }
 
-tr.accepted_defence_request {
-  border-left: #F47738 4px solid;
-}
-
-tr.created_defence_request {
-  border-left: #912B88 4px solid;
-}
-
-tr.open_defence_request {
-  border-left: #D53880 4px solid;
-}
-
-//tr.accepted_defence_request {
-//  border-left: #F47738 4px solid;
-//  background-color: rgba(242, 118, 56, 0.18);
-//}
-//
-//tr.created_defence_request {
-//  border-left: #912B88 4px solid;
-//  background-color: rgba(143, 43, 134, 0.17);
-//}
-//
-//tr.open_defence_request {
-//  border-left: #D53880 4px solid;
-//  border-left: rgba(212, 57, 129, 0.18);
-//}
-
 table.dashboard {
   width: 100%;
 }

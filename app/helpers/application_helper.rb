@@ -16,11 +16,11 @@ module ApplicationHelper
   end
 
   def date_formatter(date)
-    date ? date.strftime("%F") : ''
+    date ? date.strftime("%-d %B %Y") : ''
   end
 
   def date_and_time_formatter(date)
-    date ? date.strftime("%F - %R") : ''
+    date ? date.strftime("%-d %B %Y - %R") : ''
   end
 
   def boolean_formatter(val)
