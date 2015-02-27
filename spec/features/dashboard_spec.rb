@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Defence request dashboard' do
+  include ActiveJobHelper
 
   context 'as a cso' do
     before :each do
