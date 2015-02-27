@@ -33,6 +33,7 @@ en:
   delete: "Delete"
   details: "Details"
   detainee: "Detainee"
+  detainee_age: "Detainee age"
   detainee_details: "Detainee details"
   detainee_dob: "Detainee date of birth (optional)"
   detainee_name: "Detainee name"
