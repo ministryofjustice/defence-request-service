@@ -34,6 +34,7 @@ en:
   details: "Details"
   detainee: "Detainee"
   detainee_details: "Detainee details"
+  detainee_dob: "Detainee date of birth (optional)"
   detainee_name: "Detainee name"
   dscc_number: "DSCC number"
   duty: 'Duty'
@@ -66,7 +67,6 @@ en:
   open_defence_request: "Open Defence Requests"
   own: 'Own'
   phone_number: "Phone number"
-  prisoner_dob: "Prisoner date of birth (optional)"
   prohibit_save: Please review the following %{count}
   resend_details: "Resend details"
   scheme: "Scheme"

@@ -72,7 +72,7 @@
     </table>
     <br/>
     <% if @policy.solicitor_time_of_arrival_from_show? %>
-      <div class="panel time-of-arrival">
+      <div class="time-of-arrival">
         <%= form_tag(solicitor_time_of_arrival_defence_request_path, method: :patch) do %>
           <%= label :solicitor_time_of_arrival, t('solicitor_time_of_arrival'), class: 'form-label-bold' %>
           <fieldset class="inline time-select">
