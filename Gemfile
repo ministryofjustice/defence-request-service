@@ -43,8 +43,7 @@ end
 group :development, :test do
   gem 'capybara'
   gem 'pry'
-  gem 'rspec'
-  gem 'rspec-rails', '~> 3.0.0'
+  gem 'rspec-rails', '~> 3.2.0'
   gem 'web-console', '~> 2.0'
   gem 'shoulda-matchers'
   # Stops each asset request being logged in dev / test
