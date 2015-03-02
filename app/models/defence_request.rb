@@ -22,7 +22,7 @@ class DefenceRequest < ActiveRecord::Base
     end
 
     event :accept, success: :send_solicitor_case_details do
-      transitions from: [:opened], to: :accepted
+      transitions from: [:opened], to: :accepted, guard: :dscc_number?
     end
 
     event :finish do
