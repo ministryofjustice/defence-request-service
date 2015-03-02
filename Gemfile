@@ -33,6 +33,7 @@ group :test do
   gem 'webmock'
   gem 'factory_girl_rails'
   gem 'simplecov', require: false
+  gem "codeclimate-test-reporter", require: false
 end
 
 group :development do
