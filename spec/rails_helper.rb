@@ -37,7 +37,7 @@ end
 
 Capybara.javascript_driver = :poltergeist
 
-WebMock.disable_net_connect!(:allow_localhost => true)
+WebMock.disable_net_connect!(allow_localhost: true, allow: ['codeclimate.com'])
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
