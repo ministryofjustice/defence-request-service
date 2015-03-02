@@ -127,7 +127,6 @@ RSpec.describe DefenceRequestPolicy do
         :update,
         :close,
         :feedback,
-        :accepted,
         :accept,
         :case_details_edit,
         :detainee_details_edit,

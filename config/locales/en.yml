@@ -97,13 +97,13 @@ en:
   year: "Year"
 
   models:
-    accepted: "%{model} was not marked as accepted"
+    accept: "%{model} was not marked as accepted"
     close: "%{model} successfully closed"
     create: "%{model} successfully created"
     destroy: "%{model} successfully deleted"
     details_sent: "Details successfully sent"
     dscc_number_required: "A Valid DSCC number is required to update and accept a %{model}"
-    failed_accepted: "%{model} was not marked as accepted"
+    failed_accept: "%{model} was not marked as accepted"
     failed_close: "%{model} was not closed"
     failed_destroy: "%{model} was not deleted"
     failed_details_sent: "Details were not sent"

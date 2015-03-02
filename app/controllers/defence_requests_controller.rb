@@ -1,6 +1,6 @@
 class DefenceRequestsController < BaseController
 
-  before_action :find_defence_request, :set_policy, only: [:solicitor_time_of_arrival, :edit, :update, :feedback, :close, :open, :accepted, :resend_details]
+  before_action :find_defence_request, :set_policy, only: [:solicitor_time_of_arrival, :edit, :update, :feedback, :close, :open, :accept, :resend_details]
 
   before_action ->(c) { authorize defence_request, "#{c.action_name}?" }
 
@@ -89,12 +89,12 @@ class DefenceRequestsController < BaseController
   def close
   end
 
-  def accepted
+  def accept
     @defence_request.accept
     if @defence_request.save
-      redirect_to(defence_requests_path, notice: flash_message(:accepted, DefenceRequest))
+      redirect_to(defence_requests_path, notice: flash_message(:accept, DefenceRequest))
     else
-      redirect_to(defence_requests_path, notice: flash_message(:failed_accepted, DefenceRequest))
+      redirect_to(defence_requests_path, notice: flash_message(:failed_accept, DefenceRequest))
     end
   end
 

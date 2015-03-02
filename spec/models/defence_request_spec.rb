@@ -34,48 +34,92 @@ RSpec.describe DefenceRequest, type: :model do
   describe 'states' do
     it 'allows for correct transitions' do
       expect(DefenceRequest.available_states).to eq [:accepted, :closed, :created, :finished, :opened]
+    end
 
-      # state = created
-      expect(subject.current_state).to eql :created
-      expect(subject.can_transition? :open).to eq true
-      expect(subject.can_transition? :accept).to eq false
-      expect(subject.can_transition? :close).to eq true
-      expect(subject.can_transition? :created).to eq false
-      expect(subject.can_transition? :finish).to eq false
-      # state = open
-      expect{ subject.open }.to_not raise_error
-      expect(subject.current_state).to eql :opened
-      expect(subject.can_transition? :open).to eq false
-      expect(subject.can_transition? :accept).to eq true
-      expect(subject.can_transition? :close).to eq true
-      expect(subject.can_transition? :created).to eq false
-      expect(subject.can_transition? :finish).to eq true
-      # state = accepted
-      expect{ subject.accept }.to_not raise_error
-      expect(subject.current_state).to eql :accepted
-      expect(subject.can_transition? :open).to eq false
-      expect(subject.can_transition? :accept).to eq false
-      expect(subject.can_transition? :close).to eq true
-      expect(subject.can_transition? :created).to eq false
-      expect(subject.can_transition? :finish).to eq true
-      # state = closed
-      expect{ subject.close }.to_not raise_error
-      expect(subject.current_state).to eql :closed
-      expect(subject.can_transition? :open).to eq false
-      expect(subject.can_transition? :accept).to eq false
-      expect(subject.can_transition? :close).to eq false
-      expect(subject.can_transition? :created).to eq false
-      expect(subject.can_transition? :finish).to eq false
-      # state = finished
-      expect{ subject.finish }.to raise_error(Transitions::InvalidTransition)
-      subject.update_current_state(:opened)
-      expect{ subject.finish }.to_not raise_error
-      expect(subject.current_state).to eql :finished
-      expect(subject.can_transition? :open).to eq false
-      expect(subject.can_transition? :accept).to eq false
-      expect(subject.can_transition? :close).to eq false
-      expect(subject.can_transition? :created).to eq false
-      expect(subject.can_transition? :finish).to eq false
+    describe 'created' do
+      subject { FactoryGirl.create(:defence_request, :created) }
+
+      specify { expect(subject.current_state).to eql :created }
+
+      describe 'possible transitions' do
+        specify { expect{ subject.open }.to_not raise_error }
+        specify { expect(subject.can_execute_open?).to eq true }
+        specify { expect{ subject.close }.to_not raise_error }
+        specify { expect(subject.can_execute_close?).to eq true }
+      end
+
+      describe 'impossible transitions' do
+        specify { expect(subject.can_execute_accept?).to eq false }
+        specify { expect(subject.can_execute_finish?).to eq false }
+      end
+    end
+
+    describe 'opened' do
+      subject { FactoryGirl.create(:defence_request, :opened) }
+
+      specify { expect(subject.current_state).to eql :opened }
+
+      context 'with dscc number' do
+        subject { FactoryGirl.create(:defence_request, :opened, :with_dscc_number) }
+        specify { expect{ subject.accept }.to_not raise_error }
+        specify { expect(subject.can_execute_accept?).to eq true }
+      end
+
+      describe 'allowed transitions' do
+        specify { expect{ subject.close }.to_not raise_error }
+        specify { expect(subject.can_execute_close?).to eq true }
+        specify { expect{ subject.finish }.to_not raise_error }
+        specify { expect(subject.can_execute_finish?).to eq true }
+      end
+
+      describe 'disallowed transitions' do
+        specify { expect(subject.can_execute_open?).to eq false }
+        specify { expect(subject.can_execute_accept?).to eq false }
+      end
+    end
+
+    describe 'accepted' do
+      subject { FactoryGirl.create(:defence_request, :accepted) }
+
+      specify { expect(subject.current_state).to eql :accepted }
+
+      describe 'possible transitions' do
+        specify { expect{ subject.close }.to_not raise_error }
+        specify { expect(subject.can_execute_close?).to eq true }
+        specify { expect{ subject.finish }.to_not raise_error }
+        specify { expect(subject.can_execute_finish?).to eq true }
+      end
+
+      describe 'impossible transitions' do
+        specify { expect(subject.can_execute_open?).to eq false }
+        specify { expect(subject.can_execute_accept?).to eq false }
+      end
+    end
+
+    describe 'closed' do
+      subject { FactoryGirl.create(:defence_request, :closed) }
+
+      specify { expect(subject.current_state).to eql :closed }
+
+      describe 'impossible transitions' do
+        specify { expect(subject.can_execute_open?).to eq false }
+        specify { expect(subject.can_execute_accept?).to eq false }
+        specify { expect(subject.can_execute_close?).to eq false }
+        specify { expect(subject.can_execute_finish?).to eq false }
+      end
+    end
+
+    describe 'finished' do
+      subject { FactoryGirl.create(:defence_request, :finished) }
+
+      specify { expect(subject.current_state).to eql :finished }
+
+      describe 'impossible transitions' do
+        specify { expect(subject.can_execute_open?).to eq false }
+        specify { expect(subject.can_execute_accept?).to eq false }
+        specify { expect(subject.can_execute_close?).to eq false }
+        specify { expect(subject.can_execute_finish?).to eq false }
+      end
     end
   end
 
@@ -101,6 +145,7 @@ RSpec.describe DefenceRequest, type: :model do
         @persisted_request.update_attribute(:interview_start_time, Time.now)
       end
     end
+
     context 'save happens without change' do
       it 'does not notify the solicitor' do
         expect(@persisted_request).to_not receive(:notify_interview_start_change)

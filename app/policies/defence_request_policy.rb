@@ -51,11 +51,11 @@ class DefenceRequestPolicy < ApplicationPolicy
   end
 
   def feedback?
-    (cso || cco) && can_transition?(:close)
+    (cso || cco) && record.can_execute_close?
   end
 
   def close?
-    (cso || cco) && can_transition?(:close)
+    (cso || cco) && record.can_execute_close?
   end
 
   def dscc_number_edit?
@@ -79,15 +79,11 @@ class DefenceRequestPolicy < ApplicationPolicy
   end
 
   def open?
-    cco && can_transition?(:open)
+    cco && record.can_execute_open?
   end
 
   def accept?
-    cco && can_transition?(:accept) && has_dscc_number?
-  end
-
-  def accepted?
-    cco && can_transition?(:accept) && has_dscc_number?
+    cco && record.can_execute_accept?
   end
 
   def view_open_requests?
@@ -116,10 +112,6 @@ class DefenceRequestPolicy < ApplicationPolicy
 
   private
 
-  def can_transition?(state)
-    record.can_transition?(state)
-  end
-
   def cso
     user.cso?
   end
@@ -130,10 +122,6 @@ class DefenceRequestPolicy < ApplicationPolicy
 
   def solicitor
     user.solicitor?
-  end
-
-  def has_dscc_number?
-    record.dscc_number?
   end
 
 end
