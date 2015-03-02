@@ -51,6 +51,8 @@ class DefenceRequest < ActiveRecord::Base
 
   validates :feedback, feedback: true
 
+  validate :govuk_date_time_format
+
   audited
 
   SCHEMES = [ 'No Scheme',
@@ -98,6 +100,21 @@ class DefenceRequest < ActiveRecord::Base
     interview_start_time.hour if interview_start_time
   end
 
+  def solicitor_time_of_arrival=(new_time)
+    @solicitor_time_of_arrival_builder = DateTimeBuilder.new(new_time)
+
+    if @solicitor_time_of_arrival_builder.valid?
+      super(@solicitor_time_of_arrival_builder.value)
+    end
+  end
+
+  def solicitor_time_of_arrival
+    if @solicitor_time_of_arrival_builder
+      @solicitor_time_of_arrival_builder
+    else
+      super
+    end
+  end
   private
 
   def format_phone_number
@@ -110,5 +127,40 @@ class DefenceRequest < ActiveRecord::Base
 
   def send_solicitor_case_details
     Mailer.send_solicitor_case_details(self, solicitor).deliver_later if solicitor
+  end
+
+  def govuk_date_time_format
+    if @solicitor_time_of_arrival_builder
+      govuk_date_time
+      govuk_date_time_year
+      govuk_date_time_month
+      govuk_date_time_day
+      govuk_date_time_hour
+      govuk_date_time_min
+    end
+  end
+
+  def govuk_date_time_year
+    errors.add :solicitor_time_of_arrival, :invalid_year unless @solicitor_time_of_arrival_builder.year?
+  end
+
+  def govuk_date_time_month
+    errors.add :solicitor_time_of_arrival, :invalid_month unless @solicitor_time_of_arrival_builder.month?
+  end
+
+  def govuk_date_time_day
+    errors.add :solicitor_time_of_arrival, :invalid_day unless @solicitor_time_of_arrival_builder.day?
+  end
+
+  def govuk_date_time_hour
+    errors.add :solicitor_time_of_arrival, :invalid_hour unless @solicitor_time_of_arrival_builder.hour?
+  end
+
+  def govuk_date_time_min
+    errors.add :solicitor_time_of_arrival, :invalid_min unless @solicitor_time_of_arrival_builder.min?
+  end
+
+  def govuk_date_time
+    errors.add :solicitor_time_of_arrival, :invalid unless @solicitor_time_of_arrival_builder.valid?
   end
 end

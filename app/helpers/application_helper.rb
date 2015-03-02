@@ -11,6 +11,18 @@ module ApplicationHelper
     nil
   end
 
+  def list_errors(object, field_name)
+    if object.errors.any?
+      unless object.errors.messages[field_name].blank?
+        content_tag :ul do
+          object.errors.messages[field_name].collect do |field|
+            concat(content_tag(:li, field))
+          end
+        end
+      end
+    end
+  end
+
   def js_partial
     params[:controller] + '/js_partials/' + params[:controller] + '_' + params[:action] + '_js.html.erb'
   end

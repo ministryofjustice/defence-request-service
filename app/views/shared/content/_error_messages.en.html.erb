@@ -3,7 +3,7 @@
     <h3 id="page-error-heading">You need to fix the errors on this page before continuing.</h3>
       <% object.errors.messages.each do |field, message| %>
         <li>
-          <%= "#{t(field)}: #{message.is_a?(Array) ? message.first : message}" %>
+          <%= "#{t(field)}: #{message.is_a?(Array) ? list_errors(object, field_name) : message}".html_safe %>
         </li>
       <% end %>
     </ul>

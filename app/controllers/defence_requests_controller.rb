@@ -107,7 +107,7 @@ class DefenceRequestsController < BaseController
   end
 
   def solicitor_time_of_arrival
-    if AddSolicitorTimeOfArrival.new(@defence_request, solicitor_time_of_arrival_param).call
+    if @defence_request.update_attributes(defence_request_params)
       redirect_to(defence_request_path(@defence_request), notice: flash_message(:solicitor_time_of_arrival_added, DefenceRequest))
     else
       redirect_to(defence_request_path(@defence_request), alert: flash_message(:solicitor_time_of_arrival_not_added, DefenceRequest))
@@ -155,10 +155,6 @@ class DefenceRequestsController < BaseController
     @defence_request ||= DefenceRequest.new
   end
 
-  def solicitor_time_of_arrival_param
-    defence_request_params.select { |key, value| key.to_s.match(/^solicitor_time_of_arrival\(\d.*/) }
-  end
-
   def defence_request_params
     raw_params = params.require(:defence_request).permit(:solicitor_type,
                                                          :solicitor_name,
@@ -184,7 +180,7 @@ class DefenceRequestsController < BaseController
                                                          :time_of_arrival_minute,
                                                          :dscc_number,
                                                          :feedback,
-                                                         :solicitor_time_of_arrival)
+                                                         solicitor_time_of_arrival: %i[day month year hour min sec])
     raw_params.tap do |p|
       email = p.delete("solicitor_email")
       solicitor = User.solicitors.find_by_email email
