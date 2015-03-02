@@ -129,6 +129,7 @@ en:
             defence_request:
               attributes:
                 solicitor_time_of_arrival:
+                  invalid: "Format is invalid"
                   invalid_year: "Year is invalid"
                   invalid_month: "Month is invalid"
                   invalid_day: "Day is invalid"

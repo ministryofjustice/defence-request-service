@@ -51,7 +51,9 @@ class DefenceRequest < ActiveRecord::Base
 
   validates :feedback, feedback: true
 
-  validate :govuk_date_time_format
+  validate do |defence_request|
+    GovukTimeDateValidator.new(defence_request, :solicitor_time_of_arrival, @solicitor_time_of_arrival_builder).validate
+  end
 
   audited
 
@@ -127,40 +129,5 @@ class DefenceRequest < ActiveRecord::Base
 
   def send_solicitor_case_details
     Mailer.send_solicitor_case_details(self, solicitor).deliver_later if solicitor
-  end
-
-  def govuk_date_time_format
-    if @solicitor_time_of_arrival_builder
-      govuk_date_time
-      govuk_date_time_year
-      govuk_date_time_month
-      govuk_date_time_day
-      govuk_date_time_hour
-      govuk_date_time_min
-    end
-  end
-
-  def govuk_date_time_year
-    errors.add :solicitor_time_of_arrival, :invalid_year unless @solicitor_time_of_arrival_builder.year?
-  end
-
-  def govuk_date_time_month
-    errors.add :solicitor_time_of_arrival, :invalid_month unless @solicitor_time_of_arrival_builder.month?
-  end
-
-  def govuk_date_time_day
-    errors.add :solicitor_time_of_arrival, :invalid_day unless @solicitor_time_of_arrival_builder.day?
-  end
-
-  def govuk_date_time_hour
-    errors.add :solicitor_time_of_arrival, :invalid_hour unless @solicitor_time_of_arrival_builder.hour?
-  end
-
-  def govuk_date_time_min
-    errors.add :solicitor_time_of_arrival, :invalid_min unless @solicitor_time_of_arrival_builder.min?
-  end
-
-  def govuk_date_time
-    errors.add :solicitor_time_of_arrival, :invalid unless @solicitor_time_of_arrival_builder.valid?
   end
 end
