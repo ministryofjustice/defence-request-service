@@ -1,51 +1,30 @@
 table.dashboard {
   width: 100%;
-}
+  th { font-size: 15px; }
 
-table.dashboard th {
-  font-size: 15px;
-}
+  td {
+    font-size: 15px;
+    white-space: nowrap;
+    width: 10px;
 
-table.dashboard td {
-  font-size: 15px;
-  white-space: nowrap;
-  width: 10px;
-}
+    &.actions {
+      font-size: 15px;
+      white-space: normal;
+    }
 
-table.dashboard td.actions {
-  font-size: 15px;
-  white-space: normal;
-}
+    &.sol-name, &.det-name, &.allegation { white-space: normal; }
+    &.gender, &.adult { text-align: center; }
+  }
 
-table.dashboard td.sol-name {
-  white-space: normal;
-}
-
-table.dashboard td.det-name {
-  white-space: normal;
-}
-
-table.dashboard td.allegation {
-  white-space: normal;
-}
-
-table.dashboard td.gender {
-  text-align: center;
-}
-
-table.dashboard td.adult {
-  text-align: center;
-}
-
-table.dashboard tr {
-  font-size: 15px;
-  white-space: nowrap;
-  width: 10px;
+  tr {
+    font-size: 15px;
+    white-space: nowrap;
+    width: 10px;
+  }
 }
 
 .form-links {
   display: inline-block;
   padding-top: 14px;
 }
-
 
