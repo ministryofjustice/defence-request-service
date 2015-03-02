@@ -15,7 +15,11 @@ unless ENV['NO_COVERAGE']
 
   SimpleCov.minimum_coverage 90 # will return non-zero exit code if < 90%
   SimpleCov.refuse_coverage_drop # will return non-zero exit code if coverage drops
-  SimpleCov.start 'rails'
+  SimpleCov.start 'rails' do
+    add_group "Policies", "app/policies"
+    add_group "Services", "app/services"
+    add_group "Validators", "app/validators"
+  end
 end
 
 ENV["RAILS_ENV"] ||= 'test'
