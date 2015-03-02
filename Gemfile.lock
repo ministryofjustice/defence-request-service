@@ -56,6 +56,8 @@ GEM
     celluloid (0.16.0)
       timers (~> 4.0.0)
     cliver (0.3.2)
+    codeclimate-test-reporter (0.4.7)
+      simplecov (>= 0.7.1, < 1.0.0)
     coderay (1.1.0)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
@@ -303,6 +305,7 @@ PLATFORMS
 DEPENDENCIES
   audited-activerecord (~> 4.0.0)
   capybara
+  codeclimate-test-reporter
   coffee-rails (~> 4.1.0)
   database_cleaner
   devise (~> 3.4.1)

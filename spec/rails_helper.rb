@@ -1,9 +1,16 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 unless ENV['NO_COVERAGE']
   require 'simplecov'
-  # on circleci change the output dir to the artifacts
+
+  # On circleci change the output dir to the artifacts
   if ENV['CIRCLE_ARTIFACTS']
     SimpleCov.coverage_dir File.join(ENV['CIRCLE_ARTIFACTS'], "coverage")
+  end
+
+  # Report code coverage to codeclimate
+  if ENV['CODECLIMATE_REPO_TOKEN']
+    require "codeclimate-test-reporter"
+    CodeClimate::TestReporter.start
   end
 
   SimpleCov.minimum_coverage 90 # will return non-zero exit code if < 90%
