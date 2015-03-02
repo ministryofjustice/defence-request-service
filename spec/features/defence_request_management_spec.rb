@@ -429,7 +429,7 @@ RSpec.feature 'defence request creation' do
             click_link 'Edit'
           end
 
-          within '#solicitor-details' do
+          within '.solicitor-details' do
             fill_in 'defence_request_solicitor_time_of_arrival_day', with: '01'
             fill_in 'defence_request_solicitor_time_of_arrival_month', with: '01'
             fill_in 'defence_request_solicitor_time_of_arrival_year', with: '2001'

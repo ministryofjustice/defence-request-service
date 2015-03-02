@@ -28,6 +28,7 @@ en:
   custody_number: "Custody number"
   dashboard: 'Dashboard'
   date_hint: "eg. 28 04 1996"
+  date_time_hint: "eg. 28 04 1996 - 11 30"
   date_of_birth: "Date of Birth"
   day: "Day"
   delete: "Delete"
