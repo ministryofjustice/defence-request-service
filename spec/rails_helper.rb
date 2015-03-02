@@ -2,15 +2,15 @@
 unless ENV['NO_COVERAGE']
   require 'simplecov'
 
-  # On circleci change the output dir to the artifacts
-  if ENV['CIRCLE_ARTIFACTS']
-    SimpleCov.coverage_dir File.join(ENV['CIRCLE_ARTIFACTS'], "coverage")
-  end
-
   # Report code coverage to codeclimate
   if ENV['CODECLIMATE_REPO_TOKEN']
     require "codeclimate-test-reporter"
     CodeClimate::TestReporter.start
+  end
+
+  # On circleci change the output dir to the artifacts
+  if ENV['CIRCLE_ARTIFACTS']
+    SimpleCov.coverage_dir File.join("..", "..", "..", ENV['CIRCLE_ARTIFACTS'], "coverage")
   end
 
   SimpleCov.minimum_coverage 90 # will return non-zero exit code if < 90%
@@ -19,6 +19,11 @@ unless ENV['NO_COVERAGE']
     add_group "Policies", "app/policies"
     add_group "Services", "app/services"
     add_group "Validators", "app/validators"
+
+    formatter SimpleCov::Formatter::MultiFormatter[
+      SimpleCov::Formatter::HTMLFormatter,
+      CodeClimate::TestReporter::Formatter
+    ]
   end
 end
 
