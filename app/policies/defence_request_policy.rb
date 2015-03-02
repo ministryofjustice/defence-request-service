@@ -83,9 +83,6 @@ class DefenceRequestPolicy < ApplicationPolicy
   end
 
   def accept?
-
-  def accepted?
-    cco && can_transition?(:accept) && has_dscc_number?
     cco && record.can_execute_accept?
   end
 
