@@ -89,13 +89,6 @@ fieldset, .sub-panel
 span.error
   @extend .validation-message
 
-// .divider
-  // width: auto
-  // height: 25px
-  // padding: 0
-  // overflow: hidden
-  // border-bottom: 1px dotted #c2c2c2
-
 .js-enabled
   .hide
     display: none
@@ -127,18 +120,9 @@ span.error
       margin-left: 15px
       margin-bottom: 15px
 
-
-//.summary-field
-//  @extend .grid-row
-//  margin-bottom: 0.5em
-//
 .summary-label
   color: $secondary-text-colour
   width: 30%
-//
-//.summary-value
-//  @extend .column-three-quarters
-
 
 textarea
   height: 110px
@@ -169,12 +153,9 @@ section
 .form-group
   float: none
 
-
-
 [type="text"], [type="password"], textarea
   padding: 5px 4px 2px
   border: 1px solid $grey-2
-
 
 input[disabled="disabled"], input[readonly="readonly"]
   opacity: 1
@@ -192,3 +173,45 @@ input[disabled="disabled"], input[readonly="readonly"]
 
 span.hint.inline
   display: inline
+
+fieldset.time-select select
+  display: inline
+
+.panel
+  border: 1px solid #bfc1c3
+  padding-top: 45px
+  padding-right: 40px
+  padding-bottom: 30px
+  padding-left: 30px
+
+.form-links
+  display: inline-block
+  padding-top: 14px
+
+.flash.success
+  background-color: #FFE1E1
+  border: 3px red solid
+
+.text-field
+  text-transform: none
+  border: 1px solid #bbb
+  margin: 0 0 1em
+  padding: 0.5em
+
+.date-field-wrapper
+  display: inline-block
+  margin-right: 1em
+
+.time-field-wrapper
+  display: inline-block
+  margin-right: 1em
+
+label + input, label + textarea
+  width: 80%
+
+.hidden
+  display: none
+
+.form-group
+  margin-bottom: 1px
+

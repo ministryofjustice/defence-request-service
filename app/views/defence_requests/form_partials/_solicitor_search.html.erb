@@ -1,9 +1,9 @@
 <div class="hidden" id='search-box'>
-  <div class="form-group solicitor_search_wrapper">
+  <div class="form-group solicitor-search-wrapper">
     <p class="form-hint"><%= t('solicitor_search').html_safe %></p>
     <%= text_field_tag 'q', nil, autocomplete: "off", autofocus: true, class: "no-enter-submit search-text-field text-field" %>
     <%= button_tag t('search'), class: 'button solicitor-search' %>
   </div>
-  <div class="solicitor_results_list">
+  <div class="solicitor-results-list">
   </div>
 </div>

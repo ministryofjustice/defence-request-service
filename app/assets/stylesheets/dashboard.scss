@@ -1,0 +1,30 @@
+table.dashboard {
+  width: 100%;
+  th { font-size: 15px; }
+
+  td {
+    font-size: 15px;
+    white-space: nowrap;
+    width: 10px;
+
+    &.actions {
+      font-size: 15px;
+      white-space: normal;
+    }
+
+    &.sol-name, &.det-name, &.allegation { white-space: normal; }
+    &.gender, &.adult { text-align: center; }
+  }
+
+  tr {
+    font-size: 15px;
+    white-space: nowrap;
+    width: 10px;
+  }
+}
+
+.form-links {
+  display: inline-block;
+  padding-top: 14px;
+}
+
