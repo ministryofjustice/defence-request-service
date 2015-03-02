@@ -50,6 +50,10 @@ FactoryGirl.define do
     state 'closed'
   end
 
+  trait :finished do
+    state 'finished'
+  end
+
   trait :with_dscc_number do
     state 'opened'
     dscc_number '123456'
