@@ -20,10 +20,12 @@ unless ENV['NO_COVERAGE']
     add_group "Services", "app/services"
     add_group "Validators", "app/validators"
 
-    formatter SimpleCov::Formatter::MultiFormatter[
-      SimpleCov::Formatter::HTMLFormatter,
-      CodeClimate::TestReporter::Formatter
-    ]
+    if defined?(CodeClimate)
+      formatter SimpleCov::Formatter::MultiFormatter[
+        SimpleCov::Formatter::HTMLFormatter,
+        CodeClimate::TestReporter::Formatter
+      ]
+    end
   end
 end
 
