@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "solicitors managing defence requests" do
+RSpec.feature "Solicitors managing defence requests" do
   let!(:solicitor_dr) { create(:defence_request, :accepted) }
   let!(:dr2) { create(:defence_request, :accepted) }
   let!(:closed_dr) { create(:defence_request, :closed, solicitor: solicitor_dr.solicitor) }

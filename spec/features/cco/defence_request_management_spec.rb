@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "call center operatives managing defence requests" do
+RSpec.feature "Call Center Operatives managing defence requests" do
   let(:cco_user) { FactoryGirl.create(:cco_user) }
 
   before :each do
@@ -160,7 +160,7 @@ RSpec.feature "call center operatives managing defence requests" do
         end
       end
 
-      context "that have the "duty" solicitor type" do
+      context "that have the \"duty\" solicitor type" do
         let!(:duty_solicitor_dr) { create(:defence_request, :duty_solicitor, :opened, cco: User.first) }
 
         specify "can not mark the request as accepted from the dashboard without solicitor detials" do

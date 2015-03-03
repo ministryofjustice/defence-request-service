@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "custody suite officers managing defence requests" do
+RSpec.feature "Custody Suite Officers managing defence requests" do
 
   before :each do
     create_role_and_login("cso")
@@ -100,7 +100,7 @@ RSpec.feature "custody suite officers managing defence requests" do
       expect(page).to_not have_content "Bobson Smith"
     end
 
-    specify "is shown a message when no results are found for their search", js: true do
+    specify "are shown a message when no results are found for their search", js: true do
       stub_solicitor_search_for_mystery_man
 
       visit root_path
