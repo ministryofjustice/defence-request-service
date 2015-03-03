@@ -53,11 +53,11 @@ class DateTimeBuilder
     min.present?
   end
 
-  private
-
   def blank?
     [year, month, day, hour, min, sec].any?(&:blank?)
   end
+
+  private
 
   def build_value
     Time.zone.local(*arguments)

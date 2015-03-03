@@ -39,17 +39,20 @@ RSpec.feature 'defence request creation' do
           within '.case-details' do
             fill_in 'Custody number', with: '#CUST-01234'
             fill_in 'Allegations', with: 'BadMurder'
-            fill_in 'Hour', with: '09'
-            fill_in 'Min', with: '30'
+            fill_in 'defence_request_time_of_arrival_day', with: '01'
+            fill_in 'defence_request_time_of_arrival_month', with: '01'
+            fill_in 'defence_request_time_of_arrival_year', with: '2001'
+            fill_in 'defence_request_time_of_arrival_hour', with: '01'
+            fill_in 'defence_request_time_of_arrival_min', with: '01'
           end
 
           within '.detainee' do
             fill_in 'Full Name', with: 'Mannie Badder'
             choose 'Male'
             fill_in 'Age', with: '39'
-            fill_in 'Year', with: '1976'
-            fill_in 'Month', with: '1'
-            fill_in 'Day', with: '1'
+            fill_in 'defence_request_date_of_birth_year', with: '1976'
+            fill_in 'defence_request_date_of_birth_month', with: '01'
+            fill_in 'defence_request_date_of_birth_day', with: '01'
             choose 'No'
           end
           fill_in 'Comments', with: 'This is a very bad man. Send him down...'
@@ -266,9 +269,9 @@ RSpec.feature 'defence request creation' do
             fill_in 'Full Name', with: 'Mannie Badder'
             choose 'Male'
             fill_in 'Age', with: '39'
-            fill_in 'Year', with: '1976'
-            fill_in 'Month', with: '1'
-            fill_in 'Day', with: '1'
+            fill_in 'defence_request_date_of_birth_year', with: '1976'
+            fill_in 'defence_request_date_of_birth_month', with: '01'
+            fill_in 'defence_request_date_of_birth_day', with: '01'
             choose 'No'
           end
 
@@ -276,9 +279,9 @@ RSpec.feature 'defence request creation' do
             fill_in 'Full Name', with: 'Annie Nother'
             choose 'Female'
             fill_in 'Age', with: '28'
-            fill_in 'Year', with: '1986'
-            fill_in 'Month', with: '12'
-            fill_in 'Day', with: '31'
+            fill_in 'defence_request_date_of_birth_year', with: '1986'
+            fill_in 'defence_request_date_of_birth_month', with: '12'
+            fill_in 'defence_request_date_of_birth_day', with: '12'
             choose 'Yes'
           end
           fill_in 'Comments', with: 'I fought the law...'

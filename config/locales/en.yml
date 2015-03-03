@@ -136,3 +136,14 @@ en:
                   invalid_day: "Day is invalid"
                   invalid_hour: "Hour is invalid"
                   invalid_min: "Minute is invalid"
+                date_of_birth:
+                  invalid: "Format is invalid"
+                  invalid_year: "Year is invalid"
+                  invalid_month: "Month is invalid"
+                  invalid_day: "Day is invalid"
+                time_of_arrival:
+                  invalid_year: "Year is invalid"
+                  invalid_month: "Month is invalid"
+                  invalid_day: "Day is invalid"
+                  invalid_hour: "Hour is invalid"
+                  invalid_min: "Minute is invalid"

@@ -40,7 +40,6 @@ class DefenceRequest < ActiveRecord::Base
             :allegations,
             :gender,
             :detainee_age,
-            :time_of_arrival,
             :custody_number, presence: true
 
   validates :scheme, presence: true, if: :duty_solicitor?
@@ -53,6 +52,8 @@ class DefenceRequest < ActiveRecord::Base
 
   validate do |defence_request|
     GovukTimeDateValidator.new(defence_request, :solicitor_time_of_arrival, @solicitor_time_of_arrival_builder).validate
+    GovukTimeDateValidator.new(defence_request, :time_of_arrival, @time_of_arrival_builder).validate
+    GovukDateValidator.new(defence_request, :date_of_birth, @date_of_birth_builder).validate
   end
 
   audited
@@ -68,18 +69,6 @@ class DefenceRequest < ActiveRecord::Base
 
   def own_solicitor?
     solicitor_type == 'own'
-  end
-
-  def date_of_birth_day
-    date_of_birth.day if date_of_birth
-  end
-
-  def date_of_birth_month
-    date_of_birth.month if date_of_birth
-  end
-
-  def date_of_birth_year
-    date_of_birth.year if date_of_birth
   end
 
   def time_of_arrival_hour
@@ -102,8 +91,24 @@ class DefenceRequest < ActiveRecord::Base
     interview_start_time.hour if interview_start_time
   end
 
-  def solicitor_time_of_arrival=(new_time)
-    @solicitor_time_of_arrival_builder = DateTimeBuilder.new(new_time)
+  def date_of_birth=(new_date)
+    @date_of_birth_builder = DateBuilder.new(new_date)
+
+    if @date_of_birth_builder.valid?
+      super(@date_of_birth_builder.value)
+    end
+  end
+
+  def date_of_birth
+    if @date_of_birth_builder
+      @date_of_birth_builder
+    else
+      super
+    end
+  end
+
+  def solicitor_time_of_arrival=(new_date)
+    @solicitor_time_of_arrival_builder = DateTimeBuilder.new(new_date)
 
     if @solicitor_time_of_arrival_builder.valid?
       super(@solicitor_time_of_arrival_builder.value)
@@ -113,6 +118,22 @@ class DefenceRequest < ActiveRecord::Base
   def solicitor_time_of_arrival
     if @solicitor_time_of_arrival_builder
       @solicitor_time_of_arrival_builder
+    else
+      super
+    end
+  end
+
+  def time_of_arrival=(new_date)
+    @time_of_arrival_builder = DateTimeBuilder.new(new_date)
+
+    if @time_of_arrival_builder.valid?
+      super(@time_of_arrival_builder.value)
+    end
+  end
+
+  def time_of_arrival
+    if @time_of_arrival_builder
+      @time_of_arrival_builder
     else
       super
     end
