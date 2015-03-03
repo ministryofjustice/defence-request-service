@@ -54,7 +54,7 @@ class DateTimeBuilder
   end
 
   def blank?
-    [year, month, day, hour, min, sec].any?(&:blank?)
+    [year, month, day, hour, min].all?(&:blank?)
   end
 
   private

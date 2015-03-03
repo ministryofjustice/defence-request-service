@@ -126,24 +126,32 @@ en:
     models:
       defence_request: "Defence Request"
     errors:
-          models:
-            defence_request:
-              attributes:
-                solicitor_time_of_arrival:
-                  invalid: "Format is invalid"
-                  invalid_year: "Year is invalid"
-                  invalid_month: "Month is invalid"
-                  invalid_day: "Day is invalid"
-                  invalid_hour: "Hour is invalid"
-                  invalid_min: "Minute is invalid"
-                date_of_birth:
-                  invalid: "Format is invalid"
-                  invalid_year: "Year is invalid"
-                  invalid_month: "Month is invalid"
-                  invalid_day: "Day is invalid"
-                time_of_arrival:
-                  invalid_year: "Year is invalid"
-                  invalid_month: "Month is invalid"
-                  invalid_day: "Day is invalid"
-                  invalid_hour: "Hour is invalid"
-                  invalid_min: "Minute is invalid"
+      models:
+        defence_request:
+          attributes:
+            solicitor_time_of_arrival:
+              invalid: "Format is invalid"
+              invalid_year: "Year is invalid"
+              invalid_month: "Month is invalid"
+              invalid_day: "Day is invalid"
+              invalid_hour: "Hour is invalid"
+              invalid_min: "Minute is invalid"
+            date_of_birth:
+              invalid: "Format is invalid"
+              invalid_year: "Year is invalid"
+              invalid_month: "Month is invalid"
+              invalid_day: "Day is invalid"
+            time_of_arrival:
+              invalid: "Format is invalid"
+              invalid_year: "Year is invalid"
+              invalid_month: "Month is invalid"
+              invalid_day: "Day is invalid"
+              invalid_hour: "Hour is invalid"
+              invalid_min: "Minute is invalid"
+            interview_start_time:
+              invalid: "Format is invalid"
+              invalid_year: "Year is invalid"
+              invalid_month: "Month is invalid"
+              invalid_day: "Day is invalid"
+              invalid_hour: "Hour is invalid"
+              invalid_min: "Minute is invalid"

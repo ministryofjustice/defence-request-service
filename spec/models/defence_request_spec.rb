@@ -158,7 +158,7 @@ RSpec.describe DefenceRequest, type: :model do
     context 'interview time changes' do
       it 'notifies the solicitor'  do
         expect(@persisted_request).to receive(:notify_interview_start_change).and_call_original
-        @persisted_request.update_attribute(:interview_start_time, Time.now)
+        @persisted_request.update_attribute(:interview_start_time, date_now_as_hash)
       end
     end
 

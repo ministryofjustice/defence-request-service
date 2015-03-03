@@ -8,6 +8,8 @@ class DefenceRequest < ActiveRecord::Base
 
   after_update :notify_interview_start_change, if: :interview_start_time_changed?
 
+  after_commit :remove_builders
+
   scope :has_solicitor, ->(solicitor) { where(solicitor: solicitor) }
 
   state_machine auto_scopes: true do
@@ -40,6 +42,7 @@ class DefenceRequest < ActiveRecord::Base
             :allegations,
             :gender,
             :detainee_age,
+            :time_of_arrival,
             :custody_number, presence: true
 
   validates :scheme, presence: true, if: :duty_solicitor?
@@ -53,6 +56,7 @@ class DefenceRequest < ActiveRecord::Base
   validate do |defence_request|
     GovukTimeDateValidator.new(defence_request, :solicitor_time_of_arrival, @solicitor_time_of_arrival_builder).validate
     GovukTimeDateValidator.new(defence_request, :time_of_arrival, @time_of_arrival_builder).validate
+    GovukTimeDateValidator.new(defence_request, :interview_start_time, @interview_start_time_builder).validate
     GovukDateValidator.new(defence_request, :date_of_birth, @date_of_birth_builder).validate
   end
 
@@ -71,24 +75,8 @@ class DefenceRequest < ActiveRecord::Base
     solicitor_type == 'own'
   end
 
-  def time_of_arrival_hour
-    time_of_arrival.hour if time_of_arrival
-  end
-
-  def time_of_arrival_minute
-    time_of_arrival.min if time_of_arrival
-  end
-
   def resend_details
     send_solicitor_case_details
-  end
-
-  def interview_start_time_minute
-    interview_start_time.min if interview_start_time
-  end
-
-  def interview_start_time_hour
-    interview_start_time.hour if interview_start_time
   end
 
   def date_of_birth=(new_date)
@@ -138,7 +126,30 @@ class DefenceRequest < ActiveRecord::Base
       super
     end
   end
+
+  def interview_start_time=(new_date)
+    @interview_start_time_builder = DateTimeBuilder.new(new_date)
+
+    if @interview_start_time_builder.valid?
+      super(@interview_start_time_builder.value)
+    end
+  end
+
+  def interview_start_time
+    if @interview_start_time_builder
+      @interview_start_time_builder
+    else
+      super
+    end
+  end
+
   private
+
+  def remove_builders
+    @interview_start_time_builder = nil
+    @time_of_arrival_builder =  nil
+    @solicitor_time_of_arrival_builder =  nil
+  end
 
   def format_phone_number
     self.phone_number = self.phone_number.gsub(/\D/, '')

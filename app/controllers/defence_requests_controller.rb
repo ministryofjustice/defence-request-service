@@ -172,34 +172,27 @@ class DefenceRequestsController < BaseController
                                                          :custody_number,
                                                          :allegations,
                                                          :comments,
-                                                         :interview_start_time_hour,
-                                                         :interview_start_time_minute,
+                                                         { interview_start_time: %i[day month year hour min sec] },
                                                          { time_of_arrival: %i[day month year hour min sec] },
                                                          :dscc_number,
                                                          :feedback,
                                                          { solicitor_time_of_arrival: %i[day month year hour min sec] })
     raw_params.tap do |p|
-      email = p.delete("solicitor_email")
-      solicitor = User.solicitors.find_by_email email
-      p["solicitor_id"] = solicitor.id if solicitor
+      solicitor_association_param(p)
+      appropriate_adult_param(p)
+    end
+  end
 
-      current_year = DateTime.now.year
-      current_month = DateTime.now.month
-      current_day = DateTime.now.day
+  def solicitor_association_param(p)
+    email = p.delete("solicitor_email")
+    solicitor = User.solicitors.find_by_email email
+    p["solicitor_id"] = solicitor.id if solicitor
+  end
 
-
-      interview_hour = p.delete('interview_start_time_hour')
-      interview_minute = p.delete('interview_start_time_minute')
-      if interview_hour && interview_minute
-        p['interview_start_time'] = DateTime.new current_year, current_month, current_day, interview_hour.to_i, interview_minute.to_i
-      end
-
-
-      appropriate_adult = p.delete 'appropriate_adult'
-      if appropriate_adult
-        p['appropriate_adult'] = appropriate_adult == 'yes'
-      end
-
+  def appropriate_adult_param(p)
+    appropriate_adult = p.delete 'appropriate_adult'
+    if appropriate_adult
+      p['appropriate_adult'] = appropriate_adult == 'yes'
     end
   end
 
@@ -211,4 +204,3 @@ class DefenceRequestsController < BaseController
     @defence_request.accept && @defence_request.save
   end
 end
-

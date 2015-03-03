@@ -56,4 +56,19 @@ module HelperMethods
   def sign_out
     click_link('Sign out')
   end
+
+  def date_then_as_hash
+    date = Time.at(1423757676).to_datetime
+    { 'day' => date.day, 'month' => date.month, 'year' => date.year, 'min' => date.minute, 'hour' => date.hour }
+  end
+
+  def date_now_as_hash
+    date = DateTime.current
+    { 'day' => date.day, 'month' => date.month, 'year' => date.year, 'min' => date.minute, 'hour' => date.hour }
+  end
+
+  def twenty_one_years_ago_as_hash
+    date = DateTime.current - 21.years
+    { 'day' => date.day, 'month' => date.month, 'year' => date.year }
+  end
 end

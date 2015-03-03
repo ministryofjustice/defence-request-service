@@ -15,6 +15,7 @@ RSpec.describe DateTimeBuilder do
   let(:day_blank) { DateTimeBuilder.new({ 'day' => '', 'month' => '01', 'year' => '2001', 'hour' => '01', 'min' => '01' }) }
   let(:hour_blank) { DateTimeBuilder.new({ 'day' => '01', 'month' => '01', 'year' => '2001', 'hour' => '', 'min' => '01' }) }
   let(:min_blank) { DateTimeBuilder.new({ 'day' => '01', 'month' => '01', 'year' => '2001', 'hour' => '01', 'min' => '' }) }
+  let(:all_blank) { DateTimeBuilder.new({ 'day' => '', 'month' => '', 'year' => '', 'hour' => '', 'min' => '' }) }
 
   describe '#valid?' do
 
@@ -54,61 +55,61 @@ RSpec.describe DateTimeBuilder do
   end
 
   describe '#present?' do
-    it 'returns false if any argument is blank' do
-      expect(day_blank.present?).to eq false
+    it 'returns false if all arguments are blank' do
+      expect(all_blank.present?).to eq false
     end
 
-    it 'returns true if all argument are included' do
-      expect(valid_date_time_builder.present?).to eq true
+    it 'returns true if any argument are included' do
+      expect(day_blank.present?).to eq true
     end
   end
 
   describe '#year?' do
-    it 'returns false if any argument is blank' do
+    it 'returns false if year argument is blank' do
       expect(year_blank.year?).to eq false
     end
 
-    it 'returns true if all argument are included' do
+    it 'returns true if year argument are included' do
       expect(valid_date_time_builder.year?).to eq true
     end
   end
 
   describe '#month?' do
-    it 'returns false if any argument is blank' do
+    it 'returns false if month argument is blank' do
       expect(month_blank.month?).to eq false
     end
 
-    it 'returns true if all argument are included' do
+    it 'returns true if month argument are included' do
       expect(valid_date_time_builder.month?).to eq true
     end
   end
 
   describe '#day?' do
-    it 'returns false if any argument is blank' do
-      expect(day_blank.present?).to eq false
+    it 'returns false if day argument is blank' do
+      expect(day_blank.day?).to eq false
     end
 
-    it 'returns true if all argument are included' do
-      expect(valid_date_time_builder.present?).to eq true
+    it 'returns true if day argument are included' do
+      expect(valid_date_time_builder.day?).to eq true
     end
   end
 
   describe '#hour?' do
-    it 'returns false if any argument is blank' do
+    it 'returns false if hour argument is blank' do
       expect(hour_blank.hour?).to eq false
     end
 
-    it 'returns true if all argument are included' do
+    it 'returns true if hour argument are included' do
       expect(valid_date_time_builder.hour?).to eq true
     end
   end
 
   describe '#min?' do
-    it 'returns false if any argument is blank' do
+    it 'returns false if min argument is blank' do
       expect(min_blank.min?).to eq false
     end
 
-    it 'returns true if all argument are included' do
+    it 'returns true if min argument are included' do
       expect(valid_date_time_builder.min?).to eq true
     end
   end

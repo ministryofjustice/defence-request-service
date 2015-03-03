@@ -261,8 +261,12 @@ RSpec.feature 'defence request creation' do
           within '.case-details' do
             fill_in 'Custody number', with: '#CUST-9876'
             fill_in 'Allegations', with: 'BadMurder'
-            fill_in 'Hour', with: '10'
-            fill_in 'Min', with: '0'
+            fill_in 'defence_request_interview_start_time_day', with: '01'
+            fill_in 'defence_request_interview_start_time_month', with: '01'
+            fill_in 'defence_request_interview_start_time_year', with: '2001'
+            fill_in 'defence_request_interview_start_time_hour', with: '01'
+            fill_in 'defence_request_interview_start_time_min', with: '01'
+
           end
 
           within '.detainee' do
