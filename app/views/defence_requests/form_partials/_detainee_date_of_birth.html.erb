@@ -1,11 +1,10 @@
 <div class="form-group">
   <fieldset class="inline time-select">
     <label for>
-      <%= f.label :interview_start_time, t('interview_start_time'), class: 'form-label-bold' %>
-      <span class='hint block'><%= t('date_time_hint') %></span>
+      <%= f.label :date_of_birth, t('detainee_dob'), class: 'form-label-bold' %>
+      <span class='hint block'><%= t('date_hint') %></span>
     </label>
-
-    <%= f.fields_for :interview_start_time, @defence_request.interview_start_time do |t| %>
+    <%= f.fields_for :date_of_birth, @defence_request.date_of_birth do |t| %>
       <div class="date-field-wrapper">
         <%= t.label t('day') %>
         <%= t.text_field :day, size: 2, placeholder: 'DD', class: 'day text-field' %>
@@ -17,15 +16,6 @@
       <div class="date-field-wrapper">
         <%= t.label t('year') %>
         <%= t.text_field :year, size: 4, placeholder: 'YYYY', class: 'year text-field' %>
-      </div>
-      <div class="date-field-wrapper">-</div>
-      <div class="date-field-wrapper">
-        <%= t.label t('hour') %>
-        <%= t.text_field :hour, size: 2, placeholder: 'HH', class: 'hour text-field' %>
-      </div>
-      <div class="date-field-wrapper">
-        <%= t.label t('min') %>
-        <%= t.text_field :min, size: 2, placeholder: 'MM', class: 'minute text-field' %>
       </div>
     <% end %>
   </fieldset>

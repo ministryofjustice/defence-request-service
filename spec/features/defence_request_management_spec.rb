@@ -39,17 +39,20 @@ RSpec.feature 'defence request creation' do
           within '.case-details' do
             fill_in 'Custody number', with: '#CUST-01234'
             fill_in 'Allegations', with: 'BadMurder'
-            fill_in 'Hour', with: '09'
-            fill_in 'Min', with: '30'
+            fill_in 'defence_request_time_of_arrival_day', with: '01'
+            fill_in 'defence_request_time_of_arrival_month', with: '01'
+            fill_in 'defence_request_time_of_arrival_year', with: '2001'
+            fill_in 'defence_request_time_of_arrival_hour', with: '01'
+            fill_in 'defence_request_time_of_arrival_min', with: '01'
           end
 
           within '.detainee' do
             fill_in 'Full Name', with: 'Mannie Badder'
             choose 'Male'
             fill_in 'Age', with: '39'
-            fill_in 'Year', with: '1976'
-            fill_in 'Month', with: '1'
-            fill_in 'Day', with: '1'
+            fill_in 'defence_request_date_of_birth_year', with: '1976'
+            fill_in 'defence_request_date_of_birth_month', with: '01'
+            fill_in 'defence_request_date_of_birth_day', with: '01'
             choose 'No'
           end
           fill_in 'Comments', with: 'This is a very bad man. Send him down...'
@@ -258,17 +261,21 @@ RSpec.feature 'defence request creation' do
           within '.case-details' do
             fill_in 'Custody number', with: '#CUST-9876'
             fill_in 'Allegations', with: 'BadMurder'
-            fill_in 'Hour', with: '10'
-            fill_in 'Min', with: '0'
+            fill_in 'defence_request_interview_start_time_day', with: '01'
+            fill_in 'defence_request_interview_start_time_month', with: '01'
+            fill_in 'defence_request_interview_start_time_year', with: '2001'
+            fill_in 'defence_request_interview_start_time_hour', with: '01'
+            fill_in 'defence_request_interview_start_time_min', with: '01'
+
           end
 
           within '.detainee' do
             fill_in 'Full Name', with: 'Mannie Badder'
             choose 'Male'
             fill_in 'Age', with: '39'
-            fill_in 'Year', with: '1976'
-            fill_in 'Month', with: '1'
-            fill_in 'Day', with: '1'
+            fill_in 'defence_request_date_of_birth_year', with: '1976'
+            fill_in 'defence_request_date_of_birth_month', with: '01'
+            fill_in 'defence_request_date_of_birth_day', with: '01'
             choose 'No'
           end
 
@@ -276,9 +283,9 @@ RSpec.feature 'defence request creation' do
             fill_in 'Full Name', with: 'Annie Nother'
             choose 'Female'
             fill_in 'Age', with: '28'
-            fill_in 'Year', with: '1986'
-            fill_in 'Month', with: '12'
-            fill_in 'Day', with: '31'
+            fill_in 'defence_request_date_of_birth_year', with: '1986'
+            fill_in 'defence_request_date_of_birth_month', with: '12'
+            fill_in 'defence_request_date_of_birth_day', with: '12'
             choose 'Yes'
           end
           fill_in 'Comments', with: 'I fought the law...'
@@ -430,18 +437,18 @@ RSpec.feature 'defence request creation' do
           end
 
           within '.solicitor-details' do
-            select('2010', from: 'defence_request_solicitor_time_of_arrival_1i')
-            select('January', from: 'defence_request_solicitor_time_of_arrival_2i')
-            select('1', from: 'defence_request_solicitor_time_of_arrival_3i')
-            select('12', from: 'defence_request_solicitor_time_of_arrival_4i')
-            select('00', from: 'defence_request_solicitor_time_of_arrival_5i')
+            fill_in 'defence_request_solicitor_time_of_arrival_day', with: '01'
+            fill_in 'defence_request_solicitor_time_of_arrival_month', with: '01'
+            fill_in 'defence_request_solicitor_time_of_arrival_year', with: '2001'
+            fill_in 'defence_request_solicitor_time_of_arrival_hour', with: '01'
+            fill_in 'defence_request_solicitor_time_of_arrival_min', with: '01'
           end
           click_button 'Update Defence Request'
           expect(page).to have_content 'Defence Request successfully updated'
           within ".accepted-defence-request" do
             click_link 'Show'
           end
-          expect(page).to have_content('1 January 2010 - 12:00')
+          expect(page).to have_content('1 January 2001 - 01:01')
 
         end
       end
@@ -541,18 +548,18 @@ RSpec.feature 'defence request creation' do
         expect(page).to have_link('Dashboard')
       end
 
-      scenario 'can edit the expected arrival time of a case they "own" form the show page' do
+      scenario 'can edit the expected arrival time of a case they "own" from the show page' do
         visit defence_requests_path
         within '.accepted-defence-request' do
           click_link('Show')
         end
 
         within '.time-of-arrival' do
-          select('2010', from: 'defence_request_solicitor_time_of_arrival_1i')
-          select('January', from: 'defence_request_solicitor_time_of_arrival_2i')
-          select('1', from: 'defence_request_solicitor_time_of_arrival_3i')
-          select('12', from: 'defence_request_solicitor_time_of_arrival_4i')
-          select('00', from: 'defence_request_solicitor_time_of_arrival_5i')
+          fill_in 'defence_request_solicitor_time_of_arrival_day', with: '01'
+          fill_in 'defence_request_solicitor_time_of_arrival_month', with: '01'
+          fill_in 'defence_request_solicitor_time_of_arrival_year', with: '2001'
+          fill_in 'defence_request_solicitor_time_of_arrival_hour', with: '01'
+          fill_in 'defence_request_solicitor_time_of_arrival_min', with: '01'
 
           click_button "Add Expected Time of Arrival"
         end
@@ -560,7 +567,7 @@ RSpec.feature 'defence request creation' do
         expect(page).to have_content("Defence Request successfully updated with solicitor estimated time of arrival")
 
         within "tr.solicitor-time-of-arrival" do
-          expect(page).to have_content('1 January 2010 - 12:00')
+          expect(page).to have_content('1 January 2001 - 01:01')
         end
       end
 

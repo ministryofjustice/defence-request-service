@@ -1,11 +1,11 @@
 <div class="form-group">
   <fieldset class="inline time-select">
     <label for>
-      <%= f.label :interview_start_time, t('interview_start_time'), class: 'form-label-bold' %>
+      <%= f.label :time_of_arrival, t('time_of_arrival'), class: 'form-label-bold' %>
       <span class='hint block'><%= t('date_time_hint') %></span>
     </label>
 
-    <%= f.fields_for :interview_start_time, @defence_request.interview_start_time do |t| %>
+    <%= f.fields_for :time_of_arrival, @defence_request.time_of_arrival do |t| %>
       <div class="date-field-wrapper">
         <%= t.label t('day') %>
         <%= t.text_field :day, size: 2, placeholder: 'DD', class: 'day text-field' %>

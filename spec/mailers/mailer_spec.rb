@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Mailer, type: :mailer do
   subject { Mailer }
-  let(:defence_request) { FactoryGirl.create(:defence_request, interview_start_time: Time.at(1423757676).to_datetime) }
+  let(:defence_request) { FactoryGirl.create(:defence_request, interview_start_time: date_then_as_hash) }
   let(:solicitor) { FactoryGirl.create(:solicitor_user) }
 
   describe 'notify_interview_start_change' do

@@ -15,26 +15,8 @@
     </label>
   </fieldset>
 </div>
-<div class="form-group">
-  <fieldset class="inline">
-    <label for>
-      <%= t('detainee_dob') %>
-      <span class='hint block'><%= t('date_hint') %></span>
-    </label>
-    <div class="date-field-wrapper">
-      <%= f.label :date_of_birth_day, t('day') %>
-      <%= f.text_field :date_of_birth_day, class: 'day text-field'%>
-    </div>
-    <div class="date-field-wrapper">
-      <%= f.label :date_of_birth_month, t('month') %>
-      <%= f.text_field :date_of_birth_month, class: 'month text-field'%>
-    </div>
-    <div class="date-field-wrapper">
-      <%= f.label :date_of_birth_year, t('year') %>
-      <%= f.text_field :date_of_birth_year, class: 'year text-field'%>
-    </div>
-  </fieldset>
-</div>
+
+<%= render('defence_requests/form_partials/detainee_date_of_birth', f: f) %>
 
 <div class="form-group">
   <%= f.label :detainee_age, t('age') %>

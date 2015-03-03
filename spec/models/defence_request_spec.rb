@@ -5,10 +5,26 @@ RSpec.describe DefenceRequest, type: :model do
 
     it { expect(subject).to validate_presence_of :gender }
     it { expect(subject).to validate_presence_of :detainee_age }
-    it { expect(subject).to validate_presence_of :time_of_arrival }
     it { expect(subject).to validate_presence_of :custody_number }
     it { expect(subject).to validate_presence_of :detainee_name }
     it { expect(subject).to validate_presence_of :allegations }
+
+    context 'solicitor_time_of_arrival' do
+      it 'is valid when passed correct paramaters' do
+        valid_dr = FactoryGirl.build(:defence_request, solicitor_time_of_arrival: {'day' => '01', 'month' => '01', 'year' => '2001', 'hour' => '01', 'min' => '01'})
+        expect(valid_dr).to be_valid
+      end
+
+      it 'is invalid with a bad params' do
+        invalid_bad_dr = FactoryGirl.build(:defence_request, solicitor_time_of_arrival: {'day' => 'xx', 'month' => 'xx', 'year' => 'xxxx', 'hour' => 'xx', 'min' => 'xx'} )
+        expect(invalid_bad_dr).to_not be_valid
+      end
+
+      it 'is invalid with missing params' do
+        invalid_bad_dr = FactoryGirl.build(:defence_request, solicitor_time_of_arrival: {'day' => '', 'month' => '', 'year' => '2001', 'hour' => '01', 'min' => '02'} )
+        expect(invalid_bad_dr).to_not be_valid
+      end
+    end
 
     context 'own_solicitor' do
       before do
@@ -142,7 +158,7 @@ RSpec.describe DefenceRequest, type: :model do
     context 'interview time changes' do
       it 'notifies the solicitor'  do
         expect(@persisted_request).to receive(:notify_interview_start_change).and_call_original
-        @persisted_request.update_attribute(:interview_start_time, Time.now)
+        @persisted_request.update_attribute(:interview_start_time, date_now_as_hash)
       end
     end
 
