@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     end
   end
 
+  get '/status' => 'status#index'
   get '/help', controller: :static, action: :help, as: :help
   get '/maintenance', controller: :static, action: :maintenance, as: :maintenance
   get '/cookies', controller: :static, action: :cookies, as: :cookies
