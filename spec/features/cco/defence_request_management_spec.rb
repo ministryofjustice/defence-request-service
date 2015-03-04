@@ -122,7 +122,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
         expect(page).to have_content "Defence Request successfully updated"
       end
 
-      specify "can mark the request as accepted from the request\"s edit page whilst adding a dscc number" do
+      specify "can mark the request as accepted from the request's edit page whilst adding a dscc number" do
         visit root_path
 
         within "#defence_request_#{opened_dr.id}" do
@@ -218,28 +218,19 @@ RSpec.feature "Call Center Operatives managing defence requests" do
         click_link "Edit"
       end
 
-<<<<<<< HEAD
-      within '.solicitor-details' do
-        fill_in 'defence_request_solicitor_time_of_arrival_day', with: '01'
-        fill_in 'defence_request_solicitor_time_of_arrival_month', with: '01'
-        fill_in 'defence_request_solicitor_time_of_arrival_year', with: '2001'
-        fill_in 'defence_request_solicitor_time_of_arrival_hour', with: '01'
-        fill_in 'defence_request_solicitor_time_of_arrival_min', with: '01'
-=======
       within ".solicitor-details" do
-        select("2010", from: "defence_request_solicitor_time_of_arrival_1i")
-        select("January", from: "defence_request_solicitor_time_of_arrival_2i")
-        select("1", from: "defence_request_solicitor_time_of_arrival_3i")
-        select("12", from: "defence_request_solicitor_time_of_arrival_4i")
-        select("00", from: "defence_request_solicitor_time_of_arrival_5i")
->>>>>>> Make string style, and descriptions consistent
+        fill_in "defence_request_solicitor_time_of_arrival_day", with: "01"
+        fill_in "defence_request_solicitor_time_of_arrival_month", with: "01"
+        fill_in "defence_request_solicitor_time_of_arrival_year", with: "2001"
+        fill_in "defence_request_solicitor_time_of_arrival_hour", with: "01"
+        fill_in "defence_request_solicitor_time_of_arrival_min", with: "01"
       end
       click_button "Update Defence Request"
       expect(page).to have_content "Defence Request successfully updated"
       within ".accepted-defence-request" do
         click_link "Show"
       end
-      expect(page).to have_content("1 January 2010 - 12:00")
+      expect(page).to have_content("1 January 2001 - 01:01")
     end
   end
 end

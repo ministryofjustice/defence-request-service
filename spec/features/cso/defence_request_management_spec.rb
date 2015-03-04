@@ -169,7 +169,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
       end
       expect(page).to have_content("Close the Defence Request")
       click_button "Close"
-      expect(page).to have_content("Feedback: can"t be blank")
+      expect(page).to have_content("Feedback: can't be blank")
       expect(page).to have_content("Close the Defence Request")
 
       fill_in "Feedback", with: "I just cant take it any more..."
@@ -188,7 +188,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
       click_link "Close"
       expect(page).to have_content("Close the Defence Request")
       click_button "Close"
-      expect(page).to have_content("Feedback: can"t be blank")
+      expect(page).to have_content("Feedback: can't be blank")
       expect(page).to have_content("Close the Defence Request")
 
       fill_in "Feedback", with: "I just cant take it any more..."

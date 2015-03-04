@@ -41,7 +41,7 @@ RSpec.feature "Solicitors managing defence requests" do
       expect(page).to have_content("Defence Request successfully updated with solicitor estimated time of arrival")
 
       within "tr.solicitor-time-of-arrival" do
-        expect(page).to have_content("1 January 2010 - 12:00")
+        expect(page).to have_content("1 January 2001 - 01:01")
       end
     end
   end
