@@ -62,7 +62,7 @@ RSpec.configure do |config|
     ActionMailer::Base.deliveries = []
   end
 
-  config.after do
+  config.after :each do
     DatabaseCleaner.clean
   end
 
@@ -85,5 +85,4 @@ RSpec.configure do |config|
 
   config.disable_monkey_patching!
 
-  config.include WaitForAjax, type: :feature
 end
