@@ -16,28 +16,18 @@ class DefenceRequestsController < BaseController
   end
 
   def new
-    @defence_request = DefenceRequest.new
-    set_policy
+    @defence_request_form = DefenceRequestForm.new(@defence_request)
+    # @defence_request = DefenceRequest.new
+    # set_policy
     authorize @defence_request
   end
 
-  def solicitors_search
-    query_string = URI.escape(params[:q])
-    search_url = URI.parse "#{Settings.dsds.solicitor_search_domain}/search/?q=#{query_string}"
-    search_json = JSON.parse(HTTParty.post(search_url).body)
-
-    # Below is evil, this is a quick hack to search for solicitors and firms in the same box until we figure out how
-    # we should do it properly, probably with a proper search endpoint on the api using postgres full text search.
-    solicitors = search_json['solicitors'].map { |s| s.tap { |t| t['firm_name'] = t['firm']['name']; t.delete 'firm'} }
-    firm_solicitors = search_json['firms'].map {|f| f['solicitors'].map { |s| s.tap { |t| t['firm_name'] = f['name'] } } }.flatten
-    @solicitors = (firm_solicitors + solicitors).uniq
-  end
-
   def create
-    @defence_request = DefenceRequest.new(defence_request_params)
-    set_policy
-    if @defence_request.save
-      redirect_to(defence_requests_path, notice: flash_message(:create, DefenceRequest))
+    @defence_request_form = DefenceRequestForm.new(@defence_request)
+    # @defence_request = DefenceRequest.new(defence_request_params)
+    # set_policy
+    if @defence_request_form.submit(defence_request_params)
+      redirect_to(@defence_request_form.defence_request, notice: flash_message(:create, DefenceRequestForm))
     else
       render :new
     end
@@ -56,6 +46,18 @@ class DefenceRequestsController < BaseController
         render :edit
       end
     end
+  end
+
+  def solicitors_search
+    query_string = URI.escape(params[:q])
+    search_url = URI.parse "#{Settings.dsds.solicitor_search_domain}/search/?q=#{query_string}"
+    search_json = JSON.parse(HTTParty.post(search_url).body)
+
+    # Below is evil, this is a quick hack to search for solicitors and firms in the same box until we figure out how
+    # we should do it properly, probably with a proper search endpoint on the api using postgres full text search.
+    solicitors = search_json['solicitors'].map { |s| s.tap { |t| t['firm_name'] = t['firm']['name']; t.delete 'firm'} }
+    firm_solicitors = search_json['firms'].map {|f| f['solicitors'].map { |s| s.tap { |t| t['firm_name'] = f['name'] } } }.flatten
+    @solicitors = (firm_solicitors + solicitors).uniq
   end
 
   def refresh_dashboard
@@ -156,7 +158,7 @@ class DefenceRequestsController < BaseController
   end
 
   def defence_request_params
-    raw_params = params.require(:defence_request).permit(:solicitor_type,
+    params.require(:defence_request).permit(:solicitor_type,
                                                          :solicitor_name,
                                                          :solicitor_firm,
                                                          :solicitor_email,
@@ -177,23 +179,7 @@ class DefenceRequestsController < BaseController
                                                          :dscc_number,
                                                          :feedback,
                                                          { solicitor_time_of_arrival: %i[day month year hour min sec] })
-    raw_params.tap do |p|
-      solicitor_association_param(p)
-      appropriate_adult_param(p)
-    end
-  end
 
-  def solicitor_association_param(p)
-    email = p.delete("solicitor_email")
-    solicitor = User.solicitors.find_by_email email
-    p["solicitor_id"] = solicitor.id if solicitor
-  end
-
-  def appropriate_adult_param(p)
-    appropriate_adult = p.delete 'appropriate_adult'
-    if appropriate_adult
-      p['appropriate_adult'] = appropriate_adult == 'yes'
-    end
   end
 
   def close_and_save_defence_request

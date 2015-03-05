@@ -29,8 +29,8 @@ class DateTimeBuilder
     end
   end
 
-  def present?
-    !blank?
+  def any_present?
+    !all_blank?
   end
 
   def year?
@@ -53,7 +53,7 @@ class DateTimeBuilder
     min.present?
   end
 
-  def blank?
+  def all_blank?
     [year, month, day, hour, min].all?(&:blank?)
   end
 

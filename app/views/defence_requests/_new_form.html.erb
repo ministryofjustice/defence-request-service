@@ -1,9 +1,9 @@
-<%= form_for(@defence_request) do |f| %>
-  <%= render('defence_requests/form_partials/solicitor_request', f: f) if @defence_request.new_record? %>
+<%= form_for @defence_request_form do |f| %>
+  <%= render('defence_requests/form_partials/solicitor_request', f: f) if @defence_request_form.defence_request.new_record? %>
 
-  <div id='main-form-body' <%= "class=hidden" if @defence_request.new_record?%>>
+  <div id='main-form-body' <%= "class=hidden" if @defence_request_form.defence_request.new_record?%>>
     <!-- details -->
-    <div class='solicitor-details' <%= "class=hidden" if @defence_request.new_record? %>>
+    <div class='solicitor-details' <%= "class=hidden" if @defence_request_form.defence_request.new_record? %>>
       <h3><%= t('solicitor_details') %></h3>
       <div class="details">
         <div class="">
@@ -22,14 +22,44 @@
           <%= f.label :phone_number, t('telephone_number') %>
           <%= f.text_field :phone_number, class: 'text-field text-field-wide' %>
         </div>
-        <% if @policy.solicitor_time_of_arrival? %>
+        <%# if @policy.solicitor_time_of_arrival? %>
+
         <div class="form-group">
-          <%= label :solicitor_time_of_arrival, t('solicitor_time_of_arrival'), class: 'form-label-bold' %>
           <fieldset class="inline time-select">
-            <%= datetime_select('defence_request', 'solicitor_time_of_arrival') %>
+            <label for>
+              <%= f.label :solicitor_time_of_arrival, t('solicitor_time_of_arrival'), class: 'form-label-bold' %>
+              <span class='hint block'><%= t('date_time_hint') %></span>
+            </label>
+
+            <%= f.fields_for :solicitor_time_of_arrival, @defence_request_form.solicitor_time_of_arrival do |t| %>
+              <div class="date-field-wrapper">
+                <%= t.label t('day') %>
+                <%= t.text_field :day, size: 2, placeholder: 'DD', class: 'day text-field' %>
+              </div>
+              <div class="date-field-wrapper">
+                <%= t.label t('month') %>
+                <%= t.text_field :month, size: 2, placeholder: 'MM', class: 'month text-field' %>
+              </div>
+              <div class="date-field-wrapper">
+                <%= t.label t('year') %>
+                <%= t.text_field :year, size: 4, placeholder: 'YYYY', class: 'year text-field' %>
+              </div>
+              <div class="date-field-wrapper">-</div>
+              <div class="date-field-wrapper">
+                <%= t.label t('hour') %>
+                <%= t.text_field :hour, size: 2, placeholder: 'HH', class: 'hour text-field' %>
+              </div>
+              <div class="date-field-wrapper">
+                <%= t.label t('min') %>
+                <%= t.text_field :min, size: 2, placeholder: 'MM', class: 'minute text-field' %>
+              </div>
+            <% end %>
           </fieldset>
         </div>
-        <% end %>
+
+
+
+        <%# end %>
       </div>
     </div>
 
@@ -64,13 +94,13 @@
 
       <div class="form-group">
         <fieldset class="inline">
-          <%= f.label :appropriate_adult, t('appropriate_adult_required') %>
+          <%= f.label :appropriate_adult_required, t('appropriate_adult_required') %>
           <label class="block-label" for="defence_request_appropriate_adult_yes">
-            <%= f.radio_button :appropriate_adult, :yes, name: 'defence_request[appropriate_adult]' %>
+            <%= f.radio_button :appropriate_adult_required, :yes, name: 'defence_request[appropriate_adult_required]' %>
             <%= t('yes') %>
           </label>
           <label class="block-label" for="defence_request_appropriate_adult_no">
-            <%= f.radio_button :appropriate_adult, :no, name: 'defence_request[appropriate_adult]' %>
+            <%= f.radio_button :appropriate_adult_required, :no, name: 'defence_request[appropriate_adult_required]' %>
             <%= t('no') %>
           </label>
         </fieldset>
@@ -98,26 +128,53 @@
         <%= f.text_field :custody_number, label: t('custody_number'), class: 'text-field custody-number' %>
       </div>
 
-      <% if @policy.interview_start_time_edit? %>
-        <div class="form-group">
-          <%= f.label :interview_start_time, t('interview_start_time'), class: 'form-label-bold' %>
-          <fieldset class="inline time-select">
-            <%= f.time_select :interview_start_time %>
-          </fieldset>
-        </div>
-      <% end %>
+      <%# if @policy.interview_start_time_edit? %>
+      <div class="form-group">
+        <fieldset class="inline time-select">
+          <label for>
+            <%= f.label :interview_start_time, t('interview_start_time'), class: 'form-label-bold' %>
+            <span class='hint block'><%= t('date_time_hint') %></span>
+          </label>
+
+          <%= f.fields_for :interview_start_time, @defence_request_form.interview_start_time do |t| %>
+            <div class="date-field-wrapper">
+              <%= t.label t('day') %>
+              <%= t.text_field :day, size: 2, placeholder: 'DD', class: 'day text-field' %>
+            </div>
+            <div class="date-field-wrapper">
+              <%= t.label t('month') %>
+              <%= t.text_field :month, size: 2, placeholder: 'MM', class: 'month text-field' %>
+            </div>
+            <div class="date-field-wrapper">
+              <%= t.label t('year') %>
+              <%= t.text_field :year, size: 4, placeholder: 'YYYY', class: 'year text-field' %>
+            </div>
+            <div class="date-field-wrapper">-</div>
+            <div class="date-field-wrapper">
+              <%= t.label t('hour') %>
+              <%= t.text_field :hour, size: 2, placeholder: 'HH', class: 'hour text-field' %>
+            </div>
+            <div class="date-field-wrapper">
+              <%= t.label t('min') %>
+              <%= t.text_field :min, size: 2, placeholder: 'MM', class: 'minute text-field' %>
+            </div>
+          <% end %>
+        </fieldset>
+      </div>
+
+      <%# end %>
 
       <div class="form-group">
         <%= f.label :comments, t('comments') %>
         <%= f.text_area :comments, label: t('comments'), rows: '5', class: 'text-field text-field-wide' %>
       </div>
 
-      <%- if @policy.dscc_number_edit? %>
+      <%# if @policy.dscc_number_edit? %>
         <div class="form-group">
           <%= f.label :dscc_number, t('dscc_number'), class: 'form-label-bold' %>
-          <%= f.text_field :dscc_number, readonly: !@policy.dscc_number_edit?, class: 'text-field text-field-wide' %>
+          <%# f.text_field :dscc_number, readonly: !@policy.dscc_number_edit?, class: 'text-field text-field-wide' %>
         </div>
-      <%- end %>
+      <%# end %>
     </div>
 
     <%= render('defence_requests/form_partials/form_actions', f: f) %>

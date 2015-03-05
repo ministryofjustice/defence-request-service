@@ -7,7 +7,7 @@ class GovukDateValidator
   end
 
   def validate
-    if builder.present?
+    if builder.any_present?
       govuk_date_time
       govuk_date_time_year
       govuk_date_time_month

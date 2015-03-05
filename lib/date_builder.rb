@@ -25,8 +25,8 @@ class DateBuilder
     end
   end
 
-  def present?
-    !blank?
+  def any_present?
+    !all_blank?
   end
 
   def year?
@@ -41,8 +41,8 @@ class DateBuilder
     day.present?
   end
 
-  def blank?
-    [year, month, day].any?(&:blank?)
+  def all_blank?
+    [year, month, day].all?(&:blank?)
   end
 
   private

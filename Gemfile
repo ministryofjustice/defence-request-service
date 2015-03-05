@@ -19,6 +19,7 @@ gem 'sucker_punch', '~> 1.0'
 gem 'transitions', require: ['transitions', 'active_model/transitions']
 gem 'uglifier', '>= 1.3.0'
 gem 'unicorn', '~> 4.8.3'
+gem 'validates_timeliness', '~> 3.0'
 
 # MOJ styles
 gem 'moj_template', '~> 0.23.0'
