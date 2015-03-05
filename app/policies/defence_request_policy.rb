@@ -27,7 +27,7 @@ class DefenceRequestPolicy < ApplicationPolicy
   end
 
   def show?
-    cso || cco || solicitor
+    ((cso || cco) && !record.closed?) || user_is_the_assigned_solicitor
   end
 
   def new?
@@ -39,7 +39,7 @@ class DefenceRequestPolicy < ApplicationPolicy
   end
 
   def edit?
-    cso || (record.cco == user)
+    (cso || user_is_the_assigned_cco) && !record.closed?
   end
 
   def update?
@@ -59,7 +59,7 @@ class DefenceRequestPolicy < ApplicationPolicy
   end
 
   def dscc_number_edit?
-    cco && record.opened?
+    record.opened? && user_is_the_assigned_cco
   end
 
   def interview_start_time_edit?
@@ -67,15 +67,15 @@ class DefenceRequestPolicy < ApplicationPolicy
   end
 
   def case_details_edit?
-    cso || (cco && !record.created?)
+    edit? && (cso || (!record.created? && user_is_the_assigned_cco))
   end
 
   def detainee_details_edit?
-    cso || (cco && !record.created?)
+    edit? && (cso || (!record.created? && user_is_the_assigned_cco))
   end
 
   def solicitor_details_edit?
-   (cso || cco)
+    edit? && ((cso && record.created?) || (record.opened? && user_is_the_assigned_cco))
   end
 
   def open?
@@ -103,11 +103,11 @@ class DefenceRequestPolicy < ApplicationPolicy
   end
 
   def solicitor_time_of_arrival?
-    record.solicitor == user || (record.accepted? && (cco || cso))
+    (user_is_the_assigned_solicitor && !record.closed?) || (record.accepted? && (cco || cso))
   end
 
   def solicitor_time_of_arrival_from_show?
-    record.solicitor == user
+    user_is_the_assigned_solicitor && !record.closed?
   end
 
   private
@@ -118,6 +118,14 @@ class DefenceRequestPolicy < ApplicationPolicy
 
   def cco
     user.cco?
+  end
+
+  def user_is_the_assigned_cco
+    cco && record.cco == user
+  end
+
+  def user_is_the_assigned_solicitor
+    solicitor && record.solicitor == user
   end
 
   def solicitor
