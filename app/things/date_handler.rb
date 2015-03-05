@@ -14,7 +14,7 @@ class DateHandler
   end
 
   def value
-    Date.new year.to_i, month.to_i, day.to_i
+    Date.new year.to_i, month.to_i, day.to_i rescue nil
   end
 
   def self.from_date date
@@ -30,14 +30,14 @@ class DateHandler
   private
 
   def validate_year
-    errors.add field, :invalid_year if year.blank?
+    errors.add :invalid_year, 'year is crap' if year.blank?
   end
 
   def validate_month
-    errors.add field, :invalid_month if month.blank?
+    errors.add :invalid_month, 'month is crap' if month.blank?
   end
 
   def validate_day
-    errors.add field, :invalid_day if day.blank?
+    errors.add :invalid_day, 'day is crap' if day.blank?
   end
 end

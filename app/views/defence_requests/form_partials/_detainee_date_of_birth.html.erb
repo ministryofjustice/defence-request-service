@@ -4,7 +4,7 @@
       <%= f.label :date_of_birth, t('detainee_dob'), class: 'form-label-bold' %>
       <span class='hint block'><%= t('date_hint') %></span>
     </label>
-    <%= f.fields_for :date_of_birth, @defence_request_form.date_of_birth do |t| %>
+    <%= f.fields_for :date_of_birth, @date_of_birth_handler do |t| %>
       <div class="date-field-wrapper">
         <%= t.label t('day') %>
         <%= t.text_field :day, size: 2, placeholder: 'DD', class: 'day text-field' %>

@@ -16,7 +16,7 @@ class DateTimeHandler
   end
 
   def value
-    DateTime.new year.to_i, month.to_i, day.to_i, hour.to_i, min.to_i
+    DateTime.new year.to_i, month.to_i, day.to_i, hour.to_i, min.to_i rescue nil
   end
 
   def self.from_date_time datetime
@@ -31,23 +31,24 @@ class DateTimeHandler
 
   private
 
+
   def validate_year
-    errors.add field, :invalid_year if year.blank?
+    errors.add :invalid_year, 'THIS IS RUBBISH' if year.blank?
   end
 
   def validate_month
-    errors.add field, :invalid_month if month.blank?
+    errors.add :invalid_month, 'THIS IS RUBBISH' if month.blank?
   end
 
   def validate_day
-    errors.add field, :invalid_day if day.blank?
+    errors.add :invalid_day, 'THIS IS RUBBISH' if day.blank?
   end
 
   def validate_hour
-    errors.add field, :invalid_hour if hour.blank?
+    errors.add :invalid_hour, 'THIS IS RUBBISH' if hour.blank?
   end
 
   def validate_min
-    errors.add field, :invalid_min if min.blank?
+    errors.add :invalid_min, 'THIS IS RUBBISH' if min.blank?
   end
 end

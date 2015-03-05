@@ -5,7 +5,7 @@
       <span class='hint block'><%= t('date_time_hint') %></span>
     </label>
 
-    <%= f.fields_for :time_of_arrival, @defence_request_form.time_of_arrival do |t| %>
+    <%= f.fields_for :time_of_arrival, @time_of_arrival_handler do |t| %>
       <div class="date-field-wrapper">
         <%= t.label t('day') %>
         <%= t.text_field :day, size: 2, placeholder: 'DD', class: 'day text-field' %>
