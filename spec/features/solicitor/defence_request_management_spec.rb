@@ -60,7 +60,8 @@ RSpec.feature "Solicitors managing defence requests" do
 
   context "with cases they are not assigned to" do
     specify  "can not see the show page" do
-      expect{ visit defence_request_path(dr2) }.to raise_error(ActiveRecord::RecordNotFound)
+      visit defence_request_path(dr2)
+      expect(page).to have_content("You are not authorised to perform this action")
     end
   end
 end
