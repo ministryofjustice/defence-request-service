@@ -17,8 +17,9 @@ sandbox_email: <%= ENV["SANDBOX_EMAIL"] %>
 sandbox_email_address: <%= ENV['SANDBOX_EMAIL_ADDRESS'] || 'iamadefencesolicitor@gmail.com' %>
 
 dsds:
-  app_title: 'Defence Solicitor Deployment Service'
+  app_title: "Defence Solicitor Deployment Service"
   dashboard_refresh_milliseconds: 3000
+  dashboard_refresh_disabled: <%= ENV["DISABLE_DASHBOARD_REFRESH"] %>
   solicitor_search_domain: "http://solicitor-search.herokuapp.com"
   default_mail_host: <%= ENV["DEFAULT_MAIL_HOST"] %>
 
