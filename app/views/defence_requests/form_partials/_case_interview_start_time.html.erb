@@ -5,7 +5,7 @@
       <span class='hint block'><%= t('date_time_hint') %></span>
     </label>
 
-    <%= f.fields_for :interview_start_time, @defence_request_form.interview_start_time do |t| %>
+    <%= f.fields_for :interview_start_time, @defence_request_form.fields[:interview_start_time] do |t| %>
       <div class="date-field-wrapper">
         <%= t.label t('day') %>
         <%= t.text_field :day, size: 2, placeholder: 'DD', class: 'day text-field' %>

@@ -34,13 +34,15 @@ class DefenceRequestsController < BaseController
   end
 
   def edit
+    @defence_request_form = DefenceRequestForm.new @defence_request
   end
 
   def update
+    @defence_request_form = DefenceRequestForm.new(@defence_request)
     if update_and_accept?
       update_and_accept
     else
-      if @defence_request.update_attributes(defence_request_params)
+      if @defence_request_form.submit(defence_request_params)
         redirect_to(defence_requests_path, notice: flash_message(:update, DefenceRequest))
       else
         render :edit

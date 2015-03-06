@@ -27,6 +27,8 @@ class DateTimeField
         v.day = datetime.day
         v.month = datetime.month
         v.year = datetime.year
+        v.hour = datetime.hour
+        v.min = datetime.min
       end
     end
   end

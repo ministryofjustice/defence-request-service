@@ -27,6 +27,8 @@ class DefenceRequestForm
            to: :defence_request
 
   def submit(params)
+    @fields.select!{ |k, v| params.include?(k) }
+
     @defence_request.assign_attributes  params.slice(:solicitor_type, :solicitor_name, :solicitor_firm, :phone_number,
                                                :detainee_name, :gender, :detainee_age, :allegations, :scheme,
                                                :custody_number, :comments)
