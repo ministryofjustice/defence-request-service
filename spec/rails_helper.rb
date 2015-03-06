@@ -52,6 +52,8 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 ActiveRecord::Migration.maintain_test_schema!
 
+Settings.dsds.dashboard_refresh_disabled = false
+
 RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.use_transactional_fixtures = false
@@ -62,7 +64,7 @@ RSpec.configure do |config|
     ActionMailer::Base.deliveries = []
   end
 
-  config.after do
+  config.after :each do
     DatabaseCleaner.clean
   end
 
@@ -85,5 +87,4 @@ RSpec.configure do |config|
 
   config.disable_monkey_patching!
 
-  config.include WaitForAjax, type: :feature
 end

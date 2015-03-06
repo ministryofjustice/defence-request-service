@@ -58,8 +58,6 @@ FactoryGirl.define do
   end
 
   trait :with_dscc_number do
-    state 'opened'
     dscc_number '123456'
-    association :cco, factory: :cco_user
   end
 end

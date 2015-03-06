@@ -161,7 +161,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
       end
 
       context "that have the \"duty\" solicitor type" do
-        let!(:duty_solicitor_dr) { create(:defence_request, :duty_solicitor, :opened, cco: User.first) }
+        let!(:duty_solicitor_dr) { create(:defence_request, :duty_solicitor, :opened, cco: cco_user) }
 
         specify "can not mark the request as accepted from the dashboard without solicitor detials" do
           visit root_path

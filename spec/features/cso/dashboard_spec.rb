@@ -2,6 +2,8 @@ require "rails_helper"
 
 RSpec.feature "Custody Suite Officers viewing their dashboard" do
   include ActiveJobHelper
+  include DashboardHelper
+
   let!(:dr_created) { create(:defence_request, :created) }
   let!(:dr_open1) { create(:defence_request, :opened) }
   let!(:dr_open2) { create(:defence_request, :opened) }
@@ -23,8 +25,7 @@ RSpec.feature "Custody Suite Officers viewing their dashboard" do
     end
   end
 
-  specify "can see the dashboard with refreshed data after a period", js: true do
-    Settings.dsds.dashboard_refresh_seconds = 3000
+  specify "can see the dashboard with refreshed data after a period", js: true, short_dashboard_refresh: true do
     visit defence_requests_path
 
     within "#defence_request_#{dr_created.id}" do
@@ -38,7 +39,7 @@ RSpec.feature "Custody Suite Officers viewing their dashboard" do
     dr_created.update(solicitor_name: "New Solicitor")
     dr_open1.update(solicitor_name: "New Solicitor2")
 
-    sleep(Settings.dsds.dashboard_refresh_seconds/1000)
+    wait_for_dashboard_refresh
 
     within "#defence_request_#{dr_created.id}" do
       expect(page).to have_content("New Solicitor")
@@ -67,3 +68,4 @@ end
 def element_order_correct?(first_element, second_element)
   !!(/#{first_element}.*#{second_element}/m =~ page.body)
 end
+

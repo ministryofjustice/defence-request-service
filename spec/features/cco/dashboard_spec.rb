@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Custody Center Operatives viewing their dashboard" do
     include ActiveJobHelper
+    include DashboardHelper
 
     let!(:dr_created) { create(:defence_request, :created) }
     let!(:dr_open) { create(:defence_request, :opened) }
@@ -24,7 +25,7 @@ RSpec.feature "Custody Center Operatives viewing their dashboard" do
       end
     end
 
-    specify "can see the dashboard with refreshed data after a period", js: true do
+    specify "can see the dashboard with refreshed data after a period", js: true, short_dashboard_refresh: true do
       visit defence_requests_path
 
       within "#defence_request_#{dr_created.id}" do
@@ -37,9 +38,8 @@ RSpec.feature "Custody Center Operatives viewing their dashboard" do
 
       dr_created.update(solicitor_name: "New Solicitor")
       dr_open.update(solicitor_name: "New Solicitor2")
-      #Wait for dashboard refresh + 1
-      sleep(4)
-      wait_for_ajax
+
+      wait_for_dashboard_refresh
 
       within "#defence_request_#{dr_created.id}" do
         expect(page).to have_content("New Solicitor")

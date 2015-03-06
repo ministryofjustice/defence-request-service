@@ -1,6 +1,6 @@
 class DefenceRequestsController < BaseController
 
-  before_action :find_defence_request, :set_policy, only: [:solicitor_time_of_arrival, :edit, :update, :feedback, :close, :open, :accept, :resend_details]
+  before_action :find_defence_request, :set_policy, only: [:show, :solicitor_time_of_arrival, :edit, :update, :feedback, :close, :open, :accept, :resend_details]
 
   before_action ->(c) { authorize defence_request, "#{c.action_name}?" }
 
@@ -11,8 +11,6 @@ class DefenceRequestsController < BaseController
   end
 
   def show
-    @defence_request = policy_scope(DefenceRequest).find(params[:id])
-    set_policy
   end
 
   def new
