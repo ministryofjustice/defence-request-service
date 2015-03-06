@@ -6,11 +6,13 @@ class AppropriateAdultHandler
   end
 
   def value(checkbox)
-    1
+    @_value
   end
 
-  def self.from_value value
-    AppropriateAdultHandler.new
+  def self.from_original bool
+    AppropriateAdultHandler.new.tap do |a|
+      a.instance_variable_set(:@_value, bool)
+    end
   end
 
 end

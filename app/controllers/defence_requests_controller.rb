@@ -16,8 +16,8 @@ class DefenceRequestsController < BaseController
   end
 
   def new
-    @defence_request_form = DefenceRequestForm.new
-    # @defence_request = DefenceRequest.new
+    @defence_request = DefenceRequest.new
+    @defence_request_form = DefenceRequestForm.new @defence_request
     # set_policy
     authorize @defence_request
   end

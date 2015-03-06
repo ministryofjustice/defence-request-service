@@ -1,25 +1,25 @@
 class DefenceRequestForm
   include ActiveModel::Model
 
+  attr_reader :defence_request, :fields
+
   def self.model_name
     ActiveModel::Name.new(self, nil, 'DefenceRequest')
   end
 
   def initialize(defence_request)
+    @fields = {}
     @defence_request = defence_request
-    @date_of_birth_handler = DateHandler.from_date(@defence_request.date_of_birth)
-    @time_of_arrival_handler = DateTimeHandler.from_date_time(@defence_request.time_of_arrival)
-    @solicitor_time_of_arrival_handler = DateTimeHandler.from_date_time(@defence_request.solicitor_time_of_arrival)
-    @interview_start_time_handler = DateTimeHandler.from_date_time(@defence_request.interview_start_time)
-    @solicitor_association_handler = SolicitorAssociationHandler.from_solicitor_id
-    @appropriate_adult_handler = AppropriateAdultHandler.from_value(@defence_request.appropriate_adult)
+    register_field :date_of_birth, DateField
+    register_field :time_of_arrival, DateTimeField
+    register_field :solicitor_time_of_arrival, DateTimeField
+    register_field :interview_start_time, DateTimeField
+    #register_field :solicitor, SolicitorField.from_solicitor(@defence_request.solicitor)
+    #register_field :appropriate_adult, AppropriateAdultField.from_bool(@defence_request.appropriate_adult)
+  end
 
-    @to_validate = [  @defence_request,
-                     @date_of_birth_handler,
-                     @time_of_arrival_handler,
-                     @solicitor_time_of_arrival_handler,
-                     @interview_start_time_handler,
-                     @solicitor_association_handler ]
+  def register_field field_name, klass
+    @fields[field_name] = klass.from_persisted_value @defence_request.send field_name
   end
 
   delegate :solicitor_type, :solicitor_name, :solicitor_firm, :phone_number, :detainee_name,
@@ -27,36 +27,39 @@ class DefenceRequestForm
            to: :defence_request
 
   def submit(params)
-    @defence_request.attributes = params.slice(:solicitor_type, :solicitor_name, :solicitor_firm, :phone_number,
+    @defence_request.assign_attributes  params.slice(:solicitor_type, :solicitor_name, :solicitor_firm, :phone_number,
                                                :detainee_name, :gender, :detainee_age, :allegations, :scheme,
                                                :custody_number, :comments)
 
-    @defence_request.attributes[:date_of_birth] = @date_of_birth_handler.value
-    @defence_request.attributes[:time_of_arrival] = @time_of_arrival_handler.value
-    @defence_request.attributes[:solicitor_time_of_arrival] = @solicitor_time_of_arrival_handler.value
-    @defence_request.attributes[:interview_start_time] = @interview_start_time_handler.value
-    @defence_request.attributes[:solicitor_id] = @solicitor_association_handler.value
-    @defence_request.attributes[:appropriate_adult] = @appropriate_adult_handler.value(params[:appropriate_adult])
+    @fields.dup.each do |field_name, field_value|
+      field_value = field_value.class.new params[field_name]
+      @fields[field_name] = field_value
+    end
 
-    if @to_validate.all?(&:valid?)
+    @fields.each do |field_name, field_value|
+      @defence_request.assign_attributes({ field_name => field_value.value })
+    end
+
+    if @fields.values.all?(&:valid?) & @defence_request.valid?
       @defence_request.save!
       true
     else
-      @to_validate.select(&:invalid?).each do |invalid_thing|
-        self.errors[invalid_thing.to_s] = invalid_thing.errors.messages
-      end
+      add_errors_to_form
       false
     end
   end
 
-  def defence_request
-    @defence_request
+  def add_errors_to_form
+    @defence_request.errors.messages.each do |field_name, error_message|
+      self.errors[field_name] = error_message.join ", "
+    end
+
+    @fields.select { |_, v| v.invalid? }.each do |field_name, field_value|
+      if field_value.present?
+        self.errors[field_name].clear
+        self.errors[field_name] = field_value.errors.full_messages.join ", "
+      end
+    end
   end
 end
 
-
-#TODO: remove adult from model
-# delegate
-#          :date_of_birth,  :time_of_arrival, :appropriate_adult,
-#          :created_at, :updated_at, :state, :dscc_number,  :interview_start_time, :solicitor_id,
-#          :cco_id, :solicitor_time_of_arrival, to: :defence_request
