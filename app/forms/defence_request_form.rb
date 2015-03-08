@@ -14,11 +14,11 @@ class DefenceRequestForm
     register_field :time_of_arrival, DateTimeField
     register_field :solicitor_time_of_arrival, DateTimeField
     register_field :interview_start_time, DateTimeField
-    #register_field :solicitor, SolicitorField.from_solicitor(@defence_request.solicitor)
-    #register_field :appropriate_adult, AppropriateAdultField.from_bool(@defence_request.appropriate_adult)
+    register_field :solicitor, SolicitorField
+    register_field :appropriate_adult, AppropriateAdultField
   end
 
-  def register_field field_name, klass
+  def register_field field_name, klass, opts={}
     @fields[field_name] = klass.from_persisted_value @defence_request.send field_name
   end
 
@@ -29,20 +29,16 @@ class DefenceRequestForm
   def submit(params)
     @fields.select!{ |k, v| params.include?(k) }
 
-    @defence_request.assign_attributes  params.slice(:solicitor_type, :solicitor_name, :solicitor_firm, :phone_number,
-                                               :detainee_name, :gender, :detainee_age, :allegations, :scheme,
-                                               :custody_number, :comments)
+    params_without_fields =  params.reject { |k, _| @fields.keys.include? k.to_sym}
+    @defence_request.assign_attributes params_without_fields
 
     @fields.dup.each do |field_name, field_value|
       field_value = field_value.class.new params[field_name]
       @fields[field_name] = field_value
-    end
-
-    @fields.each do |field_name, field_value|
       @defence_request.assign_attributes({ field_name => field_value.value })
     end
 
-    if @fields.values.all?(&:valid?) & @defence_request.valid?
+    if @fields.all?(&valid_if_present?) & @defence_request.valid?
       @defence_request.save!
       true
     else
@@ -56,11 +52,18 @@ class DefenceRequestForm
       self.errors[field_name] = error_message.join ", "
     end
 
-    @fields.select { |_, v| v.invalid? }.each do |field_name, field_value|
+    @fields.reject(&valid_if_present?).each do |field_name, field_value|
       if field_value.present?
         self.errors[field_name].clear
         self.errors[field_name] = field_value.errors.full_messages.join ", "
       end
+    end
+  end
+
+  def valid_if_present?
+    ->(field) do
+      field_value = field.last
+      field_value.valid? || field_value.blank?
     end
   end
 end

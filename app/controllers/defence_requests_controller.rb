@@ -18,7 +18,7 @@ class DefenceRequestsController < BaseController
   def new
     @defence_request = DefenceRequest.new
     @defence_request_form = DefenceRequestForm.new @defence_request
-    # set_policy
+    set_policy
     authorize @defence_request
   end
 
@@ -134,7 +134,7 @@ class DefenceRequestsController < BaseController
         redirect_to(edit_defence_request_path, alert: flash_message(:solicitor_details_required, DefenceRequest))
       when dscc_number_missing?
         redirect_to(edit_defence_request_path, alert: flash_message(:dscc_number_required, DefenceRequest))
-      when @defence_request.update_attributes(defence_request_params) && accepted_and_save_defence_request
+      when @defence_request_form.submit(defence_request_params) && accepted_and_save_defence_request
         redirect_to(defence_requests_path, notice: flash_message(:updated_and_updated, DefenceRequest))
     end
   end
@@ -161,26 +161,27 @@ class DefenceRequestsController < BaseController
 
   def defence_request_params
     params.require(:defence_request).permit(:solicitor_type,
-                                                         :solicitor_name,
-                                                         :solicitor_firm,
-                                                         :solicitor_email,
-                                                         :scheme,
-                                                         :phone_number,
-                                                         :detainee_name,
-                                                         :detainee_age,
-                                                         :time_of_arrival,
-                                                         :gender,
-                                                         :adult,
-                                                         { date_of_birth: %i[day month year] },
-                                                         :appropriate_adult,
-                                                         :custody_number,
-                                                         :allegations,
-                                                         :comments,
-                                                         { interview_start_time: %i[day month year hour min sec] },
-                                                         { time_of_arrival: %i[day month year hour min sec] },
-                                                         :dscc_number,
-                                                         :feedback,
-                                                         { solicitor_time_of_arrival: %i[day month year hour min sec] })
+                                            :solicitor_name,
+                                            :solicitor_firm,
+                                            :solicitor_email,
+                                            { solicitor: :email },
+                                            :scheme,
+                                            :phone_number,
+                                            :detainee_name,
+                                            :detainee_age,
+                                            :time_of_arrival,
+                                            :gender,
+                                            :adult,
+                                            { date_of_birth: %i[day month year] },
+                                            :appropriate_adult,
+                                            :custody_number,
+                                            :allegations,
+                                            :comments,
+                                            { interview_start_time: %i[day month year hour min sec] },
+                                            { time_of_arrival: %i[day month year hour min sec] },
+                                            :dscc_number,
+                                            :feedback,
+                                            { solicitor_time_of_arrival: %i[day month year hour min sec] })
 
   end
 

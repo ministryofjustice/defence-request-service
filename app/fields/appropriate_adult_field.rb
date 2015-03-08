@@ -1,18 +1,17 @@
-class AppropriateAdultHandler
+class AppropriateAdultField
   include ActiveModel::Model
 
-  def self.model_name
-    ActiveModel::Name.new(self, nil, 'AppropriateAdult')
+  def initialize yes_or_no
+    @_value = yes_or_no == 'yes'
   end
 
-  def value(checkbox)
+  def value
     @_value
   end
 
-  def self.from_original bool
-    AppropriateAdultHandler.new.tap do |a|
-      a.instance_variable_set(:@_value, bool)
-    end
+  def self.from_persisted_value bool
+    str = bool ? 'yes' : 'no'
+    AppropriateAdultField.new str
   end
 
 end

@@ -1,19 +1,22 @@
-class SolicitorAssociationHandler
+class SolicitorField
   include ActiveModel::Model
 
-  def self.model_name
-    ActiveModel::Name.new(self, nil, '')
-  end
-
-  attr_accessor :solicitor_id
+  attr_accessor :email, :solicitor_id
 
   def value
-    User.find_by(id: solicitor_id)
+   solicitor
   end
 
-  def self.from_solicitor solicitor
-    SolicitorHandler.new.tap do |s|
-      s.solicitor_id = solicitor.id
+  def solicitor
+    if email
+      User.find_by_id email
+    elsif solicitor_id
+      User.find_by_id solicitor_id
     end
+  end
+
+  def self.from_persisted_value solicitor
+    id = solicitor.id if solicitor
+    SolicitorField.new solicitor_id: id
   end
 end

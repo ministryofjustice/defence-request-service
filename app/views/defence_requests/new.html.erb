@@ -2,5 +2,4 @@
 <%= render 'shared/error_messages', object: @defence_request_form %>
 
 <h1><%= t('new_defence_request') %></h1>
-<%= render 'new_form' %>
-<%# render 'new_form' if @policy.new? %>
+<%= render 'new_form' if @policy.new? %>
