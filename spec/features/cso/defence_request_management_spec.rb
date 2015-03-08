@@ -56,6 +56,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
         fill_in "Comments", with: "This is a very bad man. Send him down..."
         click_button "Create Defence Request"
       end
+
       an_audit_should_exist_for_the_defence_request_creation
       expect(page).to have_content "Bob Smith"
       expect(page).to have_content "Defence Request successfully created"
@@ -212,7 +213,6 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
             fill_in "Full Name", with: "Dave Smith"
             fill_in "Name of firm", with: "Broken Solicitors"
             fill_in "Telephone number", with: "0207 284 9999"
-            expect(page).to_not have_selector("defence_request_solicitor_time_of_arrival_1i")
           end
 
           within ".case-details" do

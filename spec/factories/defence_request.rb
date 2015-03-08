@@ -10,11 +10,11 @@ FactoryGirl.define do
     phone_number '447810480123'
     sequence(:detainee_name) { |n| "detainee_name-#{n}" }
     gender %w(male female).sample
-    date_of_birth ({ 'day' => twenty_one_years_ago.day, 'month' => twenty_one_years_ago.month, 'year' => twenty_one_years_ago.year })
+    date_of_birth twenty_one_years_ago
     detainee_age 21
     sequence(:custody_number) { |n| "custody_number-#{n}" }
     allegations ['Murder','Theft','Drunk','Hate Crime'].sample
-    time_of_arrival ({ 'day' => now.day, 'month' => now.month, 'year' => now.year, 'min' => now.minute, 'hour' => now.hour })
+    time_of_arrival now
     sequence(:comments) { |n| "commenty-comments-are here: #{n}" }
     adult [nil, true, false].sample
     appropriate_adult [true, false].sample
