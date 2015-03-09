@@ -9,8 +9,9 @@
 </div>
 
 <div class="form-group">
-  <%= f.label :solicitor, t('solicitor_email') %>
-  <%= f.text_field :solicitor, class: 'text-field text-field-wide' %>
+  <%= f.fields_for :solicitor, @defence_request_form.fields[:solicitor], type: :hidden do |t| %>
+    <%= t.text_field :email, type: :hidden %>
+  <% end %>
 </div>
 
 <div class="form-group">

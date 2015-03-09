@@ -50,6 +50,10 @@ class DefenceRequestPolicy < ApplicationPolicy
     cso
   end
 
+  def add_case_time_of_arrival?
+    create? && record.new_record?
+  end
+
   def feedback?
     (cso || cco) && record.can_execute_close?
   end

@@ -21,7 +21,8 @@ RSpec.describe DefenceRequestPolicy do
         :feedback,
         :case_details_edit,
         :detainee_details_edit,
-        :solicitor_details_edit
+        :solicitor_details_edit,
+        :add_case_time_of_arrival
       ] }
       let (:defreq) { FactoryGirl.build(:defence_request) }
       let (:actions) { group_actions + allowed_actions }
