@@ -24,8 +24,7 @@ class DefenceRequestsController < BaseController
 
   def create
     @defence_request_form = DefenceRequestForm.new(@defence_request)
-    # @defence_request = DefenceRequest.new(defence_request_params)
-    # set_policy
+    set_policy
     if @defence_request_form.submit(defence_request_params)
       redirect_to(@defence_request_form.defence_request, notice: flash_message(:create, DefenceRequestForm))
     else
