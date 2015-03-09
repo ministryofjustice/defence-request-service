@@ -1,0 +1,26 @@
+{
+    "firms": [],
+    "solicitors": [
+        {
+            "firm": {
+                "tel": "340.792.6112",
+                "name": "O'Reilly's",
+                "created_at": "2015-01-28T12:32:46.088Z",
+                "updated_at": "2015-01-28T12:32:46.088Z",
+                "email": "santos_mills@oberbrunnermoen.com",
+                "postcode": "UN3 2YZ",
+                "address": "2195 Heathcote Course Albania",
+                "id": 1
+            },
+            "name": "Dave O'Reilly",
+            "mobile": "567-578-7368",
+            "created_at": "2015-01-28T12:32:46.177Z",
+            "updated_at": "2015-01-28T12:32:46.177Z",
+            "id": 1,
+            "firm_id": 1,
+            "postcode": "KG9 1HO",
+            "address": "1922 Mary Parkways Turks and Caicos Islands",
+            "email": "dave@example.com"
+        }
+    ]
+}
