@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe DateField do
 
-
   context "from persisted value" do
     subject { DateField.from_persisted_value date }
     context "presisted value is present" do
@@ -57,7 +56,7 @@ RSpec.describe DateField do
   context "methods" do
     context "value" do
       context "valid object" do
-        let(:subject) { DateField.new day: "13", month: "4", year: "1992" }
+        subject { DateField.new day: "13", month: "4", year: "1992" }
 
         it "returns a date object" do
           expect(subject.value.class).to eql Date
@@ -65,7 +64,7 @@ RSpec.describe DateField do
       end
 
       context "invalid object" do
-        let (:subject) { DateField.new day: "I", month: "AM", year: "BROKEN" }
+        subject { DateField.new day: "I", month: "AM", year: "BROKEN" }
 
         it "returns nil" do
           expect(subject.value).to be_nil
@@ -75,14 +74,15 @@ RSpec.describe DateField do
 
     context "present?" do
       context "no fields filled in" do
-        let (:subject) { DateField.new }
+        subject { DateField.new }
 
         it "returns false" do
           expect(subject).to_not be_present
         end
       end
+
       context "some filled in" do
-        let (:subject) { DateField.new day: "I am filled in but not necessarily valid" }
+        subject { DateField.new day: "I am filled in but not necessarily valid" }
 
         it "returns true" do
           expect(subject).to be_present
