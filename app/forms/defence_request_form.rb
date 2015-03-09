@@ -52,7 +52,7 @@ class DefenceRequestForm
       self.errors[field_name] = error_message.join ", "
     end
 
-    @fields.reject(&valid_if_present?).each do |field_name, field_value|
+    @fields.map(&:to_a).reject(&valid_if_present?).each do |field_name, field_value|
       if field_value.present?
         self.errors[field_name].clear
         self.errors[field_name] = field_value.errors.full_messages.join ", "
