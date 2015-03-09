@@ -111,7 +111,8 @@ class DefenceRequestsController < BaseController
   end
 
   def solicitor_time_of_arrival
-    if @defence_request.update_attributes(defence_request_params)
+    new_time_of_arrival = DateTimeField.new defence_request_params['solicitor_time_of_arrival']
+    if @defence_request.update_attributes solicitor_time_of_arrival: new_time_of_arrival.value
       redirect_to(defence_request_path(@defence_request), notice: flash_message(:solicitor_time_of_arrival_added, DefenceRequest))
     else
       redirect_to(defence_request_path(@defence_request), alert: flash_message(:solicitor_time_of_arrival_not_added, DefenceRequest))
