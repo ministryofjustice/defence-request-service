@@ -81,6 +81,25 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
       end
     end
 
+    specify "a solicitor with a apostrophe renders correctly", js: true do
+      stub_solicitor_search_for_dave_oreilly
+
+      visit root_path
+      click_link "New Defence Request"
+      choose "Own"
+      fill_in "q", with: "Dave O'Reilly"
+
+      find(".solicitor-search", match: :first).click
+
+      expect(page).to have_content "Dave O'Reilly"
+
+      click_link "Dave O'Reilly"
+
+      within ".solicitor-details" do
+        expect(page).to have_field "Full Name", with: "Dave O'Reilly"
+      end
+    end
+
     specify "can perform multiple own solicitor searches", js: true do
       stub_solicitor_search_for_bob_smith
       stub_solicitor_search_for_barry_jones
@@ -280,6 +299,12 @@ def an_audit_should_exist_for_the_defence_request_creation
 
   expect(audit.auditable_type).to eq "DefenceRequest"
   expect(audit.action).to eq "create"
+end
+
+def stub_solicitor_search_for_dave_oreilly
+  body = File.open "spec/fixtures/dave_oreilly_solicitor_search.json"
+  stub_request(:post, "http://solicitor-search.herokuapp.com/search/?q=Dave%20O'Reilly").
+    to_return(body: body, status: 200)
 end
 
 def stub_solicitor_search_for_bob_smith

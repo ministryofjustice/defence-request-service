@@ -31,8 +31,8 @@ $('.btn-solicitor-results-close').bind('click', function() {
   $('#<%= solicitor_id solicitor %>').click(function(e) {
     e.preventDefault();
     $('.solicitor-results-list').html('');
-    $('#defence_request_solicitor_name').val('<%= solicitor['name'] %>')
-    $('#defence_request_solicitor_firm').val('<%= solicitor['firm_name'] %>')
+    $('#defence_request_solicitor_name').val('<%== j solicitor['name'] %>')
+    $('#defence_request_solicitor_firm').val('<%== j solicitor['firm_name'] %>')
     $('#defence_request_solicitor_email').val('<%= solicitor['email'] %>')
     $('#defence_request_phone_number').val('<%= solicitor['mobile'] %>')
   });
