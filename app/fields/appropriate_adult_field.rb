@@ -1,6 +1,8 @@
 class AppropriateAdultField
   include ActiveModel::Model
 
+  attr_accessor :appropriate_adult
+
   def initialize yes_or_no
     @_value = yes_or_no == 'yes'
   end

@@ -1,0 +1,13 @@
+<%= render('defence_requests/form_partials/solicitor_request', f: f) if @defence_request_form.defence_request.new_record? %>
+
+<div id='main-form-body' <%= "class=hidden" if @defence_request_form.defence_request.new_record? %>>
+
+  <%= render('defence_requests/form_partials/solicitor', f: f) %>
+
+  <%= render('defence_requests/form_partials/detainee', f: f) %>
+
+  <%= render('defence_requests/form_partials/case', f: f) %>
+
+</div>
+
+<%= render('defence_requests/form_partials/form_actions', f: f) %>

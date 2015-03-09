@@ -1,7 +1,7 @@
-<div class='solicitor-details'>
+<div class='solicitor-details' <%= "class=hidden" if @defence_request_form.defence_request.new_record? %>>
   <h3><%= t('solicitor_details') %></h3>
   <div class="details">
-    <%= render('defence_requests/form_partials/solicitor_details', f: f) if @policy.solicitor_details_edit? %>
+    <%= render('defence_requests/form_partials/solicitor_details', f: f) if @policy.create? || @policy.solicitor_details_edit? %>
     <%= render('defence_requests/form_partials/solicitor_time_of_arrival', f: f) if @policy.solicitor_time_of_arrival? %>
   </div>
 </div>
