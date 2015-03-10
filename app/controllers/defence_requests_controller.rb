@@ -3,7 +3,7 @@ class DefenceRequestsController < BaseController
   before_action :find_defence_request, :set_policy, only: [:show, :solicitor_time_of_arrival, :edit, :update, :feedback, :close, :open, :accept, :resend_details]
   before_action :new_defence_request, only: [:new, :create]
   before_action :new_defence_request_form, only: [:show, :new, :create, :edit, :update, :solicitor_time_of_arrival]
-  before_action :get_dashboard_components, only: [:index, :refresh_dashboard]
+  before_action :get_defence_request_scopes, only: [:index, :refresh_dashboard]
 
   before_action ->(c) { authorize defence_request, "#{c.action_name}?" }
 
@@ -108,7 +108,7 @@ class DefenceRequestsController < BaseController
 
   private
 
-  def get_dashboard_components
+  def get_defence_request_scopes
     @open_requests = policy_scope(DefenceRequest).opened.order(created_at: :asc)
     @created_requests = policy_scope(DefenceRequest).created.order(created_at: :asc)
     @accepted_requests = policy_scope(DefenceRequest).accepted.order(created_at: :asc)
