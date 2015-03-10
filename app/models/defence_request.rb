@@ -47,9 +47,10 @@ class DefenceRequest < ActiveRecord::Base
   validates :detainee_name,
             :allegations,
             :gender,
-            :detainee_age,
             :time_of_arrival,
             :custody_number, presence: true
+
+  validates :detainee_age, numericality: true, presence: true
 
   audited
 
