@@ -3,13 +3,12 @@ class DefenceRequestsController < BaseController
   before_action :find_defence_request, :set_policy, only: [:show, :solicitor_time_of_arrival, :edit, :update, :feedback, :close, :open, :accept, :resend_details]
   before_action :new_defence_request, only: [:new, :create]
   before_action :new_defence_request_form, only: [:show, :new, :create, :edit, :update, :solicitor_time_of_arrival]
+  before_action :get_dashboard_components, only: [:index, :refresh_dashboard]
 
   before_action ->(c) { authorize defence_request, "#{c.action_name}?" }
 
+
   def index
-    @open_requests = policy_scope(DefenceRequest).opened.order(created_at: :asc)
-    @created_requests = policy_scope(DefenceRequest).created.order(created_at: :asc)
-    @accepted_requests = policy_scope(DefenceRequest).accepted.order(created_at: :asc)
   end
 
   def show
@@ -56,10 +55,6 @@ class DefenceRequestsController < BaseController
   end
 
   def refresh_dashboard
-    @open_requests = policy_scope(DefenceRequest).opened.order(created_at: :asc)
-    @created_requests = policy_scope(DefenceRequest).created.order(created_at: :asc)
-    @accepted_requests = policy_scope(DefenceRequest).accepted.order(created_at: :asc)
-
     respond_to do |format|
       format.js
     end
@@ -111,8 +106,13 @@ class DefenceRequestsController < BaseController
     end
   end
 
-
   private
+
+  def get_dashboard_components
+    @open_requests = policy_scope(DefenceRequest).opened.order(created_at: :asc)
+    @created_requests = policy_scope(DefenceRequest).created.order(created_at: :asc)
+    @accepted_requests = policy_scope(DefenceRequest).accepted.order(created_at: :asc)
+  end
 
   def associate_cco
     @defence_request.cco = current_user
@@ -128,7 +128,7 @@ class DefenceRequestsController < BaseController
         redirect_to(edit_defence_request_path, alert: flash_message(:solicitor_details_required, DefenceRequest))
       when dscc_number_missing?
         redirect_to(edit_defence_request_path, alert: flash_message(:dscc_number_required, DefenceRequest))
-      when @defence_request_form.submit(defence_request_params) && accepted_and_save_defence_request
+      when @defence_request_form.submit(defence_request_params) && accept_and_save_defence_request
         redirect_to(defence_requests_path, notice: flash_message(:updated_and_updated, DefenceRequest))
     end
   end
@@ -191,7 +191,7 @@ class DefenceRequestsController < BaseController
     @defence_request.close && @defence_request.save
   end
 
-  def accepted_and_save_defence_request
+  def accept_and_save_defence_request
     @defence_request.accept && @defence_request.save
   end
 end
