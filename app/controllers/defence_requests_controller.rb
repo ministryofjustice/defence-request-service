@@ -11,6 +11,7 @@ class DefenceRequestsController < BaseController
   end
 
   def show
+    @defence_request_form ||= DefenceRequestForm.new @defence_request
   end
 
   def new
@@ -110,12 +111,13 @@ class DefenceRequestsController < BaseController
 
   def solicitor_time_of_arrival
     @defence_request_form = DefenceRequestForm.new @defence_request
-    if @defence_request_form.submit defence_request_params
+    if @defence_request_form.submit(defence_request_params)
       redirect_to(defence_request_path(@defence_request), notice: flash_message(:solicitor_time_of_arrival_added, DefenceRequest))
     else
-      redirect_to(defence_request_path(@defence_request), alert: flash_message(:solicitor_time_of_arrival_not_added, DefenceRequest))
+      render :show
     end
   end
+
 
   private
 

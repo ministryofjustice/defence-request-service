@@ -1,4 +1,5 @@
-<%= render partial: 'shared/flash_messages' %>
+<%= render 'shared/error_and_flash', object: @defence_request_form  %>
+
 <div class="inner group">
   <br/>
   <%= link_to t('dashboard'), defence_requests_path %>
@@ -74,16 +75,7 @@
     <% if @policy.solicitor_time_of_arrival_from_show? %>
       <div class="time-of-arrival">
         <%= form_for(@defence_request, url: solicitor_time_of_arrival_defence_request_path, method: :patch) do |f| %>
-          <%= f.label :solicitor_time_of_arrival, t('solicitor_time_of_arrival'), class: 'form-label-bold' %>
-          <fieldset class="inline time-select">
-            <%= f.fields_for :solicitor_time_of_arrival, @defence_request.solicitor_time_of_arrival do |t| %>
-              <%= t.text_field :day, size: 2, placeholder: 'DD' %> /
-              <%= t.text_field :month, size: 2, placeholder: 'MM' %> /
-              <%= t.text_field :year, size: 4, placeholder: 'YYYY' %> -
-              <%= t.text_field :hour, size: 2, placeholder: 'HH' %> :
-              <%= t.text_field :min, size: 2, placeholder: 'MM' %>
-            <% end %>
-          </fieldset>
+          <%= render('defence_requests/form_partials/solicitor_time_of_arrival', f: f) if @policy.solicitor_time_of_arrival_from_show? %>
           <%= f.submit(t('add_expected_time_of_arrival'), class: 'button') %>
         <% end %>
       </div>

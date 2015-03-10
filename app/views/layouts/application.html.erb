@@ -18,7 +18,7 @@
 <% end %>
 <% content_for :head do %>
   <%= csrf_meta_tag %>
-  <%= render partial: 'shared/ga' %>
+  <%= render 'shared/ga' %>
 <% end %>
 <%= content_for :cookie_message, "" %>
 <%= content_for :js_gt_ie, '6' %>
