@@ -1,5 +1,8 @@
 <%= render 'shared/flash_messages' %>
-<%= render 'shared/error_messages', object: @defence_request %>
+<%= render 'shared/error_messages', object: @defence_request_form %>
 
 <h1><%= t('new_defence_request') %></h1>
-<%= render 'new_form' if @policy.new? %>
+
+<%= form_for @defence_request_form, as: :defence_request do |f| %>
+  <%= render('defence_requests/form_partials/main', f: f) %>
+<% end if @policy.create? %>

@@ -5,26 +5,26 @@
       <span class='hint block'><%= t('date_time_hint') %></span>
     </label>
 
-    <%= f.fields_for :interview_start_time, @defence_request.interview_start_time do |t| %>
+    <%= f.fields_for :interview_start_time, @defence_request_form.fields[:interview_start_time] do |t| %>
       <div class="date-field-wrapper">
-        <%= t.label t('day') %>
+        <%= t.label :day, t('day') %>
         <%= t.text_field :day, size: 2, placeholder: 'DD', class: 'day text-field' %>
       </div>
       <div class="date-field-wrapper">
-        <%= t.label t('month') %>
+        <%= t.label :month, t('month') %>
         <%= t.text_field :month, size: 2, placeholder: 'MM', class: 'month text-field' %>
       </div>
       <div class="date-field-wrapper">
-        <%= t.label t('year') %>
+        <%= t.label :year, t('year') %>
         <%= t.text_field :year, size: 4, placeholder: 'YYYY', class: 'year text-field' %>
       </div>
       <div class="date-field-wrapper">-</div>
       <div class="date-field-wrapper">
-        <%= t.label t('hour') %>
+        <%= t.label :hour, t('hour') %>
         <%= t.text_field :hour, size: 2, placeholder: 'HH', class: 'hour text-field' %>
       </div>
       <div class="date-field-wrapper">
-        <%= t.label t('min') %>
+        <%= t.label :min, t('min') %>
         <%= t.text_field :min, size: 2, placeholder: 'MM', class: 'minute text-field' %>
       </div>
     <% end %>

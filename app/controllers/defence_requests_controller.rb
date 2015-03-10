@@ -15,8 +15,37 @@ class DefenceRequestsController < BaseController
 
   def new
     @defence_request = DefenceRequest.new
+    @defence_request_form = DefenceRequestForm.new @defence_request
     set_policy
     authorize @defence_request
+  end
+
+  def create
+    @defence_request = DefenceRequest.new
+    @defence_request_form = DefenceRequestForm.new @defence_request
+    set_policy
+    if @defence_request_form.submit(defence_request_params)
+      redirect_to(@defence_request_form.defence_request, notice: flash_message(:create, DefenceRequestForm))
+    else
+      render :new
+    end
+  end
+
+  def edit
+    @defence_request_form = DefenceRequestForm.new @defence_request
+  end
+
+  def update
+    @defence_request_form = DefenceRequestForm.new(@defence_request)
+    if update_and_accept?
+      update_and_accept
+    else
+      if @defence_request_form.submit(defence_request_params)
+        redirect_to(defence_requests_path, notice: flash_message(:update, DefenceRequest))
+      else
+        render :edit
+      end
+    end
   end
 
   def solicitors_search
@@ -29,31 +58,6 @@ class DefenceRequestsController < BaseController
     solicitors = search_json['solicitors'].map { |s| s.tap { |t| t['firm_name'] = t['firm']['name']; t.delete 'firm'} }
     firm_solicitors = search_json['firms'].map {|f| f['solicitors'].map { |s| s.tap { |t| t['firm_name'] = f['name'] } } }.flatten
     @solicitors = (firm_solicitors + solicitors).uniq
-  end
-
-  def create
-    @defence_request = DefenceRequest.new(defence_request_params)
-    set_policy
-    if @defence_request.save
-      redirect_to(defence_requests_path, notice: flash_message(:create, DefenceRequest))
-    else
-      render :new
-    end
-  end
-
-  def edit
-  end
-
-  def update
-    if update_and_accept?
-      update_and_accept
-    else
-      if @defence_request.update_attributes(defence_request_params)
-        redirect_to(defence_requests_path, notice: flash_message(:update, DefenceRequest))
-      else
-        render :edit
-      end
-    end
   end
 
   def refresh_dashboard
@@ -105,7 +109,8 @@ class DefenceRequestsController < BaseController
   end
 
   def solicitor_time_of_arrival
-    if @defence_request.update_attributes(defence_request_params)
+    @defence_request_form = DefenceRequestForm.new @defence_request
+    if @defence_request_form.submit defence_request_params
       redirect_to(defence_request_path(@defence_request), notice: flash_message(:solicitor_time_of_arrival_added, DefenceRequest))
     else
       redirect_to(defence_request_path(@defence_request), alert: flash_message(:solicitor_time_of_arrival_not_added, DefenceRequest))
@@ -128,7 +133,7 @@ class DefenceRequestsController < BaseController
         redirect_to(edit_defence_request_path, alert: flash_message(:solicitor_details_required, DefenceRequest))
       when dscc_number_missing?
         redirect_to(edit_defence_request_path, alert: flash_message(:dscc_number_required, DefenceRequest))
-      when @defence_request.update_attributes(defence_request_params) && accepted_and_save_defence_request
+      when @defence_request_form.submit(defence_request_params) && accepted_and_save_defence_request
         redirect_to(defence_requests_path, notice: flash_message(:updated_and_updated, DefenceRequest))
     end
   end
@@ -154,44 +159,29 @@ class DefenceRequestsController < BaseController
   end
 
   def defence_request_params
-    raw_params = params.require(:defence_request).permit(:solicitor_type,
-                                                         :solicitor_name,
-                                                         :solicitor_firm,
-                                                         :solicitor_email,
-                                                         :scheme,
-                                                         :phone_number,
-                                                         :detainee_name,
-                                                         :detainee_age,
-                                                         :time_of_arrival,
-                                                         :gender,
-                                                         :adult,
-                                                         { date_of_birth: %i[day month year] },
-                                                         :appropriate_adult,
-                                                         :custody_number,
-                                                         :allegations,
-                                                         :comments,
-                                                         { interview_start_time: %i[day month year hour min sec] },
-                                                         { time_of_arrival: %i[day month year hour min sec] },
-                                                         :dscc_number,
-                                                         :feedback,
-                                                         { solicitor_time_of_arrival: %i[day month year hour min sec] })
-    raw_params.tap do |p|
-      solicitor_association_param(p)
-      appropriate_adult_param(p)
-    end
-  end
+    params.require(:defence_request).permit(:solicitor_type,
+                                            :solicitor_name,
+                                            :solicitor_firm,
+                                            :solicitor_email,
+                                            { solicitor: :email },
+                                            :scheme,
+                                            :phone_number,
+                                            :detainee_name,
+                                            :detainee_age,
+                                            :time_of_arrival,
+                                            :gender,
+                                            :adult,
+                                            { date_of_birth: %i[day month year] },
+                                            { appropriate_adult: :appropriate_adult } ,
+                                            :custody_number,
+                                            :allegations,
+                                            :comments,
+                                            { interview_start_time: %i[day month year hour min sec] },
+                                            { time_of_arrival: %i[day month year hour min sec] },
+                                            :dscc_number,
+                                            :feedback,
+                                            { solicitor_time_of_arrival: %i[day month year hour min sec] })
 
-  def solicitor_association_param(p)
-    email = p.delete("solicitor_email")
-    solicitor = User.solicitors.find_by_email email
-    p["solicitor_id"] = solicitor.id if solicitor
-  end
-
-  def appropriate_adult_param(p)
-    appropriate_adult = p.delete 'appropriate_adult'
-    if appropriate_adult
-      p['appropriate_adult'] = appropriate_adult == 'yes'
-    end
   end
 
   def close_and_save_defence_request

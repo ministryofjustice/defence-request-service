@@ -9,7 +9,7 @@
     <%= t('duty') %>
   </label>
 </fieldset>
-<% if @defence_request.new_record? %>
+<% if @defence_request_form.defence_request.new_record? %>
   <div class="form-group">
     <%= render 'defence_requests/form_partials/solicitor_search' %>
   </div>

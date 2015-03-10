@@ -22,7 +22,8 @@ RSpec.describe DefenceRequestPolicy do
         :feedback,
         :case_details_edit,
         :detainee_details_edit,
-        :solicitor_details_edit
+        :solicitor_details_edit,
+        :add_case_time_of_arrival
       ] }
       let (:defreq) { FactoryGirl.build(:defence_request) }
       specify{ expect(subject).to permit_actions_and_forbid_all_others actions }

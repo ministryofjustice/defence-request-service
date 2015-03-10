@@ -155,3 +155,18 @@ en:
               invalid_day: "Day is invalid"
               invalid_hour: "Hour is invalid"
               invalid_min: "Minute is invalid"
+  activemodel:
+    models:
+      defence_request_form: "Defence Request"
+      defence_request: "Defence Request"
+    errors:
+      models:
+        defence_request:
+          attributes:
+            time_of_arrival:
+              invalid_datetime: "Format is invalid"
+              invalid_year: "Year is invalid"
+              invalid_month: "Month is invalid"
+              invalid_day: "Day is invalid"
+              invalid_hour: "Hour is invalid"
+              invalid_min: "Minute is invalid"

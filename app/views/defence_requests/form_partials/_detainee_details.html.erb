@@ -20,19 +20,21 @@
 
 <div class="form-group">
   <%= f.label :detainee_age, t('age') %>
-  <%= f.text_field :detainee_age, class: 'age text-field'%>
+  <%= f.text_field :detainee_age, class: 'age text-field' %>
 </div>
 
 <div class="form-group">
   <fieldset class="inline">
-    <%= f.label :appropriate_adult, t('appropriate_adult_required') %>
-    <label class="block-label" for="defence_request_appropriate_adult_yes">
-      <%= f.radio_button :appropriate_adult, :yes, name: 'defence_request[appropriate_adult]' %>
-      <%= t('yes') %>
-    </label>
-    <label class="block-label" for="defence_request_appropriate_adult_no">
-      <%= f.radio_button :appropriate_adult, :no, name: 'defence_request[appropriate_adult]' %>
-      <%= t('no') %>
-    </label>
+    <%= f.fields_for :appropriate_adult, @defence_request_form.fields[:appropriate_adult] do |t| %>
+      <%= t.label :appropriate_adult, t('appropriate_adult_required') %>
+      <label class="block-label" for="defence_request_appropriate_adult_yes">
+        <%= t.radio_button :appropriate_adult, :yes, name: 'defence_request[appropriate_adult][appropriate_adult]' %>
+        <%= t('yes') %>
+      </label>
+      <label class="block-label" for="defence_request_appropriate_adult_no">
+        <%= t.radio_button :appropriate_adult, :no, name: 'defence_request[appropriate_adult][appropriate_adult]' %>
+        <%= t('no') %>
+      </label>
+    <% end %>
   </fieldset>
 </div>
