@@ -29,14 +29,13 @@ RSpec.feature "Solicitors managing defence requests" do
       end
 
       within ".time-of-arrival" do
-        fill_in 'defence_request_solicitor_time_of_arrival_day', with: '01'
-        fill_in 'defence_request_solicitor_time_of_arrival_month', with: '01'
-        fill_in 'defence_request_solicitor_time_of_arrival_year', with: '2001'
-        fill_in 'defence_request_solicitor_time_of_arrival_hour', with: '01'
-        fill_in 'defence_request_solicitor_time_of_arrival_min', with: '01'
-
-        click_button "Add Expected Time of Arrival"
+        fill_in 'defence_request[solicitor_time_of_arrival][day]', with: '01'
+        fill_in 'defence_request[solicitor_time_of_arrival][month]', with: '01'
+        fill_in 'defence_request[solicitor_time_of_arrival][year]', with: '2001'
+        fill_in 'defence_request[solicitor_time_of_arrival][hour]', with: '01'
+        fill_in 'defence_request[solicitor_time_of_arrival][min]', with: '01'
       end
+      click_button "Add Expected Time of Arrival"
 
       expect(page).to have_content("Defence Request successfully updated with solicitor estimated time of arrival")
 
