@@ -1,6 +1,8 @@
 class DefenceRequestsController < BaseController
 
   before_action :find_defence_request, :set_policy, only: [:show, :solicitor_time_of_arrival, :edit, :update, :feedback, :close, :open, :accept, :resend_details]
+  before_action :new_defence_request, only: [:new, :create]
+  before_action :new_defence_request_form, only: [:show, :new, :create, :edit, :update, :solicitor_time_of_arrival]
 
   before_action ->(c) { authorize defence_request, "#{c.action_name}?" }
 
@@ -11,19 +13,13 @@ class DefenceRequestsController < BaseController
   end
 
   def show
-    @defence_request_form ||= DefenceRequestForm.new @defence_request
   end
 
   def new
-    @defence_request = DefenceRequest.new
-    @defence_request_form = DefenceRequestForm.new @defence_request
     set_policy
-    authorize @defence_request
   end
 
   def create
-    @defence_request = DefenceRequest.new
-    @defence_request_form = DefenceRequestForm.new @defence_request
     set_policy
     if @defence_request_form.submit(defence_request_params)
       redirect_to(@defence_request_form.defence_request, notice: flash_message(:create, DefenceRequestForm))
@@ -33,11 +29,9 @@ class DefenceRequestsController < BaseController
   end
 
   def edit
-    @defence_request_form = DefenceRequestForm.new @defence_request
   end
 
   def update
-    @defence_request_form = DefenceRequestForm.new(@defence_request)
     if update_and_accept?
       update_and_accept
     else
@@ -110,7 +104,6 @@ class DefenceRequestsController < BaseController
   end
 
   def solicitor_time_of_arrival
-    @defence_request_form = DefenceRequestForm.new @defence_request
     if @defence_request_form.submit(defence_request_params)
       redirect_to(defence_request_path(@defence_request), notice: flash_message(:solicitor_time_of_arrival_added, DefenceRequest))
     else
@@ -158,6 +151,14 @@ class DefenceRequestsController < BaseController
 
   def defence_request
     @defence_request ||= DefenceRequest.new
+  end
+
+  def new_defence_request
+    @defence_request ||= DefenceRequest.new
+  end
+
+  def new_defence_request_form
+    @defence_request_form ||= DefenceRequestForm.new @defence_request
   end
 
   def defence_request_params
