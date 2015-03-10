@@ -3,17 +3,19 @@ class AppropriateAdultField
 
   attr_accessor :appropriate_adult
 
-  def initialize yes_or_no
-    @_value = yes_or_no == 'yes'
-  end
-
   def value
-    @_value
+    appropriate_adult == 'yes' ? true : false
   end
 
-  def self.from_persisted_value bool
-    str = bool ? 'yes' : 'no'
-    AppropriateAdultField.new str
+  def self.from_persisted_value value
+    if value == true
+      AppropriateAdultField.new({appropriate_adult: 'yes'})
+    else
+      AppropriateAdultField.new({appropriate_adult: 'no'})
+    end
   end
 
+  def present?
+    appropriate_adult.present?
+  end
 end

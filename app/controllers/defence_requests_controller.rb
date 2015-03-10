@@ -174,7 +174,7 @@ class DefenceRequestsController < BaseController
                                             :gender,
                                             :adult,
                                             { date_of_birth: %i[day month year] },
-                                            :appropriate_adult,
+                                            { appropriate_adult: :appropriate_adult } ,
                                             :custody_number,
                                             :allegations,
                                             :comments,

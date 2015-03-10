@@ -28,11 +28,11 @@
     <%= f.fields_for :appropriate_adult, @defence_request_form.fields[:appropriate_adult] do |t| %>
       <%= t.label :appropriate_adult, t('appropriate_adult_required') %>
       <label class="block-label" for="defence_request_appropriate_adult_yes">
-        <%= t.radio_button :appropriate_adult, :yes, name: 'defence_request[appropriate_adult]' %>
+        <%= t.radio_button :appropriate_adult, :yes, name: 'defence_request[appropriate_adult][appropriate_adult]' %>
         <%= t('yes') %>
       </label>
       <label class="block-label" for="defence_request_appropriate_adult_no">
-        <%= t.radio_button :appropriate_adult, :no, name: 'defence_request[appropriate_adult]' %>
+        <%= t.radio_button :appropriate_adult, :no, name: 'defence_request[appropriate_adult][appropriate_adult]' %>
         <%= t('no') %>
       </label>
     <% end %>
