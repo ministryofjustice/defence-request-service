@@ -63,4 +63,21 @@ RSpec.feature "Custody Center Operatives viewing their dashboard" do
       an_email_has_been_sent
     end
 
+    specify "are shown an error message if case details cannot be resent", js: true do
+      visit defence_requests_path
+
+      dr_details_can_not_be_resent_for_some_reason dr_accepted
+      within ".accepted-defence-request" do
+        click_button "Resend details"
+      end
+
+      page.execute_script "window.confirm"
+
+      expect(page).to have_content("Details were not sent")
+    end
+end
+
+def dr_details_can_not_be_resent_for_some_reason defence_request
+  expect(DefenceRequest).to receive(:find).with(defence_request.id.to_s) { defence_request }
+  expect(defence_request).to receive(:resend_details) { false }
 end

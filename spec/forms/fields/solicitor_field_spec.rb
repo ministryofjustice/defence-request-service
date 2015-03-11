@@ -49,12 +49,29 @@ RSpec.describe SolicitorField do
 
   context "methods" do
     context "value" do
-      context "solicitor exists" do
+      context "solicitor email exists" do
         let(:solicitor) { FactoryGirl.create(:solicitor_user)}
         subject { SolicitorField.new email: solicitor.email}
 
         it "returns a solicitor" do
           expect(subject.value).to eql solicitor
+        end
+      end
+
+      context "solicitor id exist, but email does not" do
+        let(:solicitor) { FactoryGirl.create(:solicitor_user)}
+        subject { SolicitorField.new solicitor_id: solicitor.id}
+
+        it "returns a solicitor" do
+          expect(subject.value).to eql solicitor
+        end
+      end
+
+      context "no attributes are provided" do
+        subject { SolicitorField.new }
+
+        it "return nil" do
+          expect(subject.value).to be_nil
         end
       end
 
