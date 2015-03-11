@@ -61,9 +61,7 @@ class DefenceRequestsController < BaseController
   end
 
   def open
-    @defence_request.open
-    associate_cco
-    if @defence_request.save
+    if @defence_request.open && associate_cco && @defence_request.save
       redirect_to(defence_requests_path, notice: flash_message(:open, DefenceRequest))
     else
       redirect_to(defence_requests_path, notice: flash_message(:failed_open, DefenceRequest))

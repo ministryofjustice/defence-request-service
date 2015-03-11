@@ -61,15 +61,23 @@ RSpec.feature "Call Center Operatives managing defence requests" do
         end
       end
 
-      #TODO - make better
       specify "can open the request" do
         visit root_path
         within "#defence_request_#{unopened_dr.id}" do
           click_button "Open"
         end
+        expect(page).to have_content "Defence Request successfully opened"
       end
 
-      #TODO - make better
+      specify "are shown a message if the request cannot be opened for some reason" do
+        visit root_path
+        dr_can_not_be_opened_for_some_reason unopened_dr
+        within "#defence_request_#{unopened_dr.id}" do
+          click_button "Open"
+        end
+        expect(page).to have_content "Defence Request was not opened"
+      end
+
       specify "cannot mark the request as accepted" do
         visit root_path
         within ".created-defence-request" do
@@ -158,6 +166,16 @@ RSpec.feature "Call Center Operatives managing defence requests" do
             expect(page).to have_content(opened_dr.solicitor_name)
           end
         end
+
+        specify "are shown an error if the request cannot be accepted" do
+          opened_dr.update(dscc_number: "012345")
+          visit root_path
+          dr_can_not_be_accepted_for_some_reason opened_dr
+          within "#defence_request_#{opened_dr.id}" do
+            click_button "Accepted"
+          end
+          expect(page).to have_content("Defence Request was not marked as accepted")
+        end
       end
 
       context "that have the \"duty\" solicitor type" do
@@ -235,7 +253,13 @@ RSpec.feature "Call Center Operatives managing defence requests" do
   end
 end
 
+def dr_can_not_be_opened_for_some_reason defence_request
+  expect(DefenceRequest).to receive(:find).with(defence_request.id.to_s) { defence_request }
+  expect(defence_request).to receive(:open) { false }
+end
 
-
-
+def dr_can_not_be_accepted_for_some_reason defence_request
+  expect(DefenceRequest).to receive(:find).with(defence_request.id.to_s) { defence_request }
+  expect(defence_request).to receive(:accept) { false }
+end
 

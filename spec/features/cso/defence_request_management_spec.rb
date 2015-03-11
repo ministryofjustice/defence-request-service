@@ -177,6 +177,14 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
       choose "Own"
       expect(page).to have_field "q", with: ""
     end
+
+    specify "are shown some errors if the request cannot be created due to invalid fields" do
+      visit root_path
+      click_link "New Defence Request"
+      click_button "Create Defence Request"
+      expect(page).to have_content "You need to fix the errors on this page before continuing"
+      expect(page).to have_content "Detainee name: can't be blank"
+    end
   end
 
   context "with requests they are assigned to" do
@@ -275,6 +283,20 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           expect(page).to have_content("Annie")
           expect(page).to have_content("Nother")
         end
+      end
+
+      specify "are shown some errors if the request cannot be updated due to invalid fields" do
+        visit root_path
+        within "#defence_request_#{dr_created.id}" do
+          click_link "Edit"
+        end
+        within ".detainee" do
+          fill_in "Age", with: "MOOOSE ON THE LOOOSE!?!"
+        end
+        click_button "Update Defence Request"
+
+        expect(page).to have_content "You need to fix the errors on this page before continuing"
+        expect(page).to have_content "Detainee age: is not a number"
       end
     end
 
