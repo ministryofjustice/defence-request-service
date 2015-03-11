@@ -60,5 +60,23 @@ RSpec.describe AppropriateAdultField do
         end
       end
     end
+
+    context "present?" do
+      context "no value specified" do
+        subject { AppropriateAdultField.new }
+
+        it "returns false" do
+          expect(subject).to_not be_present
+        end
+      end
+
+      context "some fields" do
+        subject { AppropriateAdultField.new appropriate_adult: "yes" }
+
+        it "returns true" do
+          expect(subject).to be_present
+        end
+      end
+    end
   end
 end
