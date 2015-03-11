@@ -80,8 +80,7 @@ class DefenceRequestsController < BaseController
   end
 
   def accept
-    @defence_request.accept
-    if @defence_request.save
+    if @defence_request.accept && @defence_request.save
       redirect_to(defence_requests_path, notice: flash_message(:accept, DefenceRequest))
     else
       redirect_to(defence_requests_path, notice: flash_message(:failed_accept, DefenceRequest))

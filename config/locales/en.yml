@@ -98,7 +98,7 @@ en:
   year: "Year"
 
   models:
-    accept: "%{model} was not marked as accepted"
+    accept: "%{model} was marked as accepted"
     close: "%{model} successfully closed"
     create: "%{model} successfully created"
     destroy: "%{model} successfully deleted"
@@ -114,7 +114,6 @@ en:
     update: "%{model} successfully updated"
     updated_and_updated: "%{model} successfully updated and marked as accepted"
     solicitor_time_of_arrival_added: "%{model} successfully updated with solicitor estimated time of arrival"
-    solicitor_time_of_arrival_not_added: "%{model} not updated with solicitor estimated time of arrival"
 
   helpers:
     submit:

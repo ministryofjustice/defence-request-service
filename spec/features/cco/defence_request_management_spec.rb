@@ -165,6 +165,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
           within ".accepted-defence-request" do
             expect(page).to have_content(opened_dr.solicitor_name)
           end
+          expect(page).to have_content("Defence Request was marked as accepted")
         end
 
         specify "are shown an error if the request cannot be accepted" do

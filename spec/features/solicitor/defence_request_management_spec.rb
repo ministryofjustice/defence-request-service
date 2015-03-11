@@ -43,6 +43,29 @@ RSpec.feature "Solicitors managing defence requests" do
         expect(page).to have_content("1 January 2001 - 01:01")
       end
     end
+
+    specify "are shown a message if the time of arrival cannot be updated due to errors" do
+      visit defence_requests_path
+      within ".accepted-defence-request" do
+        click_link("Show")
+      end
+
+      within ".time-of-arrival" do
+        fill_in 'defence_request[solicitor_time_of_arrival][day]', with: 'I'
+        fill_in 'defence_request[solicitor_time_of_arrival][month]', with: 'AM'
+        fill_in 'defence_request[solicitor_time_of_arrival][year]', with: 'VERY'
+        fill_in 'defence_request[solicitor_time_of_arrival][hour]', with: 'VERY'
+        fill_in 'defence_request[solicitor_time_of_arrival][min]', with: 'BROKEN'
+      end
+      click_button "Add Expected Time of Arrival"
+
+      expect(page).to have_content(["Invalid Date or Time",
+                                   "Day is not a number",
+                                   "Month is not a number",
+                                   "Year is not a number",
+                                   "Hour is not a number",
+                                   "Min is not a number"].join(", "))
+    end
   end
 
   context "cases they are were assigned to, that are closed" do
