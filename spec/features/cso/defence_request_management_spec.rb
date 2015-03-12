@@ -295,6 +295,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
         end
         click_button "Update Defence Request"
 
+        expect(page).to have_field "Age", with: "MOOOSE ON THE LOOOSE!?!"
         expect(page).to have_content "You need to fix the errors on this page before continuing"
         expect(page).to have_content "Detainee age: is not a number"
       end
