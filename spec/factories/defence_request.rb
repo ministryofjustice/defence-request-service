@@ -28,8 +28,8 @@ FactoryGirl.define do
     phone_number ''
   end
 
-  trait :created do
-    state 'created'
+  trait :draft do
+    state 'draft'
   end
 
   trait :opened do

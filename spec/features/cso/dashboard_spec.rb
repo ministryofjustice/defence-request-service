@@ -4,7 +4,7 @@ RSpec.feature "Custody Suite Officers viewing their dashboard" do
   include ActiveJobHelper
   include DashboardHelper
 
-  let!(:dr_created) { create(:defence_request, :created) }
+  let!(:dr_draft) { create(:defence_request, :draft) }
   let!(:dr_open1) { create(:defence_request, :opened) }
   let!(:dr_open2) { create(:defence_request, :opened) }
   let!(:dr_accepted) { create(:defence_request, :accepted) }
@@ -16,11 +16,11 @@ RSpec.feature "Custody Suite Officers viewing their dashboard" do
   specify "can see all active defence requests in chronological order" do
     visit defence_requests_path
 
-    within "#defence_request_#{dr_created.id}" do
-      expect(page).to have_content(dr_created.solicitor_name)
+    within "#defence_request_#{dr_draft.id}" do
+      expect(page).to have_content(dr_draft.solicitor_name)
     end
 
-    within "#defence_request_#{dr_created.id}" do
+    within "#defence_request_#{dr_draft.id}" do
       expect(element_order_correct?("defence_request_#{dr_open1.id}", "defence_request_#{dr_open2.id}")).to eq true
     end
   end
@@ -28,20 +28,20 @@ RSpec.feature "Custody Suite Officers viewing their dashboard" do
   specify "can see the dashboard with refreshed data after a period", js: true, short_dashboard_refresh: true do
     visit defence_requests_path
 
-    within "#defence_request_#{dr_created.id}" do
-      expect(page).to have_content(dr_created.solicitor_name)
+    within "#defence_request_#{dr_draft.id}" do
+      expect(page).to have_content(dr_draft.solicitor_name)
     end
 
     within "#defence_request_#{dr_open1.id}" do
       expect(page).to have_content(dr_open1.solicitor_name)
     end
 
-    dr_created.update(solicitor_name: "New Solicitor")
+    dr_draft.update(solicitor_name: "New Solicitor")
     dr_open1.update(solicitor_name: "New Solicitor2")
 
     wait_for_dashboard_refresh
 
-    within "#defence_request_#{dr_created.id}" do
+    within "#defence_request_#{dr_draft.id}" do
       expect(page).to have_content("New Solicitor")
     end
 

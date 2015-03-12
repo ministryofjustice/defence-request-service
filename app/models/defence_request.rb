@@ -11,14 +11,14 @@ class DefenceRequest < ActiveRecord::Base
   scope :has_solicitor, ->(solicitor) { where(solicitor: solicitor) }
 
   state_machine auto_scopes: true do
-    state :created # first one is initial state
+    state :draft # first one is initial state
     state :opened
     state :accepted
     state :closed
     state :finished
 
     event :open do
-      transitions from: [:created], to: :opened
+      transitions from: [:draft], to: :opened
     end
 
     event :accept, success: :send_solicitor_case_details do
@@ -30,7 +30,7 @@ class DefenceRequest < ActiveRecord::Base
     end
 
     event :close do
-      transitions from: [:created, :opened, :accepted], to: :closed
+      transitions from: [:draft, :opened, :accepted], to: :closed
     end
   end
 

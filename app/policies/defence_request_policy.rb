@@ -67,19 +67,19 @@ class DefenceRequestPolicy < ApplicationPolicy
   end
 
   def interview_start_time_edit?
-    cso && !record.new_record? && record.created?
+    cso && !record.new_record? && record.draft?
   end
 
   def case_details_edit?
-    edit? && (cso || (!record.created? && user_is_the_assigned_cco))
+    edit? && (cso || (!record.draft? && user_is_the_assigned_cco))
   end
 
   def detainee_details_edit?
-    edit? && (cso || (!record.created? && user_is_the_assigned_cco))
+    edit? && (cso || (!record.draft? && user_is_the_assigned_cco))
   end
 
   def solicitor_details_edit?
-    edit? && ((cso && record.created?) || (record.opened? && user_is_the_assigned_cco))
+    edit? && ((cso && record.draft?) || (record.opened? && user_is_the_assigned_cco))
   end
 
   def open?
@@ -94,7 +94,7 @@ class DefenceRequestPolicy < ApplicationPolicy
     cco || cso
   end
 
-  def view_created_requests?
+  def view_draft_requests?
     cco || cso
   end
 

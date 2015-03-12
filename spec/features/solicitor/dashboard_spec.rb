@@ -7,7 +7,7 @@ RSpec.feature "Solicitors viewing their dashboard" do
   let!(:other_solicitor_dr) { create(:defence_request, :accepted) }
   let!(:other_solicitor) { create(:solicitor_user) }
   let!(:solicitor_dr_not_accepted) { create(:defence_request, :opened, dscc_number: "98765", solicitor: solicitor_dr.solicitor) }
-  let!(:created_dr) { create(:defence_request, :created, dscc_number: "98765", solicitor: solicitor_dr.solicitor) }
+  let!(:draft_dr) { create(:defence_request, :draft, dscc_number: "98765", solicitor: solicitor_dr.solicitor) }
 
   before :each do
     login_as_user(solicitor_dr.solicitor.email)
@@ -31,7 +31,7 @@ RSpec.feature "Solicitors viewing their dashboard" do
         expect(page).to have_content(solicitor_dr.detainee_name)
         expect(page).to_not have_content(solicitor_dr_not_accepted.detainee_name)
       end
-      expect(page).to_not have_selector(".created-defence-request")
+      expect(page).to_not have_selector(".draft-defence-request")
       expect(page).to_not have_selector(".open-defence-request")
 
       wait_for_dashboard_refresh
@@ -41,7 +41,7 @@ RSpec.feature "Solicitors viewing their dashboard" do
         expect(page).to_not have_content(solicitor_dr_not_accepted.detainee_name)
       end
 
-      expect(page).to_not have_selector(".created-defence-request")
+      expect(page).to_not have_selector(".draft-defence-request")
       expect(page).to_not have_selector(".open-defence-request")
     end
   end

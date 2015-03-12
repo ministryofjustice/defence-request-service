@@ -8,8 +8,8 @@
 <table class="dashboard">
   <%= render 'defence_requests_table_head' %>
   <tbody>
-    <% if policy(:defence_request).view_created_requests? %>
-      <%= render 'dashboard', requests: @created_requests, type: 'created' %>
+    <% if policy(:defence_request).view_draft_requests? %>
+      <%= render 'dashboard', requests: @draft_requests, type: 'draft' %>
     <% end %>
     <% if policy(:defence_request).view_open_requests? %>
       <% if policy(:defence_request).index? %>
