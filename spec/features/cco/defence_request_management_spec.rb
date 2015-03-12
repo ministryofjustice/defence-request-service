@@ -80,7 +80,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
 
       specify "cannot mark the request as accepted" do
         visit root_path
-        within ".created-defence-request" do
+        within ".draft-defence-request" do
           expect(page).to_not have_button "Accepted"
         end
         within "#defence_request_#{unopened_dr.id}" do

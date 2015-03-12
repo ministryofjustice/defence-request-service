@@ -33,13 +33,13 @@ RSpec.describe DefenceRequest, type: :model do
 
   describe 'states' do
     it 'allows for correct transitions' do
-      expect(DefenceRequest.available_states).to eq [:accepted, :closed, :created, :finished, :opened]
+      expect(DefenceRequest.available_states).to eq [:accepted, :closed, :draft, :finished, :opened]
     end
 
-    describe 'created' do
-      subject { FactoryGirl.create(:defence_request, :created) }
+    describe 'draft' do
+      subject { FactoryGirl.create(:defence_request, :draft) }
 
-      specify { expect(subject.current_state).to eql :created }
+      specify { expect(subject.current_state).to eql :draft }
 
       describe 'possible transitions' do
         specify { expect{ subject.open }.to_not raise_error }
