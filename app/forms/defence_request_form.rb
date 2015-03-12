@@ -1,7 +1,15 @@
 class DefenceRequestForm
   include ActiveModel::Model
+  extend Forwardable
 
   attr_reader :defence_request, :fields
+
+  DELEGATED_ATTRIBUTES = :solicitor_type, :solicitor_name, :solicitor_firm, :phone_number, :detainee_name,
+           :gender, :detainee_age, :allegations, :scheme, :custody_number, :comments, :feedback
+
+  DELEGATED_ATTRIBUTES.each do |attr_name|
+    def_delegator :@defence_request, "#{attr_name}_before_type_cast", attr_name
+  end
 
   def self.model_name
     ActiveModel::Name.new(self, nil, 'DefenceRequest')
@@ -21,10 +29,6 @@ class DefenceRequestForm
   def register_field field_name, klass, opts={}
     @fields[field_name] = klass.from_persisted_value @defence_request.send field_name
   end
-
-  delegate :solicitor_type, :solicitor_name, :solicitor_firm, :phone_number, :detainee_name,
-           :gender, :detainee_age, :allegations, :scheme, :custody_number, :comments, :feedback,
-           to: :defence_request
 
   def submit(params)
     @fields.select!{ |k, v| params.include?(k) }
