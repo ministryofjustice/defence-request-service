@@ -13,6 +13,8 @@ gem 'pg'
 gem 'pundit', '~> 0.3.0'
 gem 'rails', '4.2.0'
 gem 'rails_config', '~> 0.4.2'
+gem 'lograge'
+gem 'logstash-event'
 gem 'sass-rails', '~> 5.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'sucker_punch', '~> 1.0'
