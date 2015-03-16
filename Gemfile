@@ -1,10 +1,11 @@
 source 'https://rubygems.org'
 ruby '2.1.5'
 
+gem 'dotenv-rails', '~> 2.0.0', :require => 'dotenv/rails-now'
+
 gem 'audited-activerecord', '~> 4.0.0'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'devise', '~> 3.4.1'
-gem 'dotenv-rails', '~> 1.0.2'
 gem 'faker', '~> 1.4.3'
 gem 'httparty', '~> 0.13.3'
 gem 'jbuilder', '~> 2.0'

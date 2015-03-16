@@ -44,7 +44,7 @@ class DefenceRequestsController < BaseController
 
   def solicitors_search
     query_string = URI.escape(params[:q])
-    search_url = URI.parse "#{Settings.dsds.solicitor_search_domain}/search/?q=#{query_string}"
+    search_url = URI.parse "#{Settings.dsds.solicitor_search_url_prefix}/search/?q=#{query_string}"
     search_json = JSON.parse(HTTParty.post(search_url).body)
 
     # Below is evil, this is a quick hack to search for solicitors and firms in the same box until we figure out how

@@ -1,20 +1,19 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  # For details on connection pooling, see rails configuration guide
-  # http://guides.rubyonrails.org/configuring.html#database-pooling
-  pool: 5
+  # CircleCI requires that we use double-quotes here, otherwise
+  # the command CircleCI uses to create database.yml fails.
+  database: <%= ENV.fetch("DEFENCE_SOLICITOR_DATABASE_DATABASE") %>
+  host: <%= ENV.fetch("DEFENCE_SOLICITOR_DATABASE_HOST") %>
+  password: <%= ENV.fetch("DEFENCE_SOLICITOR_DATABASE_PASSWORD") %>
+  username: <%= ENV.fetch("DEFENCE_SOLICITOR_DATABASE_USERNAME") %>
+  pool: <%= ENV.fetch("DEFENCE_SOLICITOR_DATABASE_POOL", 5) %>
 
 development:
   <<: *default
-  database: defence-solicitor_development
 
 test:
   <<: *default
-  database: defence-solicitor_test
 
 production:
   <<: *default
-  database: defence-solicitor_production
-  username: defence-solicitor
-  password: <%= ENV['DEFENCE-SOLICITOR_DATABASE_PASSWORD'] %>
