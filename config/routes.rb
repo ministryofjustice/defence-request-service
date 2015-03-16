@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     member do
       get 'close'
       patch 'close' => 'defence_requests#feedback', as: 'close_feedback'
+      put 'queue'
       put 'open'
       patch 'accept' => 'defence_requests#accept'
       post 'resend_details'

@@ -9,16 +9,22 @@ class DefenceRequest < ActiveRecord::Base
   after_update :notify_interview_start_change, if: :interview_start_time_changed?
 
   scope :has_solicitor, ->(solicitor) { where(solicitor: solicitor) }
+  scope :not_draft, -> { where.not(state: 'draft') }
 
   state_machine auto_scopes: true do
     state :draft # first one is initial state
+    state :queued
     state :opened
     state :accepted
     state :closed
     state :finished
 
+    event :queue do
+      transitions from: [:draft], to: :queued
+    end
+
     event :open do
-      transitions from: [:draft], to: :opened
+      transitions from: [:queued], to: :opened
     end
 
     event :accept, success: :send_solicitor_case_details do

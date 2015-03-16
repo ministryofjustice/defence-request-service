@@ -32,6 +32,10 @@ FactoryGirl.define do
     state 'draft'
   end
 
+  trait :queued do
+    state 'queued'
+  end
+
   trait :opened do
     state 'opened'
     association :cco, factory: :cco_user

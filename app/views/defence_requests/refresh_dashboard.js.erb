@@ -1,4 +1,5 @@
 $('.dashboard tbody').html('');
-$('.dashboard tbody').append("<%= escape_javascript(render 'defence_requests_table_body', requests: @draft_requests, type: 'draft') if policy(:defence_request).view_draft_requests? %>");
-$('.dashboard tbody').append("<%= escape_javascript(render 'defence_requests_table_body', requests: @open_requests, type: 'open') if policy(:defence_request).view_open_requests? %>");
-$('.dashboard tbody').append("<%= escape_javascript(render 'defence_requests_table_body', requests: @accepted_requests, type: 'accepted') if policy(:defence_request).view_accepted_requests? %>");
+$('.dashboard tbody').append("<%= escape_javascript(render 'defence_requests_table_body', requests: @draft_requests, type: 'draft') %> ");
+$('.dashboard tbody').append("<%= escape_javascript(render 'defence_requests_table_body', requests: @queued_requests, type: 'queued') %> ");
+$('.dashboard tbody').append("<%= escape_javascript(render 'defence_requests_table_body', requests: @open_requests, type: 'open') %>");
+$('.dashboard tbody').append("<%= escape_javascript(render 'defence_requests_table_body', requests: @accepted_requests, type: 'accepted') %>");

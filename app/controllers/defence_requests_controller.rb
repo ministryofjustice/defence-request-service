@@ -1,6 +1,6 @@
 class DefenceRequestsController < BaseController
 
-  before_action :find_defence_request, :set_policy, only: [:show, :solicitor_time_of_arrival, :edit, :update, :feedback, :close, :open, :accept, :resend_details]
+  before_action :find_defence_request, :set_policy, except: [:index, :new, :create, :refresh_dashboard, :solicitors_search]
   before_action :new_defence_request, only: [:new, :create]
   before_action :new_defence_request_form, only: [:show, :new, :create, :edit, :update, :solicitor_time_of_arrival]
   before_action :get_defence_request_scopes, only: [:index, :refresh_dashboard]
@@ -103,11 +103,20 @@ class DefenceRequestsController < BaseController
     end
   end
 
+  def queue
+    if @defence_request.queue && @defence_request.save
+      redirect_to(defence_requests_path, notice: flash_message(:sent_for_processing, DefenceRequest))
+    else
+      redirect_to(defence_requests_path, notice: flash_message(:failed_send_for_processing, DefenceRequest))
+    end
+  end
+
   private
 
   def get_defence_request_scopes
-    @open_requests = policy_scope(DefenceRequest).opened.order(created_at: :asc)
     @draft_requests = policy_scope(DefenceRequest).draft.order(created_at: :asc)
+    @queued_requests = policy_scope(DefenceRequest).queued.order(created_at: :asc)
+    @open_requests = policy_scope(DefenceRequest).opened.order(created_at: :asc)
     @accepted_requests = policy_scope(DefenceRequest).accepted.order(created_at: :asc)
   end
 
