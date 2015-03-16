@@ -1,0 +1,24 @@
+FROM ministryofjustice/ruby:2.1.5-webapp-onbuild
+
+# Install required items for the build
+# RUN apt-get update
+# RUN apt-get install -y ...
+
+###############################################################################
+# Runit setup
+###############################################################################
+# Runit requires inittab
+RUN touch /etc/inittab
+
+# Add application server
+COPY ./docker/runit/application-server/run /etc/service/application-server/run
+RUN chmod +x /etc/service/application-server
+
+ENV RAILS_ENV production
+ENV UNICORN_PORT 3000
+
+EXPOSE $UNICORN_PORT
+
+RUN ["bin/rake", "assets:precompile"]
+
+CMD ["/usr/bin/runsvdir", "-P", "/etc/service"]
