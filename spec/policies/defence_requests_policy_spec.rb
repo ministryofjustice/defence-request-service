@@ -243,12 +243,12 @@ RSpec.describe DefenceRequestPolicy do
     end
 
     describe "scope" do
-      let (:defreq) { FactoryGirl.create(:defence_request) }
-      let (:defreq2) { FactoryGirl.create(:defence_request) }
+      let (:draft_dr) { FactoryGirl.create(:defence_request, :draft, solicitor: user) }
+      let (:accepted_dr) { FactoryGirl.create(:defence_request, :accepted) }
+      let (:accepted_and_assigned_dr) { FactoryGirl.create(:defence_request, :accepted, solicitor: user) }
 
-      it "returns empty list" do
-        defreq.update(solicitor: user)
-        expect(Pundit.policy_scope(user, DefenceRequest)).to eq [defreq]
+      it "returns DRs that are assigned to the solicitor and have been accepted" do
+        expect(Pundit.policy_scope(user, DefenceRequest)).to eq [accepted_and_assigned_dr]
       end
     end
   end

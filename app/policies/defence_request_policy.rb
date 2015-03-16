@@ -11,9 +11,9 @@ class DefenceRequestPolicy < ApplicationPolicy
       if user.cso?
         scope.all
       elsif user.cco?
-        scope.all
+        scope.not_draft
       elsif user.solicitor?
-        scope.has_solicitor(user)
+        scope.has_solicitor(user).accepted
       end
     end
   end
@@ -88,18 +88,6 @@ class DefenceRequestPolicy < ApplicationPolicy
 
   def accept?
     cco && record.can_execute_accept?
-  end
-
-  def view_open_requests?
-    cco || cso
-  end
-
-  def view_draft_requests?
-    cco || cso
-  end
-
-  def view_accepted_requests?
-    cco || cso || solicitor
   end
 
   def resend_details?

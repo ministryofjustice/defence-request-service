@@ -106,8 +106,9 @@ class DefenceRequestsController < BaseController
   private
 
   def get_defence_request_scopes
-    @open_requests = policy_scope(DefenceRequest).opened.order(created_at: :asc)
     @draft_requests = policy_scope(DefenceRequest).draft.order(created_at: :asc)
+    @queued_requests = policy_scope(DefenceRequest).queued.order(created_at: :asc)
+    @open_requests = policy_scope(DefenceRequest).opened.order(created_at: :asc)
     @accepted_requests = policy_scope(DefenceRequest).accepted.order(created_at: :asc)
   end
 

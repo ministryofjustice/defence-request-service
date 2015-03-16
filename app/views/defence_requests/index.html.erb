@@ -8,18 +8,11 @@
 <table class="dashboard">
   <%= render 'defence_requests_table_head' %>
   <tbody>
-    <% if policy(:defence_request).view_draft_requests? %>
+    <% if policy(:defence_request).index? %>
       <%= render 'dashboard', requests: @draft_requests, type: 'draft' %>
-    <% end %>
-    <% if policy(:defence_request).view_open_requests? %>
-      <% if policy(:defence_request).index? %>
-        <%= render 'dashboard', requests: @open_requests, type: 'open' %>
-      <% end %>
-    <% end %>
-    <% if policy(:defence_request).view_accepted_requests? %>
-      <% if policy(:defence_request).index? %>
-        <%= render 'dashboard', requests: @accepted_requests, type: 'accepted' %>
-      <% end %>
+      <%= render 'dashboard', requests: @queued_requests, type: 'queued' %>
+      <%= render 'dashboard', requests: @open_requests, type: 'open' %>
+      <%= render 'dashboard', requests: @accepted_requests, type: 'accepted' %>
     <% end %>
   </tbody>
 </table>
