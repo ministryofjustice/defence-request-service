@@ -1,6 +1,6 @@
 class DefenceRequestsController < BaseController
 
-  before_action :find_defence_request, :set_policy, only: [:show, :solicitor_time_of_arrival, :edit, :update, :feedback, :close, :open, :accept, :resend_details, :queue]
+  before_action :find_defence_request, :set_policy, except: [:index, :new, :create, :refresh_dashboard, :solicitors_search]
   before_action :new_defence_request, only: [:new, :create]
   before_action :new_defence_request_form, only: [:show, :new, :create, :edit, :update, :solicitor_time_of_arrival]
   before_action :get_defence_request_scopes, only: [:index, :refresh_dashboard]
