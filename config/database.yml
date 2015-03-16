@@ -3,10 +3,10 @@ default: &default
   encoding: unicode
   # CircleCI requires that we use double-quotes here, otherwise
   # the command CircleCI uses to create database.yml fails.
-  database: <%= ENV.fetch("DEFENCE_SOLICITOR_DATABASE_DATABASE") %>
-  host: <%= ENV.fetch("DEFENCE_SOLICITOR_DATABASE_HOST") %>
-  password: <%= ENV.fetch("DEFENCE_SOLICITOR_DATABASE_PASSWORD") %>
-  username: <%= ENV.fetch("DEFENCE_SOLICITOR_DATABASE_USERNAME") %>
+  database: <%= ENV.fetch("DEFENCE_SOLICITOR_DATABASE_DATABASE", nil) %>
+  host: <%= ENV.fetch("DEFENCE_SOLICITOR_DATABASE_HOST", nil) %>
+  password: <%= ENV.fetch("DEFENCE_SOLICITOR_DATABASE_PASSWORD", nil) %>
+  username: <%= ENV.fetch("DEFENCE_SOLICITOR_DATABASE_USERNAME", nil) %>
   pool: <%= ENV.fetch("DEFENCE_SOLICITOR_DATABASE_POOL", 5) %>
 
 development:
