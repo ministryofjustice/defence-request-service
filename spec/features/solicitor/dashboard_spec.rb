@@ -6,7 +6,7 @@ RSpec.feature "Solicitors viewing their dashboard" do
   let!(:solicitor_dr) { create(:defence_request, :accepted) }
   let!(:other_solicitor_dr) { create(:defence_request, :accepted) }
   let!(:other_solicitor) { create(:solicitor_user) }
-  let!(:solicitor_dr_not_accepted) { create(:defence_request, :opened, dscc_number: "98765", solicitor: solicitor_dr.solicitor) }
+  let!(:solicitor_dr_not_accepted) { create(:defence_request, :acknowledged, dscc_number: "98765", solicitor: solicitor_dr.solicitor) }
   let!(:draft_dr) { create(:defence_request, :draft, dscc_number: "98765", solicitor: solicitor_dr.solicitor) }
 
   before :each do
@@ -32,7 +32,7 @@ RSpec.feature "Solicitors viewing their dashboard" do
         expect(page).to_not have_content(solicitor_dr_not_accepted.detainee_name)
       end
       expect(page).to_not have_selector(".draft-defence-request")
-      expect(page).to_not have_selector(".open-defence-request")
+      expect(page).to_not have_selector(".acknowledged-defence-request")
 
       wait_for_dashboard_refresh
 
@@ -42,7 +42,7 @@ RSpec.feature "Solicitors viewing their dashboard" do
       end
 
       expect(page).to_not have_selector(".draft-defence-request")
-      expect(page).to_not have_selector(".open-defence-request")
+      expect(page).to_not have_selector(".acknowledged-defence-request")
     end
   end
 end

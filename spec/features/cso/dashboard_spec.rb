@@ -5,8 +5,8 @@ RSpec.feature "Custody Suite Officers viewing their dashboard" do
   include DashboardHelper
 
   let!(:dr_draft) { create(:defence_request, :draft) }
-  let!(:dr_open1) { create(:defence_request, :opened) }
-  let!(:dr_open2) { create(:defence_request, :opened) }
+  let!(:dr_ack1) { create(:defence_request, :acknowledged) }
+  let!(:dr_ack2) { create(:defence_request, :acknowledged) }
   let!(:dr_accepted) { create(:defence_request, :accepted) }
 
   before :each do
@@ -21,7 +21,7 @@ RSpec.feature "Custody Suite Officers viewing their dashboard" do
     end
 
     within "#defence_request_#{dr_draft.id}" do
-      expect(element_order_correct?("defence_request_#{dr_open1.id}", "defence_request_#{dr_open2.id}")).to eq true
+      expect(element_order_correct?("defence_request_#{dr_ack1.id}", "defence_request_#{dr_ack2.id}")).to eq true
     end
   end
 
@@ -32,12 +32,12 @@ RSpec.feature "Custody Suite Officers viewing their dashboard" do
       expect(page).to have_content(dr_draft.solicitor_name)
     end
 
-    within "#defence_request_#{dr_open1.id}" do
-      expect(page).to have_content(dr_open1.solicitor_name)
+    within "#defence_request_#{dr_ack1.id}" do
+      expect(page).to have_content(dr_ack1.solicitor_name)
     end
 
     dr_draft.update(solicitor_name: "New Solicitor")
-    dr_open1.update(solicitor_name: "New Solicitor2")
+    dr_ack1.update(solicitor_name: "New Solicitor2")
 
     wait_for_dashboard_refresh
 
@@ -45,7 +45,7 @@ RSpec.feature "Custody Suite Officers viewing their dashboard" do
       expect(page).to have_content("New Solicitor")
     end
 
-    within "#defence_request_#{dr_open1.id}" do
+    within "#defence_request_#{dr_ack1.id}" do
       expect(page).to have_content("New Solicitor2")
     end
   end

@@ -63,7 +63,7 @@ class DefenceRequestPolicy < ApplicationPolicy
   end
 
   def dscc_number_edit?
-    record.opened? && user_is_the_assigned_cco
+    record.acknowledged? && user_is_the_assigned_cco
   end
 
   def interview_start_time_edit?
@@ -79,11 +79,11 @@ class DefenceRequestPolicy < ApplicationPolicy
   end
 
   def solicitor_details_edit?
-    edit? && ((cso && record.draft?) || (record.opened? && user_is_the_assigned_cco))
+    edit? && ((cso && record.draft?) || (record.acknowledged? && user_is_the_assigned_cco))
   end
 
-  def open?
-    cco && record.can_execute_open?
+  def acknowledge?
+    cco && record.can_execute_acknowledge?
   end
 
   def accept?

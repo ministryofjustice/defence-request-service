@@ -33,7 +33,7 @@ RSpec.describe DefenceRequest, type: :model do
 
   describe 'states' do
     it 'allows for correct transitions' do
-      expect(DefenceRequest.available_states).to eq [:accepted, :closed, :draft, :finished, :opened, :queued]
+      expect(DefenceRequest.available_states).to eq [:accepted, :acknowledged, :closed, :draft, :finished, :queued]
     end
 
     describe 'draft' do
@@ -49,19 +49,19 @@ RSpec.describe DefenceRequest, type: :model do
       end
 
       describe 'impossible transitions' do
-        specify { expect(subject.can_execute_open?).to eq false }
+        specify { expect(subject.can_execute_acknowledge?).to eq false }
         specify { expect(subject.can_execute_accept?).to eq false }
         specify { expect(subject.can_execute_finish?).to eq false }
       end
     end
 
-    describe 'opened' do
-      subject { FactoryGirl.create(:defence_request, :opened) }
+    describe 'acknowledged' do
+      subject { FactoryGirl.create(:defence_request, :acknowledged) }
 
-      specify { expect(subject.current_state).to eql :opened }
+      specify { expect(subject.current_state).to eql :acknowledged }
 
       context 'with dscc number' do
-        subject { FactoryGirl.create(:defence_request, :opened, :with_dscc_number) }
+        subject { FactoryGirl.create(:defence_request, :acknowledged, :with_dscc_number) }
         specify { expect{ subject.accept }.to_not raise_error }
         specify { expect(subject.can_execute_accept?).to eq true }
       end
@@ -75,7 +75,7 @@ RSpec.describe DefenceRequest, type: :model do
 
       describe 'disallowed transitions' do
         specify { expect(subject.can_execute_queue?).to eq false }
-        specify { expect(subject.can_execute_open?).to eq false }
+        specify { expect(subject.can_execute_acknowledge?).to eq false }
         specify { expect(subject.can_execute_accept?).to eq false }
       end
     end
@@ -94,7 +94,7 @@ RSpec.describe DefenceRequest, type: :model do
 
       describe 'impossible transitions' do
         specify { expect(subject.can_execute_queue?).to eq false }
-        specify { expect(subject.can_execute_open?).to eq false }
+        specify { expect(subject.can_execute_acknowledge?).to eq false }
         specify { expect(subject.can_execute_accept?).to eq false }
       end
     end
@@ -106,7 +106,7 @@ RSpec.describe DefenceRequest, type: :model do
 
       describe 'impossible transitions' do
         specify { expect(subject.can_execute_queue?).to eq false }
-        specify { expect(subject.can_execute_open?).to eq false }
+        specify { expect(subject.can_execute_acknowledge?).to eq false }
         specify { expect(subject.can_execute_accept?).to eq false }
         specify { expect(subject.can_execute_close?).to eq false }
         specify { expect(subject.can_execute_finish?).to eq false }
@@ -120,7 +120,7 @@ RSpec.describe DefenceRequest, type: :model do
 
       describe 'impossible transitions' do
         specify { expect(subject.can_execute_queue?).to eq false }
-        specify { expect(subject.can_execute_open?).to eq false }
+        specify { expect(subject.can_execute_acknowledge?).to eq false }
         specify { expect(subject.can_execute_accept?).to eq false }
         specify { expect(subject.can_execute_close?).to eq false }
         specify { expect(subject.can_execute_finish?).to eq false }
@@ -131,7 +131,7 @@ RSpec.describe DefenceRequest, type: :model do
   describe 'callbacks' do
     context 'marked as accepted' do
       before do
-        @dr_with_dscc = FactoryGirl.create(:defence_request, :with_dscc_number, :opened)
+        @dr_with_dscc = FactoryGirl.create(:defence_request, :with_dscc_number, :acknowledged)
       end
 
       it 'notifies the solicitor'  do

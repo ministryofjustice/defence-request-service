@@ -1,5 +1,5 @@
 $('.dashboard tbody').html('');
 $('.dashboard tbody').append("<%= escape_javascript(render 'defence_requests_table_body', requests: @draft_requests, type: 'draft') %> ");
 $('.dashboard tbody').append("<%= escape_javascript(render 'defence_requests_table_body', requests: @queued_requests, type: 'queued') %> ");
-$('.dashboard tbody').append("<%= escape_javascript(render 'defence_requests_table_body', requests: @open_requests, type: 'open') %>");
+$('.dashboard tbody').append("<%= escape_javascript(render 'defence_requests_table_body', requests: @acknowledged_requests, type: 'acknowledged') %>");
 $('.dashboard tbody').append("<%= escape_javascript(render 'defence_requests_table_body', requests: @accepted_requests, type: 'accepted') %>");

@@ -49,7 +49,7 @@ RSpec.describe DefenceRequestPolicy do
       specify{ expect(subject).to permit_actions_and_forbid_all_others actions }
     end
 
-    context "with an opened DR" do
+    context "with an acknowledged DR" do
       let (:allowed_actions) { [
         :show,
         :edit,
@@ -59,7 +59,7 @@ RSpec.describe DefenceRequestPolicy do
         :case_details_edit,
         :detainee_details_edit
       ] }
-      let (:defreq) { FactoryGirl.create(:defence_request, :opened) }
+      let (:defreq) { FactoryGirl.create(:defence_request, :acknowledged) }
       specify { expect(subject).to permit_actions_and_forbid_all_others actions }
     end
 
@@ -111,7 +111,7 @@ RSpec.describe DefenceRequestPolicy do
     end
 
     context "DR that they are assigned to" do
-      context "with an opened DR" do
+      context "with an acknowledged DR" do
         let (:allowed_actions) { [
           :show,
           :edit,
@@ -123,11 +123,11 @@ RSpec.describe DefenceRequestPolicy do
           :detainee_details_edit,
           :solicitor_details_edit
         ] }
-        let! (:defreq) { FactoryGirl.create(:defence_request, :opened, cco: user) }
+        let! (:defreq) { FactoryGirl.create(:defence_request, :acknowledged, cco: user) }
         specify { expect(subject).to permit_actions_and_forbid_all_others actions }
       end
 
-      context "opened with a DR with dscc number" do
+      context "with an acknowledged DR with a dscc number" do
         let (:allowed_actions) { [
           :show,
           :edit,
@@ -140,7 +140,7 @@ RSpec.describe DefenceRequestPolicy do
           :detainee_details_edit,
           :solicitor_details_edit
         ] }
-        let! (:defreq) { FactoryGirl.create(:defence_request, :opened, :with_dscc_number, cco: user) }
+        let! (:defreq) { FactoryGirl.create(:defence_request, :acknowledged, :with_dscc_number, cco: user) }
         specify { expect(subject).to permit_actions_and_forbid_all_others actions }
       end
 
@@ -168,14 +168,14 @@ RSpec.describe DefenceRequestPolicy do
     end
 
     context "DR they are not assigned to" do
-      context "with an opened DR" do
+      context "with an acknowledged DR" do
         let (:other_cco) { FactoryGirl.create(:cco_user)}
         let (:allowed_actions) { [
           :show,
           :close,
           :feedback,
         ] }
-        let! (:defreq) { FactoryGirl.create(:defence_request, :opened, cco: other_cco) }
+        let! (:defreq) { FactoryGirl.create(:defence_request, :acknowledged, cco: other_cco) }
         specify { expect(subject).to permit_actions_and_forbid_all_others actions }
       end
 
@@ -186,7 +186,7 @@ RSpec.describe DefenceRequestPolicy do
           :close,
           :feedback,
         ] }
-        let! (:defreq) { FactoryGirl.create(:defence_request, :opened, cco: other_cco) }
+        let! (:defreq) { FactoryGirl.create(:defence_request, :acknowledged, cco: other_cco) }
         specify { expect(subject).to permit_actions_and_forbid_all_others actions }
       end
 

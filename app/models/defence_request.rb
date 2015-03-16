@@ -14,7 +14,7 @@ class DefenceRequest < ActiveRecord::Base
   state_machine auto_scopes: true do
     state :draft # first one is initial state
     state :queued
-    state :opened
+    state :acknowledged
     state :accepted
     state :closed
     state :finished
@@ -23,20 +23,20 @@ class DefenceRequest < ActiveRecord::Base
       transitions from: [:draft], to: :queued
     end
 
-    event :open do
-      transitions from: [:queued], to: :opened
+    event :acknowledge do
+      transitions from: [:queued], to: :acknowledged
     end
 
     event :accept, success: :send_solicitor_case_details do
-      transitions from: [:opened], to: :accepted, guard: :dscc_number?
+      transitions from: [:acknowledged], to: :accepted, guard: :dscc_number?
     end
 
     event :finish do
-      transitions from: [:opened, :accepted], to: :finished
+      transitions from: [:acknowledged, :accepted], to: :finished
     end
 
     event :close do
-      transitions from: [:draft, :opened, :accepted], to: :closed
+      transitions from: [:draft, :acknowledged, :accepted], to: :closed
     end
   end
 

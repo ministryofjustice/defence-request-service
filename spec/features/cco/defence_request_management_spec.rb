@@ -51,31 +51,31 @@ RSpec.feature "Call Center Operatives managing defence requests" do
 
   context "with requests they are assigned to" do
 
-    context "that have not yet been opened" do
-      let!(:unopened_dr) { create(:defence_request, :queued) }
+    context "that have not yet been acknowledged" do
+      let!(:unack_dr) { create(:defence_request, :queued) }
 
       specify "cannot edit the request" do
         visit root_path
-        within "#defence_request_#{unopened_dr.id}" do
+        within "#defence_request_#{unack_dr.id}" do
           expect(page).not_to have_link("Edit")
         end
       end
 
-      specify "can open the request" do
+      specify "can acknowledge the request" do
         visit root_path
-        within "#defence_request_#{unopened_dr.id}" do
-          click_button "Open"
+        within "#defence_request_#{unack_dr.id}" do
+          click_button "Acknowledge"
         end
-        expect(page).to have_content "Defence Request successfully opened"
+        expect(page).to have_content "Defence Request successfully acknowledged"
       end
 
-      specify "are shown a message if the request cannot be opened for some reason" do
+      specify "are shown a message if the request cannot be acknowledged for some reason" do
         visit root_path
-        dr_can_not_be_opened_for_some_reason unopened_dr
-        within "#defence_request_#{unopened_dr.id}" do
-          click_button "Open"
+        dr_can_not_be_acknowledged_for_some_reason unack_dr
+        within "#defence_request_#{unack_dr.id}" do
+          click_button "Acknowledge"
         end
-        expect(page).to have_content "Defence Request was not opened"
+        expect(page).to have_content "Defence Request was not acknowledged"
       end
 
       specify "cannot mark the request as accepted" do
@@ -83,18 +83,18 @@ RSpec.feature "Call Center Operatives managing defence requests" do
         within ".queued-defence-request" do
           expect(page).to_not have_button "Accepted"
         end
-        within "#defence_request_#{unopened_dr.id}" do
+        within "#defence_request_#{unack_dr.id}" do
           expect(page).to_not have_button "Accepted"
         end
       end
     end
 
-    context "that have been opened by this cco" do
-      let!(:opened_dr) { create(:defence_request, :opened, :with_solicitor, cco: cco_user) }
+    context "that have been acknowledged by this cco" do
+      let!(:ack_dr) { create(:defence_request, :acknowledged, :with_solicitor, cco: cco_user) }
 
       specify "can edit the solicitors details on the request" do
         visit root_path
-        within "#defence_request_#{opened_dr.id}" do
+        within "#defence_request_#{ack_dr.id}" do
           click_link "Edit"
         end
 
@@ -107,7 +107,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
         click_button "Update Defence Request"
         expect(current_path).to eq(defence_requests_path)
 
-        within "#defence_request_#{opened_dr.id}" do
+        within "#defence_request_#{ack_dr.id}" do
           expect(page).to have_content "Henry Billy Bob"
           expect(page).to have_content "00112233445566"
         end
@@ -115,13 +115,13 @@ RSpec.feature "Call Center Operatives managing defence requests" do
 
       specify "can add/edit the DSCC number on the request" do
         visit root_path
-        within "#defence_request_#{opened_dr.id}" do
+        within "#defence_request_#{ack_dr.id}" do
           click_link "Edit"
         end
         fill_in "DSCC number", with: "NUMBERWANG"
         click_button "Update Defence Request"
         expect(page).to have_content "Defence Request successfully updated"
-        within "#defence_request_#{opened_dr.id}" do
+        within "#defence_request_#{ack_dr.id}" do
           click_link "Edit"
         end
         expect(page).to have_field "DSCC number", with: "NUMBERWANG"
@@ -133,21 +133,21 @@ RSpec.feature "Call Center Operatives managing defence requests" do
       specify "can mark the request as accepted from the request's edit page whilst adding a dscc number" do
         visit root_path
 
-        within "#defence_request_#{opened_dr.id}" do
+        within "#defence_request_#{ack_dr.id}" do
           click_link "Edit"
         end
         fill_in "DSCC number", with: "123456"
 
         click_button "Update and Accept"
         within ".accepted-defence-request" do
-          expect(page).to have_content(opened_dr.solicitor_name)
+          expect(page).to have_content(ack_dr.solicitor_name)
         end
       end
 
       specify "can not choose \"Update and Accept\" from the request's edit page without adding a dscc number" do
         visit root_path
 
-        within "#defence_request_#{opened_dr.id}" do
+        within "#defence_request_#{ack_dr.id}" do
           click_link "Edit"
         end
 
@@ -157,22 +157,22 @@ RSpec.feature "Call Center Operatives managing defence requests" do
 
       context "that have a dscc number" do
         specify "can accept the request from the dashboard" do
-          opened_dr.update(dscc_number: "012345")
+          ack_dr.update(dscc_number: "012345")
           visit root_path
-          within "#defence_request_#{opened_dr.id}" do
+          within "#defence_request_#{ack_dr.id}" do
             click_button "Accepted"
           end
           within ".accepted-defence-request" do
-            expect(page).to have_content(opened_dr.solicitor_name)
+            expect(page).to have_content(ack_dr.solicitor_name)
           end
           expect(page).to have_content("Defence Request was marked as accepted")
         end
 
         specify "are shown an error if the request cannot be accepted" do
-          opened_dr.update(dscc_number: "012345")
+          ack_dr.update(dscc_number: "012345")
           visit root_path
-          dr_can_not_be_accepted_for_some_reason opened_dr
-          within "#defence_request_#{opened_dr.id}" do
+          dr_can_not_be_accepted_for_some_reason ack_dr
+          within "#defence_request_#{ack_dr.id}" do
             click_button "Accepted"
           end
           expect(page).to have_content("Defence Request was not marked as accepted")
@@ -180,7 +180,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
       end
 
       context "that have the \"duty\" solicitor type" do
-        let!(:duty_solicitor_dr) { create(:defence_request, :duty_solicitor, :opened, cco: cco_user) }
+        let!(:duty_solicitor_dr) { create(:defence_request, :duty_solicitor, :acknowledged, cco: cco_user) }
 
         specify "can not mark the request as accepted from the dashboard without solicitor detials" do
           visit root_path
@@ -254,9 +254,9 @@ RSpec.feature "Call Center Operatives managing defence requests" do
   end
 end
 
-def dr_can_not_be_opened_for_some_reason defence_request
+def dr_can_not_be_acknowledged_for_some_reason defence_request
   expect(DefenceRequest).to receive(:find).with(defence_request.id.to_s) { defence_request }
-  expect(defence_request).to receive(:open) { false }
+  expect(defence_request).to receive(:acknowledge) { false }
 end
 
 def dr_can_not_be_accepted_for_some_reason defence_request

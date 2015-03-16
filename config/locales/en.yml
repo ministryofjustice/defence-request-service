@@ -4,6 +4,8 @@ en:
   accepted: "Accepted"
   accepted_defence_request: "Accepted Defence Requests"
   accessibility: "Accessibility"
+  acknowledge: "Acknowledge"
+  acknowledged_defence_request: "Acknowledged Defence Requests"
   actions: "Actions"
   add_expected_time_of_arrival: "Add Expected Time of Arrival"
   adult: "Adult?"
@@ -65,8 +67,6 @@ en:
   new_defence_requests: "New Defence Requests"
   no_results_found: 'No results found - Contact DSCC'
   not_authorized: "You are not authorised to perform this action"
-  open: "Open"
-  open_defence_request: "Open Defence Requests"
   own: 'Own'
   phone_number: "Phone number"
   prohibit_save: Please review the following %{count}
@@ -100,6 +100,7 @@ en:
 
   models:
     accept: "%{model} was marked as accepted"
+    acknowledged: "%{model} successfully acknowledged"
     close: "%{model} successfully closed"
     create: "%{model} successfully created"
     destroy: "%{model} successfully deleted"
@@ -107,12 +108,11 @@ en:
     sent_for_processing: "%{model} successfully sent for processing"
     dscc_number_required: "A Valid DSCC number is required to update and accept a %{model}"
     failed_accept: "%{model} was not marked as accepted"
+    failed_acknowledge: "%{model} was not acknowledged"
     failed_close: "%{model} was not closed"
     failed_destroy: "%{model} was not deleted"
     failed_details_sent: "Details were not sent"
     failed_send_for_processing: "%{model} was not sent for processing"
-    failed_open: "%{model} was not opened"
-    open: "%{model} successfully opened"
     solicitor_details_required: "Valid solicitor details are required to update and accept a %{model}"
     update: "%{model} successfully updated"
     updated_and_updated: "%{model} successfully updated and marked as accepted"
@@ -165,7 +165,7 @@ en:
       models:
         defence_request:
           attributes:
-            time_of_arrival:
+            tie_of_arrival:
               invalid_datetime: "Format is invalid"
               invalid_year: "Year is invalid"
               invalid_month: "Month is invalid"
