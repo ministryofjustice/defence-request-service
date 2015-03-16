@@ -1,4 +1,6 @@
-worker_processes Integer(ENV["WEB_CONCURRENCY"] || 3)
+worker_processes Integer(ENV.fetch("WEB_CONCURRENCY", 3))
+listen Integer(ENV.fetch('UNICORN_PORT', 3000))
+
 timeout 15
 preload_app true
 

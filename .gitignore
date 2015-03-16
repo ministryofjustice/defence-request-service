@@ -13,4 +13,6 @@
 /tmp
 /coverage
 
-.env
+# Dotenv 2.0 uses a .env.local instead of a plain .env
+# The .env file is now used for defaults, which are then overriden with per-environment .env.production style files
+.env.local

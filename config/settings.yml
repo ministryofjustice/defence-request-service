@@ -1,27 +1,32 @@
-devise:
-  key: <%= ENV["DEVISE_KEY"] %>
-  salt: <%= ENV["DEVISE_SALT"] %>
+dsds:
+  app_title: "Defence Solicitor Deployment Service"
+  dashboard_refresh_milliseconds: 3000
+  dashboard_refresh_disabled: <%= ENV.fetch('DISABLE_DASHBOARD_REFRESH', 'false') == 'true' %>
+  solicitor_search_url_prefix: <%= ENV.fetch('SOLICITOR_SEARCH_URL_PREFIX') %>
+
 rails:
-  secret_key_base: <%= ENV["SECRET_KEY_BASE"] %>
+  secret_key_base: <%= ENV.fetch('SECRET_KEY_BASE') %>
+
+devise:
+  key: <%= ENV.fetch('DEVISE_KEY') %>
+  salt: <%= ENV.fetch('DEVISE_SALT') %>
+
 action_mailer:
+  default_url_options:
+    host: <%= ENV.fetch('MAILER_DEFAULT_URL_HOST') %>
+    port: <%= ENV.fetch('MAILER_DEFAULT_URL_PORT') %>
+    protocol: <%= ENV.fetch('MAILER_DEFAULT_URL_PROTOCOL') %>
   smtp_settings:
     address: smtp.sendgrid.net
     port: 587
     domain: em.email.dsds.dsd.io
     authentication: plain
-    user_name: <%= ENV["EMAIL_USERNAME"] %>
-    password: <%= ENV["EMAIL_PASSWORD"] %>
-    enable_starttls_auto: false
+    user_name: <%= ENV.fetch('MAILER_SMTP_USER_NAME') %>
+    password: <%= ENV.fetch('MAILER_SMTP_PASSWORD') %>
+    enable_starttls_auto: true
 
-sandbox_email: <%= ENV["SANDBOX_EMAIL"] %>
-sandbox_email_address: <%= ENV['SANDBOX_EMAIL_ADDRESS'] || 'iamadefencesolicitor@gmail.com' %>
-
-dsds:
-  app_title: "Defence Solicitor Deployment Service"
-  dashboard_refresh_milliseconds: 3000
-  dashboard_refresh_disabled: <%= ENV["DISABLE_DASHBOARD_REFRESH"] %>
-  solicitor_search_domain: "http://solicitor-search.herokuapp.com"
-  default_mail_host: <%= ENV["DEFAULT_MAIL_HOST"] %>
+sandbox_email: <%= ENV.fetch('SANDBOX_EMAIL', 'false') == 'true' %>
+sandbox_email_address: <%= ENV.fetch('SANDBOX_EMAIL_ADDRESS', nil) %>
 
 analytics:
-  google_ua: <%= ENV["GOOGLE_ANALYTICS_UA"] %>
+  google_ua: <%= ENV.fetch('GOOGLE_ANALYTICS_UA', nil) %>
