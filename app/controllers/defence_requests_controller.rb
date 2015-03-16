@@ -1,6 +1,6 @@
 class DefenceRequestsController < BaseController
 
-  before_action :find_defence_request, :set_policy, only: [:show, :solicitor_time_of_arrival, :edit, :update, :feedback, :close, :open, :accept, :resend_details]
+  before_action :find_defence_request, :set_policy, only: [:show, :solicitor_time_of_arrival, :edit, :update, :feedback, :close, :open, :accept, :resend_details, :queue]
   before_action :new_defence_request, only: [:new, :create]
   before_action :new_defence_request_form, only: [:show, :new, :create, :edit, :update, :solicitor_time_of_arrival]
   before_action :get_defence_request_scopes, only: [:index, :refresh_dashboard]
@@ -100,6 +100,14 @@ class DefenceRequestsController < BaseController
       redirect_to(defence_request_path(@defence_request), notice: flash_message(:solicitor_time_of_arrival_added, DefenceRequest))
     else
       render :show
+    end
+  end
+
+  def queue
+    if @defence_request.queue && @defence_request.save
+      redirect_to(defence_requests_path, notice: flash_message(:sent_for_processing, DefenceRequest))
+    else
+      redirect_to(defence_requests_path, notice: flash_message(:failed_send_for_processing, DefenceRequest))
     end
   end
 

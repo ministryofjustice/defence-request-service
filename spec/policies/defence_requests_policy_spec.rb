@@ -8,9 +8,11 @@ RSpec.describe DefenceRequestPolicy do
   context "Custody Suite Officers" do
     let(:user)          { FactoryGirl.create(:cso_user) }
     let(:group_actions) {
-      [:index, :new, :create, :refresh_dashboard,
-       :solicitors_search, :view_open_requests,
-       :view_draft_requests, :view_accepted_requests]
+      [:index,
+       :new,
+       :create,
+       :refresh_dashboard,
+       :solicitors_search]
     }
 
     context "with a new DR" do
@@ -18,6 +20,7 @@ RSpec.describe DefenceRequestPolicy do
         :show,
         :edit,
         :update,
+        :queue,
         :close,
         :feedback,
         :case_details_edit,
@@ -34,6 +37,7 @@ RSpec.describe DefenceRequestPolicy do
         :show,
         :edit,
         :update,
+        :queue,
         :close,
         :feedback,
         :interview_start_time_edit,
@@ -92,14 +96,13 @@ RSpec.describe DefenceRequestPolicy do
   context "Call Center Operatives" do
     let(:user) { FactoryGirl.create(:cco_user) }
     let(:group_actions) {
-      [:index, :refresh_dashboard, :view_open_requests,
-       :view_draft_requests, :view_accepted_requests]
+      [:index,
+       :refresh_dashboard]
     }
 
     context "with a draft DR" do
       let (:allowed_actions) { [
         :show,
-        :open,
         :close,
         :feedback,
       ] }
@@ -196,9 +199,10 @@ RSpec.describe DefenceRequestPolicy do
     end
 
     describe "scope" do
-      let (:defreq) { FactoryGirl.create(:defence_request) }
-      it "returns all of the requests" do
-        expect(Pundit.policy_scope(user, DefenceRequest)).to eq [defreq]
+      let (:draft_defreq) { FactoryGirl.create(:defence_request) }
+      let (:other_defreq) { FactoryGirl.create(:defence_request, :queued) }
+      it "returns non-draft of the requests" do
+        expect(Pundit.policy_scope(user, DefenceRequest)).to eq [other_defreq]
       end
     end
   end
@@ -206,7 +210,8 @@ RSpec.describe DefenceRequestPolicy do
   context "Solicitors" do
     let (:defreq) { FactoryGirl.create(:defence_request) }
     let(:user) { FactoryGirl.create(:solicitor_user)}
-    let(:group_actions) { [:index, :view_accepted_requests, :refresh_dashboard] }
+    let(:group_actions) { [:index,
+                           :refresh_dashboard] }
 
     context "DR they are assigned to" do
       context "with an accepted DR" do

@@ -19,8 +19,12 @@ class DefenceRequest < ActiveRecord::Base
     state :closed
     state :finished
 
+    event :queue do
+      transitions from: [:draft], to: :queued
+    end
+
     event :open do
-      transitions from: [:draft], to: :opened
+      transitions from: [:queued], to: :opened
     end
 
     event :accept, success: :send_solicitor_case_details do

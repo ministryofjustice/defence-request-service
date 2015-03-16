@@ -102,6 +102,10 @@ class DefenceRequestPolicy < ApplicationPolicy
     user_is_the_assigned_solicitor && !record.closed?
   end
 
+  def queue?
+    cso && record.draft?
+  end
+
   private
 
   def cso

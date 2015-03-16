@@ -33,7 +33,7 @@ RSpec.describe DefenceRequest, type: :model do
 
   describe 'states' do
     it 'allows for correct transitions' do
-      expect(DefenceRequest.available_states).to eq [:accepted, :closed, :draft, :finished, :opened]
+      expect(DefenceRequest.available_states).to eq [:accepted, :closed, :draft, :finished, :opened, :queued]
     end
 
     describe 'draft' do
@@ -42,13 +42,14 @@ RSpec.describe DefenceRequest, type: :model do
       specify { expect(subject.current_state).to eql :draft }
 
       describe 'possible transitions' do
-        specify { expect{ subject.open }.to_not raise_error }
-        specify { expect(subject.can_execute_open?).to eq true }
+        specify { expect{ subject.queue }.to_not raise_error }
+        specify { expect(subject.can_execute_queue?).to eq true }
         specify { expect{ subject.close }.to_not raise_error }
         specify { expect(subject.can_execute_close?).to eq true }
       end
 
       describe 'impossible transitions' do
+        specify { expect(subject.can_execute_open?).to eq false }
         specify { expect(subject.can_execute_accept?).to eq false }
         specify { expect(subject.can_execute_finish?).to eq false }
       end
@@ -73,6 +74,7 @@ RSpec.describe DefenceRequest, type: :model do
       end
 
       describe 'disallowed transitions' do
+        specify { expect(subject.can_execute_queue?).to eq false }
         specify { expect(subject.can_execute_open?).to eq false }
         specify { expect(subject.can_execute_accept?).to eq false }
       end
@@ -91,6 +93,7 @@ RSpec.describe DefenceRequest, type: :model do
       end
 
       describe 'impossible transitions' do
+        specify { expect(subject.can_execute_queue?).to eq false }
         specify { expect(subject.can_execute_open?).to eq false }
         specify { expect(subject.can_execute_accept?).to eq false }
       end
@@ -102,6 +105,7 @@ RSpec.describe DefenceRequest, type: :model do
       specify { expect(subject.current_state).to eql :closed }
 
       describe 'impossible transitions' do
+        specify { expect(subject.can_execute_queue?).to eq false }
         specify { expect(subject.can_execute_open?).to eq false }
         specify { expect(subject.can_execute_accept?).to eq false }
         specify { expect(subject.can_execute_close?).to eq false }
@@ -115,6 +119,7 @@ RSpec.describe DefenceRequest, type: :model do
       specify { expect(subject.current_state).to eql :finished }
 
       describe 'impossible transitions' do
+        specify { expect(subject.can_execute_queue?).to eq false }
         specify { expect(subject.can_execute_open?).to eq false }
         specify { expect(subject.can_execute_accept?).to eq false }
         specify { expect(subject.can_execute_close?).to eq false }

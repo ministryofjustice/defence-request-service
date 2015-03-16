@@ -52,7 +52,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
   context "with requests they are assigned to" do
 
     context "that have not yet been opened" do
-      let!(:unopened_dr) { create(:own_solicitor) }
+      let!(:unopened_dr) { create(:defence_request, :queued) }
 
       specify "cannot edit the request" do
         visit root_path
@@ -80,7 +80,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
 
       specify "cannot mark the request as accepted" do
         visit root_path
-        within ".draft-defence-request" do
+        within ".queued-defence-request" do
           expect(page).to_not have_button "Accepted"
         end
         within "#defence_request_#{unopened_dr.id}" do

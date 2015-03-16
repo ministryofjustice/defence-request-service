@@ -4,7 +4,7 @@ RSpec.feature "Custody Center Operatives viewing their dashboard" do
     include ActiveJobHelper
     include DashboardHelper
 
-    let!(:dr_draft) { create(:defence_request, :draft) }
+    let!(:dr_queued) { create(:defence_request, :queued) }
     let!(:dr_open) { create(:defence_request, :opened) }
     let!(:dr_accepted) { create(:defence_request, :accepted) }
     let(:cco_user2){ create :cco_user }
@@ -13,11 +13,11 @@ RSpec.feature "Custody Center Operatives viewing their dashboard" do
       create_role_and_login("cco")
     end
 
-    specify "can see tables of \"draft\" and \"open\" defence requests" do
+    specify "can see tables of \"queued\" and \"open\" defence requests" do
       visit defence_requests_path
 
-      within ".draft-defence-request" do
-        expect(page).to have_content(dr_draft.solicitor_name)
+      within ".queued-defence-request" do
+        expect(page).to have_content(dr_queued.solicitor_name)
       end
 
       within ".open-defence-request" do
@@ -28,20 +28,20 @@ RSpec.feature "Custody Center Operatives viewing their dashboard" do
     specify "can see the dashboard with refreshed data after a period", js: true, short_dashboard_refresh: true do
       visit defence_requests_path
 
-      within "#defence_request_#{dr_draft.id}" do
-        expect(page).to have_content(dr_draft.solicitor_name)
+      within "#defence_request_#{dr_queued.id}" do
+        expect(page).to have_content(dr_queued.solicitor_name)
       end
 
       within "#defence_request_#{dr_open.id}" do
         expect(page).to have_content(dr_open.solicitor_name)
       end
 
-      dr_draft.update(solicitor_name: "New Solicitor")
+      dr_queued.update(solicitor_name: "New Solicitor")
       dr_open.update(solicitor_name: "New Solicitor2")
 
       wait_for_dashboard_refresh
 
-      within "#defence_request_#{dr_draft.id}" do
+      within "#defence_request_#{dr_queued.id}" do
         expect(page).to have_content("New Solicitor")
       end
       within "#defence_request_#{dr_open.id}" do

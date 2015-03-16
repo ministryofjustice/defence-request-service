@@ -50,6 +50,31 @@ RSpec.feature "Custody Suite Officers viewing their dashboard" do
     end
   end
 
+  specify "can send a draft case for processing" do
+    visit defence_requests_path
+
+    within ".draft-defence-request" do
+      click_button "Send for Processing"
+    end
+
+    expect(page).to have_content("Defence Request successfully sent for processing")
+    within ".queued-defence-request" do
+      expect(page).to have_content(dr_draft.solicitor_name)
+    end
+  end
+
+  specify "are shown an error message if a case cannot be sent for processing" do
+    visit defence_requests_path
+
+    dr_can_not_be_sent_for_processing_for_some_reason dr_draft
+    within ".draft-defence-request" do
+      click_button "Send for Processing"
+    end
+
+    expect(page).to have_content("Defence Request was not sent for processing")
+    expect(page).to_not have_selector(".queued-defence-request")
+  end
+
   specify "can resend case details of an defence request to the assigned solicitor", js: true do
     visit defence_requests_path
 
@@ -67,5 +92,10 @@ end
 
 def element_order_correct?(first_element, second_element)
   !!(/#{first_element}.*#{second_element}/m =~ page.body)
+end
+
+def dr_can_not_be_sent_for_processing_for_some_reason defence_request
+  expect(DefenceRequest).to receive(:find).with(defence_request.id.to_s) { defence_request }
+  expect(defence_request).to receive(:queue) { false }
 end
 
