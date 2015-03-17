@@ -60,11 +60,11 @@ class DefenceRequestsController < BaseController
     end
   end
 
-  def open
-    if @defence_request.open && associate_cco && @defence_request.save
-      redirect_to(defence_requests_path, notice: flash_message(:open, DefenceRequest))
+  def acknowledge
+    if @defence_request.acknowledge && associate_cco && @defence_request.save
+      redirect_to(defence_requests_path, notice: flash_message(:acknowledged, DefenceRequest))
     else
-      redirect_to(defence_requests_path, notice: flash_message(:failed_open, DefenceRequest))
+      redirect_to(defence_requests_path, notice: flash_message(:failed_acknowledge, DefenceRequest))
     end
   end
 
@@ -116,7 +116,7 @@ class DefenceRequestsController < BaseController
   def get_defence_request_scopes
     @draft_requests = policy_scope(DefenceRequest).draft.order(created_at: :asc)
     @queued_requests = policy_scope(DefenceRequest).queued.order(created_at: :asc)
-    @open_requests = policy_scope(DefenceRequest).opened.order(created_at: :asc)
+    @acknowledged_requests = policy_scope(DefenceRequest).acknowledged.order(created_at: :asc)
     @accepted_requests = policy_scope(DefenceRequest).accepted.order(created_at: :asc)
   end
 
