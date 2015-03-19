@@ -2,7 +2,7 @@ class DefenceRequestsController < BaseController
 
   before_action :find_defence_request, :set_policy, except: [:index, :new, :create, :refresh_dashboard, :solicitors_search]
   before_action :new_defence_request, only: [:new, :create]
-  before_action :new_defence_request_form, only: [:show, :new, :create, :edit, :update, :solicitor_time_of_arrival]
+  before_action :new_defence_request_form, only: [:show, :edit, :update, :solicitor_time_of_arrival]
   before_action :get_defence_request_scopes, only: [:index, :refresh_dashboard]
 
   before_action ->(c) { authorize defence_request, "#{c.action_name}?" }
@@ -15,13 +15,15 @@ class DefenceRequestsController < BaseController
   end
 
   def new
+    @defence_request_form = DefenceRequestNewForm.new @defence_request
     set_policy
   end
 
   def create
+    @defence_request_form = DefenceRequestNewForm.new @defence_request
     set_policy
     if @defence_request_form.submit(defence_request_params)
-      redirect_to(@defence_request_form.defence_request, notice: flash_message(:create, DefenceRequestForm))
+      redirect_to(@defence_request_form.defence_request, notice: flash_message(:create, DefenceRequest))
     else
       render :new
     end
@@ -164,7 +166,7 @@ class DefenceRequestsController < BaseController
   end
 
   def new_defence_request_form
-    @defence_request_form ||= DefenceRequestForm.new @defence_request
+    @defence_request_form ||= DefenceRequestNewForm.new @defence_request
   end
 
   def defence_request_params
