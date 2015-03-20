@@ -80,4 +80,7 @@ Rails.application.configure do
 
   # Configure ActiveJob queue adapter
   config.active_job.queue_adapter = :sucker_punch
+
+  config.lograge.enabled = true
+  config.lograge.formatter = Lograge::Formatters::Logstash.new
 end
