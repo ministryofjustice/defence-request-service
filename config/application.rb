@@ -48,6 +48,7 @@ module DefenceSolicitor
     config.action_mailer.smtp_settings = Settings.action_mailer.smtp_settings.to_h
 
     config.autoload_paths += %W(#{config.root}/lib)
+    config.autoload_paths += Dir["#{config.root}/app/paradats/**/"]
 
     config.action_controller.action_on_unpermitted_parameters = :raise
   end
