@@ -101,5 +101,23 @@ RSpec.describe SolicitorField do
         end
       end
     end
+
+    context "blank?" do
+      context "no fields" do
+        subject { SolicitorField.new }
+
+        it "returns true" do
+          expect(subject).to be_blank
+        end
+      end
+
+      context "some fields" do
+        subject { SolicitorField.new email: "I am not necessarily valid, but I am present" }
+
+        it "returns false" do
+          expect(subject).to_not be_blank
+        end
+      end
+    end
   end
 end

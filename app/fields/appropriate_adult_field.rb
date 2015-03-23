@@ -18,4 +18,8 @@ class AppropriateAdultField
   def present?
     appropriate_adult.present?
   end
+
+  def blank?
+    !present?
+  end
 end

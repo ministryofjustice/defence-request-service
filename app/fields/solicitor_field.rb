@@ -26,4 +26,8 @@ class SolicitorField
       SolicitorField.new
     end
   end
+
+  def blank?
+    !present?
+  end
 end
