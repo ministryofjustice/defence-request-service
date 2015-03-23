@@ -3,7 +3,7 @@ module Paradat
     include ActiveModel::Model
     extend Forwardable
 
-    attr_reader :base_model, :fields
+    attr_reader :base_model, :decorated_fields
 
     def self.delegates_fields *attrs
       attrs.each do |attr_name|
@@ -11,9 +11,9 @@ module Paradat
       end
     end
 
-    @@fields = {}
+    @@decorated_field_classes = {}
     def self.decorates_field field_name, klass
-      @@fields[field_name] = klass
+      @@decorated_field_classes[field_name] = klass
     end
 
     def self.underlying_model klass, accessor=klass.model_name.singular
@@ -23,23 +23,23 @@ module Paradat
 
     def initialize(base_model)
       @base_model = base_model
-      @fields = {}
+      @decorated_fields = {}
       register_fields
     end
 
     def submit(params)
-      @fields.select!{ |k, v| params.include?(k) }
+      @decorated_fields.select!{ |k, v| params.include?(k) }
 
-      params_without_fields =  params.reject { |k, _| @fields.keys.include? k.to_sym}
+      params_without_fields =  params.reject { |k, _| @decorated_fields.keys.include? k.to_sym}
       @base_model.assign_attributes params_without_fields
 
-      @fields.dup.each do |field_name, field_value|
+      @decorated_fields.dup.each do |field_name, field_value|
         field_value = field_value.class.new params[field_name]
-        @fields[field_name] = field_value
+        @decorated_fields[field_name] = field_value
         @base_model.assign_attributes({ field_name => field_value.value })
       end
 
-      if @fields.all?(&valid_if_present?) & @base_model.valid?
+      if @decorated_fields.all?(&valid_if_present?) & @base_model.valid?
         @base_model.save!
         true
       else
@@ -51,8 +51,8 @@ module Paradat
     private
 
     def register_fields
-      @@fields.each do |field_name, klass|
-        @fields[field_name] = klass.from_persisted_value @base_model.send field_name
+      @@decorated_field_classes.each do |field_name, klass|
+        @decorated_fields[field_name] = klass.from_persisted_value @base_model.send field_name
       end
     end
 
@@ -61,7 +61,7 @@ module Paradat
         self.errors[field_name] = error_message.join ", "
       end
 
-      @fields.map(&:to_a).reject(&valid_if_present?).each do |field_name, field_value|
+      @decorated_fields.map(&:to_a).reject(&valid_if_present?).each do |field_name, field_value|
         if field_value.present?
           self.errors[field_name].clear
           self.errors[field_name] = field_value.errors.full_messages.join ", "
