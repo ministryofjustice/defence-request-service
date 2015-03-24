@@ -39,7 +39,7 @@ class DefenceRequestPolicy < ApplicationPolicy
   end
 
   def edit?
-    (cso || user_is_the_assigned_cco) && !record.closed?
+    ((cso && record.draft?) || (user_is_the_assigned_cco && !record.draft? && !record.queued?)) && !record.closed?
   end
 
   def update?
