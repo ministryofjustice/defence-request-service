@@ -1,0 +1,22 @@
+FROM defence-request-service:latest
+
+# For developer use only
+ENV RAILS_ENV development
+
+RUN apt-get update
+RUN apt-get install -y postgresql-client
+
+###############################################################################
+# Install PhantomJS
+###############################################################################
+# Packages required for PhantomJS
+RUN apt-get install -y build-essential chrpath git-core libssl-dev libfontconfig1-dev
+#
+# Install PhantomJS itself
+ADD https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.7-linux-x86_64.tar.bz2 /usr/local/share/
+RUN cd /usr/local/share/ && tar jxf /usr/local/share/phantomjs-1.9.7-linux-x86_64.tar.bz2
+RUN ln -sf /usr/local/share/phantomjs-1.9.7-linux-x86_64/bin/phantomjs /usr/local/share/phantomjs
+RUN ln -sf /usr/local/share/phantomjs-1.9.7-linux-x86_64/bin/phantomjs /usr/local/bin/phantomjs
+RUN ln -sf /usr/local/share/phantomjs-1.9.7-linux-x86_64/bin/phantomjs /usr/bin/phantomjs
+
+CMD "/bin/bash"
