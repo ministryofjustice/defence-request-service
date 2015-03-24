@@ -70,18 +70,6 @@ class DefenceRequestPolicy < ApplicationPolicy
     cso && !record.new_record? && record.draft?
   end
 
-  def case_details_edit?
-    edit? && (cso || (!record.draft? && user_is_the_assigned_cco))
-  end
-
-  def detainee_details_edit?
-    edit? && (cso || (!record.draft? && user_is_the_assigned_cco))
-  end
-
-  def solicitor_details_edit?
-    edit? && ((cso && record.draft?) || (record.acknowledged? && user_is_the_assigned_cco))
-  end
-
   def acknowledge?
     cco && record.can_execute_acknowledge?
   end

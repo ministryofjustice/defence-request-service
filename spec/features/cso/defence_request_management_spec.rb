@@ -227,7 +227,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
       expect(dr_created.state).to eq "closed"
     end
 
-    context "with requests that have not been opened yet" do
+    context "with requests that have not been acklowledged yet" do
       specify "can edit all relevant details of the request" do
         visit root_path
         within "#defence_request_#{dr_created.id}" do

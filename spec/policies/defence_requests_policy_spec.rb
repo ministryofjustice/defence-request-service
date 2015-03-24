@@ -23,9 +23,6 @@ RSpec.describe DefenceRequestPolicy do
         :queue,
         :close,
         :feedback,
-        :case_details_edit,
-        :detainee_details_edit,
-        :solicitor_details_edit,
         :add_case_time_of_arrival
       ] }
       let (:defreq) { FactoryGirl.build(:defence_request) }
@@ -41,9 +38,6 @@ RSpec.describe DefenceRequestPolicy do
         :close,
         :feedback,
         :interview_start_time_edit,
-        :case_details_edit,
-        :detainee_details_edit,
-        :solicitor_details_edit
       ] }
       let (:defreq) { FactoryGirl.create(:defence_request) }
       specify{ expect(subject).to permit_actions_and_forbid_all_others actions }
@@ -52,12 +46,8 @@ RSpec.describe DefenceRequestPolicy do
     context "with an acknowledged DR" do
       let (:allowed_actions) { [
         :show,
-        :edit,
-        :update,
         :close,
-        :feedback,
-        :case_details_edit,
-        :detainee_details_edit
+        :feedback
       ] }
       let (:defreq) { FactoryGirl.create(:defence_request, :acknowledged) }
       specify { expect(subject).to permit_actions_and_forbid_all_others actions }
@@ -66,13 +56,9 @@ RSpec.describe DefenceRequestPolicy do
     context "with an accepted DR" do
       let (:allowed_actions) { [
         :show,
-        :edit,
-        :update,
         :close,
         :feedback,
         :resend_details,
-        :case_details_edit,
-        :detainee_details_edit,
         :solicitor_time_of_arrival
       ] }
       let (:defreq) { FactoryGirl.create(:defence_request, :accepted) }
@@ -119,9 +105,6 @@ RSpec.describe DefenceRequestPolicy do
           :update,
           :close,
           :feedback,
-          :case_details_edit,
-          :detainee_details_edit,
-          :solicitor_details_edit
         ] }
         let! (:defreq) { FactoryGirl.create(:defence_request, :acknowledged, cco: user) }
         specify { expect(subject).to permit_actions_and_forbid_all_others actions }
@@ -136,9 +119,6 @@ RSpec.describe DefenceRequestPolicy do
           :close,
           :feedback,
           :accept,
-          :case_details_edit,
-          :detainee_details_edit,
-          :solicitor_details_edit
         ] }
         let! (:defreq) { FactoryGirl.create(:defence_request, :acknowledged, :with_dscc_number, cco: user) }
         specify { expect(subject).to permit_actions_and_forbid_all_others actions }
@@ -152,8 +132,6 @@ RSpec.describe DefenceRequestPolicy do
           :close,
           :feedback,
           :resend_details,
-          :detainee_details_edit,
-          :case_details_edit,
           :solicitor_time_of_arrival
         ] }
         let (:defreq) { FactoryGirl.create(:defence_request, :accepted, cco: user) }
