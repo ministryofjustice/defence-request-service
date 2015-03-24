@@ -98,6 +98,24 @@ RSpec.describe DateTimeField do
         end
       end
     end
+
+    context "blank?" do
+      context "no fields filled in" do
+        subject { DateField.new }
+
+        it "returns true" do
+          expect(subject).to be_blank
+        end
+      end
+
+      context "some filled in" do
+        subject { DateField.new day: "I am filled in but not necessarily valid" }
+
+        it "returns false" do
+          expect(subject).to_not be_blank
+        end
+      end
+    end
   end
 
 end

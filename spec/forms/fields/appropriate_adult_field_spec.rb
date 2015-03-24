@@ -78,5 +78,23 @@ RSpec.describe AppropriateAdultField do
         end
       end
     end
+
+    context "blank?" do
+      context "no value specified" do
+        subject { AppropriateAdultField.new }
+
+        it "returns true" do
+          expect(subject).to be_blank
+        end
+      end
+
+      context "some fields" do
+        subject { AppropriateAdultField.new appropriate_adult: "yes" }
+
+        it "returns false" do
+          expect(subject).to_not be_blank
+        end
+      end
+    end
   end
 end

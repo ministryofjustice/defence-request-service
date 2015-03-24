@@ -17,6 +17,10 @@ class DateField
     [year, month, day].any? &:present?
   end
 
+  def blank?
+    !present?
+  end
+
   def value
     Date.new year.to_i, month.to_i, day.to_i rescue nil
   end
