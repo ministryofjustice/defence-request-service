@@ -9,10 +9,10 @@
   <%= render 'defence_requests_table_head' %>
   <tbody>
     <% if policy(:defence_request).index? %>
-      <%= render 'dashboard', requests: @draft_requests, type: 'draft' %>
-      <%= render 'dashboard', requests: @queued_requests, type: 'queued' %>
-      <%= render 'dashboard', requests: @acknowledged_requests, type: 'acknowledged' %>
-      <%= render 'dashboard', requests: @accepted_requests, type: 'accepted' %>
+      <%= render 'defence_requests_table_body', requests: @draft_requests, type: 'draft' %>
+      <%= render 'defence_requests_table_body', requests: @queued_requests, type: 'queued' %>
+      <%= render 'defence_requests_table_body', requests: @acknowledged_requests, type: 'acknowledged' %>
+      <%= render 'defence_requests_table_body', requests: @accepted_requests, type: 'accepted' %>
     <% end %>
   </tbody>
 </table>
