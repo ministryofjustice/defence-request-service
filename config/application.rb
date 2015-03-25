@@ -28,6 +28,16 @@ module DefenceSolicitor
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
+    config.generators do |generate|
+      generate.helper false
+      generate.javascript_engine false
+      generate.request_specs false
+      generate.routing_specs false
+      generate.stylesheets false
+      generate.test_framework :rspec
+      generate.view_specs false
+    end
+
     config.relative_url_root = ENV['RAILS_RELATIVE_URL_ROOT'] || ''
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
@@ -50,5 +60,6 @@ module DefenceSolicitor
     config.autoload_paths += %W(#{config.root}/lib)
 
     config.action_controller.action_on_unpermitted_parameters = :raise
+    config.active_record.raise_in_transactional_callbacks = true
   end
 end

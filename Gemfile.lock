@@ -43,10 +43,13 @@ GEM
     audited-activerecord (4.0.0)
       activerecord (~> 4.0)
       audited (= 4.0.0)
+    awesome_print (1.6.1)
     bcrypt (3.1.10)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     builder (3.2.2)
+    byebug (4.0.3)
+      columnize (= 0.9.0)
     capybara (2.4.4)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -66,6 +69,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.9.0)
+    columnize (0.9.0)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
     database_cleaner (1.4.0)
@@ -171,6 +175,8 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-rails (0.3.3)
+      pry (>= 0.9.10)
     pundit (0.3.0)
       activesupport (>= 3.0.0)
     quiet_assets (1.1.0)
@@ -178,6 +184,7 @@ GEM
     rack (1.6.0)
     rack-test (0.6.3)
       rack (>= 1.0)
+    rack-timeout (0.2.1)
     rails (4.2.1)
       actionmailer (= 4.2.1)
       actionpack (= 4.2.1)
@@ -199,13 +206,8 @@ GEM
       loofah (~> 2.0)
     rails-observers (0.1.2)
       activemodel (~> 4.0)
-    rails_12factor (0.0.3)
-      rails_serve_static_assets
-      rails_stdout_logging
     rails_config (0.4.2)
       activesupport (>= 3.0)
-    rails_serve_static_assets (0.0.4)
-    rails_stdout_logging (0.0.3)
     railties (4.2.1)
       actionpack (= 4.2.1)
       activesupport (= 4.2.1)
@@ -309,6 +311,8 @@ PLATFORMS
 
 DEPENDENCIES
   audited-activerecord (~> 4.0.0)
+  awesome_print
+  byebug
   capybara
   codeclimate-test-reporter
   coffee-rails (~> 4.1.0)
@@ -329,11 +333,11 @@ DEPENDENCIES
   moj_template (~> 0.23.0)
   pg
   poltergeist
-  pry
+  pry-rails
   pundit (~> 0.3.0)
   quiet_assets (~> 1.1)
+  rack-timeout
   rails (= 4.2.1)
-  rails_12factor
   rails_config (~> 0.4.2)
   rspec-rails (~> 3.2.0)
   sass-rails (~> 5.0)

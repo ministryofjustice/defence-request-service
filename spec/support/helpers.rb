@@ -1,9 +1,4 @@
 module HelperMethods
-
-  def saop
-    save_and_open_page
-  end
-
   def create_role_and_login(role)
     password = '123456789'
     user = User.create(email: "#{role}@example.com", password: password, role: role.to_sym)
