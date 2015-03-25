@@ -44,7 +44,7 @@ User.where(email: 'solicitor5@example.com').first_or_create(
   email: 'solicitor5@example.com', password: 'password', role: :solicitor)
 
 
-NUMBER_OF_FIRMS = 100
+NUMBER_OF_FIRMS = 10
 SOLICITORS_PER_FIRM = 25
 NUMBER_OF_SOLICITORS = NUMBER_OF_FIRMS * SOLICITORS_PER_FIRM
 
