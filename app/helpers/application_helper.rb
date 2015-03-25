@@ -8,20 +8,23 @@ module ApplicationHelper
     end
   end
 
-  def list_errors(object, field_name)
-    if object.errors.any?
-      unless object.errors.messages[field_name].blank?
-        content_tag :ul do
-          object.errors.messages[field_name].collect do |field|
-            concat(content_tag(:li, field))
-          end
-        end
-      end
   def flash_message key, msg
     content_tag(:div, class: "#{key}-summary") do
       content_tag :p, msg
     end
   end
+
+  def object_error_messages active_model_messages
+    content_tag(:ul) do
+      active_model_messages.map do |field_name, field_messages|
+        errors_for_field field_name, field_messages
+      end.join.html_safe
+    end
+  end
+
+  def errors_for_field field_name, field_messages
+    content_tag :li do
+      "#{t(field_name)}: #{field_messages.join(', ').html_safe}".html_safe
     end
   end
 
