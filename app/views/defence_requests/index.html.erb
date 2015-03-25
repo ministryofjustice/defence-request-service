@@ -1,4 +1,5 @@
-<%= render 'shared/flash_messages' %>
+<%= flash_messages %>
+
 <h1><%= "#{t(current_user.role)}  #{t('dashboard')}" %></h1>
 <% if policy(:defence_request).create? %>
   <div class="new_defence_request">

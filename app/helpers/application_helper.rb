@@ -1,14 +1,11 @@
 module ApplicationHelper
 
-  def flash_messages(opts = {})
-    flash.to_h.slice('notice', 'alert').each do |msg_type, message|
-      concat(content_tag(:div, message, class: "#{msg_type}-summary") do
-        content_tag(:p, message) do
-          concat safe_join(Array(message), tag(:br))
-        end
-      end)
+  def flash_messages
+    capture do
+      flash.each do |key, msg|
+        concat flash_message(key, msg)
+      end
     end
-    nil
   end
 
   def list_errors(object, field_name)
@@ -20,6 +17,11 @@ module ApplicationHelper
           end
         end
       end
+  def flash_message key, msg
+    content_tag(:div, class: "#{key}-summary") do
+      content_tag :p, msg
+    end
+  end
     end
   end
 
