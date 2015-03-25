@@ -38,7 +38,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "docker" do |d|
     # Dockerfile-dev is the primary container we're building, but it requires the base
     # container
-    d.build_image "/vagrant", args: "-t #{DOCKER_IMAGE_TAG} -f /vagrant/docker/Dockerfile-base"
+    d.build_image "/vagrant", args: "-t #{DOCKER_IMAGE_TAG}-base -f /vagrant/docker/Dockerfile-base"
     d.build_image "/vagrant", args: "-t #{DOCKER_IMAGE_TAG}-dev -f /vagrant/docker/Dockerfile-dev"
 
     d.run "#{DOCKER_IMAGE_TAG}-dev",

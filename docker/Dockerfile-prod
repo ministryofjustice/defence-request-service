@@ -1,0 +1,51 @@
+FROM defence-request-service:latest
+
+COPY . /usr/src/app
+WORKDIR /usr/src/app
+
+# To run 'rake assets:precompile' we need a set of environment variables, since
+# the rake task loads rails to be able to function.
+#
+# Since we don't know the production config at the moment we start executing,
+# and we don't want to wait until boot time to run the asset precompile,
+# we use the environment variables in the .env.development file to run the precompile
+#
+COPY .env.development .env.local
+RUN ["bin/rake", "assets:clobber", "assets:precompile"]
+RUN rm -f .env.local
+
+
+###############################################################################
+# Runit setup
+###############################################################################
+# Runit requires inittab
+RUN touch /etc/inittab
+
+# Add application server
+COPY ./docker/runit/application-server/run /etc/service/application-server/run
+RUN chmod +x /etc/service/application-server
+
+###############################################################################
+# Cleanup
+###############################################################################
+# Clear any and all packages and logs, so that they don't take any space in the
+# Docker image. Do this towards the end, just in case any previous item
+# creates temporary files etc
+RUN apt-get -y autoremove --purge && apt-get clean
+RUN truncate -s 0 /var/log/*log
+RUN rm -rf logs/* tmp/*
+RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+###############################################################################
+# App Config
+###############################################################################
+# Default environment variables for production runs
+ENV RAILS_ENV production
+ENV UNICORN_PORT 3000
+
+EXPOSE $UNICORN_PORT
+
+CMD ["/usr/bin/runsvdir", "-P", "/etc/service"]
+
+VOLUME /usr/src/app/logs
+VOLUME /var/log
