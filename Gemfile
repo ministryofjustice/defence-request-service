@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.1.5'
+ruby '2.2.1'
 
 gem 'dotenv-rails', '~> 2.0.0', :require => 'dotenv/rails-now'
 
@@ -12,7 +12,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
 gem 'pg'
 gem 'pundit', '~> 0.3.0'
-gem 'rails', '4.2.0'
+gem 'rails', '4.2.1'
 gem 'rails_config', '~> 0.4.2'
 gem 'lograge'
 gem 'logstash-event'
