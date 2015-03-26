@@ -4,7 +4,7 @@
 
   <%= render('defence_requests/form_partials/case_interview_start_time', f: f) if @policy.interview_start_time_edit? %>
 
-  <%= render('defence_requests/form_partials/case_details', f: f) if @policy.create? || @policy.case_details_edit? %>
+  <%= render('defence_requests/form_partials/case_details', f: f) if @policy.create? %>
 
   <%= render('defence_requests/form_partials/case_dscc_number', f: f) if @policy.dscc_number_edit? %>
 </div>

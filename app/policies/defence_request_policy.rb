@@ -39,7 +39,7 @@ class DefenceRequestPolicy < ApplicationPolicy
   end
 
   def edit?
-    (cso || user_is_the_assigned_cco) && !record.closed?
+    ((cso && record.draft?) || (user_is_the_assigned_cco && !record.draft? && !record.queued?)) && !record.closed?
   end
 
   def update?
@@ -68,18 +68,6 @@ class DefenceRequestPolicy < ApplicationPolicy
 
   def interview_start_time_edit?
     cso && !record.new_record? && record.draft?
-  end
-
-  def case_details_edit?
-    edit? && (cso || (!record.draft? && user_is_the_assigned_cco))
-  end
-
-  def detainee_details_edit?
-    edit? && (cso || (!record.draft? && user_is_the_assigned_cco))
-  end
-
-  def solicitor_details_edit?
-    edit? && ((cso && record.draft?) || (record.acknowledged? && user_is_the_assigned_cco))
   end
 
   def acknowledge?
