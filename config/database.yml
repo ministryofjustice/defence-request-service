@@ -1,9 +1,8 @@
 default: &default
   adapter: postgresql
-  encoding: unicode
+  encoding: utf8
   # CircleCI requires that we use double-quotes here, otherwise
   # the command CircleCI uses to create database.yml fails.
-  database: <%= ENV.fetch("DEFENCE_SOLICITOR_DATABASE_DATABASE", nil) %>
   host: <%= ENV.fetch("DEFENCE_SOLICITOR_DATABASE_HOST", nil) %>
   password: <%= ENV.fetch("DEFENCE_SOLICITOR_DATABASE_PASSWORD", nil) %>
   username: <%= ENV.fetch("DEFENCE_SOLICITOR_DATABASE_USERNAME", nil) %>
@@ -11,9 +10,8 @@ default: &default
 
 development:
   <<: *default
+  database: defence-solicitor_development
 
 test:
   <<: *default
-
-production:
-  <<: *default
+  database: defence-solicitor_test
