@@ -1,0 +1,34 @@
+FROM defence-request-service:base_localbuild
+
+# For developer use only
+ENV RAILS_ENV development
+
+# Base packages:
+#   - postgresql-client
+#
+# Packages required for PhantomJS:
+#   - build-essential
+#   - chrpath
+#   - git-core
+#   - libssl-dev
+#   - libfontconfig1-dev
+#
+RUN apt-get update && apt-get install -y postgresql-client \
+	build-essential chrpath git-core libssl-dev libfontconfig1-dev
+
+###############################################################################
+# Install PhantomJS
+###############################################################################
+ADD vendor/downloads/phantomjs-1.9.7-linux-x86_64.tar.bz2 /usr/local/share/
+RUN ln -sf /usr/local/share/phantomjs-1.9.7-linux-x86_64/bin/phantomjs /usr/local/share/phantomjs && \
+    ln -sf /usr/local/share/phantomjs-1.9.7-linux-x86_64/bin/phantomjs /usr/local/bin/phantomjs && \
+    ln -sf /usr/local/share/phantomjs-1.9.7-linux-x86_64/bin/phantomjs /usr/bin/phantomjs && \
+    rm -f /usr/local/share/phantomjs-1.9.7-linux-x86_64.tar.bz2
+
+###############################################################################
+# Defaults for executing container
+###############################################################################
+VOLUME /usr/src/app
+
+# We don't run /usr/local/bin/clean-up-docker-container here, since in development mode
+# users may want to quickly run 'apt-get install packagename'.
