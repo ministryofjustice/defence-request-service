@@ -16,6 +16,7 @@ class DefenceRequest < ActiveRecord::Base
     state :queued
     state :acknowledged
     state :accepted
+    state :aborted
     state :closed
     state :finished
 
@@ -29,6 +30,10 @@ class DefenceRequest < ActiveRecord::Base
 
     event :accept, success: :send_solicitor_case_details do
       transitions from: [:acknowledged], to: :accepted, guard: :dscc_number?
+    end
+
+    event :abort do
+      transitions from: [:queued, :acknowledged, :accepted], to: :aborted
     end
 
     event :finish do
