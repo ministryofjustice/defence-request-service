@@ -55,7 +55,7 @@ RSpec.describe DefenceRequest, type: :model do
       end
 
       describe 'impossible transitions' do
-        disallowed_events = ([:abort, :accept, :acknowledge, :close, :finish, :queue] - allowed_events)
+        disallowed_events = (DefenceRequest.available_events - allowed_events)
         disallowed_events.each { |e| it_behaves_like 'transition impossible', e }
       end
     end
