@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       patch 'close' => 'defence_requests#feedback', as: 'close_feedback'
       put 'queue'
       put 'acknowledge'
+      put 'abort'
       patch 'accept' => 'defence_requests#accept'
       post 'resend_details'
       patch 'solicitor_time_of_arrival' => 'defence_requests#solicitor_time_of_arrival', as: 'solicitor_time_of_arrival'

@@ -1,6 +1,7 @@
 en:
   "no": "No"
   "yes": "Yes"
+  abort: "Abort"
   accepted: "Accepted"
   accepted_defence_request: "Accepted Defence Requests"
   accessibility: "Accessibility"
@@ -99,6 +100,7 @@ en:
   year: "Year"
 
   models:
+    aborted: "%{model} successfully aborted"
     accept: "%{model} was marked as accepted"
     acknowledged: "%{model} successfully acknowledged"
     close: "%{model} successfully closed"
@@ -107,6 +109,7 @@ en:
     details_sent: "Details successfully sent"
     sent_for_processing: "%{model} successfully sent for processing"
     dscc_number_required: "A Valid DSCC number is required to update and accept a %{model}"
+    failed_abort: "%{model} was not aborted"
     failed_accept: "%{model} was not marked as accepted"
     failed_acknowledge: "%{model} was not acknowledged"
     failed_close: "%{model} was not closed"

@@ -88,6 +88,32 @@ RSpec.feature "Custody Suite Officers viewing their dashboard" do
     an_email_has_been_sent
   end
 
+  def check_abort_request defence_request
+    visit defence_requests_path
+    request_id = "#defence_request_#{defence_request.id}"
+    within request_id do
+      click_button 'Abort'
+    end
+
+    expect(page).to have_content('Defence Request successfully aborted')
+    expect(page).to_not have_selector(request_id)
+
+    expect(defence_request.reload.state).to eq('aborted')
+  end
+
+  specify 'can abort queued defence request', js: true do
+    dr_draft.queue
+    dr_draft.save
+    check_abort_request dr_draft
+  end
+
+  specify 'can abort acknowledged defence request', js: true do
+    check_abort_request dr_ack1
+  end
+
+  specify 'can abort accepted defence request', js: true do
+    check_abort_request dr_accepted
+  end
 end
 
 def element_order_correct?(first_element, second_element)
@@ -98,4 +124,3 @@ def dr_can_not_be_sent_for_processing_for_some_reason defence_request
   expect(DefenceRequest).to receive(:find).with(defence_request.id.to_s) { defence_request }
   expect(defence_request).to receive(:queue) { false }
 end
-

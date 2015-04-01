@@ -1,7 +1,9 @@
-<%= link_to t('show'), defence_request_path(def_req) if policy(def_req).show? %>
-<%= link_to t('close'), close_defence_request_path(def_req) if policy(def_req).close? %>
-<%= link_to t('edit'), edit_defence_request_path(def_req) if policy(def_req).edit? %>
-<%= button_to t('acknowledge'), acknowledge_defence_request_path(def_req), method: :put if policy(def_req).acknowledge? %>
-<%= button_to t('accepted'), accept_defence_request_path(def_req), method: :patch if policy(def_req).accept? %>
-<%= button_to t('resend_details'), resend_details_defence_request_path(def_req), onclick: "return confirm('Are you sure?')", method: :post if policy(def_req).resend_details? %>
-<%= button_to t('send_for_processing'), queue_defence_request_path(def_req), method: :put if policy(def_req).queue? %>
+<% can = policy(def_req) %>
+<%= link_to t('show'), defence_request_path(def_req) if can.show? %>
+<%= link_to t('close'), close_defence_request_path(def_req) if can.close? %>
+<%= link_to t('edit'), edit_defence_request_path(def_req) if can.edit? %>
+<%= button_to t('acknowledge'), acknowledge_defence_request_path(def_req), method: :put if can.acknowledge? %>
+<%= button_to t('accepted'), accept_defence_request_path(def_req), method: :patch if can.accept? %>
+<%= button_to t('resend_details'), resend_details_defence_request_path(def_req), onclick: "return confirm('Are you sure?')", method: :post if can.resend_details? %>
+<%= button_to t('send_for_processing'), queue_defence_request_path(def_req), method: :put if can.queue? %>
+<%= button_to t('abort'), abort_defence_request_path(def_req), method: :put if can.abort? %>

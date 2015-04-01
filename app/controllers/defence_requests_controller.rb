@@ -68,6 +68,14 @@ class DefenceRequestsController < BaseController
     end
   end
 
+  def abort
+    if @defence_request.abort && @defence_request.save
+      redirect_to(defence_requests_path, notice: flash_message(:aborted, DefenceRequest))
+    else
+      redirect_to(defence_requests_path, notice: flash_message(:failed_abort, DefenceRequest))
+    end
+  end
+
   def feedback
     if @defence_request.update_attributes(defence_request_params) && close_and_save_defence_request
       redirect_to(defence_requests_path, notice: flash_message(:close, DefenceRequest))
