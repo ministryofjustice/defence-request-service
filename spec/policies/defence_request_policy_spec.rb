@@ -47,6 +47,7 @@ RSpec.describe DefenceRequestPolicy do
       let (:allowed_actions) { [
         :show,
         :close,
+        :abort,
         :feedback
       ] }
       let (:defreq) { FactoryGirl.create(:defence_request, :acknowledged) }
@@ -57,6 +58,7 @@ RSpec.describe DefenceRequestPolicy do
       let (:allowed_actions) { [
         :show,
         :close,
+        :abort,
         :feedback,
         :resend_details,
         :solicitor_time_of_arrival

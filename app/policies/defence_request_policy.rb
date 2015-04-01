@@ -94,6 +94,10 @@ class DefenceRequestPolicy < ApplicationPolicy
     cso && record.draft?
   end
 
+  def abort?
+    cso && record.can_execute_abort?
+  end
+
   private
 
   def cso
