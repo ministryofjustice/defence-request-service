@@ -2,17 +2,20 @@ module HelperMethods
   def create_role_and_login(role)
     password = '123456789'
     user = User.create(email: "#{role}@example.com", password: password, role: role.to_sym)
-    visit new_user_session_path
-    fill_in 'user_email', with: user.email
-    fill_in 'user_password', with: password
-    click_button 'Sign in'
+    # visit new_user_session_path
+    # fill_in 'user_email', with: user.email
+    # fill_in 'user_password', with: password
+    # click_button 'Sign in'
+    login_as(user, scope: :user) # use warden helper to speed up tests
   end
 
   def login_as_user(email)
-    visit new_user_session_path
-    fill_in 'user_email', with: email
-    fill_in 'user_password', with: 'password'
-    click_button 'Sign in'
+    user = User.find_by_email(email)
+    # visit new_user_session_path
+    # fill_in 'user_email', with: email
+    # fill_in 'user_password', with: 'password'
+    # click_button 'Sign in'
+    login_as(user, scope: :user) # use warden helper to speed up tests
   end
 
   def create_a_defence_request
