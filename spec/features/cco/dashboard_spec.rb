@@ -7,13 +7,14 @@ RSpec.feature "Custody Center Operatives viewing their dashboard" do
     let!(:dr_queued) { create(:defence_request, :queued) }
     let!(:dr_ack) { create(:defence_request, :acknowledged) }
     let!(:dr_accepted) { create(:defence_request, :accepted) }
+    let!(:dr_aborted) { create(:defence_request, :aborted) }
     let(:cco_user2){ create :cco_user }
 
     before :each do
       create_role_and_login("cco")
     end
 
-    specify "can see tables of \"queued\" and \"acknowledged\" defence requests" do
+    specify 'can see tables of "queued", "acknowledged" and "aborted" defence requests' do
       visit defence_requests_path
 
       within ".queued-defence-request" do
@@ -22,6 +23,10 @@ RSpec.feature "Custody Center Operatives viewing their dashboard" do
 
       within ".acknowledged-defence-request" do
         expect(page).to have_content(dr_ack.solicitor_name)
+      end
+
+      within ".aborted-defence-request" do
+        expect(page).to have_content(dr_aborted.solicitor_name)
       end
     end
 

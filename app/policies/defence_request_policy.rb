@@ -9,7 +9,7 @@ class DefenceRequestPolicy < ApplicationPolicy
 
     def resolve
       if user.cso?
-        scope.all
+        scope.not_aborted
       elsif user.cco?
         scope.not_draft
       elsif user.solicitor?
@@ -27,7 +27,7 @@ class DefenceRequestPolicy < ApplicationPolicy
   end
 
   def show?
-    ((cso || cco) && !record.aborted?) || user_is_the_assigned_solicitor
+    (cso && !record.aborted?) || cco  || user_is_the_assigned_solicitor
   end
 
   def new?

@@ -14,6 +14,7 @@
       <%= render 'defence_requests_table_body', requests: @queued_requests, type: 'queued' %>
       <%= render 'defence_requests_table_body', requests: @acknowledged_requests, type: 'acknowledged' %>
       <%= render 'defence_requests_table_body', requests: @accepted_requests, type: 'accepted' %>
+      <%= render 'defence_requests_table_body', requests: @aborted_requests, type: 'aborted' %>
     <% end %>
   </tbody>
 </table>

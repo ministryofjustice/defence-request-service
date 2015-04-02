@@ -127,7 +127,9 @@ RSpec.describe DefenceRequestPolicy do
       end
 
       context "with an aborted DR" do
-        let (:allowed_actions) { [] }
+        let (:allowed_actions) { [
+          :show
+        ] }
         let! (:defreq) { FactoryGirl.create(:defence_request, :aborted, cco: user) }
         specify { expect(subject).to permit_actions_and_forbid_all_others actions }
       end
@@ -154,7 +156,9 @@ RSpec.describe DefenceRequestPolicy do
 
       context "with an aborted DR" do
         let (:other_cco) { FactoryGirl.create(:cco_user)}
-        let (:allowed_actions) { [] }
+        let (:allowed_actions) { [
+          :show
+        ] }
         let! (:defreq) { FactoryGirl.create(:defence_request, :aborted, cco: other_cco) }
         specify { expect(subject).to permit_actions_and_forbid_all_others actions }
       end

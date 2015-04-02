@@ -10,6 +10,7 @@ class DefenceRequest < ActiveRecord::Base
 
   scope :has_solicitor, ->(solicitor) { where(solicitor: solicitor) }
   scope :not_draft, -> { where.not(state: 'draft') }
+  scope :not_aborted, -> { where.not(state: 'aborted') }
 
   state_machine auto_scopes: true do
     state :draft # first one is initial state

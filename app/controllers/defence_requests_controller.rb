@@ -120,6 +120,7 @@ class DefenceRequestsController < BaseController
     @queued_requests = policy_scope(DefenceRequest).queued.order(created_at: :asc)
     @acknowledged_requests = policy_scope(DefenceRequest).acknowledged.order(created_at: :asc)
     @accepted_requests = policy_scope(DefenceRequest).accepted.order(created_at: :asc)
+    @aborted_requests = policy_scope(DefenceRequest).aborted.order(created_at: :asc)
   end
 
   def associate_cco
