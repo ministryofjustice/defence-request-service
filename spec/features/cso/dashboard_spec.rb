@@ -92,13 +92,18 @@ RSpec.feature "Custody Suite Officers viewing their dashboard" do
     visit defence_requests_path
     request_id = "#defence_request_#{defence_request.id}"
     within request_id do
-      click_button 'Abort'
+      click_link 'Abort'
     end
+    reason = "Reason for abort"
+    fill_in "Reason aborted", with: reason
+    click_button 'Abort'
 
     expect(page).to have_content('Defence Request successfully aborted')
     expect(page).to_not have_selector(request_id)
 
-    expect(defence_request.reload.state).to eq('aborted')
+    defence_request = defence_request.reload
+    expect(defence_request.state).to eq('aborted')
+    expect(defence_request.reason_aborted).to eq(reason)
   end
 
   specify 'can abort queued defence request', js: true do

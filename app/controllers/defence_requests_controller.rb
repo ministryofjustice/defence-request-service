@@ -7,7 +7,6 @@ class DefenceRequestsController < BaseController
 
   before_action ->(c) { authorize defence_request, "#{c.action_name}?" }
 
-
   def index
   end
 
@@ -69,10 +68,16 @@ class DefenceRequestsController < BaseController
   end
 
   def abort
+  end
+
+  def reason_aborted
+    @defence_request.reason_aborted = defence_request_params[:reason_aborted]
+
     if @defence_request.abort && @defence_request.save
-      redirect_to(defence_requests_path, notice: flash_message(:aborted, DefenceRequest))
+      message = flash_message(:aborted, DefenceRequest)
+      redirect_to defence_requests_path, notice: message
     else
-      redirect_to(defence_requests_path, notice: flash_message(:failed_abort, DefenceRequest))
+      render :abort
     end
   end
 
@@ -176,29 +181,30 @@ class DefenceRequestsController < BaseController
   end
 
   def defence_request_params
-    params.require(:defence_request).permit(:solicitor_type,
-                                            :solicitor_name,
-                                            :solicitor_firm,
-                                            :solicitor_email,
-                                            { solicitor: :email },
-                                            :scheme,
-                                            :phone_number,
-                                            :detainee_name,
-                                            :detainee_age,
-                                            :time_of_arrival,
-                                            :gender,
-                                            :adult,
-                                            { date_of_birth: %i[day month year] },
-                                            { appropriate_adult: :appropriate_adult } ,
-                                            :custody_number,
-                                            :allegations,
-                                            :comments,
-                                            { interview_start_time: %i[day month year hour min sec] },
-                                            { time_of_arrival: %i[day month year hour min sec] },
-                                            :dscc_number,
-                                            :feedback,
-                                            { solicitor_time_of_arrival: %i[day month year hour min sec] })
-
+    params.require(:defence_request).permit(
+      :solicitor_type,
+      :solicitor_name,
+      :solicitor_firm,
+      :solicitor_email,
+      { solicitor: :email },
+      :scheme,
+      :phone_number,
+      :detainee_name,
+      :detainee_age,
+      :time_of_arrival,
+      :gender,
+      :adult,
+      { date_of_birth: %i[day month year] },
+      { appropriate_adult: :appropriate_adult },
+      :custody_number,
+      :allegations,
+      :comments,
+      { interview_start_time: %i[day month year hour min sec] },
+      { time_of_arrival: %i[day month year hour min sec] },
+      :dscc_number,
+      :feedback,
+      :reason_aborted,
+      { solicitor_time_of_arrival: %i[day month year hour min sec] })
   end
 
   def close_and_save_defence_request

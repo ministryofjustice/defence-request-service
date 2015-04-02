@@ -71,6 +71,7 @@ en:
   own: 'Own'
   phone_number: "Phone number"
   prohibit_save: Please review the following %{count}
+  reason_aborted: Reason aborted
   resend_details: "Resend details"
   send_for_processing: "Send for Processing"
   scheme: "Scheme"

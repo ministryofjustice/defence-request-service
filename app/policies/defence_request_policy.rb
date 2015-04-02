@@ -98,6 +98,10 @@ class DefenceRequestPolicy < ApplicationPolicy
     cso && record.can_execute_abort?
   end
 
+  def reason_aborted?
+    abort?
+  end
+
   private
 
   def cso

@@ -48,6 +48,7 @@ class DefenceRequest < ActiveRecord::Base
   before_save :format_phone_number
 
   validates :feedback, feedback: true
+  validates :reason_aborted, presence: true, if: :aborted?
 
   validates :solicitor_name,
             :solicitor_firm,
