@@ -27,7 +27,7 @@ class DefenceRequestPolicy < ApplicationPolicy
   end
 
   def show?
-    ((cso || cco) && !record.closed?) || user_is_the_assigned_solicitor
+    ((cso || cco) && !record.aborted?) || user_is_the_assigned_solicitor
   end
 
   def new?
@@ -39,7 +39,7 @@ class DefenceRequestPolicy < ApplicationPolicy
   end
 
   def edit?
-    ((cso && record.draft?) || (user_is_the_assigned_cco && !record.draft? && !record.queued?)) && !record.closed?
+    ((cso && record.draft?) || (user_is_the_assigned_cco && !record.draft? && !record.queued?)) && !record.aborted?
   end
 
   def update?
@@ -52,14 +52,6 @@ class DefenceRequestPolicy < ApplicationPolicy
 
   def add_case_time_of_arrival?
     create? && record.new_record?
-  end
-
-  def feedback?
-    (cso || cco) && record.can_execute_close?
-  end
-
-  def close?
-    (cso || cco) && record.can_execute_close?
   end
 
   def dscc_number_edit?
@@ -83,11 +75,11 @@ class DefenceRequestPolicy < ApplicationPolicy
   end
 
   def solicitor_time_of_arrival?
-    (user_is_the_assigned_solicitor && !record.closed?) || (record.accepted? && (cco || cso))
+    (user_is_the_assigned_solicitor && !record.aborted?) || (record.accepted? && (cco || cso))
   end
 
   def solicitor_time_of_arrival_from_show?
-    user_is_the_assigned_solicitor && !record.closed?
+    user_is_the_assigned_solicitor && !record.aborted?
   end
 
   def queue?

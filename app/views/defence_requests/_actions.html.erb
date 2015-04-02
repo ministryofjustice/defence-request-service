@@ -1,6 +1,5 @@
 <% can = policy(def_req) %>
 <%= link_to t('show'), defence_request_path(def_req) if can.show? %>
-<%= link_to t('close'), close_defence_request_path(def_req) if can.close? %>
 <%= link_to t('abort'), abort_defence_request_path(def_req) if can.abort? %>
 <%= link_to t('edit'), edit_defence_request_path(def_req) if can.edit? %>
 <%= button_to t('acknowledge'), acknowledge_defence_request_path(def_req), method: :put if can.acknowledge? %>

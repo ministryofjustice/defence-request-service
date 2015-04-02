@@ -17,7 +17,6 @@ RSpec.describe DefenceRequestForm do
                               allegations: defence_request.allegations,
                               time_of_arrival: datetime_to_params(defence_request.time_of_arrival),
                               custody_number: defence_request.custody_number,
-                              feedback: defence_request.feedback,
                               comments: defence_request.comments } }
 
 

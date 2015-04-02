@@ -205,7 +205,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
       expect(dr_created.reason_aborted).to eq "Aborted reasoning"
     end
 
-    specify "can close the request from the dashboard" do
+    specify "can abort the request from the dashboard" do
       dr_created.queue
       dr_created.save
       visit root_path
@@ -213,38 +213,6 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
         click_link "Abort"
       end
       abort_request
-    end
-
-    def close_request
-      expect(page).to have_content("Close the Defence Request")
-      click_button "Close"
-      expect(page).to have_content("Feedback: can't be blank")
-      expect(page).to have_content("Close the Defence Request")
-
-      fill_in "Feedback", with: "The feedback"
-      click_button "Close"
-      expect(page).to have_content("Defence Request successfully closed")
-      expect(page).to have_content("Custody Suite Officer Dashboard")
-      dr_created.reload
-      expect(dr_created.state).to eq "closed"
-      expect(dr_created.feedback).to eq "The feedback"
-    end
-
-    specify "can close the request from the dashboard" do
-      visit root_path
-      within "#defence_request_#{dr_created.id}" do
-        click_link "Close"
-      end
-      close_request
-    end
-
-    specify "can close the request from the edit page" do
-      visit root_path
-      within "#defence_request_#{dr_created.id}" do
-        click_link "Edit"
-      end
-      click_link "Close"
-      close_request
     end
 
     context "with requests that have not been acklowledged yet" do

@@ -17,7 +17,6 @@ class DefenceRequest < ActiveRecord::Base
     state :acknowledged
     state :accepted
     state :aborted
-    state :closed
     state :finished
 
     event :queue do
@@ -40,14 +39,10 @@ class DefenceRequest < ActiveRecord::Base
       transitions from: [:acknowledged, :accepted], to: :finished
     end
 
-    event :close do
-      transitions from: [:draft, :acknowledged, :accepted], to: :closed
-    end
   end
 
   before_save :format_phone_number
 
-  validates :feedback, feedback: true
   validates :reason_aborted, presence: true, if: :aborted?
 
   validates :solicitor_name,

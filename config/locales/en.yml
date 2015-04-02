@@ -17,7 +17,7 @@ en:
   call_call_center: "Please call the Call Centre on 0999 999 9999"
   cancel: "Cancel"
   cancel_and_delete_all_details: "Cancel and delete all details"
-  case_closed: "This case has been closed with the following feedback"
+  case_aborted: "This case has been aborted for the following reason"
   case_details: "Case Details"
   cco: "Call Center Operative"
   change_password: "Change Password"

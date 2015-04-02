@@ -3,10 +3,10 @@
 <div class="inner group">
   <br/>
   <%= link_to t('dashboard'), defence_requests_path %>
-  <% if @defence_request.feedback? %>
-    <h1><%= t('case_closed') %></h1>
+  <% if @defence_request.reason_aborted? %>
+    <h1><%= t('case_aborted') %></h1>
 
-    <p><%= @defence_request.feedback %></p>
+    <p><%= @defence_request.reason_aborted %></p>
 
     <p><%= t('call_call_center') %></p>
   <% else %>

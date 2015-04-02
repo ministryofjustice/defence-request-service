@@ -81,17 +81,6 @@ class DefenceRequestsController < BaseController
     end
   end
 
-  def feedback
-    if @defence_request.update_attributes(defence_request_params) && close_and_save_defence_request
-      redirect_to(defence_requests_path, notice: flash_message(:close, DefenceRequest))
-    else
-      render :close
-    end
-  end
-
-  def close
-  end
-
   def accept
     if @defence_request.accept && @defence_request.save
       redirect_to(defence_requests_path, notice: flash_message(:accept, DefenceRequest))
@@ -202,13 +191,8 @@ class DefenceRequestsController < BaseController
       { interview_start_time: %i[day month year hour min sec] },
       { time_of_arrival: %i[day month year hour min sec] },
       :dscc_number,
-      :feedback,
       :reason_aborted,
       { solicitor_time_of_arrival: %i[day month year hour min sec] })
-  end
-
-  def close_and_save_defence_request
-    @defence_request.close && @defence_request.save
   end
 
   def accept_and_save_defence_request

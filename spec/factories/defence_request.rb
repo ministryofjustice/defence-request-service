@@ -51,10 +51,10 @@ FactoryGirl.define do
     association :solicitor, factory: :solicitor_user
   end
 
-  trait :closed do
+  trait :aborted do
     dscc_number '123456'
-    feedback 'This has been closed for a reason.'
-    state 'closed'
+    reason_aborted 'This has been closed for a reason.'
+    state 'aborted'
   end
 
   trait :finished do
