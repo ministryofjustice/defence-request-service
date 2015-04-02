@@ -27,6 +27,7 @@ unless ENV["NO_COVERAGE"]
 end
 
 require "webmock/rspec"
+require 'warden'
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
@@ -37,6 +38,11 @@ RSpec.configure do |config|
   config.mock_with :rspec do |mocks|
     mocks.syntax = :expect
     mocks.verify_partial_doubles = true
+  end
+
+  config.include Warden::Test::Helpers
+  config.before :suite do
+    Warden.test_mode!
   end
 
   config.disable_monkey_patching!

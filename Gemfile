@@ -31,7 +31,6 @@ gem "govuk_elements_rails", "~> 0.1.1"
 
 group :development do
   gem "guard-rspec", require: false
-  gem "terminal-notifier-guard"
   gem "web-console", "~> 2.0"
 end
 
@@ -42,6 +41,7 @@ group :development, :test do
   gem "pry-rails"
   gem "quiet_assets", "~> 1.1"
   gem "rspec-rails", "~> 3.2.0"
+  gem 'rb-fsevent' if `uname` =~ /Darwin/
 end
 
 group :test do
