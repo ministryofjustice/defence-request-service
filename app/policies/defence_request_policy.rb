@@ -27,7 +27,7 @@ class DefenceRequestPolicy < ApplicationPolicy
   end
 
   def show?
-    (cso && !record.aborted?) || cco  || user_is_the_assigned_solicitor
+    (cso && !record.aborted?) || ((cco  || user_is_the_assigned_solicitor) && !record.draft?)
   end
 
   def new?

@@ -83,9 +83,7 @@ RSpec.describe DefenceRequestPolicy do
     }
 
     context "with a draft DR" do
-      let (:allowed_actions) { [
-        :show
-      ] }
+      let (:allowed_actions) { [] }
       let (:defreq) { FactoryGirl.create(:defence_request) }
       specify { expect(subject).to permit_actions_and_forbid_all_others actions }
     end
