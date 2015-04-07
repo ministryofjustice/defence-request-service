@@ -1,7 +1,7 @@
 class DefenceRequestsController < BaseController
 
-  before_action :find_defence_request, :set_policy, except: [:index, :new, :create, :refresh_dashboard, :solicitors_search]
-  before_action :new_defence_request, only: [:new, :create]
+  before_action :find_defence_request, except: [:index, :new, :create, :refresh_dashboard, :solicitors_search]
+  before_action :set_policy, except: [:index, :refresh_dashboard, :solicitors_search]
   before_action :new_defence_request_form, only: [:show, :new, :create, :edit, :update, :solicitor_time_of_arrival]
   before_action :get_defence_request_scopes, only: [:index, :refresh_dashboard]
 
@@ -14,11 +14,9 @@ class DefenceRequestsController < BaseController
   end
 
   def new
-    set_policy
   end
 
   def create
-    set_policy
     if @defence_request_form.submit(defence_request_params)
       redirect_to(@defence_request_form.defence_request, notice: flash_message(:create, DefenceRequestForm))
     else
@@ -155,14 +153,10 @@ class DefenceRequestsController < BaseController
   end
 
   def set_policy
-    @policy ||= policy(@defence_request)
+    @policy ||= policy(defence_request)
   end
 
   def defence_request
-    @defence_request ||= DefenceRequest.new
-  end
-
-  def new_defence_request
     @defence_request ||= DefenceRequest.new
   end
 
