@@ -32,99 +32,64 @@ RSpec.describe DefenceRequest, type: :model do
   end
 
   describe 'states' do
+
     it 'allows for correct transitions' do
-      expect(DefenceRequest.available_states).to eq [:accepted, :acknowledged, :closed, :draft, :finished, :queued]
+      expect(DefenceRequest.available_states).to eq [:aborted, :accepted, :acknowledged, :draft, :finished, :queued]
+      expect(DefenceRequest.available_events).to eq [:abort, :accept, :acknowledge, :finish, :queue]
     end
 
-    describe 'draft' do
-      subject { FactoryGirl.create(:defence_request, :draft) }
+    shared_examples 'transition possible' do |event|
+      specify { expect{ subject.send(event) }.to_not raise_error }
+      specify { expect( subject.send("can_execute_#{event}?".to_sym) ).to eq true }
+    end
 
-      specify { expect(subject.current_state).to eql :draft }
+    shared_examples 'transition impossible' do |event|
+      specify { expect( subject.send("can_execute_#{event}?".to_sym) ).to eq false }
+    end
+
+    shared_examples 'allowed transitions' do |allowed_events|
+      specify { expect(subject.current_state).to eql state }
 
       describe 'possible transitions' do
-        specify { expect{ subject.queue }.to_not raise_error }
-        specify { expect(subject.can_execute_queue?).to eq true }
-        specify { expect{ subject.close }.to_not raise_error }
-        specify { expect(subject.can_execute_close?).to eq true }
+        allowed_events.each { |e| it_behaves_like 'transition possible', e }
       end
 
       describe 'impossible transitions' do
-        specify { expect(subject.can_execute_acknowledge?).to eq false }
-        specify { expect(subject.can_execute_accept?).to eq false }
-        specify { expect(subject.can_execute_finish?).to eq false }
+        disallowed_events = (DefenceRequest.available_events - allowed_events)
+        disallowed_events.each { |e| it_behaves_like 'transition impossible', e }
       end
     end
 
-    describe 'acknowledged' do
-      subject { FactoryGirl.create(:defence_request, :acknowledged) }
+    subject { FactoryGirl.create(:defence_request, state) }
 
-      specify { expect(subject.current_state).to eql :acknowledged }
+    describe 'draft' do
+      let(:state) { :draft }
+      include_examples 'allowed transitions', [ :queue ]
+    end
+
+    describe 'queued' do
+      let(:state) { :queued }
+      include_examples 'allowed transitions', [ :acknowledge, :abort ]
+    end
+
+    describe 'acknowledged' do
+      let(:state) { :acknowledged }
+      include_examples 'allowed transitions', [ :finish, :abort ]
 
       context 'with dscc number' do
         subject { FactoryGirl.create(:defence_request, :acknowledged, :with_dscc_number) }
-        specify { expect{ subject.accept }.to_not raise_error }
-        specify { expect(subject.can_execute_accept?).to eq true }
-      end
-
-      describe 'allowed transitions' do
-        specify { expect{ subject.close }.to_not raise_error }
-        specify { expect(subject.can_execute_close?).to eq true }
-        specify { expect{ subject.finish }.to_not raise_error }
-        specify { expect(subject.can_execute_finish?).to eq true }
-      end
-
-      describe 'disallowed transitions' do
-        specify { expect(subject.can_execute_queue?).to eq false }
-        specify { expect(subject.can_execute_acknowledge?).to eq false }
-        specify { expect(subject.can_execute_accept?).to eq false }
+        include_examples 'allowed transitions', [ :accept, :finish, :abort ]
       end
     end
 
     describe 'accepted' do
-      subject { FactoryGirl.create(:defence_request, :accepted) }
-
-      specify { expect(subject.current_state).to eql :accepted }
-
-      describe 'possible transitions' do
-        specify { expect{ subject.close }.to_not raise_error }
-        specify { expect(subject.can_execute_close?).to eq true }
-        specify { expect{ subject.finish }.to_not raise_error }
-        specify { expect(subject.can_execute_finish?).to eq true }
-      end
-
-      describe 'impossible transitions' do
-        specify { expect(subject.can_execute_queue?).to eq false }
-        specify { expect(subject.can_execute_acknowledge?).to eq false }
-        specify { expect(subject.can_execute_accept?).to eq false }
-      end
-    end
-
-    describe 'closed' do
-      subject { FactoryGirl.create(:defence_request, :closed) }
-
-      specify { expect(subject.current_state).to eql :closed }
-
-      describe 'impossible transitions' do
-        specify { expect(subject.can_execute_queue?).to eq false }
-        specify { expect(subject.can_execute_acknowledge?).to eq false }
-        specify { expect(subject.can_execute_accept?).to eq false }
-        specify { expect(subject.can_execute_close?).to eq false }
-        specify { expect(subject.can_execute_finish?).to eq false }
-      end
+      let(:state) { :accepted }
+      include_examples 'allowed transitions', [ :finish, :abort ]
     end
 
     describe 'finished' do
-      subject { FactoryGirl.create(:defence_request, :finished) }
-
-      specify { expect(subject.current_state).to eql :finished }
-
-      describe 'impossible transitions' do
-        specify { expect(subject.can_execute_queue?).to eq false }
-        specify { expect(subject.can_execute_acknowledge?).to eq false }
-        specify { expect(subject.can_execute_accept?).to eq false }
-        specify { expect(subject.can_execute_close?).to eq false }
-        specify { expect(subject.can_execute_finish?).to eq false }
-      end
+      let(:state) { :finished }
+      include_examples 'allowed transitions', []
     end
   end
 

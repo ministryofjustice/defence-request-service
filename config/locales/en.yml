@@ -1,6 +1,7 @@
 en:
   "no": "No"
   "yes": "Yes"
+  abort: "Abort"
   accepted: "Accepted"
   accepted_defence_request: "Accepted Defence Requests"
   accessibility: "Accessibility"
@@ -16,7 +17,7 @@ en:
   call_call_center: "Please call the Call Centre on 0999 999 9999"
   cancel: "Cancel"
   cancel_and_delete_all_details: "Cancel and delete all details"
-  case_closed: "This case has been closed with the following feedback"
+  case_aborted: "This case has been aborted for the following reason"
   case_details: "Case Details"
   cco: "Call Center Operative"
   change_password: "Change Password"
@@ -70,6 +71,7 @@ en:
   own: 'Own'
   phone_number: "Phone number"
   prohibit_save: Please review the following %{count}
+  reason_aborted: Reason aborted
   resend_details: "Resend details"
   send_for_processing: "Send for Processing"
   scheme: "Scheme"
@@ -99,6 +101,7 @@ en:
   year: "Year"
 
   models:
+    aborted: "%{model} successfully aborted"
     accept: "%{model} was marked as accepted"
     acknowledged: "%{model} successfully acknowledged"
     close: "%{model} successfully closed"
@@ -107,6 +110,7 @@ en:
     details_sent: "Details successfully sent"
     sent_for_processing: "%{model} successfully sent for processing"
     dscc_number_required: "A Valid DSCC number is required to update and accept a %{model}"
+    failed_abort: "%{model} was not aborted"
     failed_accept: "%{model} was not marked as accepted"
     failed_acknowledge: "%{model} was not acknowledged"
     failed_close: "%{model} was not closed"

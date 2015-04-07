@@ -30,23 +30,6 @@ RSpec.feature "Call Center Operatives managing defence requests" do
       expect(page).to_not have_selector(".time-of-arrival")
     end
 
-    specify "can close the request from the dashboard" do
-      visit root_path
-      within "#defence_request_#{accepted_dr.id}" do
-        click_link "Close"
-      end
-      expect(page).to have_content("Close the Defence Request")
-      click_button "Close"
-      expect(page).to have_content("Feedback: can't be blank")
-      expect(page).to have_content("Close the Defence Request")
-
-      fill_in "Feedback", with: "I just cant take it any more..."
-      click_button "Close"
-      expect(page).to have_content("Defence Request successfully closed")
-      expect(page).to have_content("Call Center Operative Dashboard")
-      accepted_dr.reload
-      expect(accepted_dr.state).to eq "closed"
-    end
   end
 
   context "with requests they are assigned to" do

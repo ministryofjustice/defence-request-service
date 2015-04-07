@@ -8,6 +8,6 @@
   <%= f.submit(t('update_and_accept'), class: 'button warning') if @policy.dscc_number_edit? %>
   <div class="form-links">
     <%= link_to t('cancel'), defence_requests_path %>
-    <%= link_to t('close'), close_defence_request_path(@defence_request_form.defence_request) if @policy.close? %>
+    <%= link_to t('abort'), abort_defence_request_path(@defence_request_form.defence_request) if @policy.abort? %>
   </div>
 <% end %>

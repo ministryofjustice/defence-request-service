@@ -1,12 +1,11 @@
 class DefenceRequestsController < BaseController
 
-  before_action :find_defence_request, :set_policy, except: [:index, :new, :create, :refresh_dashboard, :solicitors_search]
-  before_action :new_defence_request, only: [:new, :create]
+  before_action :find_defence_request, except: [:index, :new, :create, :refresh_dashboard, :solicitors_search]
+  before_action :set_policy, except: [:index, :refresh_dashboard, :solicitors_search]
   before_action :new_defence_request_form, only: [:show, :new, :create, :edit, :update, :solicitor_time_of_arrival]
   before_action :get_defence_request_scopes, only: [:index, :refresh_dashboard]
 
   before_action ->(c) { authorize defence_request, "#{c.action_name}?" }
-
 
   def index
   end
@@ -15,11 +14,9 @@ class DefenceRequestsController < BaseController
   end
 
   def new
-    set_policy
   end
 
   def create
-    set_policy
     if @defence_request_form.submit(defence_request_params)
       redirect_to(@defence_request_form.defence_request, notice: flash_message(:create, DefenceRequestForm))
     else
@@ -68,15 +65,18 @@ class DefenceRequestsController < BaseController
     end
   end
 
-  def feedback
-    if @defence_request.update_attributes(defence_request_params) && close_and_save_defence_request
-      redirect_to(defence_requests_path, notice: flash_message(:close, DefenceRequest))
-    else
-      render :close
-    end
+  def abort
   end
 
-  def close
+  def reason_aborted
+    @defence_request.reason_aborted = defence_request_params[:reason_aborted]
+
+    if @defence_request.abort && @defence_request.save
+      message = flash_message(:aborted, DefenceRequest)
+      redirect_to defence_requests_path, notice: message
+    else
+      render :abort
+    end
   end
 
   def accept
@@ -118,6 +118,7 @@ class DefenceRequestsController < BaseController
     @queued_requests = policy_scope(DefenceRequest).queued.order(created_at: :asc)
     @acknowledged_requests = policy_scope(DefenceRequest).acknowledged.order(created_at: :asc)
     @accepted_requests = policy_scope(DefenceRequest).accepted.order(created_at: :asc)
+    @aborted_requests = policy_scope(DefenceRequest).aborted.order(created_at: :asc)
   end
 
   def associate_cco
@@ -152,14 +153,10 @@ class DefenceRequestsController < BaseController
   end
 
   def set_policy
-    @policy ||= policy(@defence_request)
+    @policy ||= policy(defence_request)
   end
 
   def defence_request
-    @defence_request ||= DefenceRequest.new
-  end
-
-  def new_defence_request
     @defence_request ||= DefenceRequest.new
   end
 
@@ -168,33 +165,29 @@ class DefenceRequestsController < BaseController
   end
 
   def defence_request_params
-    params.require(:defence_request).permit(:solicitor_type,
-                                            :solicitor_name,
-                                            :solicitor_firm,
-                                            :solicitor_email,
-                                            { solicitor: :email },
-                                            :scheme,
-                                            :phone_number,
-                                            :detainee_name,
-                                            :detainee_age,
-                                            :time_of_arrival,
-                                            :gender,
-                                            :adult,
-                                            { date_of_birth: %i[day month year] },
-                                            { appropriate_adult: :appropriate_adult } ,
-                                            :custody_number,
-                                            :allegations,
-                                            :comments,
-                                            { interview_start_time: %i[day month year hour min sec] },
-                                            { time_of_arrival: %i[day month year hour min sec] },
-                                            :dscc_number,
-                                            :feedback,
-                                            { solicitor_time_of_arrival: %i[day month year hour min sec] })
-
-  end
-
-  def close_and_save_defence_request
-    @defence_request.close && @defence_request.save
+    params.require(:defence_request).permit(
+      :solicitor_type,
+      :solicitor_name,
+      :solicitor_firm,
+      :solicitor_email,
+      { solicitor: :email },
+      :scheme,
+      :phone_number,
+      :detainee_name,
+      :detainee_age,
+      :time_of_arrival,
+      :gender,
+      :adult,
+      { date_of_birth: %i[day month year] },
+      { appropriate_adult: :appropriate_adult },
+      :custody_number,
+      :allegations,
+      :comments,
+      { interview_start_time: %i[day month year hour min sec] },
+      { time_of_arrival: %i[day month year hour min sec] },
+      :dscc_number,
+      :reason_aborted,
+      { solicitor_time_of_arrival: %i[day month year hour min sec] })
   end
 
   def accept_and_save_defence_request

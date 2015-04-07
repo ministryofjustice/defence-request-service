@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 RSpec.feature "Solicitors managing defence requests" do
+
   let!(:solicitor_dr) { create(:defence_request, :accepted) }
   let!(:dr2) { create(:defence_request, :accepted) }
-  let!(:closed_dr) { create(:defence_request, :closed, solicitor: solicitor_dr.solicitor) }
+  let!(:aborted_dr) { create(:defence_request, :aborted, solicitor: solicitor_dr.solicitor) }
 
   before :each do
     login_as_user(solicitor_dr.solicitor.email)
@@ -70,12 +71,12 @@ RSpec.feature "Solicitors managing defence requests" do
 
   context "cases they are were assigned to, that are closed" do
     specify "can see the feedback page and \"call Call Centre\" message" do
-      visit defence_request_path(closed_dr)
+      visit defence_request_path(aborted_dr)
       expect(page).to_not have_content("Case Details")
-      expect(page).to_not have_content(closed_dr.solicitor_name)
+      expect(page).to_not have_content(aborted_dr.solicitor_name)
       expect(page).to have_link("Dashboard")
-      expect(page).to have_content("This case has been closed with the following feedback")
-      expect(page).to have_content(closed_dr.feedback)
+      expect(page).to have_content("This case has been aborted for the following reason")
+      expect(page).to have_content(aborted_dr.reason_aborted)
       expect(page).to have_content("Please call the Call Centre on 0999 999 9999") #TODO: this needs filling in
     end
   end

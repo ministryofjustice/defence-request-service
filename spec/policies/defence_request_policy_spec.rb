@@ -21,8 +21,6 @@ RSpec.describe DefenceRequestPolicy do
         :edit,
         :update,
         :queue,
-        :close,
-        :feedback,
         :add_case_time_of_arrival
       ] }
       let (:defreq) { FactoryGirl.build(:defence_request) }
@@ -35,8 +33,6 @@ RSpec.describe DefenceRequestPolicy do
         :edit,
         :update,
         :queue,
-        :close,
-        :feedback,
         :interview_start_time_edit,
       ] }
       let (:defreq) { FactoryGirl.create(:defence_request) }
@@ -46,8 +42,8 @@ RSpec.describe DefenceRequestPolicy do
     context "with an acknowledged DR" do
       let (:allowed_actions) { [
         :show,
-        :close,
-        :feedback
+        :abort,
+        :reason_aborted
       ] }
       let (:defreq) { FactoryGirl.create(:defence_request, :acknowledged) }
       specify { expect(subject).to permit_actions_and_forbid_all_others actions }
@@ -56,8 +52,8 @@ RSpec.describe DefenceRequestPolicy do
     context "with an accepted DR" do
       let (:allowed_actions) { [
         :show,
-        :close,
-        :feedback,
+        :abort,
+        :reason_aborted,
         :resend_details,
         :solicitor_time_of_arrival
       ] }
@@ -65,9 +61,9 @@ RSpec.describe DefenceRequestPolicy do
       specify{ expect(subject).to permit_actions_and_forbid_all_others actions }
     end
 
-    context "with a closed DR" do
+    context "with an aborted DR" do
       let (:allowed_actions) { [] }
-      let! (:defreq) { FactoryGirl.create(:defence_request, :closed) }
+      let! (:defreq) { FactoryGirl.create(:defence_request, :aborted) }
       specify { expect(subject).to permit_actions_and_forbid_all_others actions }
     end
 
@@ -87,11 +83,7 @@ RSpec.describe DefenceRequestPolicy do
     }
 
     context "with a draft DR" do
-      let (:allowed_actions) { [
-        :show,
-        :close,
-        :feedback,
-      ] }
+      let (:allowed_actions) { [] }
       let (:defreq) { FactoryGirl.create(:defence_request) }
       specify { expect(subject).to permit_actions_and_forbid_all_others actions }
     end
@@ -102,9 +94,7 @@ RSpec.describe DefenceRequestPolicy do
           :show,
           :edit,
           :dscc_number_edit,
-          :update,
-          :close,
-          :feedback,
+          :update
         ] }
         let! (:defreq) { FactoryGirl.create(:defence_request, :acknowledged, cco: user) }
         specify { expect(subject).to permit_actions_and_forbid_all_others actions }
@@ -116,9 +106,7 @@ RSpec.describe DefenceRequestPolicy do
           :edit,
           :dscc_number_edit,
           :update,
-          :close,
-          :feedback,
-          :accept,
+          :accept
         ] }
         let! (:defreq) { FactoryGirl.create(:defence_request, :acknowledged, :with_dscc_number, cco: user) }
         specify { expect(subject).to permit_actions_and_forbid_all_others actions }
@@ -129,8 +117,6 @@ RSpec.describe DefenceRequestPolicy do
           :edit,
           :show,
           :update,
-          :close,
-          :feedback,
           :resend_details,
           :solicitor_time_of_arrival
         ] }
@@ -138,9 +124,11 @@ RSpec.describe DefenceRequestPolicy do
         specify { expect(subject).to permit_actions_and_forbid_all_others actions }
       end
 
-      context "with a closed DR" do
-        let (:allowed_actions) { [] }
-        let! (:defreq) { FactoryGirl.create(:defence_request, :closed, cco: user) }
+      context "with an aborted DR" do
+        let (:allowed_actions) { [
+          :show
+        ] }
+        let! (:defreq) { FactoryGirl.create(:defence_request, :aborted, cco: user) }
         specify { expect(subject).to permit_actions_and_forbid_all_others actions }
       end
     end
@@ -149,9 +137,7 @@ RSpec.describe DefenceRequestPolicy do
       context "with an acknowledged DR" do
         let (:other_cco) { FactoryGirl.create(:cco_user)}
         let (:allowed_actions) { [
-          :show,
-          :close,
-          :feedback,
+          :show
         ] }
         let! (:defreq) { FactoryGirl.create(:defence_request, :acknowledged, cco: other_cco) }
         specify { expect(subject).to permit_actions_and_forbid_all_others actions }
@@ -160,18 +146,18 @@ RSpec.describe DefenceRequestPolicy do
       context "with an accepted DR" do
         let (:other_cco) { FactoryGirl.create(:cco_user)}
         let (:allowed_actions) { [
-          :show,
-          :close,
-          :feedback,
+          :show
         ] }
         let! (:defreq) { FactoryGirl.create(:defence_request, :acknowledged, cco: other_cco) }
         specify { expect(subject).to permit_actions_and_forbid_all_others actions }
       end
 
-      context "with a closed DR" do
+      context "with an aborted DR" do
         let (:other_cco) { FactoryGirl.create(:cco_user)}
-        let (:allowed_actions) { [] }
-        let! (:defreq) { FactoryGirl.create(:defence_request, :closed, cco: other_cco) }
+        let (:allowed_actions) { [
+          :show
+        ] }
+        let! (:defreq) { FactoryGirl.create(:defence_request, :aborted, cco: other_cco) }
         specify { expect(subject).to permit_actions_and_forbid_all_others actions }
       end
     end
@@ -202,9 +188,9 @@ RSpec.describe DefenceRequestPolicy do
         specify { expect(subject).to permit_actions_and_forbid_all_others actions }
       end
 
-      context "with a closed DR" do
+      context "with an aborted DR" do
         let (:allowed_actions) { [:show ] }
-        let (:defreq) { FactoryGirl.create(:defence_request, :closed, solicitor: user) }
+        let (:defreq) { FactoryGirl.create(:defence_request, :aborted, solicitor: user) }
         specify { expect(subject).to permit_actions_and_forbid_all_others actions }
       end
     end
@@ -218,9 +204,9 @@ RSpec.describe DefenceRequestPolicy do
         specify { expect(subject).to permit_actions_and_forbid_all_others actions }
       end
 
-      context "with a closed DR" do
+      context "with an aborted DR" do
         let (:allowed_actions) { [] }
-        let (:defreq) { FactoryGirl.create(:defence_request, :accepted, solicitor: other_solicitor) }
+        let (:defreq) { FactoryGirl.create(:defence_request, :aborted, solicitor: other_solicitor) }
         specify { expect(subject).to permit_actions_and_forbid_all_others actions }
       end
     end

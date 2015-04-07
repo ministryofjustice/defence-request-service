@@ -10,13 +10,14 @@ class DefenceRequest < ActiveRecord::Base
 
   scope :has_solicitor, ->(solicitor) { where(solicitor: solicitor) }
   scope :not_draft, -> { where.not(state: 'draft') }
+  scope :not_aborted, -> { where.not(state: 'aborted') }
 
   state_machine auto_scopes: true do
     state :draft # first one is initial state
     state :queued
     state :acknowledged
     state :accepted
-    state :closed
+    state :aborted
     state :finished
 
     event :queue do
@@ -31,18 +32,19 @@ class DefenceRequest < ActiveRecord::Base
       transitions from: [:acknowledged], to: :accepted, guard: :dscc_number?
     end
 
+    event :abort do
+      transitions from: [:queued, :acknowledged, :accepted], to: :aborted
+    end
+
     event :finish do
       transitions from: [:acknowledged, :accepted], to: :finished
     end
 
-    event :close do
-      transitions from: [:draft, :acknowledged, :accepted], to: :closed
-    end
   end
 
   before_save :format_phone_number
 
-  validates :feedback, feedback: true
+  validates :reason_aborted, presence: true, if: :aborted?
 
   validates :solicitor_name,
             :solicitor_firm,
