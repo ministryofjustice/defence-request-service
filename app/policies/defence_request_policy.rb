@@ -74,6 +74,10 @@ class DefenceRequestPolicy < ApplicationPolicy
     (cco || cso) && record.accepted?
   end
 
+  def edit_solicitor_details?
+    record.own_solicitor? && edit?
+  end
+
   def solicitor_time_of_arrival?
     (user_is_the_assigned_solicitor && !record.aborted?) || (record.accepted? && (cco || cso))
   end

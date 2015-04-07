@@ -135,7 +135,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
         end
 
         click_button "Update and Accept"
-        expect(page).to have_content("A Valid DSCC number is required to update and accept a Defence Request")
+        expect(page).to have_content("Defence Request was not updated or marked as accepted")
       end
 
       context "that have a dscc number" do
@@ -172,31 +172,21 @@ RSpec.feature "Call Center Operatives managing defence requests" do
           end
         end
 
-        specify "can only mark the request as accepted from the edit page with solicitor details and dscc number" do
+        specify "can only mark the request as accepted from the edit page with a dscc number and cannot edit solicitor" do
           visit root_path
 
           within "#defence_request_#{duty_solicitor_dr.id}" do
             click_link "Edit"
           end
           click_button "Update and Accept"
-          expect(page).to have_content("Valid solicitor details are required to update and accept a Defence Request")
+          expect(page).to have_content("Defence Request was not updated or marked as accepted")
 
           within ".solicitor-details" do
-            fill_in "Full Name", with: "Dodgy Dave"
+            expect(page).to have_css("#defence_request_solicitor_name[disabled]")
+            expect(page).to have_css("#defence_request_solicitor_firm[disabled]")
+            expect(page).to have_css("#defence_request_phone_number[disabled]")
           end
-          click_button "Update and Accept"
-          expect(page).to have_content("Valid solicitor details are required to update and accept a Defence Request")
-          within ".solicitor-details" do
-            fill_in "Full Name", with: "Dodgy Dave"
-            fill_in "Name of firm", with: "Innocent your honour"
-          end
-          click_button "Update and Accept"
 
-          expect(page).to have_content("A Valid DSCC number is required to update and accept a Defence Request")
-          within ".solicitor-details" do
-            fill_in "Full Name", with: "Dodgy Dave"
-            fill_in "Name of firm", with: "Innocent your honour"
-          end
           fill_in "DSCC number", with: "123456"
           click_button "Update and Accept"
           expect(page).to have_content("Defence Request successfully updated and marked as accepted")

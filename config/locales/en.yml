@@ -119,7 +119,8 @@ en:
     failed_send_for_processing: "%{model} was not sent for processing"
     solicitor_details_required: "Valid solicitor details are required to update and accept a %{model}"
     update: "%{model} successfully updated"
-    updated_and_updated: "%{model} successfully updated and marked as accepted"
+    updated_and_accepted: "%{model} successfully updated and marked as accepted"
+    failed_to_update_not_accepted: "%{model} was not updated or marked as accepted"
     solicitor_time_of_arrival_added: "%{model} successfully updated with solicitor estimated time of arrival"
 
   helpers:
