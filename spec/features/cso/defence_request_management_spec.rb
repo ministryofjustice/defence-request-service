@@ -190,32 +190,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
   context "with requests they are assigned to" do
     let!(:dr_created) { create(:defence_request) }
 
-    def abort_request
-      expect(page).to have_content("Abort the Defence Request")
-      click_button "Abort"
-      expect(page).to have_content("Reason aborted: can't be blank")
-      expect(page).to have_content("Abort the Defence Request")
-
-      fill_in "Reason aborted", with: "Aborted reasoning"
-      click_button "Abort"
-      expect(page).to have_content("Defence Request successfully aborted")
-      expect(page).to have_content("Custody Suite Officer Dashboard")
-      dr_created.reload
-      expect(dr_created.state).to eq "aborted"
-      expect(dr_created.reason_aborted).to eq "Aborted reasoning"
-    end
-
-    specify "can abort the request from the dashboard" do
-      dr_created.queue
-      dr_created.save
-      visit root_path
-      within "#defence_request_#{dr_created.id}" do
-        click_link "Abort"
-      end
-      abort_request
-    end
-
-    context "with requests that have not been acklowledged yet" do
+    context "with requests that have not been queued yet" do
       specify "can edit all relevant details of the request" do
         visit root_path
         within "#defence_request_#{dr_created.id}" do
@@ -288,6 +263,32 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
         expect(page).to have_content "Detainee age: is not a number"
       end
     end
+
+    context "with requests that are no longer in draft state" do
+      let!(:dr_queued) { create(:defence_request, :queued) }
+
+      specify "can abort the request" do
+        visit root_path
+        within "#defence_request_#{dr_queued.id}" do
+          click_link "Abort"
+        end
+        fill_in "Reason aborted", with: "Aborted reasoning"
+        click_button "Abort"
+        expect(page).to have_content("Defence Request successfully aborted")
+      end
+
+      specify "are shown an error message if the defence request could not be aborted" do
+        visit root_path
+        within "#defence_request_#{dr_queued.id}" do
+          click_link "Abort"
+        end
+        expect(page).to have_content("Abort the Defence Request")
+        click_button "Abort"
+        expect(page).to have_content("Reason aborted: can't be blank")
+        expect(page).to have_content("Abort the Defence Request")
+      end
+    end
+
 
     context "with accepted requests" do
       let!(:accepted_dr) { create(:defence_request, :accepted) }

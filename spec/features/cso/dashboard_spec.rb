@@ -106,17 +106,17 @@ RSpec.feature "Custody Suite Officers viewing their dashboard" do
     expect(defence_request.reason_aborted).to eq(reason)
   end
 
-  specify 'can abort queued defence request', js: true do
+  specify "can abort queued defence request", js: true do
     dr_draft.queue
     dr_draft.save
     check_abort_request dr_draft
   end
 
-  specify 'can abort acknowledged defence request', js: true do
+  specify "can abort acknowledged defence request", js: true do
     check_abort_request dr_ack1
   end
 
-  specify 'can abort accepted defence request', js: true do
+  specify "can abort accepted defence request", js: true do
     check_abort_request dr_accepted
   end
 end
