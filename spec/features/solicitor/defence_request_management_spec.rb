@@ -4,7 +4,6 @@ RSpec.feature "Solicitors managing defence requests" do
 
   let!(:solicitor_dr) { create(:defence_request, :accepted) }
   let!(:dr2) { create(:defence_request, :accepted) }
-  let!(:aborted_dr) { create(:defence_request, :aborted, solicitor: solicitor_dr.solicitor) }
 
   before :each do
     login_as_user(solicitor_dr.solicitor.email)
@@ -66,18 +65,6 @@ RSpec.feature "Solicitors managing defence requests" do
                                    "Year is not a number",
                                    "Hour is not a number",
                                    "Min is not a number"].join(", "))
-    end
-  end
-
-  context "cases they are were assigned to, that are closed" do
-    specify "can see the feedback page and \"call Call Centre\" message" do
-      visit defence_request_path(aborted_dr)
-      expect(page).to_not have_content("Case Details")
-      expect(page).to_not have_content(aborted_dr.solicitor_name)
-      expect(page).to have_link("Dashboard")
-      expect(page).to have_content("This case has been aborted for the following reason")
-      expect(page).to have_content(aborted_dr.reason_aborted)
-      expect(page).to have_content("Please call the Call Centre on 0999 999 9999") #TODO: this needs filling in
     end
   end
 

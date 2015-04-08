@@ -13,7 +13,7 @@ class DefenceRequestPolicy < ApplicationPolicy
       elsif user.cco?
         scope.not_draft
       elsif user.solicitor?
-        scope.has_solicitor(user).accepted
+        scope.has_solicitor(user).accepted_or_aborted
       end
     end
   end
