@@ -339,6 +339,7 @@ DEPENDENCIES
   rack-timeout
   rails (= 4.2.1)
   rails_config (~> 0.4.2)
+  rb-fsevent
   rspec-rails (~> 3.2.0)
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
