@@ -66,4 +66,26 @@ module HelperMethods
     date = DateTime.current - 21.years
     { 'day' => date.day, 'month' => date.month, 'year' => date.year }
   end
+
+  def expect_to_see_reason_aborted request
+    expect(page).to have_content('This case has been aborted for the following reason')
+    expect(page).to have_content(request.reason_aborted)
+  end
+
+  def expect_to_see_defence_request_values request
+    request.attributes.each do |key, value|
+      if %w(solicitor_name
+        solicitor_firm
+        phone_number
+        detainee_name
+        custody_number
+        allegations
+        comments
+        dscc_number).include? key
+        unless value.is_a?(ActiveSupport::TimeWithZone)
+          expect(page).to have_content(value.to_s)
+        end
+      end
+    end
+  end
 end
