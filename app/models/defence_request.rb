@@ -43,8 +43,6 @@ class DefenceRequest < ActiveRecord::Base
 
   end
 
-  before_save :format_phone_number
-
   validates :reason_aborted, presence: true, if: :aborted?
 
   validates :solicitor_name,
@@ -81,10 +79,14 @@ class DefenceRequest < ActiveRecord::Base
     solicitor_type == 'own'
   end
 
+  def phone_number=(new_value)
+    super(format_phone_number(new_value))
+  end
+
   private
 
-  def format_phone_number
-    self.phone_number = self.phone_number.gsub(/\D/, '') if self.phone_number
+  def format_phone_number(phone_number)
+    phone_number.to_s.gsub(/\D/, '') if phone_number
   end
 
   def notify_interview_start_change

@@ -65,7 +65,7 @@ class DefenceRequestsController < BaseController
     if @defence_request.acknowledge && associate_cco && @defence_request.save
       redirect_to(defence_requests_path, notice: flash_message(:acknowledged, DefenceRequest))
     else
-      redirect_to(defence_requests_path, notice: flash_message(:failed_acknowledge, DefenceRequest))
+      redirect_to(defence_requests_path, alert: flash_message(:failed_acknowledge, DefenceRequest))
     end
   end
 
@@ -86,7 +86,7 @@ class DefenceRequestsController < BaseController
     if @defence_request.accept && @defence_request.save
       redirect_to(defence_requests_path, notice: flash_message(:accept, DefenceRequest))
     else
-      redirect_to(defence_requests_path, notice: flash_message(:failed_accept, DefenceRequest))
+      redirect_to(defence_requests_path, alert: flash_message(:failed_accept, DefenceRequest))
     end
   end
 
@@ -94,7 +94,7 @@ class DefenceRequestsController < BaseController
     if @defence_request.resend_details
       redirect_to(defence_requests_path, notice: flash_message(:details_sent, DefenceRequest))
     else
-      redirect_to(defence_requests_path, notice: flash_message(:failed_details_sent, DefenceRequest))
+      redirect_to(defence_requests_path, alert: flash_message(:failed_details_sent, DefenceRequest))
     end
   end
 
@@ -110,7 +110,7 @@ class DefenceRequestsController < BaseController
     if @defence_request.queue && @defence_request.save
       redirect_to(defence_requests_path, notice: flash_message(:sent_for_processing, DefenceRequest))
     else
-      redirect_to(defence_requests_path, notice: flash_message(:failed_send_for_processing, DefenceRequest))
+      redirect_to(defence_requests_path, alert: flash_message(:failed_send_for_processing, DefenceRequest))
     end
   end
 
