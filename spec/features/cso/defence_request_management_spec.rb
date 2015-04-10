@@ -51,6 +51,12 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           fill_in "defence_request_date_of_birth_year", with: "1976"
           fill_in "defence_request_date_of_birth_month", with: "01"
           fill_in "defence_request_date_of_birth_day", with: "01"
+          fill_in "defence_request_house_name", with: "House of the rising sun"
+          fill_in "defence_request_address_1", with: "Letsby Avenue"
+          fill_in "defence_request_address_2", with: "Right up my street"
+          fill_in "defence_request_city", with: "London"
+          fill_in "defence_request_county", with: "Greater London"
+          fill_in "defence_request_postcode", with: "XX1 1XX"
           choose "No"
         end
         fill_in "Comments", with: "This is a very bad man. Send him down..."
@@ -368,7 +374,8 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
                                     :with_dscc_number,
                                     :appropriate_adult,
                                     :interview_start_time,
-                                    :solicitor_time_of_arrival) }
+                                    :solicitor_time_of_arrival,
+                                    :with_address) }
 
     specify "visitng the show page for a defence request shows all required fields" do
       visit defence_request_path(fully_loaded_dr)
@@ -379,7 +386,13 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
       expect(page).to have_content("Gender male")
       expect(page).to have_content("Date of Birth 10 April 1994")
       expect(page).to have_content("Appropriate adult required?	✓")
-      expect(page).to have_content("Reason for appropriate adult They look underag")
+      expect(page).to have_content("Reason for appropriate adult They look underage")
+      expect(page).to have_content("House on the Hill")
+      expect(page).to have_content("Letsby Avenue")
+      expect(page).to have_content("Right up my street")
+      expect(page).to have_content("London")
+      expect(page).to have_content("Greater London")
+      expect(page).to have_content("XX1 1XX")
       expect(page).to have_content("Custody number custody_number-")
       expect(page).to have_content("Allegations Theft")
       expect(page).to have_content("Time of Arrival 1 January 2001 - 01:01")

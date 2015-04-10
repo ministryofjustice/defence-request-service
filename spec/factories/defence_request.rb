@@ -77,4 +77,13 @@ FactoryGirl.define do
   trait :solicitor_time_of_arrival do
     solicitor_time_of_arrival now
   end
+
+  trait :with_address do
+    house_name "House on the Hill"
+    address_1 "Letsby Avenue"
+    address_2 "Right up my street"
+    city "London"
+    county "Greater London"
+    postcode "XX1 1XX"
+  end
 end
