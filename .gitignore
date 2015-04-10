@@ -4,17 +4,24 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
-# Ignore vagrant config
-/.vagrant
-
 # Ignore bundler config.
 /.bundle
 
-# Ignore all logfiles and tempfiles.
+# Ignore logfiles and tempfiles.
 /log/*
-!/log/.keep
-/tmp
+/tmp/cache/*
+/tmp/capybara/*
+/tmp/sockets/*
+/tmp/pids/*
+/tmp/sessions/*
+
+*.DS_Store
+*.swo
+*.swp
 /coverage
+
+# Add back any keep files that might have been excluded by the above
+!.keep
 
 # Dotenv 2.0 uses a .env.local instead of a plain .env
 # The .env file is now used for defaults, which are then overriden with per-environment .env.production style files
