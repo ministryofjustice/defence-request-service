@@ -29,6 +29,20 @@ RSpec.describe DefenceRequest, type: :model do
       it { expect(subject).to_not validate_presence_of :solicitor_firm }
       it { expect(subject).to_not validate_presence_of :phone_number }
     end
+
+    context 'appropriate_adult required' do
+      before do
+        subject.appropriate_adult = true
+      end
+      it { expect(subject).to validate_presence_of :appropriate_adult_reason }
+    end
+
+    context 'appropriate_adult not required' do
+      before do
+        subject.appropriate_adult = false
+      end
+      it { expect(subject).to_not validate_presence_of :appropriate_adult_reason }
+    end
   end
 
   describe 'states' do

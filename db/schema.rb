@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150402160847) do
+ActiveRecord::Schema.define(version: 20150410121705) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 20150402160847) do
     t.integer  "cco_id"
     t.datetime "solicitor_time_of_arrival"
     t.text     "reason_aborted"
+    t.text     "appropriate_adult_reason"
   end
 
   add_index "defence_requests", ["solicitor_id"], name: "index_defence_requests_on_solicitor_id", using: :btree

@@ -59,6 +59,8 @@ class DefenceRequest < ActiveRecord::Base
 
   validates :detainee_age, numericality: true, presence: true
 
+  validates :appropriate_adult_reason, presence: true, if: :appropriate_adult?
+
   audited
 
   SCHEMES = [ 'No Scheme',

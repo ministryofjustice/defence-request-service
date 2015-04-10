@@ -7,6 +7,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
   end
 
   context "creating a new request" do
+
     context "duty solicitor" do
       let!(:dr_for_duty_solicitor) { create(:defence_request, :duty_solicitor) }
 
@@ -38,12 +39,28 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
 
           within ".case-details" do
             fill_in "Custody number", with: "#CUST-01234"
-            fill_in "Allegations", with: "BadMurder"
+            fill_in "defence_request_custody_address", with: "The Nick"
+            fill_in "defence_request_investigating_officer_name", with: "Dave Mc.Copper"
+            fill_in "defence_request_investigating_officer_shoulder_number", with: "987654"
+            fill_in "defence_request_investigating_officer_contact_number", with: "0207 111 0000"
+            fill_in "Offences", with: "BadMurder"
+            fill_in "defence_request_circumstances_of_arrest", with: "He looked a bit shady"
+            choose "defence_request_fit_for_interview_true"
+            fill_in "defence_request_time_of_arrest_day", with: "02"
+            fill_in "defence_request_time_of_arrest_month", with: "02"
+            fill_in "defence_request_time_of_arrest_year", with: "2002"
+            fill_in "defence_request_time_of_arrest_hour", with: "02"
+            fill_in "defence_request_time_of_arrest_min", with: "02"
             fill_in "defence_request_time_of_arrival_day", with: "01"
             fill_in "defence_request_time_of_arrival_month", with: "01"
             fill_in "defence_request_time_of_arrival_year", with: "2001"
             fill_in "defence_request_time_of_arrival_hour", with: "01"
             fill_in "defence_request_time_of_arrival_min", with: "01"
+            fill_in "defence_request_time_of_detention_authorised_day", with: "03"
+            fill_in "defence_request_time_of_detention_authorised_month", with: "03"
+            fill_in "defence_request_time_of_detention_authorised_year", with: "2003"
+            fill_in "defence_request_time_of_detention_authorised_hour", with: "03"
+            fill_in "defence_request_time_of_detention_authorised_min", with: "03"
           end
 
           within ".detainee" do
@@ -53,7 +70,14 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
             fill_in "defence_request_date_of_birth_year", with: "1976"
             fill_in "defence_request_date_of_birth_month", with: "01"
             fill_in "defence_request_date_of_birth_day", with: "01"
-            choose "No"
+            fill_in "defence_request_house_name", with: "House of the rising sun"
+            fill_in "defence_request_address_1", with: "Letsby Avenue"
+            fill_in "defence_request_address_2", with: "Right up my street"
+            fill_in "defence_request_city", with: "London"
+            fill_in "defence_request_county", with: "Greater London"
+            fill_in "defence_request_postcode", with: "XX1 1XX"
+            choose "defence_request_appropriate_adult_false"
+            choose "defence_request_interpreter_required_false"
           end
           fill_in "Comments", with: "This is a very bad man. Send him down..."
           click_button "Create Defence Request"
@@ -162,46 +186,217 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
         page.execute_script("$(\"body\").trigger($.Event(\"keydown\", { keyCode: 27 }))")
         expect(page).not_to have_content "Bobson Smith"
       end
-    end
 
-    specify "can not see a DSCC field on the defence request form" do
-      visit root_path
-      click_link "New Defence Request"
+      specify "can not see a DSCC field on the defence request form" do
+        visit root_path
+        click_link "New Defence Request"
 
-      expect(page).not_to have_field("DSCC Number")
-    end
+        expect(page).not_to have_field("DSCC Number")
+      end
 
-    specify "can not see the solicitor time of arrival field on the defence request form" do
-      visit root_path
-      click_link "New Defence Request"
+      specify "can not see the solicitor time of arrival field on the defence request form" do
+        visit root_path
+        click_link "New Defence Request"
 
-      expect(page).not_to have_field("Expected Solicitor Time of Arrival")
-    end
+        expect(page).not_to have_field("Expected Solicitor Time of Arrival")
+      end
 
-    specify "has the solicitor search results cleared when toggling between \"duty\" or \"own\" solicitor", js: true do
-      stub_solicitor_search_for_bob_smith
+      specify "has the solicitor search results cleared when toggling between \"duty\" or \"own\" solicitor", js: true do
+        stub_solicitor_search_for_bob_smith
 
-      visit root_path
-      click_link "New Defence Request"
-      choose "Own"
-      fill_in "q", with: "Bob Smith"
-      find(".solicitor-search", match: :first).click
-      click_link "Bobson Smith"
-      choose "Duty"
+        visit root_path
+        click_link "New Defence Request"
+        choose "Own"
+        fill_in "q", with: "Bob Smith"
+        find(".solicitor-search", match: :first).click
+        click_link "Bobson Smith"
+        choose "Duty"
 
-      expect(page).to_not have_content "Bobson Smith"
+        expect(page).to_not have_content "Bobson Smith"
 
-      choose "Own"
-      expect(page).to have_field "q", with: ""
-    end
+        choose "Own"
+        expect(page).to have_field "q", with: ""
+      end
 
-    specify "are shown some errors if the request cannot be created due to invalid fields" do
-      visit root_path
-      click_link "New Defence Request"
-      click_button "Create Defence Request"
-      expect(page).to have_content "You need to fix the errors on this page before continuing"
-      expect(page).to have_content "Detainee name: can't be blank"
-    end
+      specify "are shown some errors if the request cannot be created due to invalid fields" do
+        visit root_path
+        click_link "New Defence Request"
+        click_button "Create Defence Request"
+        expect(page).to have_content "You need to fix the errors on this page before continuing"
+        expect(page).to have_content "Detainee name: can't be blank"
+      end
+      specify "appropriate_adult toggles appropriate_adult_reason", js: true do
+        visit root_path
+        click_link "New Defence Request"
+        choose "Own"
+
+        expect(page).to have_css("#defence_request_appropriate_adult_reason[disabled]")
+
+        within ".detainee" do
+          choose "defence_request_appropriate_adult_true"
+        end
+
+        expect(page).to_not have_css("#defence_request_appropriate_adult_reason[disabled]")
+      end
+
+      specify "must add appropriate_adult_reason if \"appropriate adult\" is required", js: true do
+        visit root_path
+        click_link "New Defence Request"
+        choose "Own"
+        within ".solicitor-details" do
+          fill_in "Full Name", with: "Bob Smith"
+          fill_in "Name of firm", with: "Acme Solicitors"
+          fill_in "Telephone number", with: "0207 284 0000"
+        end
+
+        within ".case-details" do
+          fill_in "Custody number", with: "#CUST-01234"
+          fill_in "Offences", with: "BadMurder"
+          fill_in "defence_request_time_of_arrival_day", with: "01"
+          fill_in "defence_request_time_of_arrival_month", with: "01"
+          fill_in "defence_request_time_of_arrival_year", with: "2001"
+          fill_in "defence_request_time_of_arrival_hour", with: "01"
+          fill_in "defence_request_time_of_arrival_min", with: "01"
+        end
+
+        within ".detainee" do
+          fill_in "Full Name", with: "Mannie Badder"
+          choose "Male"
+          fill_in "Age", with: "39"
+          fill_in "defence_request_date_of_birth_year", with: "1976"
+          fill_in "defence_request_date_of_birth_month", with: "01"
+          fill_in "defence_request_date_of_birth_day", with: "01"
+          choose "defence_request_appropriate_adult_true"
+        end
+        fill_in "Comments", with: "This is a very bad man. Send him down..."
+        click_button "Create Defence Request"
+
+        expect(page).to have_content "Reason for appropriate adult: can't be blank"
+
+        within ".detainee" do
+          fill_in "defence_request_appropriate_adult_reason", with: "They look under age"
+        end
+
+        click_button "Create Defence Request"
+
+        expect(page).to have_content "Defence Request successfully created"
+      end
+
+      specify "fit_for_interview toggles unfit_for_interview_reason", js: true do
+        visit root_path
+        click_link "New Defence Request"
+        choose "Own"
+
+        expect(page).to have_css("#defence_request_unfit_for_interview_reason[disabled]")
+
+        within ".case-details" do
+          choose "defence_request_fit_for_interview_false"
+        end
+
+        expect(page).to_not have_css("#defence_request_unfit_for_interview_reason[disabled]")
+      end
+
+      specify "must add unfit_for_interview_reason if \"fit_for_interview adult\" is required", js: true do
+        visit root_path
+        click_link "New Defence Request"
+        choose "Own"
+        within ".solicitor-details" do
+          fill_in "Full Name", with: "Bob Smith"
+          fill_in "Name of firm", with: "Acme Solicitors"
+          fill_in "Telephone number", with: "0207 284 0000"
+        end
+
+        within ".case-details" do
+          fill_in "Custody number", with: "#CUST-01234"
+          fill_in "Offences", with: "BadMurder"
+          fill_in "defence_request_time_of_arrival_day", with: "01"
+          fill_in "defence_request_time_of_arrival_month", with: "01"
+          fill_in "defence_request_time_of_arrival_year", with: "2001"
+          fill_in "defence_request_time_of_arrival_hour", with: "01"
+          fill_in "defence_request_time_of_arrival_min", with: "01"
+          choose "defence_request_fit_for_interview_false"
+        end
+
+        within ".detainee" do
+          fill_in "Full Name", with: "Mannie Badder"
+          choose "Male"
+          fill_in "Age", with: "39"
+          fill_in "defence_request_date_of_birth_year", with: "1976"
+          fill_in "defence_request_date_of_birth_month", with: "01"
+          fill_in "defence_request_date_of_birth_day", with: "01"
+          choose "defence_request_appropriate_adult_false"
+        end
+        click_button "Create Defence Request"
+        expect(page).to have_content "Reason unfit for interview: can't be blank"
+
+        within ".case-details" do
+          fill_in "defence_request_unfit_for_interview_reason", with: "Drunk as a skunk"
+        end
+
+        click_button "Create Defence Request"
+
+        expect(page).to have_content "Defence Request successfully created"
+      end
+
+      specify "interpreter_required toggles interpreter_type", js: true do
+        visit root_path
+        click_link "New Defence Request"
+        choose "Own"
+
+        expect(page).to have_css("#defence_request_interpreter_type[disabled]")
+
+        within ".detainee" do
+          choose "defence_request_interpreter_required_true"
+        end
+
+        expect(page).to_not have_css("#defence_request_interpreter_type[disabled]")
+      end
+
+      specify "must add interpreter_type if interpreter_required", js: true do
+        visit root_path
+        click_link "New Defence Request"
+        choose "Own"
+        within ".solicitor-details" do
+          fill_in "Full Name", with: "Bob Smith"
+          fill_in "Name of firm", with: "Acme Solicitors"
+          fill_in "Telephone number", with: "0207 284 0000"
+        end
+
+        within ".case-details" do
+          fill_in "Custody number", with: "#CUST-01234"
+          fill_in "Offences", with: "BadMurder"
+          fill_in "defence_request_time_of_arrival_day", with: "01"
+          fill_in "defence_request_time_of_arrival_month", with: "01"
+          fill_in "defence_request_time_of_arrival_year", with: "2001"
+          fill_in "defence_request_time_of_arrival_hour", with: "01"
+          fill_in "defence_request_time_of_arrival_min", with: "01"
+        end
+
+        within ".detainee" do
+          fill_in "Full Name", with: "Mannie Badder"
+          choose "Male"
+          fill_in "Age", with: "39"
+          fill_in "defence_request_date_of_birth_year", with: "1976"
+          fill_in "defence_request_date_of_birth_month", with: "01"
+          fill_in "defence_request_date_of_birth_day", with: "01"
+          choose "defence_request_interpreter_required_true"
+        end
+        fill_in "Comments", with: "This is a very bad man. Send him down..."
+        click_button "Create Defence Request"
+
+        expect(page).to have_content "Interpreter Type: can't be blank"
+
+        within ".detainee" do
+          fill_in "defence_request_interpreter_type", with: "German - English"
+        end
+
+        click_button "Create Defence Request"
+
+        expect(page).to have_content "Defence Request successfully created"
+      end
+    end #####THIS?
+
+
   end
 
   context "with requests they are assigned to" do
@@ -225,7 +420,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
       let!(:dr_created) { create(:defence_request) }
 
       context "with requests that have not been queued yet" do
-        specify "can edit all relevant details of the request" do
+        specify "can edit all relevant details of the request", js: true do
           visit root_path
           within "#defence_request_#{dr_created.id}" do
             click_link "Edit"
@@ -241,7 +436,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
 
             within ".case-details" do
               fill_in "Custody number", with: "#CUST-9876"
-              fill_in "Allegations", with: "BadMurder"
+              fill_in "Offences", with: "BadMurder"
               fill_in "defence_request_interview_start_time_day", with: "01"
               fill_in "defence_request_interview_start_time_month", with: "01"
               fill_in "defence_request_interview_start_time_year", with: "2001"
@@ -256,7 +451,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
               fill_in "defence_request_date_of_birth_year", with: "1976"
               fill_in "defence_request_date_of_birth_month", with: "01"
               fill_in "defence_request_date_of_birth_day", with: "01"
-              choose "No"
+              choose "defence_request_appropriate_adult_false"
             end
 
             within ".detainee" do
@@ -266,7 +461,14 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
               fill_in "defence_request_date_of_birth_year", with: "1986"
               fill_in "defence_request_date_of_birth_month", with: "12"
               fill_in "defence_request_date_of_birth_day", with: "12"
-              choose "Yes"
+              choose "defence_request_appropriate_adult_true"
+              fill_in "defence_request_appropriate_adult_reason", with: "They look under age"
+              fill_in "defence_request_house_name", with: "House of the rising sun"
+              fill_in "defence_request_address_1", with: "Letsby Avenue"
+              fill_in "defence_request_address_2", with: "Right up my street"
+              fill_in "defence_request_city", with: "London"
+              fill_in "defence_request_county", with: "Greater London"
+              fill_in "defence_request_postcode", with: "XX1 1XX"
             end
             fill_in "Comments", with: "I fought the law..."
             click_button "Update Defence Request"
@@ -280,6 +482,16 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
             expect(page).to have_content("Annie")
             expect(page).to have_content("Nother")
           end
+
+          visit defence_request_path(dr_created)
+          expect(page).to have_content("They look under age")
+          expect(page).to have_content("House of the rising sun")
+          expect(page).to have_content("Letsby Avenue")
+          expect(page).to have_content("Right up my street")
+          expect(page).to have_content("London")
+          expect(page).to have_content("Greater London")
+          expect(page).to have_content("XX1 1XX")
+
         end
 
         specify "are shown some errors if the request cannot be updated due to invalid fields" do
@@ -296,6 +508,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           expect(page).to have_content "You need to fix the errors on this page before continuing"
           expect(page).to have_content "Detainee age: is not a number"
         end
+
       end
 
       context "with requests that are no longer in draft state" do
@@ -322,11 +535,11 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           expect(page).to have_content("Abort the Defence Request")
         end
       end
-
+      ####
       context "with accepted requests" do
         let!(:accepted_dr) { create(:defence_request, :accepted) }
 
-        specify "can not edit the expected arrival time from request show page"do
+        specify "can not edit the expected arrival time from request show page" do
           visit defence_requests_path
           within ".accepted-defence-request" do
             click_link("Show")
@@ -335,6 +548,61 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           expect(page).to_not have_selector(".time-of-arrival")
         end
       end
+    end
+  end
+
+  context "viewing a defence request" do
+    let!(:fully_loaded_dr) { create(:own_solicitor,
+                                    :accepted,
+                                    :with_dscc_number,
+                                    :appropriate_adult,
+                                    :interview_start_time,
+                                    :solicitor_time_of_arrival,
+                                    :with_address,
+                                    :with_investigating_officer,
+                                    :with_custody_address,
+                                    :with_circumstance_of_arrest,
+                                    :with_time_of_arrest,
+                                    :with_time_of_detention_authorised,
+                                    :unfit_for_interview,
+                                    :with_interpreter_required) }
+
+    specify "visitng the show page for a defence request shows all required fields" do
+      visit defence_request_path(fully_loaded_dr)
+      expect(page).to have_content("Solicitor Name solicitor_name-")
+      expect(page).to have_content("Solicitor Firm solicitor_firm-")
+      expect(page).to have_content("Phone number 447810480123")
+      expect(page).to have_content("Detainee name detainee_name-")
+      expect(page).to have_content("Gender male")
+      expect(page).to have_content("Date of Birth #{twenty_one_years_ago}")
+      expect(page).to have_content("Appropriate adult required? ✓")
+      expect(page).to have_content("Reason for appropriate adult They look underage")
+      expect(page).to have_content("Interpreter Required true")
+      expect(page).to have_content("Interpreter Type ENGLISH - GERMAN")
+      expect(page).to have_content("House on the Hill")
+      expect(page).to have_content("Letsby Avenue")
+      expect(page).to have_content("Right up my street")
+      expect(page).to have_content("London")
+      expect(page).to have_content("Greater London")
+      expect(page).to have_content("XX1 1XX")
+      expect(page).to have_content("Custody number custody_number-")
+      expect(page).to have_content("Custody Address The Nick")
+      expect(page).to have_content("Offences Theft")
+      expect(page).to have_content("Circumstances of Arrest Caught red handed")
+      expect(page).to have_content("Circumstances of Arrest Caught red handed")
+      expect(page).to have_content("Fit for Interview? ✗")
+      expect(page).to have_content("Reason unfit for interview Drunk as a skunk")
+      expect(page).to have_content("Investigating Officer Name Dave Mc.Copper")
+      expect(page).to have_content("Investigating Officer Shoulder Number 987654")
+      expect(page).to have_content("Investigating Officer Contact Number 0207 111 0000")
+      expect(page).to have_content("Time of Arrest 1 January 2001 - 01:01")
+      expect(page).to have_content("Time of Arrival 1 January 2001 - 01:01")
+      expect(page).to have_content("Time of Detention Authorised 1 January 2001 - 01:01")
+      expect(page).to have_content("Comments commenty-comments-are here: ")
+      expect(page).to have_content("DSCC number 123456")
+      expect(page).to have_content("Interview Start Time 1 January 2001 - 01:01")
+      expect(page).to have_content("Solicitor Name solicitor_name-")
+      expect(page).to have_content("Solicitor Expected Time of Arrival 1 January 2001 - 01:01")
     end
   end
 end
@@ -370,3 +638,4 @@ def stub_solicitor_search_for_mystery_man
   stub_request(:post, "http://solicitor-search.herokuapp.com/search/?q=Mystery%20Man").
     to_return(body: body, status: 200)
 end
+
