@@ -1,5 +1,5 @@
 dsds:
-  app_title: "Defence Solicitor Deployment Service"
+  app_title: Defence Request Service
   dashboard_refresh_milliseconds: 3000
   dashboard_refresh_disabled: <%= ENV.fetch('DISABLE_DASHBOARD_REFRESH', 'false') == 'true' %>
   solicitor_search_url_prefix: <%= ENV.fetch('SOLICITOR_SEARCH_URL_PREFIX') %>
