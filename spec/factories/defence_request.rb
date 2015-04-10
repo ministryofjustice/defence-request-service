@@ -13,7 +13,7 @@ FactoryGirl.define do
     date_of_birth twenty_one_years_ago
     detainee_age 21
     sequence(:custody_number) { |n| "custody_number-#{n}" }
-    allegations 'Theft'
+    offences 'Theft'
     time_of_arrival now
     sequence(:comments) { |n| "commenty-comments-are here: #{n}" }
     adult [nil, true, false].sample
