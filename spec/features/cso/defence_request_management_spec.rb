@@ -185,13 +185,70 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
       expect(page).to have_content "You need to fix the errors on this page before continuing"
       expect(page).to have_content "Detainee name: can't be blank"
     end
+
+    specify "appropriate_adult toggles appropriate_adult_reason", js: true do
+      visit root_path
+      click_link "New Defence Request"
+      choose "Own"
+
+      expect(page).to have_css("#defence_request_appropriate_adult_reason[disabled]")
+
+      within ".detainee" do
+        choose "Yes"
+      end
+
+      expect(page).to_not have_css("#defence_request_appropriate_adult_reason[disabled]")
+    end
+
+    specify "must add appropriate_adult_reason if \"appropriate adult\" is required", js: true do
+      visit root_path
+      click_link "New Defence Request"
+      choose "Own"
+      within ".solicitor-details" do
+        fill_in "Full Name", with: "Bob Smith"
+        fill_in "Name of firm", with: "Acme Solicitors"
+        fill_in "Telephone number", with: "0207 284 0000"
+      end
+
+      within ".case-details" do
+        fill_in "Custody number", with: "#CUST-01234"
+        fill_in "Allegations", with: "BadMurder"
+        fill_in "defence_request_time_of_arrival_day", with: "01"
+        fill_in "defence_request_time_of_arrival_month", with: "01"
+        fill_in "defence_request_time_of_arrival_year", with: "2001"
+        fill_in "defence_request_time_of_arrival_hour", with: "01"
+        fill_in "defence_request_time_of_arrival_min", with: "01"
+      end
+
+      within ".detainee" do
+        fill_in "Full Name", with: "Mannie Badder"
+        choose "Male"
+        fill_in "Age", with: "39"
+        fill_in "defence_request_date_of_birth_year", with: "1976"
+        fill_in "defence_request_date_of_birth_month", with: "01"
+        fill_in "defence_request_date_of_birth_day", with: "01"
+        choose "Yes"
+      end
+      fill_in "Comments", with: "This is a very bad man. Send him down..."
+      click_button "Create Defence Request"
+
+      expect(page).to have_content "Reason for appropriate adult: can't be blank"
+
+      within ".detainee" do
+        fill_in "defence_request_appropriate_adult_reason", with: "They look under age"
+      end
+
+      click_button "Create Defence Request"
+
+      expect(page).to have_content "Defence Request successfully created"
+    end
   end
 
   context "with requests they are assigned to" do
     let!(:dr_created) { create(:defence_request) }
 
     context "with requests that have not been queued yet" do
-      specify "can edit all relevant details of the request" do
+      specify "can edit all relevant details of the request", js: true do
         visit root_path
         within "#defence_request_#{dr_created.id}" do
           click_link "Edit"
@@ -233,6 +290,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
             fill_in "defence_request_date_of_birth_month", with: "12"
             fill_in "defence_request_date_of_birth_day", with: "12"
             choose "Yes"
+            fill_in "defence_request_appropriate_adult_reason", with: "They look under age"
           end
           fill_in "Comments", with: "I fought the law..."
           click_button "Update Defence Request"

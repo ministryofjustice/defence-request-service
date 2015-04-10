@@ -17,7 +17,7 @@ FactoryGirl.define do
     time_of_arrival now
     sequence(:comments) { |n| "commenty-comments-are here: #{n}" }
     adult [nil, true, false].sample
-    appropriate_adult [true, false].sample
+    appropriate_adult false
   end
 
   trait :duty_solicitor do
@@ -63,5 +63,10 @@ FactoryGirl.define do
 
   trait :with_dscc_number do
     dscc_number '123456'
+  end
+
+  trait :appropriate_adult do
+    appropriate_adult true
+    appropriate_adult_reason 'They look underage'
   end
 end

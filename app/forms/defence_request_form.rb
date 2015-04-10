@@ -5,7 +5,7 @@ class DefenceRequestForm
   attr_reader :defence_request, :fields
 
   DELEGATED_ATTRIBUTES = :solicitor_type, :solicitor_name, :solicitor_firm, :phone_number, :detainee_name,
-           :gender, :detainee_age, :allegations, :scheme, :custody_number, :comments
+           :gender, :detainee_age, :allegations, :scheme, :custody_number, :comments, :appropriate_adult_reason
 
   DELEGATED_ATTRIBUTES.each do |attr_name|
     def_delegator :@defence_request, "#{attr_name}_before_type_cast", attr_name
