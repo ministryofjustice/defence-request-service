@@ -351,7 +351,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
     context "with accepted requests" do
       let!(:accepted_dr) { create(:defence_request, :accepted) }
 
-      specify "can not edit the expected arrival time from request show page"do
+      specify "can not edit the expected arrival time from request show page" do
         visit defence_requests_path
         within ".accepted-defence-request" do
           click_link("Show")
@@ -359,6 +359,35 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
 
         expect(page).to_not have_selector(".time-of-arrival")
       end
+    end
+  end
+
+  context "viewing a defence request" do
+    let!(:fully_loaded_dr) { create(:own_solicitor,
+                                    :accepted,
+                                    :with_dscc_number,
+                                    :appropriate_adult,
+                                    :interview_start_time,
+                                    :solicitor_time_of_arrival) }
+
+    specify "visitng the show page for a defence request shows all required fields" do
+      visit defence_request_path(fully_loaded_dr)
+      expect(page).to have_content("Solicitor Name solicitor_name-")
+      expect(page).to have_content("Solicitor Firm solicitor_firm-")
+      expect(page).to have_content("Phone number 447810480123")
+      expect(page).to have_content("Detainee name detainee_name-")
+      expect(page).to have_content("Gender male")
+      expect(page).to have_content("Date of Birth 10 April 1994")
+      expect(page).to have_content("Appropriate adult required?	✓")
+      expect(page).to have_content("Reason for appropriate adult They look underag")
+      expect(page).to have_content("Custody number custody_number-")
+      expect(page).to have_content("Allegations Theft")
+      expect(page).to have_content("Time of Arrival 1 January 2001 - 01:01")
+      expect(page).to have_content("Comments commenty-comments-are here: ")
+      expect(page).to have_content("DSCC number 123456")
+      expect(page).to have_content("Interview Start Time 1 January 2001 - 01:01")
+      expect(page).to have_content("Solicitor Name solicitor_name-")
+      expect(page).to have_content("Solicitor Expected Time of Arrival 1 January 2001 - 01:01")
     end
   end
 end
