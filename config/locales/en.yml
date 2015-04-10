@@ -9,6 +9,8 @@ en:
   acknowledged_defence_request: "Acknowledged Defence Requests"
   actions: "Actions"
   add_expected_time_of_arrival: "Add Expected Time of Arrival"
+  address_1: Address 2
+  address_2: Address 1
   adult: "Adult?"
   age: "Age"
   allegations: "Allegations"
@@ -22,18 +24,20 @@ en:
   case_details: "Case Details"
   cco: "Call Center Operative"
   change_password: "Change Password"
+  city: City
   close: Close
   comments: "Comments"
   confirm: "Confirm"
   contact_us: "contact us"
   continue: "Continue"
   cookies: "Cookies"
+  county: County
   cso: "Custody Suite Officer"
   custody_number: "Custody number"
   dashboard: 'Dashboard'
   date_hint: "eg. 28 04 1996"
-  date_time_hint: "eg. 28 04 1996 - 11 30"
   date_of_birth: "Date of Birth"
+  date_time_hint: "eg. 28 04 1996 - 11 30"
   day: "Day"
   delete: "Delete"
   details: "Details"
@@ -58,6 +62,7 @@ en:
   help: "Help"
   home: "Home"
   hour: "Hour"
+  house_name: House name or number
   interview_start_time: "Interview Start Time"
   interview_start_time_change: "Interview start time change"
   legal_advice_request: "Legal advice request"
@@ -71,12 +76,13 @@ en:
   not_authorized: "You are not authorised to perform this action"
   own: 'Own'
   phone_number: "Phone number"
+  postcode: Postcode
   prohibit_save: Please review the following %{count}
   reason_aborted: Reason aborted
   resend_details: "Resend details"
-  send_for_processing: "Send for Processing"
   scheme: "Scheme"
   search: "Search"
+  send_for_processing: "Send for Processing"
   show: "Show"
   solicitor: "Solicitor"
   solicitor_details: "Solicitor details"
