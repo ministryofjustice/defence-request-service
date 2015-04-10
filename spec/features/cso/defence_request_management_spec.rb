@@ -394,13 +394,10 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
 
         expect(page).to have_content "Defence Request successfully created"
       end
-    end #####THIS?
-
-
+    end
   end
 
   context "with requests they are assigned to" do
-
     context "duty solicitor" do
       let!(:dr_for_duty_solicitor) { create(:defence_request, :duty_solicitor) }
 
@@ -535,7 +532,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           expect(page).to have_content("Abort the Defence Request")
         end
       end
-      ####
+
       context "with accepted requests" do
         let!(:accepted_dr) { create(:defence_request, :accepted) }
 
@@ -565,7 +562,8 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
                                     :with_time_of_arrest,
                                     :with_time_of_detention_authorised,
                                     :unfit_for_interview,
-                                    :with_interpreter_required) }
+                                    :with_interpreter_required,
+                                    :solicitor_time_of_arrival) }
 
     specify "visitng the show page for a defence request shows all required fields" do
       visit defence_request_path(fully_loaded_dr)
@@ -598,6 +596,12 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
       expect(page).to have_content("Time of Arrest 1 January 2001 - 01:01")
       expect(page).to have_content("Time of Arrival 1 January 2001 - 01:01")
       expect(page).to have_content("Time of Detention Authorised 1 January 2001 - 01:01")
+      expect(page).to have_content("Date of Birth 10 April 1994")
+      expect(page).to have_content("Appropriate adult required?	✓")
+      expect(page).to have_content("Reason for appropriate adult They look underag")
+      expect(page).to have_content("Custody number custody_number-")
+      expect(page).to have_content("Allegations Theft")
+      expect(page).to have_content("Time of Arrival 1 January 2001 - 01:01")
       expect(page).to have_content("Comments commenty-comments-are here: ")
       expect(page).to have_content("DSCC number 123456")
       expect(page).to have_content("Interview Start Time 1 January 2001 - 01:01")
@@ -638,4 +642,3 @@ def stub_solicitor_search_for_mystery_man
   stub_request(:post, "http://solicitor-search.herokuapp.com/search/?q=Mystery%20Man").
     to_return(body: body, status: 200)
 end
-

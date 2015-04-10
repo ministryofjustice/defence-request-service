@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  now = DateTime.current
+  now = DateTime.new(2001,1,1,1,1)
   twenty_one_years_ago = DateTime.current - 21.years
 
   factory :defence_request, aliases: [:own_solicitor] do
@@ -9,11 +9,11 @@ FactoryGirl.define do
     scheme 1
     phone_number '447810480123'
     sequence(:detainee_name) { |n| "detainee_name-#{n}" }
-    gender %w(male female).sample
+    gender 'male'
     date_of_birth twenty_one_years_ago
     detainee_age 21
     sequence(:custody_number) { |n| "custody_number-#{n}" }
-    allegations ['Murder','Theft','Drunk','Hate Crime'].sample
+    allegations 'Theft'
     time_of_arrival now
     sequence(:comments) { |n| "commenty-comments-are here: #{n}" }
     adult [nil, true, false].sample
@@ -68,5 +68,13 @@ FactoryGirl.define do
   trait :appropriate_adult do
     appropriate_adult true
     appropriate_adult_reason 'They look underage'
+  end
+
+  trait :interview_start_time do
+    interview_start_time now
+  end
+
+  trait :solicitor_time_of_arrival do
+    solicitor_time_of_arrival now
   end
 end

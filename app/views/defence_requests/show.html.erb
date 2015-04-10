@@ -41,6 +41,14 @@
       <td><%= date_formatter(@defence_request.date_of_birth) %></td>
     </tr>
     <tr>
+      <td><%= t('appropriate_adult_required') %></td>
+      <td><%= boolean_formatter(@defence_request.appropriate_adult) %></td>
+    </tr>
+    <tr>
+      <td><%= t('appropriate_adult_reason') %></td>
+      <td><%= @defence_request.appropriate_adult_reason %></td>
+    </tr>
+    <tr>
       <td><%= t('custody_number') %></td>
       <td><%= @defence_request.custody_number %></td>
     </tr>
