@@ -13,7 +13,6 @@ en:
   address_2: Address 1
   adult: "Adult?"
   age: "Age"
-  allegations: "Allegations"
   appropriate_adult: "Appropriate Adult"
   appropriate_adult_reason: "Reason for appropriate adult"
   appropriate_adult_required: "Appropriate adult required?"
@@ -74,6 +73,7 @@ en:
   new_defence_requests: "New Defence Requests"
   no_results_found: 'No results found - Contact DSCC'
   not_authorized: "You are not authorised to perform this action"
+  offences: "Offences"
   own: 'Own'
   phone_number: "Phone number"
   postcode: Postcode

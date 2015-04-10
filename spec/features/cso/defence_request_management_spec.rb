@@ -36,7 +36,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
 
         within ".case-details" do
           fill_in "Custody number", with: "#CUST-01234"
-          fill_in "Allegations", with: "BadMurder"
+          fill_in "Offences", with: "BadMurder"
           fill_in "defence_request_time_of_arrival_day", with: "01"
           fill_in "defence_request_time_of_arrival_month", with: "01"
           fill_in "defence_request_time_of_arrival_year", with: "2001"
@@ -218,7 +218,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
 
       within ".case-details" do
         fill_in "Custody number", with: "#CUST-01234"
-        fill_in "Allegations", with: "BadMurder"
+        fill_in "Offences", with: "BadMurder"
         fill_in "defence_request_time_of_arrival_day", with: "01"
         fill_in "defence_request_time_of_arrival_month", with: "01"
         fill_in "defence_request_time_of_arrival_year", with: "2001"
@@ -270,7 +270,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
 
           within ".case-details" do
             fill_in "Custody number", with: "#CUST-9876"
-            fill_in "Allegations", with: "BadMurder"
+            fill_in "Offences", with: "BadMurder"
             fill_in "defence_request_interview_start_time_day", with: "01"
             fill_in "defence_request_interview_start_time_month", with: "01"
             fill_in "defence_request_interview_start_time_year", with: "2001"
@@ -297,6 +297,12 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
             fill_in "defence_request_date_of_birth_day", with: "12"
             choose "Yes"
             fill_in "defence_request_appropriate_adult_reason", with: "They look under age"
+            fill_in "defence_request_house_name", with: "House of the rising sun"
+            fill_in "defence_request_address_1", with: "Letsby Avenue"
+            fill_in "defence_request_address_2", with: "Right up my street"
+            fill_in "defence_request_city", with: "London"
+            fill_in "defence_request_county", with: "Greater London"
+            fill_in "defence_request_postcode", with: "XX1 1XX"
           end
           fill_in "Comments", with: "I fought the law..."
           click_button "Update Defence Request"
@@ -310,6 +316,16 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           expect(page).to have_content("Annie")
           expect(page).to have_content("Nother")
         end
+
+        visit defence_request_path(dr_created)
+        expect(page).to have_content("They look under age")
+        expect(page).to have_content("House of the rising sun")
+        expect(page).to have_content("Letsby Avenue")
+        expect(page).to have_content("Right up my street")
+        expect(page).to have_content("London")
+        expect(page).to have_content("Greater London")
+        expect(page).to have_content("XX1 1XX")
+
       end
 
       specify "are shown some errors if the request cannot be updated due to invalid fields" do
@@ -394,7 +410,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
       expect(page).to have_content("Greater London")
       expect(page).to have_content("XX1 1XX")
       expect(page).to have_content("Custody number custody_number-")
-      expect(page).to have_content("Allegations Theft")
+      expect(page).to have_content("Offences Theft")
       expect(page).to have_content("Time of Arrival 1 January 2001 - 01:01")
       expect(page).to have_content("Comments commenty-comments-are here: ")
       expect(page).to have_content("DSCC number 123456")

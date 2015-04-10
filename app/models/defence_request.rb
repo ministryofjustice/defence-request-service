@@ -54,7 +54,7 @@ class DefenceRequest < ActiveRecord::Base
   validates :scheme, presence: true, if: :duty_solicitor?
 
   validates :detainee_name,
-            :allegations,
+            :offences,
             :gender,
             :time_of_arrival,
             :custody_number, presence: true

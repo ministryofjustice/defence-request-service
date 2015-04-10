@@ -24,7 +24,7 @@ module HelperMethods
         fill_in 'Solicitor Firm', with: 'Acme Solicitors'
         fill_in 'Phone Number', with: '0207 284 0000'
         fill_in 'Custody Number', with: '#CUST-01234'
-        fill_in 'Allegations', with: 'BadMurder'
+        fill_in 'Offences', with: 'BadMurder'
         select('09', from: 'defence_request_time_of_arrival_4i')
         select('30', from: 'defence_request_time_of_arrival_5i')
       end
@@ -79,7 +79,7 @@ module HelperMethods
         phone_number
         detainee_name
         custody_number
-        allegations
+        offences
         comments
         dscc_number).include? key
         unless value.is_a?(ActiveSupport::TimeWithZone)

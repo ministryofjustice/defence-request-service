@@ -14,7 +14,7 @@ RSpec.describe DefenceRequestForm do
                               detainee_name: defence_request.detainee_name,
                               gender: defence_request.gender,
                               detainee_age: defence_request.detainee_age,
-                              allegations: defence_request.allegations,
+                              offences: defence_request.offences,
                               time_of_arrival: datetime_to_params(defence_request.time_of_arrival),
                               custody_number: defence_request.custody_number,
                               comments: defence_request.comments } }

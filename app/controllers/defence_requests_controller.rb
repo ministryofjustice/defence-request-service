@@ -188,7 +188,7 @@ class DefenceRequestsController < BaseController
       :county,
       :postcode,
       :custody_number,
-      :allegations,
+      :offences,
       :comments,
       { interview_start_time: %i[day month year hour min sec] },
       { time_of_arrival: %i[day month year hour min sec] },
