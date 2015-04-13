@@ -11,11 +11,11 @@
 <div class="form-group">
   <fieldset class="inline">
     <%= f.label :fit_for_interview, t('fit_for_interview') %>
-    <label class="block-label" for="defence_request_gender_male">
+    <label class="block-label" for="defence_request_fit_for_interview_true">
       <%= f.radio_button :fit_for_interview, true, name: 'defence_request[fit_for_interview]', checked: @defence_request.fit_for_interview.present?, class: 'fit_for_interview_radio' %>
       <%= t('yes') %>
     </label>
-    <label class="block-label" for="defence_request_gender_female">
+    <label class="block-label" for="defence_request_fit_for_interview_false">
       <%= f.radio_button :fit_for_interview, false, name: 'defence_request[fit_for_interview]', checked: @defence_request.fit_for_interview.blank?, class: 'fit_for_interview_radio' %>
       <%= t('no') %>
     </label>
