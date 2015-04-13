@@ -42,6 +42,11 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           fill_in "defence_request_investigating_officer_contact_number", with: "0207 111 0000"
           fill_in "Offences", with: "BadMurder"
           fill_in "defence_request_circumstances_of_arrest", with: "He looked a bit shady"
+          fill_in "defence_request_time_of_arrest_day", with: "02"
+          fill_in "defence_request_time_of_arrest_month", with: "02"
+          fill_in "defence_request_time_of_arrest_year", with: "2002"
+          fill_in "defence_request_time_of_arrest_hour", with: "02"
+          fill_in "defence_request_time_of_arrest_min", with: "02"
           fill_in "defence_request_time_of_arrival_day", with: "01"
           fill_in "defence_request_time_of_arrival_month", with: "01"
           fill_in "defence_request_time_of_arrival_year", with: "2001"
@@ -399,7 +404,8 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
                                     :with_address,
                                     :with_investigating_officer,
                                     :with_custody_address,
-                                    :with_circumstance_of_arrest) }
+                                    :with_circumstance_of_arrest,
+                                    :with_time_of_arrest) }
 
     specify "visitng the show page for a defence request shows all required fields" do
       visit defence_request_path(fully_loaded_dr)
@@ -424,6 +430,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
       expect(page).to have_content("Investigating Officer Name Dave Mc.Copper")
       expect(page).to have_content("Investigating Officer Shoulder Number 987654")
       expect(page).to have_content("Investigating Officer Contact Number 0207 111 0000")
+      expect(page).to have_content("Time of Arrest 1 January 2001 - 01:01")
       expect(page).to have_content("Time of Arrival 1 January 2001 - 01:01")
       expect(page).to have_content("Comments commenty-comments-are here: ")
       expect(page).to have_content("DSCC number 123456")

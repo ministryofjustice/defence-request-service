@@ -23,6 +23,7 @@ class DefenceRequestForm
     @defence_request = defence_request
     register_field :date_of_birth, DateField
     register_field :time_of_arrival, DateTimeField
+    register_field :time_of_arrest, DateTimeField
     register_field :solicitor_time_of_arrival, DateTimeField
     register_field :interview_start_time, DateTimeField
     register_field :solicitor, SolicitorField
