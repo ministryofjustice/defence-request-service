@@ -9,7 +9,7 @@ class DsccNumber < ActiveRecord::Base
   end
 
   def self.current_year_and_month
-    Time.now.to_date.beginning_of_month
+    Time.current.to_date.beginning_of_month
   end
 
   def self.generate
