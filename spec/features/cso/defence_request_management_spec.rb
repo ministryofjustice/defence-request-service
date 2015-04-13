@@ -42,6 +42,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           fill_in "defence_request_investigating_officer_contact_number", with: "0207 111 0000"
           fill_in "Offences", with: "BadMurder"
           fill_in "defence_request_circumstances_of_arrest", with: "He looked a bit shady"
+          choose "defence_request_fit_for_interview_fit_for_interview_yes"
           fill_in "defence_request_time_of_arrest_day", with: "02"
           fill_in "defence_request_time_of_arrest_month", with: "02"
           fill_in "defence_request_time_of_arrest_year", with: "2002"
@@ -433,6 +434,8 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
       expect(page).to have_content("Custody Address The Nick")
       expect(page).to have_content("Offences Theft")
       expect(page).to have_content("Circumstances of Arrest Caught red handed")
+      expect(page).to have_content("Circumstances of Arrest Caught red handed")
+      expect(page).to have_content("Fit for Interview? ✓")
       expect(page).to have_content("Investigating Officer Name Dave Mc.Copper")
       expect(page).to have_content("Investigating Officer Shoulder Number 987654")
       expect(page).to have_content("Investigating Officer Contact Number 0207 111 0000")
