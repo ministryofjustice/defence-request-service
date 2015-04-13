@@ -104,4 +104,8 @@ FactoryGirl.define do
   trait :with_time_of_arrest do
     time_of_arrest now
   end
+
+  trait :with_time_of_detention_authorised do
+    time_of_detention_authorised now
+  end
 end
