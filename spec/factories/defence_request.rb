@@ -86,4 +86,18 @@ FactoryGirl.define do
     county "Greater London"
     postcode "XX1 1XX"
   end
+
+  trait :with_circumstance_of_arrest do
+    circumstances_of_arrest "Caught red handed"
+  end
+
+  trait :with_investigating_officer do
+    investigating_officer_name "Dave Mc.Copper"
+    investigating_officer_shoulder_number "987654"
+    investigating_officer_contact_number "0207 111 0000"
+  end
+
+  trait :with_custody_address do
+    custody_address "The Nick"
+  end
 end

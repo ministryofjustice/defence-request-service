@@ -6,7 +6,9 @@ class DefenceRequestForm
 
   DELEGATED_ATTRIBUTES =  :solicitor_type, :solicitor_name, :solicitor_firm, :phone_number, :detainee_name, :gender,
                           :detainee_age, :offences, :scheme, :custody_number, :comments, :appropriate_adult_reason,
-                          :house_name, :address_1,  :address_2,  :city, :county, :postcode
+                          :house_name, :address_1, :address_2, :city, :county, :postcode, :circumstances_of_arrest,
+                          :custody_address, :investigating_officer_name, :investigating_officer_shoulder_number,
+                          :investigating_officer_contact_number
 
   DELEGATED_ATTRIBUTES.each do |attr_name|
     def_delegator :@defence_request, "#{attr_name}_before_type_cast", attr_name
