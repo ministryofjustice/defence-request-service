@@ -25,17 +25,15 @@
 
 <div class="form-group">
   <fieldset class="inline">
-    <%= f.fields_for :appropriate_adult, @defence_request_form.fields[:appropriate_adult] do |t| %>
-      <%= t.label :appropriate_adult, t('appropriate_adult_required') %>
-      <label class="block-label" for="defence_request_appropriate_adult_yes">
-        <%= t.radio_button :appropriate_adult, :yes, name: 'defence_request[appropriate_adult][appropriate_adult]', class: 'appropriate_adult_radio' %>
-        <%= t('yes') %>
-      </label>
-      <label class="block-label" for="defence_request_appropriate_adult_no">
-        <%= t.radio_button :appropriate_adult, :no, name: 'defence_request[appropriate_adult][appropriate_adult]', class: 'appropriate_adult_radio' %>
-        <%= t('no') %>
-      </label>
-    <% end %>
+    <%= f.label :appropriate_adult, t('appropriate_adult') %>
+    <label class="block-label" for="defence_request_appropriate_adult_true">
+      <%= f.radio_button :appropriate_adult, true, name: 'defence_request[appropriate_adult]', checked: @defence_request.appropriate_adult.present?, class: 'appropriate_adult_radio' %>
+      <%= t('yes') %>
+    </label>
+    <label class="block-label" for="defence_request_fit_for_interview_false">
+      <%= f.radio_button :appropriate_adult, false, name: 'defence_request[appropriate_adult]', checked: @defence_request.appropriate_adult.blank?, class: 'appropriate_adult_radio' %>
+      <%= t('no') %>
+    </label>
   </fieldset>
 </div>
 

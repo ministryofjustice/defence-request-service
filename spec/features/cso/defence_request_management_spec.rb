@@ -73,7 +73,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           fill_in "defence_request_city", with: "London"
           fill_in "defence_request_county", with: "Greater London"
           fill_in "defence_request_postcode", with: "XX1 1XX"
-          choose "defence_request_appropriate_adult_appropriate_adult_no"
+          choose "defence_request_appropriate_adult_false"
         end
         fill_in "Comments", with: "This is a very bad man. Send him down..."
         click_button "Create Defence Request"
@@ -216,7 +216,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
       expect(page).to have_css("#defence_request_appropriate_adult_reason[disabled]")
 
       within ".detainee" do
-        choose "defence_request_appropriate_adult_appropriate_adult_yes"
+        choose "defence_request_appropriate_adult_true"
       end
 
       expect(page).to_not have_css("#defence_request_appropriate_adult_reason[disabled]")
@@ -249,7 +249,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
         fill_in "defence_request_date_of_birth_year", with: "1976"
         fill_in "defence_request_date_of_birth_month", with: "01"
         fill_in "defence_request_date_of_birth_day", with: "01"
-        choose "defence_request_appropriate_adult_appropriate_adult_yes"
+        choose "defence_request_appropriate_adult_true"
       end
       fill_in "Comments", with: "This is a very bad man. Send him down..."
       click_button "Create Defence Request"
@@ -307,7 +307,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
         fill_in "defence_request_date_of_birth_year", with: "1976"
         fill_in "defence_request_date_of_birth_month", with: "01"
         fill_in "defence_request_date_of_birth_day", with: "01"
-        choose "defence_request_appropriate_adult_appropriate_adult_no"
+        choose "defence_request_appropriate_adult_false"
       end
       click_button "Create Defence Request"
       expect(page).to have_content "Reason unfit for interview: can't be blank"
@@ -357,7 +357,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
             fill_in "defence_request_date_of_birth_year", with: "1976"
             fill_in "defence_request_date_of_birth_month", with: "01"
             fill_in "defence_request_date_of_birth_day", with: "01"
-            choose "defence_request_appropriate_adult_appropriate_adult_no"
+            choose "defence_request_appropriate_adult_false"
           end
 
           within ".detainee" do
@@ -367,7 +367,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
             fill_in "defence_request_date_of_birth_year", with: "1986"
             fill_in "defence_request_date_of_birth_month", with: "12"
             fill_in "defence_request_date_of_birth_day", with: "12"
-            choose "defence_request_appropriate_adult_appropriate_adult_yes"
+            choose "defence_request_appropriate_adult_true"
             fill_in "defence_request_appropriate_adult_reason", with: "They look under age"
             fill_in "defence_request_house_name", with: "House of the rising sun"
             fill_in "defence_request_address_1", with: "Letsby Avenue"

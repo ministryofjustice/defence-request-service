@@ -1,5 +1,6 @@
 <script>
   var appropriate_adult_true = function () {
+    $('#defence_request_appropriate_adult_reason').val("");
     $('#defence_request_appropriate_adult_reason').removeAttr("disabled");
   }
 
@@ -8,8 +9,8 @@
   }
 
   var adjust_form_for_appropriate_adult = function () {
-    var appropriate_adult_yes_checked = ($("input[type='radio']#defence_request_appropriate_adult_appropriate_adult_yes:checked").length > 0);
-    var appropriate_adult_no_checked = ($("input[type='radio']#defence_request_appropriate_adult_appropriate_adult_no:checked").length > 0);
+    var appropriate_adult_yes_checked = ($("input[type='radio']#defence_request_appropriate_adult_true:checked").length > 0);
+    var appropriate_adult_no_checked = ($("input[type='radio']#defence_request_appropriate_adult_false:checked").length > 0);
     if (appropriate_adult_yes_checked) {
       appropriate_adult_true()
     } else if (appropriate_adult_no_checked) {
