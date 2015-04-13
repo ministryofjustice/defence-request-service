@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  include Omniauth::Dsds::ControllerMethods
 
   protect_from_forgery with: :exception
 
@@ -7,5 +8,4 @@ class ApplicationController < ActionController::Base
   def flash_message(type, klass)
     t("models.#{type}", model: klass.model_name.human)
   end
-
 end

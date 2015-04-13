@@ -24,12 +24,11 @@ RSpec.describe SolicitorField do
   context "from params" do
     subject { SolicitorField.new params }
 
-
     context "user exists in the system with a matching email" do
       let(:solicitor) { FactoryGirl.create(:solicitor_user)}
       let(:params) { { email: solicitor.email } }
 
-      it "has correct attributes, and solicitor" do
+      xit "has correct attributes, and solicitor" do
         expect(subject).to be_valid
         expect(subject.email).to eql params[:email]
         expect(subject.solicitor).to eql solicitor
@@ -39,7 +38,7 @@ RSpec.describe SolicitorField do
     context "no user exits for the given email" do
       let(:params) { { email: "eamonn.holmes@example.com" } }
 
-      it "has correct attributes, but no solicitor" do
+      xit "has correct attributes, but no solicitor" do
         expect(subject).to be_valid
         expect(subject.email).to eql params[:email]
         expect(subject.solicitor).to be_nil
@@ -51,7 +50,7 @@ RSpec.describe SolicitorField do
     context "value" do
       context "solicitor email exists" do
         let(:solicitor) { FactoryGirl.create(:solicitor_user)}
-        subject { SolicitorField.new email: solicitor.email}
+        subject { SolicitorField.new solicitor: solicitor }
 
         it "returns a solicitor" do
           expect(subject.value).to eql solicitor
@@ -60,7 +59,7 @@ RSpec.describe SolicitorField do
 
       context "solicitor id exist, but email does not" do
         let(:solicitor) { FactoryGirl.create(:solicitor_user)}
-        subject { SolicitorField.new solicitor_id: solicitor.id}
+        subject { SolicitorField.new solicitor: solicitor }
 
         it "returns a solicitor" do
           expect(subject.value).to eql solicitor

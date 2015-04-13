@@ -8,11 +8,11 @@ class DefenceRequestPolicy < ApplicationPolicy
     end
 
     def resolve
-      if user.cso?
+      if user.roles.include?("cso")
         scope.not_aborted
-      elsif user.cco?
+      elsif user.roles.include?("cco")
         scope.not_draft
-      elsif user.solicitor?
+      elsif user.roles.include?("solicitor")
         scope.has_solicitor(user).accepted_or_aborted
       end
     end
@@ -100,24 +100,23 @@ class DefenceRequestPolicy < ApplicationPolicy
 
   private
 
-  def cso
-    user.cso?
-  end
-
   def cco
-    user.cco?
+    user.roles.include?("cco")
   end
 
-  def user_is_the_assigned_cco
-    cco && record.cco == user
-  end
-
-  def user_is_the_assigned_solicitor
-    solicitor && record.solicitor == user
+  def cso
+    user.roles.include?("cso")
   end
 
   def solicitor
-    user.solicitor?
+    user.roles.include?("solicitor")
   end
 
+  def user_is_the_assigned_cco
+    cco && record.cco_uid == user.uid
+  end
+
+  def user_is_the_assigned_solicitor
+    solicitor && record.solicitor_uid == user.uid
+  end
 end

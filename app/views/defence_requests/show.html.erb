@@ -8,7 +8,7 @@
 
     <p><%= @defence_request.reason_aborted %></p>
 
-    <% if @current_user.solicitor? %>
+    <% if @current_user.roles.include?("solicitor") %>
       <p><%= t('call_call_center') %></p>
     <% end %>
   <% else %>

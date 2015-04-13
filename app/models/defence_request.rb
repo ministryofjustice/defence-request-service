@@ -1,17 +1,17 @@
 class DefenceRequest < ActiveRecord::Base
   include ActiveModel::Transitions
 
-  belongs_to :solicitor, class_name: :User
-  belongs_to :cco, class_name: :User
-
-  delegate :email, to: :solicitor, prefix: true, allow_nil: true
+  attr_accessor :cco, :solicitor
 
   after_update :notify_interview_start_change, if: :interview_start_time_changed?
 
-  scope :has_solicitor, ->(solicitor) { where(solicitor: solicitor) }
-  scope :not_draft, -> { where.not(state: 'draft') }
-  scope :not_aborted, -> { where.not(state: 'aborted') }
-  scope :accepted_or_aborted, -> { where(state: ['accepted', 'aborted']) }
+  scope :not_draft, -> { where.not(state: "draft") }
+  scope :not_aborted, -> { where.not(state: "aborted") }
+  scope :accepted_or_aborted, -> { where(state: ["accepted", "aborted"]) }
+
+  def self.has_solicitor(solicitor)
+    where(solicitor_uid: solicitor.uid)
+  end
 
   state_machine auto_scopes: true do
     state :draft # first one is initial state
@@ -67,22 +67,21 @@ class DefenceRequest < ActiveRecord::Base
 
   audited
 
-  SCHEMES = [ 'No Scheme',
-              'Brighton Scheme 1',
-              'Brighton Scheme 2',
-              'Brighton Scheme 3']
-
+  SCHEMES = [ "No Scheme",
+              "Brighton Scheme 1",
+              "Brighton Scheme 2",
+              "Brighton Scheme 3"]
 
   def resend_details
     send_solicitor_case_details
   end
 
   def duty_solicitor?
-    solicitor_type == 'duty'
+    solicitor_type == "duty"
   end
 
   def own_solicitor?
-    solicitor_type == 'own'
+    solicitor_type == "own"
   end
 
   def phone_number=(new_value)

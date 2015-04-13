@@ -1,77 +1,81 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.feature "Solicitors managing defence requests" do
-
-  let!(:solicitor_dr) { create(:defence_request, :accepted) }
-  let!(:dr2) { create(:defence_request, :accepted) }
-
-  before :each do
-    login_as_user(solicitor_dr.solicitor.email)
-  end
-
   context "with cases they are assigned to" do
-
     specify "can see the show page of the request" do
-      visit defence_requests_path
-      within ".accepted-defence-request" do
-        click_link("Show")
-      end
+      solicitor_user = create :solicitor_user
+      accepted_defence_request = create(
+        :defence_request,
+        :accepted,
+        solicitor_uid: solicitor_user.uid
+      )
 
-      expect(page).to have_content("Case Details")
-      expect(page).to have_content(solicitor_dr.solicitor_name)
-      expect(page).to have_link("Dashboard")
+      login_with_role "solicitor", solicitor_user.uid
+      click_link "Show"
+
+      expect(page).to have_content accepted_defence_request.solicitor_name
     end
 
     specify "can edit the expected arrival time from the show page of the request" do
-      visit defence_requests_path
-      within ".accepted-defence-request" do
-        click_link("Show")
-      end
+      solicitor_user = create :solicitor_user
+      create :defence_request, :accepted, solicitor_uid: solicitor_user.uid
 
+      login_with_role "solicitor", solicitor_user.uid
+      click_link "Show"
       within ".time-of-arrival" do
-        fill_in 'defence_request[solicitor_time_of_arrival][day]', with: '01'
-        fill_in 'defence_request[solicitor_time_of_arrival][month]', with: '01'
-        fill_in 'defence_request[solicitor_time_of_arrival][year]', with: '2001'
-        fill_in 'defence_request[solicitor_time_of_arrival][hour]', with: '01'
-        fill_in 'defence_request[solicitor_time_of_arrival][min]', with: '01'
+        fill_in "defence_request[solicitor_time_of_arrival][day]", with: "01"
+        fill_in "defence_request[solicitor_time_of_arrival][month]", with: "01"
+        fill_in "defence_request[solicitor_time_of_arrival][year]", with: "2001"
+        fill_in "defence_request[solicitor_time_of_arrival][hour]", with: "01"
+        fill_in "defence_request[solicitor_time_of_arrival][min]", with: "01"
       end
       click_button "Add Expected Time of Arrival"
 
-      expect(page).to have_content("Defence Request successfully updated with solicitor estimated time of arrival")
-
-      within "tr.solicitor-time-of-arrival" do
-        expect(page).to have_content("1 January 2001 - 01:01")
-      end
+      expect(page).to have_content "1 January 2001 - 01:01"
     end
 
     specify "are shown a message if the time of arrival cannot be updated due to errors" do
-      visit defence_requests_path
-      within ".accepted-defence-request" do
-        click_link("Show")
-      end
+      solicitor_user = create :solicitor_user
+      create :defence_request, :accepted, solicitor_uid: solicitor_user.uid
 
+      login_with_role "solicitor", solicitor_user.uid
+      click_link "Show"
       within ".time-of-arrival" do
-        fill_in 'defence_request[solicitor_time_of_arrival][day]', with: 'I'
-        fill_in 'defence_request[solicitor_time_of_arrival][month]', with: 'AM'
-        fill_in 'defence_request[solicitor_time_of_arrival][year]', with: 'VERY'
-        fill_in 'defence_request[solicitor_time_of_arrival][hour]', with: 'VERY'
-        fill_in 'defence_request[solicitor_time_of_arrival][min]', with: 'BROKEN'
+        fill_in "defence_request[solicitor_time_of_arrival][day]", with: "I"
+        fill_in "defence_request[solicitor_time_of_arrival][month]", with: "AM"
+        fill_in "defence_request[solicitor_time_of_arrival][year]", with: "VERY"
+        fill_in "defence_request[solicitor_time_of_arrival][hour]", with: "VERY"
+        fill_in "defence_request[solicitor_time_of_arrival][min]", with: "BROKEN"
       end
       click_button "Add Expected Time of Arrival"
 
-      expect(page).to have_content(["Invalid Date or Time",
-                                   "Day is not a number",
-                                   "Month is not a number",
-                                   "Year is not a number",
-                                   "Hour is not a number",
-                                   "Min is not a number"].join(", "))
+      expect(page).to have_content(
+        [
+          "Invalid Date or Time",
+          "Day is not a number",
+          "Month is not a number",
+          "Year is not a number",
+          "Hour is not a number",
+          "Min is not a number"
+        ].join(", ")
+      )
     end
   end
 
   context "with cases they are not assigned to" do
     specify  "can not see the show page" do
-      visit defence_request_path(dr2)
-      expect(page).to have_content("You are not authorised to perform this action")
+      solicitor_user = create :solicitor_user
+      defence_request_assigned_to_other_solicitor = create(
+        :defence_request,
+        :accepted,
+        solicitor_uid: create(:solicitor_user).uid
+      )
+
+      login_with_role "solicitor", solicitor_user.uid
+      visit defence_request_path defence_request_assigned_to_other_solicitor
+
+      expect(page).
+        to have_content "You are not authorised to perform this action"
     end
   end
 end

@@ -4,85 +4,62 @@ RSpec.feature "Custody Center Operatives viewing their dashboard" do
     include ActiveJobHelper
     include DashboardHelper
 
-    let!(:dr_queued) { create(:defence_request, :queued) }
-    let!(:dr_ack) { create(:defence_request, :acknowledged) }
-    let!(:dr_accepted) { create(:defence_request, :accepted) }
-    let!(:dr_aborted) { create(:defence_request, :aborted) }
-    let(:cco_user2){ create :cco_user }
+    specify "view queued, acknowledged and aborted defence requests tables" do
+      cco_user = create :cco_user
+      aborted_defence_request = create :defence_request, :aborted
+      acknowledged_defence_request = create :defence_request, :acknowledged
+      queued_defence_request = create :defence_request, :queued
 
-    before :each do
-      create_role_and_login("cco")
+      login_with_role "cco", cco_user.uid
+
+      expect(page).to have_content aborted_defence_request.solicitor_name
+      expect(page).to have_content acknowledged_defence_request.solicitor_name
+      expect(page).to have_content queued_defence_request.solicitor_name
     end
 
-    specify 'can see tables of "queued", "acknowledged" and "aborted" defence requests' do
-      visit defence_requests_path
+    specify "view refreshed data on the dashboard with after a period", js: true, short_dashboard_refresh: true do
+      cco_user = create :cco_user
+      acknowledged_defence_request = create :defence_request, :acknowledged
+      queued_defence_request = create :defence_request, :queued
 
-      within ".queued-defence-request" do
-        expect(page).to have_content(dr_queued.solicitor_name)
-      end
+      login_with_role "cco", cco_user.uid
 
-      within ".acknowledged-defence-request" do
-        expect(page).to have_content(dr_ack.solicitor_name)
-      end
-
-      within ".aborted-defence-request" do
-        expect(page).to have_content(dr_aborted.solicitor_name)
-      end
-    end
-
-    specify "can see the dashboard with refreshed data after a period", js: true, short_dashboard_refresh: true do
-      visit defence_requests_path
-
-      within "#defence_request_#{dr_queued.id}" do
-        expect(page).to have_content(dr_queued.solicitor_name)
-      end
-
-      within "#defence_request_#{dr_ack.id}" do
-        expect(page).to have_content(dr_ack.solicitor_name)
-      end
-
-      dr_queued.update(solicitor_name: "New Solicitor")
-      dr_ack.update(solicitor_name: "New Solicitor2")
+      acknowledged_defence_request.update(
+        solicitor_name: "Queued Req. Updated Solicitor Name"
+      )
+      queued_defence_request.update(
+        solicitor_name: "Acknowledged Req. Updated Solicitor Name"
+      )
 
       wait_for_dashboard_refresh
 
-      within "#defence_request_#{dr_queued.id}" do
-        expect(page).to have_content("New Solicitor")
-      end
-      within "#defence_request_#{dr_ack.id}" do
-        expect(page).to have_content("New Solicitor2")
-      end
-
+      expect(page).to have_content "Queued Req. Updated Solicitor Name"
+      expect(page).to have_content "Acknowledged Req. Updated Solicitor Name"
     end
 
-    specify "can resend case details of an defence request to the assigned solicitor", js: true do
-      visit defence_requests_path
+    xspecify "can resend case details of an defence request to the assigned solicitor", js: true do
+      cco_user = create :cco_user
+      create :defence_request, :accepted
 
-      within ".accepted-defence-request" do
-        click_button "Resend details"
-      end
-
+      login_with_role "cco", cco_user.uid
+      click_button "Resend details"
       page.execute_script "window.confirm"
+      wait_for_dashboard_refresh
 
-      expect(page).to have_content("Details successfully sent")
-      an_email_has_been_sent
+      expect(page).to have_content "Details successfully sent"
+      expect_email_with_case_details_to_have_been_sent_to_assigned_solicitor
     end
 
-    specify "are shown an error message if case details cannot be resent", js: true do
-      visit defence_requests_path
+    xspecify "are shown an error message if case details cannot be resent", js: true do
+      stub_defence_request_with method: :resend_details, value: false
+      cco_user = create :cco_user
+      create :defence_request, :with_solicitor, :accepted
 
-      dr_details_can_not_be_resent_for_some_reason dr_accepted
-      within ".accepted-defence-request" do
-        click_button "Resend details"
-      end
-
+      login_with_role "cco", cco_user.uid
+      click_button "Resend details"
       page.execute_script "window.confirm"
+      wait_for_dashboard_refresh
 
-      expect(page).to have_content("Details were not sent")
+      expect(page).to have_content "Details were not sent"
     end
-end
-
-def dr_details_can_not_be_resent_for_some_reason defence_request
-  expect(DefenceRequest).to receive(:find).with(defence_request.id.to_s) { defence_request }
-  expect(defence_request).to receive(:resend_details) { false }
 end

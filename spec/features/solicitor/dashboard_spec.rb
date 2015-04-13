@@ -3,46 +3,40 @@ require "rails_helper"
 RSpec.feature "Solicitors viewing their dashboard" do
   include DashboardHelper
 
-  let!(:solicitor_dr) { create(:defence_request, :accepted) }
-  let!(:other_solicitor_dr) { create(:defence_request, :accepted) }
-  let!(:other_solicitor) { create(:solicitor_user) }
-  let!(:solicitor_dr_not_accepted) { create(:defence_request, :acknowledged, dscc_number: "98765", solicitor: solicitor_dr.solicitor) }
-  let!(:draft_dr) { create(:defence_request, :draft, dscc_number: "98765", solicitor: solicitor_dr.solicitor) }
-
-  before :each do
-    login_as_user(solicitor_dr.solicitor.email)
-  end
-
   specify "can only see requests that they have accepted" do
-    visit defence_requests_path
-    within ".accepted-defence-request" do
-      expect(page).to have_content(solicitor_dr.solicitor_name)
-    end
-    within ".accepted-defence-request" do
-      expect(page).to_not have_content(other_solicitor_dr.solicitor_name)
-    end
+    solicitor_user = create :solicitor_user
+    accepted_defence_request = create(
+      :defence_request,
+      :accepted,
+      solicitor_uid: solicitor_user.uid
+    )
+    not_accepted_defence_request = create :defence_request
+
+    login_with_role "solicitor", solicitor_user.uid
+
+    expect(page).to have_content accepted_defence_request.solicitor_name
+    expect(page).to_not have_content not_accepted_defence_request.solicitor_name
   end
 
   context "when the dashboard refreshes to update defence request information" do
     specify "they can still only see requests the they have accepted", js: true, short_dashboard_refresh: true do
-      visit defence_requests_path
+      solicitor_user = create :solicitor_user
+      accepted_defence_request = create(
+        :defence_request,
+        :accepted,
+        solicitor_uid: solicitor_user.uid
+      )
+      acknowledged_defence_request = create :defence_request, :acknowledged
 
-      within ".accepted-defence-request" do
-        expect(page).to have_content(solicitor_dr.detainee_name)
-        expect(page).to_not have_content(solicitor_dr_not_accepted.detainee_name)
-      end
-      expect(page).to_not have_selector(".draft-defence-request")
-      expect(page).to_not have_selector(".acknowledged-defence-request")
+      login_with_role "solicitor", solicitor_user.uid
+
+      expect(page).to have_content(accepted_defence_request.detainee_name)
+      expect(page).to_not have_content(acknowledged_defence_request.detainee_name)
 
       wait_for_dashboard_refresh
 
-      within ".accepted-defence-request" do
-        expect(page).to have_content(solicitor_dr.detainee_name)
-        expect(page).to_not have_content(solicitor_dr_not_accepted.detainee_name)
-      end
-
-      expect(page).to_not have_selector(".draft-defence-request")
-      expect(page).to_not have_selector(".acknowledged-defence-request")
+      expect(page).to have_content(accepted_defence_request.detainee_name)
+      expect(page).to_not have_content(acknowledged_defence_request.detainee_name)
     end
   end
 end
