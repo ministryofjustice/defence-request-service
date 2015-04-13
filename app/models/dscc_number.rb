@@ -19,8 +19,9 @@ class DsccNumber < ActiveRecord::Base
     end
   end
 
+  has_one :defence_request
+
   validates_uniqueness_of :number, scope: [:year_and_month]
-  validates_uniqueness_of :defence_request_id
 
   def to_s
     [year_and_month.strftime("%y%m"), number.to_s.rjust(5, "0"), extension].join ""

@@ -3,7 +3,7 @@ class DefenceRequest < ActiveRecord::Base
 
   belongs_to :solicitor, class_name: :User
   belongs_to :cco, class_name: :User
-  has_one :dscc_number, autosave: true
+  belongs_to :dscc_number, autosave: true
 
   delegate :email, to: :solicitor, prefix: true, allow_nil: true
 
@@ -62,6 +62,8 @@ class DefenceRequest < ActiveRecord::Base
 
   validates :detainee_age, numericality: true, presence: true
 
+  validates_uniqueness_of :dscc_number_id
+
   audited
 
   SCHEMES = [ 'No Scheme',
@@ -98,5 +100,9 @@ class DefenceRequest < ActiveRecord::Base
 
   def generate_dscc_number
     self.dscc_number = DsccNumber.generate unless dscc_number
+  end
+
+  def dscc_number?
+    dscc_number.present?
   end
 end
