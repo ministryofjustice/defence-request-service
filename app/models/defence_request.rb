@@ -31,7 +31,7 @@ class DefenceRequest < ActiveRecord::Base
     end
 
     event :accept, success: :send_solicitor_case_details do
-      transitions from: [:acknowledged], to: :accepted, guard: :dscc_number?
+      transitions from: [:acknowledged], to: :accepted, guard: [:dscc_number?, :solicitor_details?]
     end
 
     event :abort do
@@ -62,7 +62,7 @@ class DefenceRequest < ActiveRecord::Base
 
   validates :detainee_age, numericality: true, presence: true
 
-  validates_uniqueness_of :dscc_number_id
+  validates_uniqueness_of :dscc_number_id, allow_nil: true
 
   audited
 
@@ -84,6 +84,14 @@ class DefenceRequest < ActiveRecord::Base
     solicitor_type == 'own'
   end
 
+  def dscc_number?
+    dscc_number.present?
+  end
+
+  def solicitor_details?
+    solicitor_name && solicitor_firm && phone_number
+  end
+
   private
 
   def format_phone_number
@@ -100,9 +108,5 @@ class DefenceRequest < ActiveRecord::Base
 
   def generate_dscc_number
     self.dscc_number = DsccNumber.generate unless dscc_number
-  end
-
-  def dscc_number?
-    dscc_number.present?
   end
 end

@@ -54,10 +54,6 @@ class DefenceRequestPolicy < ApplicationPolicy
     create? && record.new_record?
   end
 
-  def dscc_number_edit?
-    record.acknowledged? && user_is_the_assigned_cco
-  end
-
   def interview_start_time_edit?
     cso && !record.new_record? && record.draft?
   end
@@ -67,7 +63,7 @@ class DefenceRequestPolicy < ApplicationPolicy
   end
 
   def accept?
-    cco && record.can_execute_accept?
+    cco && record.cco == user && record.can_execute_accept?
   end
 
   def resend_details?
@@ -92,6 +88,10 @@ class DefenceRequestPolicy < ApplicationPolicy
 
   def reason_aborted?
     abort?
+  end
+
+  def update_and_accept?
+    cco && record.cco == user && record.acknowledged?
   end
 
   private

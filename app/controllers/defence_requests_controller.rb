@@ -133,8 +133,6 @@ class DefenceRequestsController < BaseController
     case
       when solicitor_details_missing?
         redirect_to(edit_defence_request_path, alert: flash_message(:solicitor_details_required, DefenceRequest))
-      when dscc_number_missing?
-        redirect_to(edit_defence_request_path, alert: flash_message(:dscc_number_required, DefenceRequest))
       when @defence_request_form.submit(defence_request_params) && accept_and_save_defence_request
         redirect_to(defence_requests_path, notice: flash_message(:updated_and_updated, DefenceRequest))
     end
@@ -142,10 +140,6 @@ class DefenceRequestsController < BaseController
 
   def solicitor_details_missing?
     !@defence_request.solicitor && (defence_request_params[:solicitor_name].blank? || defence_request_params[:solicitor_firm].blank?)
-  end
-
-  def dscc_number_missing?
-    defence_request_params[:dscc_number].blank?
   end
 
   def find_defence_request

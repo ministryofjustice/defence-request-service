@@ -44,7 +44,7 @@ RSpec.describe DefenceRequest, type: :model do
     end
 
     shared_examples 'transition impossible' do |event|
-      specify { expect( subject.send("can_execute_#{event}?".to_sym) ).to eq false }
+      specify { expect( subject.send("can_execute_#{event}?".to_sym) ).to eq(false), "failed event: #{event}" }
     end
 
     shared_examples 'allowed transitions' do |allowed_events|
@@ -74,10 +74,10 @@ RSpec.describe DefenceRequest, type: :model do
 
     describe 'acknowledged' do
       let(:state) { :acknowledged }
-      include_examples 'allowed transitions', [ :finish, :abort ]
+      include_examples 'allowed transitions', [ :finish, :abort, :accept ]
 
       context 'with dscc number' do
-        subject { FactoryGirl.create(:defence_request, :acknowledged, :with_dscc_number) }
+        subject { FactoryGirl.create(:defence_request, :acknowledged) }
         include_examples 'allowed transitions', [ :accept, :finish, :abort ]
       end
     end

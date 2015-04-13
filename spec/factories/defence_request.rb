@@ -38,6 +38,7 @@ FactoryGirl.define do
 
   trait :acknowledged do
     state 'acknowledged'
+    association :dscc_number
     association :cco, factory: :cco_user
   end
 
@@ -47,12 +48,12 @@ FactoryGirl.define do
 
   trait :accepted do
     state 'accepted'
-    dscc_number '123456'
+    association :dscc_number
     association :solicitor, factory: :solicitor_user
   end
 
   trait :aborted do
-    dscc_number '123456'
+    association :dscc_number
     reason_aborted 'This has been closed for a reason.'
     state 'aborted'
   end
@@ -62,6 +63,6 @@ FactoryGirl.define do
   end
 
   trait :with_dscc_number do
-    dscc_number '123456'
+    association :dscc_number
   end
 end

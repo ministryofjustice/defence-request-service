@@ -93,22 +93,11 @@ RSpec.describe DefenceRequestPolicy do
         let (:allowed_actions) { [
           :show,
           :edit,
-          :dscc_number_edit,
-          :update
-        ] }
-        let! (:defreq) { FactoryGirl.create(:defence_request, :acknowledged, cco: user) }
-        specify { expect(subject).to permit_actions_and_forbid_all_others actions }
-      end
-
-      context "with an acknowledged DR with a dscc number" do
-        let (:allowed_actions) { [
-          :show,
-          :edit,
-          :dscc_number_edit,
           :update,
+          :update_and_accept,
           :accept
         ] }
-        let! (:defreq) { FactoryGirl.create(:defence_request, :acknowledged, :with_dscc_number, cco: user) }
+        let! (:defreq) { FactoryGirl.create(:defence_request, :acknowledged, cco: user) }
         specify { expect(subject).to permit_actions_and_forbid_all_others actions }
       end
 

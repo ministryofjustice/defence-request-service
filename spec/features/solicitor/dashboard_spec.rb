@@ -6,8 +6,7 @@ RSpec.feature "Solicitors viewing their dashboard" do
   let!(:solicitor_dr) { create(:defence_request, :accepted) }
   let!(:other_solicitor_dr) { create(:defence_request, :accepted) }
   let!(:other_solicitor) { create(:solicitor_user) }
-  let!(:solicitor_dr_not_accepted) { create(:defence_request, :acknowledged, dscc_number: "98765", solicitor: solicitor_dr.solicitor) }
-  let!(:draft_dr) { create(:defence_request, :draft, dscc_number: "98765", solicitor: solicitor_dr.solicitor) }
+  let!(:solicitor_dr_not_accepted) { create(:defence_request, :acknowledged, solicitor: solicitor_dr.solicitor) }
 
   before :each do
     login_as_user(solicitor_dr.solicitor.email)

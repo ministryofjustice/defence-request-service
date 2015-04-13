@@ -96,83 +96,52 @@ RSpec.feature "Call Center Operatives managing defence requests" do
         end
       end
 
-      specify "can add/edit the DSCC number on the request" do
+      specify "cannot change the generated DSCC number on the request" do
         visit root_path
         within "#defence_request_#{ack_dr.id}" do
           click_link "Edit"
         end
-        fill_in "DSCC number", with: "NUMBERWANG"
-        click_button "Update Defence Request"
-        expect(page).to have_content "Defence Request successfully updated"
-        within "#defence_request_#{ack_dr.id}" do
-          click_link "Edit"
-        end
-        expect(page).to have_field "DSCC number", with: "NUMBERWANG"
-        fill_in "DSCC number", with: "T-1000"
-        click_button "Update Defence Request"
-        expect(page).to have_content "Defence Request successfully updated"
+        expect(page).to have_content ack_dr.dscc_number.to_s
       end
 
-      specify "can mark the request as accepted from the request's edit page whilst adding a dscc number" do
+      specify "can mark the request as accepted from the request's edit page" do
         visit root_path
 
         within "#defence_request_#{ack_dr.id}" do
           click_link "Edit"
         end
-        fill_in "DSCC number", with: "123456"
 
         click_button "Update and Accept"
+        
         within ".accepted-defence-request" do
           expect(page).to have_content(ack_dr.solicitor_name)
         end
       end
 
-      specify "can not choose \"Update and Accept\" from the request's edit page without adding a dscc number" do
+
+      specify "can accept the request from the dashboard" do
         visit root_path
-
         within "#defence_request_#{ack_dr.id}" do
-          click_link "Edit"
+          click_button "Accepted"
         end
-
-        click_button "Update and Accept"
-        expect(page).to have_content("A Valid DSCC number is required to update and accept a Defence Request")
+        within ".accepted-defence-request" do
+          expect(page).to have_content(ack_dr.solicitor_name)
+        end
+        expect(page).to have_content("Defence Request was marked as accepted")
       end
 
-      context "that have a dscc number" do
-        specify "can accept the request from the dashboard" do
-          ack_dr.update(dscc_number: "012345")
-          visit root_path
-          within "#defence_request_#{ack_dr.id}" do
-            click_button "Accepted"
-          end
-          within ".accepted-defence-request" do
-            expect(page).to have_content(ack_dr.solicitor_name)
-          end
-          expect(page).to have_content("Defence Request was marked as accepted")
-        end
-
-        specify "are shown an error if the request cannot be accepted" do
-          ack_dr.update(dscc_number: "012345")
-          visit root_path
-          dr_can_not_be_accepted_for_some_reason ack_dr
-          within "#defence_request_#{ack_dr.id}" do
-            click_button "Accepted"
-          end
-          expect(page).to have_content("Defence Request was not marked as accepted")
-        end
-      end
 
       context "that have the \"duty\" solicitor type" do
         let!(:duty_solicitor_dr) { create(:defence_request, :duty_solicitor, :acknowledged, cco: cco_user) }
 
-        specify "can not mark the request as accepted from the dashboard without solicitor detials" do
+        specify "can not mark the request as accepted from the dashboard without solicitor details" do
           visit root_path
           within "#defence_request_#{duty_solicitor_dr.id}" do
             expect(page).to_not have_button "Accepted"
           end
         end
 
-        specify "can only mark the request as accepted from the edit page with solicitor details and dscc number" do
+        specify "can only mark the request as accepted from the edit page with solicitor details" do
           visit root_path
 
           within "#defence_request_#{duty_solicitor_dr.id}" do
@@ -192,13 +161,6 @@ RSpec.feature "Call Center Operatives managing defence requests" do
           end
           click_button "Update and Accept"
 
-          expect(page).to have_content("A Valid DSCC number is required to update and accept a Defence Request")
-          within ".solicitor-details" do
-            fill_in "Full Name", with: "Dodgy Dave"
-            fill_in "Name of firm", with: "Innocent your honour"
-          end
-          fill_in "DSCC number", with: "123456"
-          click_button "Update and Accept"
           expect(page).to have_content("Defence Request successfully updated and marked as accepted")
         end
       end
