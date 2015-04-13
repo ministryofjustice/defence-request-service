@@ -30,18 +30,32 @@ RSpec.describe DefenceRequest, type: :model do
       it { expect(subject).to_not validate_presence_of :phone_number }
     end
 
-    context 'appropriate_adult required' do
+    context 'appropriate_adult_reason required' do
       before do
         subject.appropriate_adult = true
       end
       it { expect(subject).to validate_presence_of :appropriate_adult_reason }
     end
 
-    context 'appropriate_adult not required' do
+    context 'appropriate_adult_reason not required' do
       before do
         subject.appropriate_adult = false
       end
       it { expect(subject).to_not validate_presence_of :appropriate_adult_reason }
+    end
+
+    context 'unfit_for_interview_reason required' do
+      before do
+        subject.fit_for_interview = false
+      end
+      it { expect(subject).to validate_presence_of :unfit_for_interview_reason }
+    end
+
+    context 'unfit_for_interview_reason not required' do
+      before do
+        subject.fit_for_interview = true
+      end
+      it { expect(subject).to_not validate_presence_of :unfit_for_interview_reason }
     end
   end
 

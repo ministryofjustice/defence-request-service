@@ -109,4 +109,9 @@ FactoryGirl.define do
   trait :with_time_of_detention_authorised do
     time_of_detention_authorised now
   end
+
+  trait :unfit_for_interview do
+    fit_for_interview false
+    unfit_for_interview_reason 'Drunk as a skunk'
+  end
 end

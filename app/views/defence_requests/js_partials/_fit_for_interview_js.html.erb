@@ -1,0 +1,22 @@
+<script>
+  var fit_for_interview_true = function () {
+    $('#defence_request_unfit_for_interview_reason').attr("disabled", "disabled");
+  }
+
+  var fit_for_interview_false = function () {
+    $('#defence_request_unfit_for_interview_reason').removeAttr("disabled");
+  }
+
+  var adjust_form_for_fit_for_interview = function () {
+    var fit_for_interview_yes_checked = ($("input[type='radio']#defence_request_fit_for_interview_fit_for_interview_yes:checked").length > 0);
+    var fit_for_interview_no_checked = ($("input[type='radio']#defence_request_fit_for_interview_fit_for_interview_no:checked").length > 0);
+    if (fit_for_interview_yes_checked) {
+      fit_for_interview_true()
+    } else if (fit_for_interview_no_checked) {
+      fit_for_interview_false()
+    }
+  }
+
+  $(".fit_for_interview_radio").change(adjust_form_for_fit_for_interview)
+  adjust_form_for_fit_for_interview()
+</script>

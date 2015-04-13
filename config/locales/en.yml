@@ -9,8 +9,8 @@ en:
   acknowledged_defence_request: "Acknowledged Defence Requests"
   actions: "Actions"
   add_expected_time_of_arrival: "Add Expected Time of Arrival"
-  address_1: Address 2
-  address_2: Address 1
+  address_1: "Address 1"
+  address_2: "Address 2"
   adult: "Adult?"
   age: "Age"
   appropriate_adult: "Appropriate Adult"
@@ -108,6 +108,7 @@ en:
   time_of_arrival: "Time of Arrival"
   time_of_detention_authorised: Time of Detention Authorised
   unavailable: "Unavailable"
+  unfit_for_interview_reason: Reason unfit for interview
   update: "Update"
   update_and_accept: "Update and Accept"
   update_from: "Update from"

@@ -93,6 +93,10 @@
       <td><%= boolean_formatter(@defence_request.fit_for_interview) %></td>
     </tr>
     <tr>
+      <td><%= t('unfit_for_interview_reason') %></td>
+      <td><%= @defence_request.unfit_for_interview_reason %></td>
+    </tr>
+    <tr>
       <td><%= t('investigating_officer_name') %></td>
       <td><%= @defence_request.investigating_officer_name %></td>
     </tr>

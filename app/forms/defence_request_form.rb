@@ -8,7 +8,7 @@ class DefenceRequestForm
                           :detainee_age, :offences, :scheme, :custody_number, :comments, :appropriate_adult_reason,
                           :house_name, :address_1, :address_2, :city, :county, :postcode, :circumstances_of_arrest,
                           :custody_address, :investigating_officer_name, :investigating_officer_shoulder_number,
-                          :investigating_officer_contact_number
+                          :investigating_officer_contact_number, :unfit_for_interview_reason
 
   DELEGATED_ATTRIBUTES.each do |attr_name|
     def_delegator :@defence_request, "#{attr_name}_before_type_cast", attr_name
