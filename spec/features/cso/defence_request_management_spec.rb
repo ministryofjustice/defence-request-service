@@ -289,7 +289,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           fill_in "defence_request_city", with: "London"
           fill_in "defence_request_county", with: "Greater London"
           fill_in "defence_request_postcode", with: "XX1 1XX"
-          choose "defence_request_appropriate_adult_appropriate_adult_no"
+          choose "defence_request_appropriate_adult_false"
         end
         fill_in "Comments", with: "This is a very bad man. Send him down..."
         click_button "Create Defence Request"
@@ -461,7 +461,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
         fill_in "defence_request_date_of_birth_year", with: "1976"
         fill_in "defence_request_date_of_birth_month", with: "01"
         fill_in "defence_request_date_of_birth_day", with: "01"
-        choose "defence_request_appropriate_adult_appropriate_adult_no"
+        choose "defence_request_appropriate_adult_false"
       end
       click_button "Create Defence Request"
       expect(page).to have_content "Reason unfit for interview: can't be blank"
@@ -501,6 +501,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           within "#defence_request_#{dr_created.id}" do
             click_link "Edit"
           end
+
           expect(page).to have_content ("Edit Defence Request")
 
           within ".edit_defence_request" do
