@@ -101,6 +101,10 @@
       <td><%= @defence_request.investigating_officer_contact_number %></td>
     </tr>
     <tr>
+      <td><%= t('time_of_arrest') %></td>
+      <td><%= date_and_time_formatter(@defence_request.time_of_arrest) %></td>
+    </tr>
+    <tr>
       <td><%= t('time_of_arrival') %></td>
       <td><%= date_and_time_formatter(@defence_request.time_of_arrival) %></td>
     </tr>

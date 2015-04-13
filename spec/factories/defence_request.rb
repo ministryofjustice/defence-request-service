@@ -100,4 +100,8 @@ FactoryGirl.define do
   trait :with_custody_address do
     custody_address "The Nick"
   end
+
+  trait :with_time_of_arrest do
+    time_of_arrest now
+  end
 end
