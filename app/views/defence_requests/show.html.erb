@@ -89,6 +89,10 @@
       <td><%= @defence_request.circumstances_of_arrest %></td>
     </tr>
     <tr>
+      <td><%= t('fit_for_interview') %></td>
+      <td><%= boolean_formatter(@defence_request.fit_for_interview) %></td>
+    </tr>
+    <tr>
       <td><%= t('investigating_officer_name') %></td>
       <td><%= @defence_request.investigating_officer_name %></td>
     </tr>

@@ -29,6 +29,7 @@ class DefenceRequestForm
     register_field :interview_start_time, DateTimeField
     register_field :solicitor, SolicitorField
     register_field :appropriate_adult, AppropriateAdultField
+    register_field :fit_for_interview, FitForInterviewField
   end
 
   def register_field field_name, klass, opts={}

@@ -18,6 +18,7 @@ FactoryGirl.define do
     sequence(:comments) { |n| "commenty-comments-are here: #{n}" }
     adult [nil, true, false].sample
     appropriate_adult false
+    fit_for_interview true
   end
 
   trait :duty_solicitor do
