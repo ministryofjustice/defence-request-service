@@ -172,6 +172,8 @@ class DefenceRequestsController < BaseController
       { date_of_birth: %i[day month year] },
       :appropriate_adult,
       :appropriate_adult_reason,
+      :interpreter_required,
+      :interpreter_type,
       :house_name,
       :address_1,
       :address_2,

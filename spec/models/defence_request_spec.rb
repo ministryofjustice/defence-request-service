@@ -57,6 +57,20 @@ RSpec.describe DefenceRequest, type: :model do
       end
       it { expect(subject).to_not validate_presence_of :unfit_for_interview_reason }
     end
+
+    context 'interpreter_type required' do
+      before do
+        subject.interpreter_required = true
+      end
+      it { expect(subject).to validate_presence_of :interpreter_type }
+    end
+
+    context 'interpreter_type not required' do
+      before do
+        subject.interpreter_required = false
+      end
+      it { expect(subject).to_not validate_presence_of :interpreter_type }
+    end
   end
 
   describe 'states' do

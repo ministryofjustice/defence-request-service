@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150413130749) do
+ActiveRecord::Schema.define(version: 20150413152539) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,6 +80,8 @@ ActiveRecord::Schema.define(version: 20150413130749) do
     t.datetime "time_of_detention_authorised"
     t.boolean  "fit_for_interview",                     default: true,  null: false
     t.text     "unfit_for_interview_reason"
+    t.boolean  "interpreter_required",                  default: false, null: false
+    t.text     "interpreter_type"
   end
 
   add_index "defence_requests", ["solicitor_id"], name: "index_defence_requests_on_solicitor_id", using: :btree

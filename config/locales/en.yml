@@ -65,6 +65,8 @@ en:
   home: "Home"
   hour: "Hour"
   house_name: House name or number
+  interpreter_required: "Interpreter Required"
+  interpreter_type: "Interpreter Type"
   interview_start_time: "Interview Start Time"
   interview_start_time_change: "Interview start time change"
   investigating_officer_contact_number: Investigating Officer Contact Number

@@ -290,6 +290,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           fill_in "defence_request_county", with: "Greater London"
           fill_in "defence_request_postcode", with: "XX1 1XX"
           choose "defence_request_appropriate_adult_false"
+          choose "defence_request_interpreter_required_false"
         end
         fill_in "Comments", with: "This is a very bad man. Send him down..."
         click_button "Create Defence Request"
@@ -468,6 +469,63 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
 
       within ".case-details" do
         fill_in "defence_request_unfit_for_interview_reason", with: "Drunk as a skunk"
+      end
+
+      click_button "Create Defence Request"
+
+      expect(page).to have_content "Defence Request successfully created"
+    end
+
+    specify "interpreter_required toggles interpreter_type", js: true do
+      visit root_path
+      click_link "New Defence Request"
+      choose "Own"
+
+      expect(page).to have_css("#defence_request_interpreter_type[disabled]")
+
+      within ".detainee" do
+        choose "defence_request_interpreter_required_true"
+      end
+
+      expect(page).to_not have_css("#defence_request_interpreter_type[disabled]")
+    end
+
+    specify "must add interpreter_type if interpreter_required", js: true do
+      visit root_path
+      click_link "New Defence Request"
+      choose "Own"
+      within ".solicitor-details" do
+        fill_in "Full Name", with: "Bob Smith"
+        fill_in "Name of firm", with: "Acme Solicitors"
+        fill_in "Telephone number", with: "0207 284 0000"
+      end
+
+      within ".case-details" do
+        fill_in "Custody number", with: "#CUST-01234"
+        fill_in "Offences", with: "BadMurder"
+        fill_in "defence_request_time_of_arrival_day", with: "01"
+        fill_in "defence_request_time_of_arrival_month", with: "01"
+        fill_in "defence_request_time_of_arrival_year", with: "2001"
+        fill_in "defence_request_time_of_arrival_hour", with: "01"
+        fill_in "defence_request_time_of_arrival_min", with: "01"
+      end
+
+      within ".detainee" do
+        fill_in "Full Name", with: "Mannie Badder"
+        choose "Male"
+        fill_in "Age", with: "39"
+        fill_in "defence_request_date_of_birth_year", with: "1976"
+        fill_in "defence_request_date_of_birth_month", with: "01"
+        fill_in "defence_request_date_of_birth_day", with: "01"
+        choose "defence_request_interpreter_required_true"
+      end
+      fill_in "Comments", with: "This is a very bad man. Send him down..."
+      click_button "Create Defence Request"
+
+      expect(page).to have_content "Interpreter Type: can't be blank"
+
+      within ".detainee" do
+        fill_in "defence_request_interpreter_type", with: "German - English"
       end
 
       click_button "Create Defence Request"
@@ -677,6 +735,8 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
       expect(page).to have_content("Date of Birth 10 April 1994")
       expect(page).to have_content("Appropriate adult required?	✓")
       expect(page).to have_content("Reason for appropriate adult They look underage")
+      expect(page).to have_content("Interpreter Required true")
+      expect(page).to have_content("Interpreter Type ENGLISH - GERMAN")
       expect(page).to have_content("House on the Hill")
       expect(page).to have_content("Letsby Avenue")
       expect(page).to have_content("Right up my street")
