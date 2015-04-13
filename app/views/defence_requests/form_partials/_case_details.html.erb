@@ -10,17 +10,15 @@
 
 <div class="form-group">
   <fieldset class="inline">
-    <%= f.fields_for :fit_for_interview, @defence_request_form.fields[:fit_for_interview] do |t| %>
-      <%= t.label :fit_for_interview, t('fit_for_interview') %>
-      <label class="block-label" for="defence_request_fit_for_interview_yes">
-        <%= t.radio_button :fit_for_interview, :yes, name: 'defence_request[fit_for_interview][fit_for_interview]', class: 'fit_for_interview_radio' %>
-        <%= t('yes') %>
-      </label>
-      <label class="block-label" for="defence_request_fit_for_interview_no">
-        <%= t.radio_button :fit_for_interview, :no, name: 'defence_request[fit_for_interview][fit_for_interview]', class: 'fit_for_interview_radio' %>
-        <%= t('no') %>
-      </label>
-    <% end %>
+    <%= f.label :fit_for_interview, t('fit_for_interview') %>
+    <label class="block-label" for="defence_request_gender_male">
+      <%= f.radio_button :fit_for_interview, true, name: 'defence_request[fit_for_interview]', checked: @defence_request.fit_for_interview.present?, class: 'fit_for_interview_radio' %>
+      <%= t('yes') %>
+    </label>
+    <label class="block-label" for="defence_request_gender_female">
+      <%= f.radio_button :fit_for_interview, false, name: 'defence_request[fit_for_interview]', checked: @defence_request.fit_for_interview.blank?, class: 'fit_for_interview_radio' %>
+      <%= t('no') %>
+    </label>
   </fieldset>
 </div>
 

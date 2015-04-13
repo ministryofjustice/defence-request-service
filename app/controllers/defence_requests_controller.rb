@@ -181,7 +181,7 @@ class DefenceRequestsController < BaseController
       :custody_number,
       :offences,
       :circumstances_of_arrest,
-      { fit_for_interview: :fit_for_interview },
+      :fit_for_interview,
       :unfit_for_interview_reason,
       :custody_address,
       :investigating_officer_name,
