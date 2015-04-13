@@ -67,6 +67,10 @@ module HelperMethods
     { 'day' => date.day, 'month' => date.month, 'year' => date.year }
   end
 
+  def twenty_one_years_ago
+    (DateTime.current - 21.years).strftime("%-d %B %Y")
+  end
+
   def expect_to_see_reason_aborted request
     expect(page).to have_content('This case has been aborted for the following reason')
     expect(page).to have_content(request.reason_aborted)

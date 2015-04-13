@@ -23,6 +23,7 @@ en:
   case_details: "Case Details"
   cco: "Call Center Operative"
   change_password: "Change Password"
+  circumstances_of_arrest: Circumstances of Arrest
   city: City
   close: Close
   comments: "Comments"
@@ -32,6 +33,7 @@ en:
   cookies: "Cookies"
   county: County
   cso: "Custody Suite Officer"
+  custody_address: Custody Address
   custody_number: "Custody number"
   dashboard: 'Dashboard'
   date_hint: "eg. 28 04 1996"
@@ -64,6 +66,9 @@ en:
   house_name: House name or number
   interview_start_time: "Interview Start Time"
   interview_start_time_change: "Interview start time change"
+  investigating_officer_contact_number: Investigating Officer Contact Number
+  investigating_officer_name: Investigating Officer Name
+  investigating_officer_shoulder_number: Investigating Officer Shoulder Number
   legal_advice_request: "Legal advice request"
   male: "Male"
   min: "Min"

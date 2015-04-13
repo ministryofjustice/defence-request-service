@@ -251,7 +251,12 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
 
         within ".case-details" do
           fill_in "Custody number", with: "#CUST-01234"
+          fill_in "defence_request_custody_address", with: "The Nick"
+          fill_in "defence_request_investigating_officer_name", with: "Dave Mc.Copper"
+          fill_in "defence_request_investigating_officer_shoulder_number", with: "987654"
+          fill_in "defence_request_investigating_officer_contact_number", with: "0207 111 0000"
           fill_in "Offences", with: "BadMurder"
+          fill_in "defence_request_circumstances_of_arrest", with: "He looked a bit shady"
           fill_in "defence_request_time_of_arrival_day", with: "01"
           fill_in "defence_request_time_of_arrival_month", with: "01"
           fill_in "defence_request_time_of_arrival_year", with: "2001"
@@ -570,6 +575,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
                                     :unfit_for_interview,
                                     :with_interpreter_required,
                                     :solicitor_time_of_arrival) }
+
     specify "visitng the show page for a defence request shows all required fields" do
       visit defence_request_path(fully_loaded_dr)
       expect(page).to have_content("Solicitor Name solicitor_name-")
@@ -611,7 +617,12 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
       expect(page).to have_content("Greater London")
       expect(page).to have_content("XX1 1XX")
       expect(page).to have_content("Custody number custody_number-")
+      expect(page).to have_content("Custody Address The Nick")
       expect(page).to have_content("Offences Theft")
+      expect(page).to have_content("Circumstances of Arrest Caught red handed")
+      expect(page).to have_content("Investigating Officer Name Dave Mc.Copper")
+      expect(page).to have_content("Investigating Officer Shoulder Number 987654")
+      expect(page).to have_content("Investigating Officer Contact Number 0207 111 0000")
       expect(page).to have_content("Time of Arrival 1 January 2001 - 01:01")
       expect(page).to have_content("Comments commenty-comments-are here: ")
       expect(page).to have_content("DSCC number 123456")
