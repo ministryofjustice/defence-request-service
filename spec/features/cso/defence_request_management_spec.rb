@@ -264,6 +264,62 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
 
       expect(page).to have_content "Defence Request successfully created"
     end
+
+    specify "fit_for_interview toggles unfit_for_interview_reason", js: true do
+      visit root_path
+      click_link "New Defence Request"
+      choose "Own"
+
+      expect(page).to have_css("#defence_request_unfit_for_interview_reason[disabled]")
+
+      within ".case-details" do
+        choose "defence_request_fit_for_interview_fit_for_interview_no"
+      end
+
+      expect(page).to_not have_css("#defence_request_unfit_for_interview_reason[disabled]")
+    end
+
+    specify "must add unfit_for_interview_reason if \"fit_for_interview adult\" is required", js: true do
+      visit root_path
+      click_link "New Defence Request"
+      choose "Own"
+      within ".solicitor-details" do
+        fill_in "Full Name", with: "Bob Smith"
+        fill_in "Name of firm", with: "Acme Solicitors"
+        fill_in "Telephone number", with: "0207 284 0000"
+      end
+
+      within ".case-details" do
+        fill_in "Custody number", with: "#CUST-01234"
+        fill_in "Offences", with: "BadMurder"
+        fill_in "defence_request_time_of_arrival_day", with: "01"
+        fill_in "defence_request_time_of_arrival_month", with: "01"
+        fill_in "defence_request_time_of_arrival_year", with: "2001"
+        fill_in "defence_request_time_of_arrival_hour", with: "01"
+        fill_in "defence_request_time_of_arrival_min", with: "01"
+        choose "defence_request_fit_for_interview_fit_for_interview_no"
+      end
+
+      within ".detainee" do
+        fill_in "Full Name", with: "Mannie Badder"
+        choose "Male"
+        fill_in "Age", with: "39"
+        fill_in "defence_request_date_of_birth_year", with: "1976"
+        fill_in "defence_request_date_of_birth_month", with: "01"
+        fill_in "defence_request_date_of_birth_day", with: "01"
+        choose "No"
+      end
+      click_button "Create Defence Request"
+      expect(page).to have_content "Reason unfit for interview: can't be blank"
+
+      within ".case-details" do
+        fill_in "defence_request_unfit_for_interview_reason", with: "Drunk as a skunk"
+      end
+
+      click_button "Create Defence Request"
+
+      expect(page).to have_content "Defence Request successfully created"
+    end
   end
 
   context "with requests they are assigned to" do
@@ -412,7 +468,8 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
                                     :with_custody_address,
                                     :with_circumstance_of_arrest,
                                     :with_time_of_arrest,
-                                    :with_time_of_detention_authorised) }
+                                    :with_time_of_detention_authorised,
+                                    :unfit_for_interview) }
 
     specify "visitng the show page for a defence request shows all required fields" do
       visit defence_request_path(fully_loaded_dr)
@@ -435,7 +492,8 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
       expect(page).to have_content("Offences Theft")
       expect(page).to have_content("Circumstances of Arrest Caught red handed")
       expect(page).to have_content("Circumstances of Arrest Caught red handed")
-      expect(page).to have_content("Fit for Interview? ✓")
+      expect(page).to have_content("Fit for Interview? ✗")
+      expect(page).to have_content("Reason unfit for interview Drunk as a skunk")
       expect(page).to have_content("Investigating Officer Name Dave Mc.Copper")
       expect(page).to have_content("Investigating Officer Shoulder Number 987654")
       expect(page).to have_content("Investigating Officer Contact Number 0207 111 0000")

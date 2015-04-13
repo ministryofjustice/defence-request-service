@@ -190,6 +190,7 @@ class DefenceRequestsController < BaseController
       :offences,
       :circumstances_of_arrest,
       { fit_for_interview: :fit_for_interview },
+      :unfit_for_interview_reason,
       :custody_address,
       :investigating_officer_name,
       :investigating_officer_shoulder_number,

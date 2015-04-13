@@ -63,6 +63,8 @@ class DefenceRequest < ActiveRecord::Base
 
   validates :appropriate_adult_reason, presence: true, if: :appropriate_adult?
 
+  validates :unfit_for_interview_reason, presence: true, unless: :fit_for_interview?
+
   audited
 
   SCHEMES = [ 'No Scheme',
