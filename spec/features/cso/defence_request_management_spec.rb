@@ -42,7 +42,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           fill_in "defence_request_investigating_officer_contact_number", with: "0207 111 0000"
           fill_in "Offences", with: "BadMurder"
           fill_in "defence_request_circumstances_of_arrest", with: "He looked a bit shady"
-          choose "defence_request_fit_for_interview_fit_for_interview_yes"
+          choose "defence_request_fit_for_interview_true"
           fill_in "defence_request_time_of_arrest_day", with: "02"
           fill_in "defence_request_time_of_arrest_month", with: "02"
           fill_in "defence_request_time_of_arrest_year", with: "2002"
@@ -73,7 +73,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           fill_in "defence_request_city", with: "London"
           fill_in "defence_request_county", with: "Greater London"
           fill_in "defence_request_postcode", with: "XX1 1XX"
-          choose "No"
+          choose "defence_request_appropriate_adult_appropriate_adult_no"
         end
         fill_in "Comments", with: "This is a very bad man. Send him down..."
         click_button "Create Defence Request"
@@ -216,7 +216,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
       expect(page).to have_css("#defence_request_appropriate_adult_reason[disabled]")
 
       within ".detainee" do
-        choose "Yes"
+        choose "defence_request_appropriate_adult_appropriate_adult_yes"
       end
 
       expect(page).to_not have_css("#defence_request_appropriate_adult_reason[disabled]")
@@ -249,7 +249,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
         fill_in "defence_request_date_of_birth_year", with: "1976"
         fill_in "defence_request_date_of_birth_month", with: "01"
         fill_in "defence_request_date_of_birth_day", with: "01"
-        choose "Yes"
+        choose "defence_request_appropriate_adult_appropriate_adult_yes"
       end
       fill_in "Comments", with: "This is a very bad man. Send him down..."
       click_button "Create Defence Request"
@@ -273,7 +273,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
       expect(page).to have_css("#defence_request_unfit_for_interview_reason[disabled]")
 
       within ".case-details" do
-        choose "defence_request_fit_for_interview_fit_for_interview_no"
+        choose "defence_request_fit_for_interview_false"
       end
 
       expect(page).to_not have_css("#defence_request_unfit_for_interview_reason[disabled]")
@@ -297,7 +297,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
         fill_in "defence_request_time_of_arrival_year", with: "2001"
         fill_in "defence_request_time_of_arrival_hour", with: "01"
         fill_in "defence_request_time_of_arrival_min", with: "01"
-        choose "defence_request_fit_for_interview_fit_for_interview_no"
+        choose "defence_request_fit_for_interview_false"
       end
 
       within ".detainee" do
@@ -307,7 +307,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
         fill_in "defence_request_date_of_birth_year", with: "1976"
         fill_in "defence_request_date_of_birth_month", with: "01"
         fill_in "defence_request_date_of_birth_day", with: "01"
-        choose "No"
+        choose "defence_request_appropriate_adult_appropriate_adult_no"
       end
       click_button "Create Defence Request"
       expect(page).to have_content "Reason unfit for interview: can't be blank"
@@ -357,7 +357,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
             fill_in "defence_request_date_of_birth_year", with: "1976"
             fill_in "defence_request_date_of_birth_month", with: "01"
             fill_in "defence_request_date_of_birth_day", with: "01"
-            choose "No"
+            choose "defence_request_appropriate_adult_appropriate_adult_no"
           end
 
           within ".detainee" do
@@ -367,7 +367,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
             fill_in "defence_request_date_of_birth_year", with: "1986"
             fill_in "defence_request_date_of_birth_month", with: "12"
             fill_in "defence_request_date_of_birth_day", with: "12"
-            choose "Yes"
+            choose "defence_request_appropriate_adult_appropriate_adult_yes"
             fill_in "defence_request_appropriate_adult_reason", with: "They look under age"
             fill_in "defence_request_house_name", with: "House of the rising sun"
             fill_in "defence_request_address_1", with: "Letsby Avenue"
