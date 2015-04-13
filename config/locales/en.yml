@@ -105,6 +105,7 @@ en:
   time_hint: "eg. 23 10"
   time_of_arrest: Time of Arrest
   time_of_arrival: "Time of Arrival"
+  time_of_detention_authorised: Time of Detention Authorised
   unavailable: "Unavailable"
   update: "Update"
   update_and_accept: "Update and Accept"

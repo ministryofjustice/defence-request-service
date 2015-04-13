@@ -109,6 +109,10 @@
       <td><%= date_and_time_formatter(@defence_request.time_of_arrival) %></td>
     </tr>
     <tr>
+      <td><%= t('time_of_detention_authorised') %></td>
+      <td><%= date_and_time_formatter(@defence_request.time_of_detention_authorised) %></td>
+    </tr>
+    <tr>
       <td><%= t('comments') %></td>
       <td><%= @defence_request.comments %></td>
     </tr>

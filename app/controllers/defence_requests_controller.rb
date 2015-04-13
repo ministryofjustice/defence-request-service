@@ -189,6 +189,7 @@ class DefenceRequestsController < BaseController
       { interview_start_time: %i[day month year hour min sec] },
       { time_of_arrival: %i[day month year hour min sec] },
       { time_of_arrest: %i[day month year hour min sec] },
+      { time_of_detention_authorised: %i[day month year hour min sec] },
       :dscc_number,
       :reason_aborted,
       { solicitor_time_of_arrival: %i[day month year hour min sec] })

@@ -267,6 +267,11 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           fill_in "defence_request_time_of_arrival_year", with: "2001"
           fill_in "defence_request_time_of_arrival_hour", with: "01"
           fill_in "defence_request_time_of_arrival_min", with: "01"
+          fill_in "defence_request_time_of_detention_authorised_day", with: "03"
+          fill_in "defence_request_time_of_detention_authorised_month", with: "03"
+          fill_in "defence_request_time_of_detention_authorised_year", with: "2003"
+          fill_in "defence_request_time_of_detention_authorised_hour", with: "03"
+          fill_in "defence_request_time_of_detention_authorised_min", with: "03"
         end
 
         within ".detainee" do
@@ -630,6 +635,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
       expect(page).to have_content("Investigating Officer Contact Number 0207 111 0000")
       expect(page).to have_content("Time of Arrest 1 January 2001 - 01:01")
       expect(page).to have_content("Time of Arrival 1 January 2001 - 01:01")
+      expect(page).to have_content("Time of Detention Authorised 1 January 2001 - 01:01")
       expect(page).to have_content("Comments commenty-comments-are here: ")
       expect(page).to have_content("DSCC number 123456")
       expect(page).to have_content("Interview Start Time 1 January 2001 - 01:01")
