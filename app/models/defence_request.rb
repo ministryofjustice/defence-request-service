@@ -65,6 +65,8 @@ class DefenceRequest < ActiveRecord::Base
 
   validates :unfit_for_interview_reason, presence: true, unless: :fit_for_interview?
 
+  validates :interpreter_type, presence: true, if: :interpreter_required
+
   audited
 
   SCHEMES = [ 'No Scheme',

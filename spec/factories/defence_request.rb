@@ -114,4 +114,9 @@ FactoryGirl.define do
     fit_for_interview false
     unfit_for_interview_reason 'Drunk as a skunk'
   end
+
+  trait :with_interpreter_required do
+    interpreter_required true
+    interpreter_type "ENGLISH - GERMAN"
+  end
 end
