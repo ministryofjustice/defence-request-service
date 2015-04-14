@@ -107,6 +107,6 @@ class DefenceRequest < ActiveRecord::Base
   end
 
   def generate_dscc_number
-    self.dscc_number = DsccNumber.generate unless dscc_number
+    self.dscc_number = DsccNumberGenerator.new(defence_request: self).generate unless dscc_number
   end
 end
