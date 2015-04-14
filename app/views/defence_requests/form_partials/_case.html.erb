@@ -6,5 +6,8 @@
 
   <%= render('defence_requests/form_partials/case_details', f: f) if @policy.create? %>
 
-  <%= render('defence_requests/form_partials/case_dscc_number', f: f) if @policy.dscc_number_edit? %>
+  <div class="form-group">
+    <%= f.label :dscc_number, t('dscc_number'), class: 'form-label-bold' %>
+    <%= f.label :dscc_number, @defence_request.dscc_number %>
+  </div>
 </div>

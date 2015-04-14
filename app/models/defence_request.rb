@@ -3,6 +3,7 @@ class DefenceRequest < ActiveRecord::Base
 
   belongs_to :solicitor, class_name: :User
   belongs_to :cco, class_name: :User
+  belongs_to :dscc_number, autosave: true
 
   delegate :email, to: :solicitor, prefix: true, allow_nil: true
 
@@ -26,11 +27,11 @@ class DefenceRequest < ActiveRecord::Base
     end
 
     event :acknowledge do
-      transitions from: [:queued], to: :acknowledged
+      transitions from: [:queued], to: :acknowledged, on_transition: :generate_dscc_number
     end
 
     event :accept, success: :send_solicitor_case_details do
-      transitions from: [:acknowledged], to: :accepted, guard: :dscc_number?
+      transitions from: [:acknowledged], to: :accepted, guard: [:dscc_number?, :solicitor_details?]
     end
 
     event :abort do
@@ -61,6 +62,8 @@ class DefenceRequest < ActiveRecord::Base
 
   validates :detainee_age, numericality: true, presence: true
 
+  validates_uniqueness_of :dscc_number_id, allow_nil: true
+
   audited
 
   SCHEMES = [ 'No Scheme',
@@ -81,6 +84,14 @@ class DefenceRequest < ActiveRecord::Base
     solicitor_type == 'own'
   end
 
+  def dscc_number?
+    dscc_number.present?
+  end
+
+  def solicitor_details?
+    solicitor_name && solicitor_firm && phone_number
+  end
+
   private
 
   def format_phone_number
@@ -93,5 +104,9 @@ class DefenceRequest < ActiveRecord::Base
 
   def send_solicitor_case_details
     Mailer.send_solicitor_case_details(self, solicitor).deliver_later if solicitor
+  end
+
+  def generate_dscc_number
+    self.dscc_number = DsccNumberGenerator.new(defence_request: self).generate unless dscc_number
   end
 end
