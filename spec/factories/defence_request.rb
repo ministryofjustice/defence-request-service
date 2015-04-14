@@ -1,6 +1,6 @@
 FactoryGirl.define do
-  now = DateTime.new(2001,1,1,1,1)
-  twenty_one_years_ago = DateTime.current - 21.years
+  now = Time.new(2001,1,1,1,1)
+  twenty_one_years_ago = Time.current - 21.years
 
   factory :defence_request, aliases: [:own_solicitor] do
     solicitor_type 'own'
