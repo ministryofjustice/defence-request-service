@@ -225,6 +225,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
         expect(page).to have_content "You need to fix the errors on this page before continuing"
         expect(page).to have_content "Detainee name: can't be blank"
       end
+
       specify "appropriate_adult toggles appropriate_adult_reason", js: true do
         visit root_path
         click_link "New Defence Request"
@@ -289,7 +290,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           fill_in "defence_request_city", with: "London"
           fill_in "defence_request_county", with: "Greater London"
           fill_in "defence_request_postcode", with: "XX1 1XX"
-          choose "defence_request_appropriate_adult_false"
+          choose "defence_request_appropriate_adult_true"
           choose "defence_request_interpreter_required_false"
         end
         fill_in "Comments", with: "This is a very bad man. Send him down..."
@@ -607,25 +608,24 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
             end
             fill_in "Comments", with: "I fought the law..."
             click_button "Update Defence Request"
-
-            within "#defence_request_#{dr_created.id}" do
-              expect(page).to have_content("Dave Smith")
-              expect(page).to have_content("02072849999")
-              expect(page).to have_content("#CUST-9876")
-              expect(page).to have_content("BadMurder")
-              expect(page).to have_content("Annie")
-              expect(page).to have_content("Nother")
-            end
-
-            visit defence_request_path(dr_created)
-            expect(page).to have_content("They look under age")
-            expect(page).to have_content("House of the rising sun")
-            expect(page).to have_content("Letsby Avenue")
-            expect(page).to have_content("Right up my street")
-            expect(page).to have_content("London")
-            expect(page).to have_content("Greater London")
-            expect(page).to have_content("XX1 1XX")
           end
+          
+          within "#defence_request_#{dr_created.id}" do
+            expect(page).to have_content("Dave Smith")
+            expect(page).to have_content("02072849999")
+            expect(page).to have_content("#CUST-9876")
+            expect(page).to have_content("BadMurder")
+            expect(page).to have_content("Annie Nother")
+          end
+
+          visit defence_request_path(dr_created)
+          expect(page).to have_content("They look under age")
+          expect(page).to have_content("House of the rising sun")
+          expect(page).to have_content("Letsby Avenue")
+          expect(page).to have_content("Right up my street")
+          expect(page).to have_content("London")
+          expect(page).to have_content("Greater London")
+          expect(page).to have_content("XX1 1XX")
         end
 
         specify "are shown some errors if the request cannot be updated due to invalid fields" do
@@ -710,30 +710,6 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
       expect(page).to have_content("Gender male")
       expect(page).to have_content("Date of Birth #{twenty_one_years_ago}")
       expect(page).to have_content("Appropriate adult required? ✓")
-      expect(page).to have_content("Reason for appropriate adult They look underage")
-      expect(page).to have_content("Interpreter Required true")
-      expect(page).to have_content("Interpreter Type ENGLISH - GERMAN")
-      expect(page).to have_content("House on the Hill")
-      expect(page).to have_content("Letsby Avenue")
-      expect(page).to have_content("Right up my street")
-      expect(page).to have_content("London")
-      expect(page).to have_content("Greater London")
-      expect(page).to have_content("XX1 1XX")
-      expect(page).to have_content("Custody number custody_number-")
-      expect(page).to have_content("Custody Address The Nick")
-      expect(page).to have_content("Offences Theft")
-      expect(page).to have_content("Circumstances of Arrest Caught red handed")
-      expect(page).to have_content("Circumstances of Arrest Caught red handed")
-      expect(page).to have_content("Fit for Interview? ✗")
-      expect(page).to have_content("Reason unfit for interview Drunk as a skunk")
-      expect(page).to have_content("Investigating Officer Name Dave Mc.Copper")
-      expect(page).to have_content("Investigating Officer Shoulder Number 987654")
-      expect(page).to have_content("Investigating Officer Contact Number 0207 111 0000")
-      expect(page).to have_content("Time of Arrest 1 January 2001 - 01:01")
-      expect(page).to have_content("Time of Arrival 1 January 2001 - 01:01")
-      expect(page).to have_content("Time of Detention Authorised 1 January 2001 - 01:01")
-      expect(page).to have_content("Date of Birth 10 April 1994")
-      expect(page).to have_content("Appropriate adult required?	✓")
       expect(page).to have_content("Reason for appropriate adult They look underage")
       expect(page).to have_content("Interpreter Required true")
       expect(page).to have_content("Interpreter Type ENGLISH - GERMAN")
