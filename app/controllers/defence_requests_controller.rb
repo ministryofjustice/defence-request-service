@@ -29,7 +29,11 @@ class DefenceRequestsController < BaseController
 
   def update
     if update_and_accept?
-      update_and_accept
+      if @defence_request_form.submit(defence_request_params) && accept_and_save_defence_request
+        redirect_to(defence_requests_path, notice: flash_message(:updated_and_accepted, DefenceRequest))
+      else
+        redirect_to(edit_defence_request_path, alert: flash_message(:failed_to_update_not_accepted, DefenceRequest))
+      end
     else
       if @defence_request_form.submit(defence_request_params)
         redirect_to(defence_requests_path, notice: flash_message(:update, DefenceRequest))
@@ -61,7 +65,7 @@ class DefenceRequestsController < BaseController
     if @defence_request.acknowledge && associate_cco && @defence_request.save
       redirect_to(defence_requests_path, notice: flash_message(:acknowledged, DefenceRequest))
     else
-      redirect_to(defence_requests_path, notice: flash_message(:failed_acknowledge, DefenceRequest))
+      redirect_to(defence_requests_path, alert: flash_message(:failed_acknowledge, DefenceRequest))
     end
   end
 
@@ -72,8 +76,7 @@ class DefenceRequestsController < BaseController
     @defence_request.reason_aborted = defence_request_params[:reason_aborted]
 
     if @defence_request.abort && @defence_request.save
-      message = flash_message(:aborted, DefenceRequest)
-      redirect_to defence_requests_path, notice: message
+      redirect_to defence_requests_path, notice: flash_message(:aborted, DefenceRequest)
     else
       render :abort
     end
@@ -83,7 +86,7 @@ class DefenceRequestsController < BaseController
     if @defence_request.accept && @defence_request.save
       redirect_to(defence_requests_path, notice: flash_message(:accept, DefenceRequest))
     else
-      redirect_to(defence_requests_path, notice: flash_message(:failed_accept, DefenceRequest))
+      redirect_to(defence_requests_path, alert: flash_message(:failed_accept, DefenceRequest))
     end
   end
 
@@ -91,7 +94,7 @@ class DefenceRequestsController < BaseController
     if @defence_request.resend_details
       redirect_to(defence_requests_path, notice: flash_message(:details_sent, DefenceRequest))
     else
-      redirect_to(defence_requests_path, notice: flash_message(:failed_details_sent, DefenceRequest))
+      redirect_to(defence_requests_path, alert: flash_message(:failed_details_sent, DefenceRequest))
     end
   end
 
@@ -107,7 +110,7 @@ class DefenceRequestsController < BaseController
     if @defence_request.queue && @defence_request.save
       redirect_to(defence_requests_path, notice: flash_message(:sent_for_processing, DefenceRequest))
     else
-      redirect_to(defence_requests_path, notice: flash_message(:failed_send_for_processing, DefenceRequest))
+      redirect_to(defence_requests_path, alert: flash_message(:failed_send_for_processing, DefenceRequest))
     end
   end
 
@@ -127,17 +130,6 @@ class DefenceRequestsController < BaseController
 
   def update_and_accept?
     params[:commit] == 'Update and Accept'
-  end
-
-  def update_and_accept
-    case
-      when solicitor_details_missing?
-        redirect_to(edit_defence_request_path, alert: flash_message(:solicitor_details_required, DefenceRequest))
-      when dscc_number_missing?
-        redirect_to(edit_defence_request_path, alert: flash_message(:dscc_number_required, DefenceRequest))
-      when @defence_request_form.submit(defence_request_params) && accept_and_save_defence_request
-        redirect_to(defence_requests_path, notice: flash_message(:updated_and_updated, DefenceRequest))
-    end
   end
 
   def solicitor_details_missing?
