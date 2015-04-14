@@ -24,6 +24,12 @@ class DsccNumber < ActiveRecord::Base
   validates_uniqueness_of :number, scope: [:year_and_month]
 
   def to_s
-    [year_and_month.strftime("%y%m"), number.to_s.rjust(5, "0"), extension].join ""
+    "%s%05d%s" % [prefix, number, extension]
+  end
+
+  private
+
+  def prefix
+    year_and_month.strftime("%y%m")
   end
 end
