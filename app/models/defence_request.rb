@@ -52,12 +52,18 @@ class DefenceRequest < ActiveRecord::Base
   validates :scheme, presence: true, if: :duty_solicitor?
 
   validates :detainee_name,
-            :allegations,
+            :offences,
             :gender,
             :time_of_arrival,
             :custody_number, presence: true
 
   validates :detainee_age, numericality: true, presence: true
+
+  validates :appropriate_adult_reason, presence: true, if: :appropriate_adult?
+
+  validates :unfit_for_interview_reason, presence: true, unless: :fit_for_interview?
+
+  validates :interpreter_type, presence: true, if: :interpreter_required
 
   audited
 

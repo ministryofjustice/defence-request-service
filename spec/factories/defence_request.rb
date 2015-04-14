@@ -1,6 +1,6 @@
 FactoryGirl.define do
-  now = DateTime.current
-  twenty_one_years_ago = DateTime.current - 21.years
+  now = Time.new(2001,1,1,1,1)
+  twenty_one_years_ago = Time.current - 21.years
 
   factory :defence_request, aliases: [:own_solicitor] do
     solicitor_type 'own'
@@ -9,15 +9,16 @@ FactoryGirl.define do
     scheme 1
     phone_number '447810480123'
     sequence(:detainee_name) { |n| "detainee_name-#{n}" }
-    gender %w(male female).sample
+    gender 'male'
     date_of_birth twenty_one_years_ago
     detainee_age 21
     sequence(:custody_number) { |n| "custody_number-#{n}" }
-    allegations ['Murder','Theft','Drunk','Hate Crime'].sample
+    offences 'Theft'
     time_of_arrival now
     sequence(:comments) { |n| "commenty-comments-are here: #{n}" }
     adult [nil, true, false].sample
-    appropriate_adult [true, false].sample
+    appropriate_adult false
+    fit_for_interview true
   end
 
   trait :duty_solicitor do
@@ -63,5 +64,59 @@ FactoryGirl.define do
 
   trait :with_dscc_number do
     dscc_number '123456'
+  end
+
+  trait :appropriate_adult do
+    appropriate_adult true
+    appropriate_adult_reason 'They look underage'
+  end
+
+  trait :interview_start_time do
+    interview_start_time now
+  end
+
+  trait :solicitor_time_of_arrival do
+    solicitor_time_of_arrival now
+  end
+
+  trait :with_address do
+    house_name "House on the Hill"
+    address_1 "Letsby Avenue"
+    address_2 "Right up my street"
+    city "London"
+    county "Greater London"
+    postcode "XX1 1XX"
+  end
+
+  trait :with_circumstance_of_arrest do
+    circumstances_of_arrest "Caught red handed"
+  end
+
+  trait :with_investigating_officer do
+    investigating_officer_name "Dave Mc.Copper"
+    investigating_officer_shoulder_number "987654"
+    investigating_officer_contact_number "0207 111 0000"
+  end
+
+  trait :with_custody_address do
+    custody_address "The Nick"
+  end
+
+  trait :with_time_of_arrest do
+    time_of_arrest now
+  end
+
+  trait :with_time_of_detention_authorised do
+    time_of_detention_authorised now
+  end
+
+  trait :unfit_for_interview do
+    fit_for_interview false
+    unfit_for_interview_reason 'Drunk as a skunk'
+  end
+
+  trait :with_interpreter_required do
+    interpreter_required true
+    interpreter_type "ENGLISH - GERMAN"
   end
 end

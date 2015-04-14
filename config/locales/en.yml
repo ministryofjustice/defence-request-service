@@ -9,10 +9,12 @@ en:
   acknowledged_defence_request: "Acknowledged Defence Requests"
   actions: "Actions"
   add_expected_time_of_arrival: "Add Expected Time of Arrival"
+  address_1: "Address 1"
+  address_2: "Address 2"
   adult: "Adult?"
   age: "Age"
-  allegations: "Allegations"
   appropriate_adult: "Appropriate Adult"
+  appropriate_adult_reason: "Reason for appropriate adult"
   appropriate_adult_required: "Appropriate adult required?"
   call_call_center: "Please call the Call Centre on 0999 999 9999"
   cancel: "Cancel"
@@ -21,18 +23,22 @@ en:
   case_details: "Case Details"
   cco: "Call Center Operative"
   change_password: "Change Password"
+  circumstances_of_arrest: Circumstances of Arrest
+  city: City
   close: Close
   comments: "Comments"
   confirm: "Confirm"
   contact_us: "contact us"
   continue: "Continue"
   cookies: "Cookies"
+  county: County
   cso: "Custody Suite Officer"
+  custody_address: Custody Address
   custody_number: "Custody number"
   dashboard: 'Dashboard'
   date_hint: "eg. 28 04 1996"
-  date_time_hint: "eg. 28 04 1996 - 11 30"
   date_of_birth: "Date of Birth"
+  date_time_hint: "eg. 28 04 1996 - 11 30"
   day: "Day"
   delete: "Delete"
   details: "Details"
@@ -52,13 +58,20 @@ en:
   expired: "Session expired"
   feedback: "Feedback"
   female: "Female"
+  fit_for_interview: Fit for Interview?
   full_name: "Full Name"
   gender: "Gender"
   help: "Help"
   home: "Home"
   hour: "Hour"
+  house_name: House name or number
+  interpreter_required: "Interpreter Required"
+  interpreter_type: "Interpreter Type"
   interview_start_time: "Interview Start Time"
   interview_start_time_change: "Interview start time change"
+  investigating_officer_contact_number: Investigating Officer Contact Number
+  investigating_officer_name: Investigating Officer Name
+  investigating_officer_shoulder_number: Investigating Officer Shoulder Number
   legal_advice_request: "Legal advice request"
   male: "Male"
   min: "Min"
@@ -68,14 +81,16 @@ en:
   new_defence_requests: "New Defence Requests"
   no_results_found: 'No results found - Contact DSCC'
   not_authorized: "You are not authorised to perform this action"
+  offences: "Offences"
   own: 'Own'
   phone_number: "Phone number"
+  postcode: Postcode
   prohibit_save: Please review the following %{count}
   reason_aborted: Reason aborted
   resend_details: "Resend details"
-  send_for_processing: "Send for Processing"
   scheme: "Scheme"
   search: "Search"
+  send_for_processing: "Send for Processing"
   show: "Show"
   solicitor: "Solicitor"
   solicitor_details: "Solicitor details"
@@ -91,8 +106,11 @@ en:
   terms: "Terms"
   terms_and_conditions: "Terms and conditions and privacy policy"
   time_hint: "eg. 23 10"
+  time_of_arrest: Time of Arrest
   time_of_arrival: "Time of Arrival"
+  time_of_detention_authorised: Time of Detention Authorised
   unavailable: "Unavailable"
+  unfit_for_interview_reason: Reason unfit for interview
   update: "Update"
   update_and_accept: "Update and Accept"
   update_from: "Update from"
