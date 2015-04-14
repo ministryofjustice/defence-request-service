@@ -172,7 +172,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
           end
         end
 
-        specify "can only mark the request as accepted from the edit page with a dscc number and cannot edit solicitor" do
+        specify "can only mark the request as accepted from the edit page with a dscc number and can edit solicitor" do
           visit root_path
 
           within "#defence_request_#{duty_solicitor_dr.id}" do
@@ -182,9 +182,9 @@ RSpec.feature "Call Center Operatives managing defence requests" do
           expect(page).to have_content("Defence Request was not updated or marked as accepted")
 
           within ".solicitor-details" do
-            expect(page).to have_css("#defence_request_solicitor_name[disabled]")
-            expect(page).to have_css("#defence_request_solicitor_firm[disabled]")
-            expect(page).to have_css("#defence_request_phone_number[disabled]")
+            fill_in 'Full Name', with: 'a new solicitor'
+            fill_in 'Name of firm', with: 'a new solicitor firm'
+            fill_in 'Telephone number', with: '999999999'
           end
 
           fill_in "DSCC number", with: "123456"

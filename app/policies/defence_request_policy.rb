@@ -75,7 +75,7 @@ class DefenceRequestPolicy < ApplicationPolicy
   end
 
   def edit_solicitor_details?
-    record.own_solicitor? && edit?
+    (record.own_solicitor? || user_is_the_assigned_cco) && edit?
   end
 
   def solicitor_time_of_arrival?
