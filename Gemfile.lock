@@ -1,9 +1,9 @@
 GIT
   remote: git://github.com/ministryofjustice/defence-request-service-omniauth-dsds.git
-  revision: 86107a3830c5b0d97773f08d1eda2ec0203617da
-  tag: v0.5.1
+  revision: 8b845897e85f0f140fd019868304af8feb99b619
+  tag: v0.6.0
   specs:
-    omniauth-dsds (0.5.1)
+    omniauth-dsds (0.6.0)
       multi_json (~> 1.11.0)
       omniauth-oauth2 (~> 1.2.0)
 
