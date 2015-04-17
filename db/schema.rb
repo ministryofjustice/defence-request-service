@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150415134845) do
+ActiveRecord::Schema.define(version: 20150417100452) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 20150415134845) do
     t.uuid     "solicitor_uid"
     t.uuid     "cco_uid"
     t.text     "interpreter_type"
+    t.uuid     "organisation_uid"
   end
 
 end
