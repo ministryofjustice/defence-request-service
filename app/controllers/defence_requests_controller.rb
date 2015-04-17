@@ -7,7 +7,19 @@ class DefenceRequestsController < BaseController
 
   before_action ->(c) { authorize defence_request, "#{c.action_name}?" }
 
+  public
+
   def index
+    # Example of using Spyke model to retrieve remote data.
+    organisation_uid = 'a24f1ded6cd84322bd43ed9199a4adb4' # <- example - change to match your db
+    user_token = "Bearer #{session['user_token']}"
+    o = Organisation.where(user_token: user_token).find(organisation_uid)
+    puts '--------'
+    puts o.inspect
+    puts 'uid: ' + o.uid
+    puts 'type: ' + o.type
+    puts 'name: ' + o.name
+    puts '--------'
   end
 
   def show
