@@ -75,14 +75,15 @@ ActiveRecord::Schema.define(version: 20150420095935) do
     t.string   "investigating_officer_shoulder_number"
     t.string   "investigating_officer_contact_number"
     t.text     "circumstances_of_arrest"
-    t.uuid     "solicitor_uid"
-    t.uuid     "cco_uid"
     t.datetime "time_of_arrest"
     t.datetime "time_of_detention_authorised"
     t.boolean  "fit_for_interview",                     default: true,  null: false
     t.text     "unfit_for_interview_reason"
     t.boolean  "interpreter_required",                  default: false, null: false
+    t.uuid     "solicitor_uid"
+    t.uuid     "cco_uid"
     t.text     "interpreter_type"
+    t.uuid     "organisation_uid"
   end
 
   add_index "defence_requests", ["cco_uid"], name: "index_defence_requests_on_cco_uid", using: :btree
