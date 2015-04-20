@@ -5,13 +5,22 @@ require File.expand_path("../../config/environment", __FILE__)
 require "rspec/rails"
 require "shoulda-matchers"
 require "capybara/poltergeist"
+require "omniauth-dsds/spec/sign_in_helper"
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |file| require file }
 
 Settings.dsds.dashboard_refresh_disabled = false
 
+module Features
+  # Extend this module in spec/support/features/*.rb
+  include Omniauth::Dsds::Spec::SignInHelper
+  include DefenceRequestHelpers
+  include SessionHelpers
+  include DateHelpers
+end
+
 RSpec.configure do |config|
-  config.include HelperMethods
+  config.include Features, type: :feature
 
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.use_transactional_fixtures = false

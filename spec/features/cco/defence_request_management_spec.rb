@@ -1,239 +1,245 @@
 require "rails_helper"
 
 RSpec.feature "Call Center Operatives managing defence requests" do
-  let(:cco_user) { FactoryGirl.create(:cco_user) }
-
-  before :each do
-    login_as_user(cco_user.email)
-  end
-
   context "with any request" do
-    let!(:accepted_dr) { create(:defence_request, :accepted) }
-
     specify "can see the show page of the request" do
-      visit defence_requests_path
-      within ".accepted-defence-request" do
-        click_link "Show"
-      end
+      cco_user = create :cco_user
+      accepted_defence_request = create :defence_request, :accepted
 
-      expect(page).to have_content("Case Details")
-      expect(page).to have_content(accepted_dr.solicitor_name)
-      expect(page).to have_link("Dashboard")
+      login_with_role "cco", cco_user.uid
+      click_link "Show"
+
+      expect(page).to have_content accepted_defence_request.solicitor_name
     end
 
     specify "can not edit expected time of arrival from the request show page" do
-      visit defence_requests_path
-      within ".accepted-defence-request" do
-        click_link("Show")
-      end
+      cco_user = create :cco_user
+      create :defence_request, :accepted
 
-      expect(page).to_not have_selector(".time-of-arrival")
+      login_with_role "cco", cco_user.uid
+      click_link "Show"
+
+      expect(page).to_not have_selector ".time-of-arrival"
     end
-
   end
 
   context "with requests they are assigned to" do
-
     context "that have not yet been acknowledged" do
-      let!(:unack_dr) { create(:defence_request, :queued) }
-
       specify "cannot edit the request" do
-        visit root_path
-        within "#defence_request_#{unack_dr.id}" do
-          expect(page).not_to have_link("Edit")
-        end
+        cco_user = create :cco_user
+        create :defence_request, :queued, cco_uid: cco_user.uid
+
+        login_with_role "cco", cco_user.uid
+
+        expect(page).not_to have_link "Edit"
       end
 
       specify "can acknowledge the request" do
-        visit root_path
-        within "#defence_request_#{unack_dr.id}" do
-          click_button "Acknowledge"
-        end
+        cco_user = create :cco_user
+        create :defence_request, :queued, cco_uid: cco_user.uid
+
+        login_with_role "cco", cco_user.uid
+        click_button "Acknowledge"
+
         expect(page).to have_content "Defence Request successfully acknowledged"
       end
 
-      specify "are shown a message if the request cannot be acknowledged for some reason" do
-        visit root_path
-        dr_can_not_be_acknowledged_for_some_reason unack_dr
-        within "#defence_request_#{unack_dr.id}" do
-          click_button "Acknowledge"
-        end
+      specify "are shown a message if the request cannot be acknowledged" do
+        stub_defence_request_with method: :acknowledge, value: false
+        cco_user = create :cco_user
+        create :defence_request, :queued
+
+        login_with_role "cco", cco_user.uid
+        click_button "Acknowledge"
+
         expect(page).to have_content "Defence Request was not acknowledged"
       end
 
       specify "cannot mark the request as accepted" do
-        visit root_path
-        within ".queued-defence-request" do
-          expect(page).to_not have_button "Accepted"
-        end
-        within "#defence_request_#{unack_dr.id}" do
-          expect(page).to_not have_button "Accepted"
-        end
+        cco_user = create :cco_user
+        create :defence_request, :queued
+
+        login_with_role "cco", cco_user.uid
+
+        expect(page).to_not have_button "Accepted"
       end
     end
 
     context "that have been acknowledged by this cco" do
-      let!(:ack_dr) { create(:defence_request, :acknowledged, :with_solicitor, cco: cco_user) }
-
       specify "can edit the solicitors details on the request" do
-        visit root_path
-        within "#defence_request_#{ack_dr.id}" do
-          click_link "Edit"
-        end
+        cco_user = create :cco_user
+        create :defence_request, :acknowledged, cco_uid: cco_user.uid
 
-        within ".solicitor-details" do
-          fill_in "Full Name", with: "Henry Billy Bob"
-          fill_in "Name of firm", with: "Cheap Skate Law"
-          fill_in "Telephone number", with: "00112233445566"
-        end
-
+        login_with_role "cco", cco_user.uid
+        click_link "Edit"
+        fill_in "Full Name", with: "Henry Billy Bob"
+        fill_in "Telephone number", with: "00112233445566"
         click_button "Update Defence Request"
-        expect(current_path).to eq(defence_requests_path)
 
-        within "#defence_request_#{ack_dr.id}" do
-          expect(page).to have_content "Henry Billy Bob"
-          expect(page).to have_content "00112233445566"
-        end
+        expect(page).to have_content "Henry Billy Bob"
+        expect(page).to have_content "00112233445566"
       end
 
       specify "can add/edit the DSCC number on the request" do
-        visit root_path
-        within "#defence_request_#{ack_dr.id}" do
-          click_link "Edit"
-        end
+        cco_user = create :cco_user
+        create(
+          :defence_request,
+          :acknowledged,
+          cco_uid: cco_user.uid
+        )
+
+        login_with_role "cco", cco_user.uid
+        click_link "Edit"
         fill_in "DSCC number", with: "NUMBERWANG"
         click_button "Update Defence Request"
-        expect(page).to have_content "Defence Request successfully updated"
-        within "#defence_request_#{ack_dr.id}" do
-          click_link "Edit"
-        end
-        expect(page).to have_field "DSCC number", with: "NUMBERWANG"
-        fill_in "DSCC number", with: "T-1000"
-        click_button "Update Defence Request"
+
         expect(page).to have_content "Defence Request successfully updated"
       end
 
-      specify "can mark the request as accepted from the request's edit page whilst adding a dscc number" do
-        visit root_path
+      specify "can mark the request as accepted its edit page while adding a dscc number" do
+        cco_user = create :cco_user
+        acknowledged_defence_request = create(
+          :defence_request,
+          :acknowledged,
+          cco_uid: cco_user.uid
+        )
 
-        within "#defence_request_#{ack_dr.id}" do
-          click_link "Edit"
-        end
+        login_with_role "cco", cco_user.uid
+        click_link "Edit"
         fill_in "DSCC number", with: "123456"
-
         click_button "Update and Accept"
-        within ".accepted-defence-request" do
-          expect(page).to have_content(ack_dr.solicitor_name)
-        end
+
+        expect(page).
+          to have_content acknowledged_defence_request.solicitor_name
       end
 
-      specify "can not choose \"Update and Accept\" from the request's edit page without adding a dscc number" do
-        visit root_path
+      specify "can not choose 'Update and Accept' from the request's edit page without adding a dscc number" do
+        cco_user = create :cco_user
+        create(
+          :defence_request,
+          :acknowledged,
+          cco_uid: cco_user.uid
+        )
 
-        within "#defence_request_#{ack_dr.id}" do
-          click_link "Edit"
-        end
-
+        login_with_role "cco", cco_user.uid
+        click_link "Edit"
         click_button "Update and Accept"
-        expect(page).to have_content("Defence Request was not updated or marked as accepted")
+
+        expect(page).
+          to have_content "Defence Request was not updated or marked as accepted"
       end
 
       context "that have a dscc number" do
         specify "can accept the request from the dashboard" do
-          ack_dr.update(dscc_number: "012345")
-          visit root_path
-          within "#defence_request_#{ack_dr.id}" do
-            click_button "Accepted"
-          end
-          within ".accepted-defence-request" do
-            expect(page).to have_content(ack_dr.solicitor_name)
-          end
-          expect(page).to have_content("Defence Request was marked as accepted")
+          cco_user = create :cco_user
+          create(
+            :defence_request,
+            :acknowledged,
+            dscc_number: "012345",
+            cco_uid: cco_user.uid
+          )
+
+          login_with_role "cco", cco_user.uid
+          click_button "Accepted"
+
+          expect(page).to have_content "Defence Request was marked as accepted"
         end
 
         specify "are shown an error if the request cannot be accepted" do
-          ack_dr.update(dscc_number: "012345")
-          visit root_path
-          dr_can_not_be_accepted_for_some_reason ack_dr
-          within "#defence_request_#{ack_dr.id}" do
-            click_button "Accepted"
-          end
-          expect(page).to have_content("Defence Request was not marked as accepted")
+          stub_defence_request_with method: :accept, value: false
+          cco_user = create :cco_user
+          create(
+            :defence_request,
+            :acknowledged,
+            dscc_number: "012345",
+            cco_uid: cco_user.uid
+          )
+
+          login_with_role "cco", cco_user.uid
+          click_button "Accepted"
+
+          expect(page).
+            to have_content "Defence Request was not marked as accepted"
         end
       end
 
-      context "that have the \"duty\" solicitor type" do
-        let!(:duty_solicitor_dr) { create(:defence_request, :duty_solicitor, :acknowledged, cco: cco_user) }
+      context "that have the 'duty' solicitor type" do
+        specify "can't  mark the request as accepted from the dashboard without solicitor details" do
+          cco_user = create :cco_user
+          create(
+            :defence_request,
+            :duty_solicitor,
+            :acknowledged,
+            cco_uid: cco_user.uid
+          )
 
-        specify "can not mark the request as accepted from the dashboard without solicitor detials" do
-          visit root_path
-          within "#defence_request_#{duty_solicitor_dr.id}" do
-            expect(page).to_not have_button "Accepted"
-          end
+          login_with_role "cco", cco_user.uid
+
+          expect(page).to_not have_button "Accepted"
         end
 
-        specify "can only mark the request as accepted from the edit page with a dscc number and can edit solicitor" do
-          visit root_path
+        specify "can only mark the request as accepted from the edit page with solicitor details" do
+          cco_user = create :cco_user
+          create(
+            :defence_request,
+            :duty_solicitor,
+            :acknowledged,
+            cco_uid: cco_user.uid
+          )
 
-          within "#defence_request_#{duty_solicitor_dr.id}" do
-            click_link "Edit"
-          end
+          login_with_role "cco", cco_user.uid
+          click_link "Edit"
+          fill_in "Full Name", with: "Dodgy Dave"
+          fill_in "Name of firm", with: ""
           click_button "Update and Accept"
-          expect(page).to have_content("Defence Request was not updated or marked as accepted")
 
-          within ".solicitor-details" do
-            fill_in 'Full Name', with: 'a new solicitor'
-            fill_in 'Name of firm', with: 'a new solicitor firm'
-            fill_in 'Telephone number', with: '999999999'
-          end
+          expect(page).
+            to have_content "Defence Request was not updated or marked as accepted"
+        end
 
-          fill_in "DSCC number", with: "123456"
+        specify "can only mark the request as accepted from the edit page with a dscc number" do
+          cco_user = create :cco_user
+          create(
+            :defence_request,
+            :duty_solicitor,
+            :acknowledged,
+            cco_uid: cco_user.uid
+          )
+
+          login_with_role "cco", cco_user.uid
+          click_link "Edit"
+          fill_in "Full Name", with: "Dodgy Dave"
+          fill_in "Name of firm", with: "Innocent your honour"
+          fill_in "DSCC number", with: ""
           click_button "Update and Accept"
-          expect(page).to have_content("Defence Request successfully updated and marked as accepted")
+
+          expect(page).
+            to have_content "Defence Request was not updated or marked as accepted"
         end
       end
     end
   end
-
 
   context "that have been marked as accepted" do
-    let!(:accepted_dr) { create(:defence_request, :accepted, :with_solicitor, cco: cco_user) }
-
     specify "can edit the expected time of arrival on the request" do
-      visit root_path
+      cco_user = create :cco_user
+      create(
+        :defence_request,
+        :accepted,
+        cco_uid: cco_user.uid
+      )
 
-      within ".accepted-defence-request" do
-        expect(page).to have_content(accepted_dr.solicitor_name)
-      end
-
-      within ".accepted-defence-request" do
-        click_link "Edit"
-      end
-
-      within ".solicitor-details" do
-        fill_in "defence_request_solicitor_time_of_arrival_day", with: "01"
-        fill_in "defence_request_solicitor_time_of_arrival_month", with: "01"
-        fill_in "defence_request_solicitor_time_of_arrival_year", with: "2001"
-        fill_in "defence_request_solicitor_time_of_arrival_hour", with: "01"
-        fill_in "defence_request_solicitor_time_of_arrival_min", with: "01"
-      end
+      login_with_role "cco", cco_user.uid
+      click_link "Edit"
+      fill_in "defence_request_solicitor_time_of_arrival_day", with: "01"
+      fill_in "defence_request_solicitor_time_of_arrival_month", with: "01"
+      fill_in "defence_request_solicitor_time_of_arrival_year", with: "2001"
+      fill_in "defence_request_solicitor_time_of_arrival_hour", with: "01"
+      fill_in "defence_request_solicitor_time_of_arrival_min", with: "01"
       click_button "Update Defence Request"
-      expect(page).to have_content "Defence Request successfully updated"
-      within ".accepted-defence-request" do
-        click_link "Show"
-      end
-      expect(page).to have_content("1 January 2001 - 01:01")
+      click_link "Show"
+
+      expect(page).to have_content "1 January 2001 - 01:01"
     end
   end
 end
-
-def dr_can_not_be_acknowledged_for_some_reason defence_request
-  expect(DefenceRequest).to receive(:find).with(defence_request.id.to_s) { defence_request }
-  expect(defence_request).to receive(:acknowledge) { false }
-end
-
-def dr_can_not_be_accepted_for_some_reason defence_request
-  expect(DefenceRequest).to receive(:find).with(defence_request.id.to_s) { defence_request }
-  expect(defence_request).to receive(:accept) { false }
-end
-

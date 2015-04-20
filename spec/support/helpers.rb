@@ -1,18 +1,13 @@
 module HelperMethods
-  def create_role_and_login(role)
-    password = '123456789'
-    user = User.create(email: "#{role}@example.com", password: password, role: role.to_sym)
-    visit new_user_session_path
-    fill_in 'user_email', with: user.email
-    fill_in 'user_password', with: password
-    click_button 'Sign in'
+  def login_with_role(role, uid)
+    mock_token
+    mock_profile(options: { uid: uid, roles: [role] })
+
+    sign_in_using_dsds_auth
   end
 
-  def login_as_user(email)
-    visit new_user_session_path
-    fill_in 'user_email', with: email
-    fill_in 'user_password', with: 'password'
-    click_button 'Sign in'
+  def sign_in_using_dsds_auth
+    visit root_path
   end
 
   def create_a_defence_request
@@ -44,9 +39,6 @@ module HelperMethods
     end
   end
 
-  def an_email_has_been_sent
-    expect(ActionMailer::Base.deliveries.size).to eq 1
-  end
 
   def sign_out
     click_link('Sign out')
@@ -65,31 +57,5 @@ module HelperMethods
   def twenty_one_years_ago_as_hash
     date = DateTime.current - 21.years
     { 'day' => date.day, 'month' => date.month, 'year' => date.year }
-  end
-
-  def twenty_one_years_ago
-    (DateTime.current - 21.years).strftime("%-d %B %Y")
-  end
-
-  def expect_to_see_reason_aborted request
-    expect(page).to have_content('This case has been aborted for the following reason')
-    expect(page).to have_content(request.reason_aborted)
-  end
-
-  def expect_to_see_defence_request_values request
-    request.attributes.each do |key, value|
-      if %w(solicitor_name
-        solicitor_firm
-        phone_number
-        detainee_name
-        custody_number
-        offences
-        comments
-        dscc_number).include? key
-        unless value.is_a?(ActiveSupport::TimeWithZone)
-          expect(page).to have_content(value.to_s)
-        end
-      end
-    end
   end
 end

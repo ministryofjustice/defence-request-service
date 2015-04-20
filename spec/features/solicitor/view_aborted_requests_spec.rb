@@ -1,23 +1,21 @@
 require "rails_helper"
 
 RSpec.feature "Solicitors viewing aborted requests" do
+  specify "can see 'aborted' defence requests" do
+    solicitor = create :solicitor_user
+    aborted_defence_request =
+      create(
+        :defence_request,
+        :aborted,
+        solicitor_uid: solicitor.uid
+    )
 
-  let!(:aborted_dr) { create(:defence_request, :aborted, solicitor: create(:solicitor_user) ) }
+    login_with_role "solicitor", solicitor.uid
 
-  before :each do
-    login_as_user(aborted_dr.solicitor.email)
+    click_link "Show"
+
+    expect(page).
+      to have_content "This case has been aborted for the following reason"
+    expect(page).to have_content aborted_defence_request.reason_aborted
   end
-
-  specify 'can see "aborted" defence requests' do
-    visit defence_requests_path
-
-    within '.aborted-defence-request' do
-      click_link('Show')
-    end
-    expect_to_see_reason_aborted aborted_dr
-    expect(page).to have_content("Please call the Call Centre on 0999 999 9999") #TODO: this needs filling in
-
-    expect_to_see_defence_request_values aborted_dr
-  end
-
 end

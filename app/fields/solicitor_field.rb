@@ -1,27 +1,23 @@
 class SolicitorField
   include ActiveModel::Model
 
-  attr_accessor :email, :solicitor_id
+  attr_accessor :email, :solicitor, :solicitor_uid
 
   def value
-   solicitor
-  end
-
-  def solicitor
-    if email
-      User.find_by_email email
-    elsif solicitor_id
-      User.find_by_id solicitor_id
-    end
+    solicitor
   end
 
   def present?
-    [email, solicitor_id].any? &:present?
+    [email, solicitor_uid].any? &:present?
   end
 
   def self.from_persisted_value solicitor
     if solicitor
-      SolicitorField.new solicitor_id: solicitor.id, email: solicitor.email
+      SolicitorField.new(
+        solicitor_uid: solicitor.uid,
+        email: solicitor.email,
+        solicitor: solicitor
+      )
     else
       SolicitorField.new
     end
