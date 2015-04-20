@@ -6,6 +6,7 @@ class DsccNumber < ActiveRecord::Base
   scope :most_recent_monthly, ->(year_and_month) {
     where(year_and_month: year_and_month).order('number desc').limit(1)
   }
+  validates :number, :year_and_month, :extension, presence: true
 
   def to_s
     "%s%05d%s" % [prefix, number, extension]

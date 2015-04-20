@@ -27,7 +27,7 @@ class DefenceRequest < ActiveRecord::Base
     end
 
     event :acknowledge do
-      transitions from: [:queued], to: :acknowledged, on_transition: :generate_dscc_number
+      transitions from: [:queued], to: :acknowledged
     end
 
     event :accept, success: :send_solicitor_case_details do
@@ -106,7 +106,4 @@ class DefenceRequest < ActiveRecord::Base
     Mailer.send_solicitor_case_details(self, solicitor).deliver_later if solicitor
   end
 
-  def generate_dscc_number
-    self.dscc_number = DsccNumberGenerator.new(defence_request: self).generate unless dscc_number
-  end
 end

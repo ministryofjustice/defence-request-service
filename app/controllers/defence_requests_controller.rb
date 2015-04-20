@@ -58,7 +58,8 @@ class DefenceRequestsController < BaseController
   end
 
   def acknowledge
-    if @defence_request.acknowledge && associate_cco && @defence_request.save
+    acknowledger = DefenceRequestAcknowledger.new(defence_request: @defence_request)
+    if acknowledger.acknowledge_with cco: current_user
       redirect_to(defence_requests_path, notice: flash_message(:acknowledged, DefenceRequest))
     else
       redirect_to(defence_requests_path, notice: flash_message(:failed_acknowledge, DefenceRequest))
@@ -119,10 +120,6 @@ class DefenceRequestsController < BaseController
     @acknowledged_requests = policy_scope(DefenceRequest).acknowledged.order(created_at: :asc)
     @accepted_requests = policy_scope(DefenceRequest).accepted.order(created_at: :asc)
     @aborted_requests = policy_scope(DefenceRequest).aborted.order(created_at: :asc)
-  end
-
-  def associate_cco
-    @defence_request.cco = current_user
   end
 
   def update_and_accept?
