@@ -7,7 +7,8 @@ FactoryGirl.define do
         uid: SecureRandom.uuid,
         name: "Example User",
         email: "user@example.com",
-        roles: []
+        roles: [],
+        organisation_uids: []
       )
     }
   end
@@ -20,7 +21,8 @@ FactoryGirl.define do
         uid: SecureRandom.uuid,
         name: "Example CCO User",
         email: "cco_user@example.com",
-        roles: ["cco"]
+        roles: ["cco"],
+        organisation_uids: []
       )
     }
   end
@@ -33,7 +35,8 @@ FactoryGirl.define do
         uid: SecureRandom.uuid,
         name: "Example CSO User",
         email: "cso_user@example.com",
-        roles: ["cso"]
+        roles: ["cso"],
+        organisation_uids: []
       )
     }
   end
@@ -46,7 +49,8 @@ FactoryGirl.define do
         uid: SecureRandom.uuid,
         name: "Example Solicitor User",
         email: "solicitor_user@example.com",
-        roles: ["solicitor"]
+        roles: ["solicitor"],
+        organisation_uids: []
       )
     }
   end
