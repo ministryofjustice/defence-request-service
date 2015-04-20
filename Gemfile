@@ -15,7 +15,7 @@ gem "lograge"
 gem "logstash-event"
 gem "pg"
 gem "pundit", "~> 0.3.0"
-gem "rails", "4.2.1"
+gem "rails", path: '~/Code/rails'
 gem "rails_config", "~> 0.4.2"
 gem "sass-rails", "~> 5.0"
 gem "sdoc", "~> 0.4.0", group: :doc

@@ -3,5 +3,4 @@ FactoryGirl.define do
     year_and_month { Time.now.to_date.beginning_of_month }
     sequence(:number) {|i| i }
   end
-
 end
