@@ -112,7 +112,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
         end
 
         click_button "Update and Accept"
-        
+
         within ".accepted-defence-request" do
           expect(page).to have_content(ack_dr.solicitor_name)
         end
