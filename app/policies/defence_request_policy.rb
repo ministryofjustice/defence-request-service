@@ -14,6 +14,8 @@ class DefenceRequestPolicy < ApplicationPolicy
         scope.not_draft
       elsif user.roles.include?("solicitor")
         scope.has_solicitor(user).accepted_or_aborted
+      else
+        scope.none
       end
     end
   end
