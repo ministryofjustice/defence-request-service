@@ -54,7 +54,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
 
       specify "are shown a message if the request cannot be acknowledged for some reason" do
         visit root_path
-        dr_can_not_be_acknowledged_for_some_reason unack_dr
+        dr_can_not_be_acknowledged_by_cco_for_some_reason unack_dr, cco_user
         within "#defence_request_#{unack_dr.id}" do
           click_button "Acknowledge"
         end
@@ -199,9 +199,11 @@ RSpec.feature "Call Center Operatives managing defence requests" do
   end
 end
 
-def dr_can_not_be_acknowledged_for_some_reason defence_request
+def dr_can_not_be_acknowledged_by_cco_for_some_reason defence_request, cco
   expect(DefenceRequest).to receive(:find).with(defence_request.id.to_s) { defence_request }
-  expect(defence_request).to receive(:acknowledge) { false }
+  acknowledger = double
+  expect(DefenceRequestAcknowledger).to receive(:new).with(defence_request: defence_request) { acknowledger }
+  expect(acknowledger).to receive(:acknowledge_with).with(cco: cco) { false }
 end
 
 def dr_can_not_be_accepted_for_some_reason defence_request
