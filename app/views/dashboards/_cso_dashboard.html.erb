@@ -1,0 +1,10 @@
+<div class="new_defence_request">
+  <%= link_to t('new_defence_request'), new_defence_request_path, role: 'button', class: 'button' %>
+</div>
+
+<table class="dashboard">
+  <%= render 'defence_requests/defence_requests_table_head' %>
+  <tbody>
+    <%= render 'defence_requests/defence_requests_table_body', requests: @dashboard.defence_requests %>
+  </tbody>
+</table>

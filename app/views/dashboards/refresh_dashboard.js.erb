@@ -1,0 +1,2 @@
+$('.dashboard tbody').html('');
+$('.dashboard tbody').append("<%= escape_javascript(render 'defence_requests/defence_requests_table_body', requests: @dashboard.defence_requests) %>");

@@ -1,0 +1,9 @@
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag "dashboard_refresh_interval" %>
+<% end %>
+
+<%= flash_messages %>
+
+<h1><%= "#{t(@dashboard.user_role)}  #{t('dashboard')}" %></h1>
+
+<%= render @dashboard %>

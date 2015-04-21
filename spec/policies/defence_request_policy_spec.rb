@@ -8,10 +8,8 @@ RSpec.describe DefenceRequestPolicy do
   context "Custody Suite Officers" do
     let(:user)          { FactoryGirl.create(:cso_user) }
     let(:group_actions) { [
-      :index,
       :new,
       :create,
-      :refresh_dashboard,
       :solicitors_search
     ] }
 
@@ -80,8 +78,7 @@ RSpec.describe DefenceRequestPolicy do
   context "Call Center Operatives" do
     let(:user) { FactoryGirl.create(:cco_user) }
     let(:group_actions) {
-      [:index,
-       :refresh_dashboard]
+      []
     }
 
     context "with a draft DR" do
@@ -179,8 +176,7 @@ RSpec.describe DefenceRequestPolicy do
   context "Solicitors" do
     let (:defreq) { FactoryGirl.create(:defence_request) }
     let(:user) { FactoryGirl.create(:solicitor_user)}
-    let(:group_actions) { [:index,
-                           :refresh_dashboard] }
+    let(:group_actions) { [] }
 
     context "DR they are assigned to" do
       context "with an accepted DR" do
@@ -226,5 +222,4 @@ RSpec.describe DefenceRequestPolicy do
       end
     end
   end
-
 end

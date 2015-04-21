@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
-  root "defence_requests#index"
+  root "dashboards#show"
+
+  resource :dashboard, only: [:show]
+  get "/refresh_dashboard", to: "dashboards#refresh_dashboard"
 
   get "/auth/:provider/callback", to: "sessions#create"
-  get "defence_requests/refresh_dashboard" => "defence_requests#refresh_dashboard"
 
-  resources :defence_requests do
+  resources :defence_requests, except: [:index] do
     collection do
       post "solicitors_search"
     end

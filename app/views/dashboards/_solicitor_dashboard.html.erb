@@ -1,0 +1,6 @@
+<table class="dashboard">
+  <%= render 'defence_requests/defence_requests_table_head' %>
+  <tbody>
+    <%= render 'defence_requests/defence_requests_table_body', requests: @dashboard.defence_requests %>
+  </tbody>
+</table>

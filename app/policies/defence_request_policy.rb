@@ -20,14 +20,6 @@ class DefenceRequestPolicy < ApplicationPolicy
     end
   end
 
-  def index?
-    cso || cco || solicitor
-  end
-
-  def refresh_dashboard?
-    index?
-  end
-
   def show?
     (cso && !record.aborted?) || ((cco  || user_is_the_assigned_solicitor) && !record.draft?)
   end
