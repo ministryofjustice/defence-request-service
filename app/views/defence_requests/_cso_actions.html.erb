@@ -1,6 +1,6 @@
-<%= link_to t('show'), defence_request_path(def_req) %>
-<%= link_to t('abort'), abort_defence_request_path(def_req) %>
-<%= link_to t('edit'), edit_defence_request_path(def_req) %>
-<%= button_to t('acknowledge'), acknowledge_defence_request_path(def_req), method: :put %>
-<%= button_to t('resend_details'), resend_details_defence_request_path(def_req), confirm: "Are you sure?" %>
-<%= button_to t('send_for_processing'), queue_defence_request_path(def_req), method: :put %>
+<%= link_to t("show"), defence_request_path(def_req) %>
+<%= link_to t("abort"), abort_defence_request_path(def_req) %>
+<%= link_to t("edit"), edit_defence_request_path(def_req) %>
+<%= button_to t("acknowledge"), acknowledge_defence_request_path(def_req), method: :put %>
+<%= button_to t("resend_details"), resend_details_defence_request_path(def_req), confirm: "Are you sure?" %>
+<%= button_to t("send_for_processing"), queue_defence_request_path(def_req), method: :put %>

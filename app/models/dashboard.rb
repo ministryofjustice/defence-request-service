@@ -1,15 +1,7 @@
 class Dashboard
-  def self.for(user, defence_requests_scoped_by_policy)
-    new(user, defence_requests_scoped_by_policy)
-  end
-
   def initialize(user, defence_requests_scoped_by_policy)
     @user = user
     @defence_requests_scoped_by_policy = defence_requests_scoped_by_policy
-  end
-
-  def to_partial_path
-    "dashboards/#{user_role}_dashboard"
   end
 
   def defence_requests

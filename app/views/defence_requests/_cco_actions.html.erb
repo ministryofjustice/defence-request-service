@@ -1,11 +1,11 @@
-<%= link_to t('show'), defence_request_path(def_req) %>
+<%= link_to t("show"), defence_request_path(def_req) %>
 <% if policy(def_req).edit? %>
-  <%= link_to t('edit'), edit_defence_request_path(def_req) %>
+  <%= link_to t("edit"), edit_defence_request_path(def_req) %>
 <% end %>
-<%= button_to t('acknowledge'), acknowledge_defence_request_path(def_req), method: :put %>
+<%= button_to t("acknowledge"), acknowledge_defence_request_path(def_req), method: :put %>
 <% if policy(def_req).accept? %>
-  <%= button_to t('accepted'), accept_defence_request_path(def_req), method: :patch %>
+  <%= button_to t("accepted"), accept_defence_request_path(def_req), method: :patch %>
 <% end %>
 <% if policy(def_req).resend_details? %>
-  <%= button_to t('resend_details'), resend_details_defence_request_path(def_req), confirm: "Are you sure?" %>
+  <%= button_to t("resend_details"), resend_details_defence_request_path(def_req), confirm: "Are you sure?" %>
 <% end %>

@@ -6,15 +6,15 @@ class DashboardsController < BaseController
   end
 
   def refresh_dashboard
-    respond_to do |format|
-      format.js { @dashboard = dashboard }
-    end
+    @defence_requests = defence_requests_scoped_by_policy
+
+    respond_to { |format| format.js }
   end
 
   private
 
   def dashboard
-    Dashboard.for(
+    Dashboard.new(
       current_user,
       defence_requests_scoped_by_policy
     )
