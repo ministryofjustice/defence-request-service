@@ -15,6 +15,7 @@
 <% end %>
 <% content_for :javascripts do %>
   <%= javascript_include_tag 'application' %>
+  <%= yield :javascript_includes %>
 <% end %>
 <% content_for :head do %>
   <%= csrf_meta_tag %>

@@ -33,7 +33,7 @@ RSpec.feature "Solicitors viewing their dashboard" do
       expect(page).to have_content(accepted_defence_request.detainee_name)
       expect(page).to_not have_content(acknowledged_defence_request.detainee_name)
 
-      wait_for_dashboard_refresh
+      refresh_dashboard
 
       expect(page).to have_content(accepted_defence_request.detainee_name)
       expect(page).to_not have_content(acknowledged_defence_request.detainee_name)

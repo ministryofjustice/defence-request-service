@@ -13,4 +13,5 @@ Rails.application.config.assets.precompile += %w(
       govuk_elements_extensions_ie6.css
       govuk_elements_extensions_ie7.css
       govuk_elements_extensions_ie8.css
+      dashboard_poller.js
     )

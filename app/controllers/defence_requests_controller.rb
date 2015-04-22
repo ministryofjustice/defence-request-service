@@ -1,14 +1,9 @@
 class DefenceRequestsController < BaseController
-
-  before_action :find_defence_request, except: [:index, :new, :create, :refresh_dashboard, :solicitors_search]
-  before_action :set_policy, except: [:index, :refresh_dashboard, :solicitors_search]
+  before_action :find_defence_request, except: [:new, :create, :solicitors_search]
+  before_action :set_policy, except: [:solicitors_search]
   before_action :new_defence_request_form, only: [:show, :new, :create, :edit, :update, :solicitor_time_of_arrival]
-  before_action :get_defence_request_scopes, only: [:index, :refresh_dashboard]
 
   before_action ->(c) { authorize defence_request, "#{c.action_name}?" }
-
-  def index
-  end
 
   def show
   end
@@ -30,13 +25,13 @@ class DefenceRequestsController < BaseController
   def update
     if update_and_accept?
       if @defence_request_form.submit(defence_request_params) && accept_and_save_defence_request
-        redirect_to(defence_requests_path, notice: flash_message(:updated_and_accepted, DefenceRequest))
+        redirect_to(dashboard_path, notice: flash_message(:updated_and_accepted, DefenceRequest))
       else
         redirect_to(edit_defence_request_path, alert: flash_message(:failed_to_update_not_accepted, DefenceRequest))
       end
     else
       if @defence_request_form.submit(defence_request_params)
-        redirect_to(defence_requests_path, notice: flash_message(:update, DefenceRequest))
+        redirect_to(dashboard_path, notice: flash_message(:update, DefenceRequest))
       else
         render :edit
       end
@@ -55,17 +50,11 @@ class DefenceRequestsController < BaseController
     @solicitors = (firm_solicitors + solicitors).uniq
   end
 
-  def refresh_dashboard
-    respond_to do |format|
-      format.js
-    end
-  end
-
   def acknowledge
     if @defence_request.acknowledge && associate_cco && @defence_request.save
-      redirect_to(defence_requests_path, notice: flash_message(:acknowledged, DefenceRequest))
+      redirect_to(dashboard_path, notice: flash_message(:acknowledged, DefenceRequest))
     else
-      redirect_to(defence_requests_path, alert: flash_message(:failed_acknowledge, DefenceRequest))
+      redirect_to(dashboard_path, alert: flash_message(:failed_acknowledge, DefenceRequest))
     end
   end
 
@@ -76,7 +65,7 @@ class DefenceRequestsController < BaseController
     @defence_request.reason_aborted = defence_request_params[:reason_aborted]
 
     if @defence_request.abort && @defence_request.save
-      redirect_to defence_requests_path, notice: flash_message(:aborted, DefenceRequest)
+      redirect_to dashboard_path, notice: flash_message(:aborted, DefenceRequest)
     else
       render :abort
     end
@@ -84,17 +73,17 @@ class DefenceRequestsController < BaseController
 
   def accept
     if @defence_request.accept && @defence_request.save
-      redirect_to(defence_requests_path, notice: flash_message(:accept, DefenceRequest))
+      redirect_to(dashboard_path, notice: flash_message(:accept, DefenceRequest))
     else
-      redirect_to(defence_requests_path, alert: flash_message(:failed_accept, DefenceRequest))
+      redirect_to(dashboard_path, alert: flash_message(:failed_accept, DefenceRequest))
     end
   end
 
   def resend_details
     if @defence_request.resend_details
-      redirect_to(defence_requests_path, notice: flash_message(:details_sent, DefenceRequest))
+      redirect_to(dashboard_path, notice: flash_message(:details_sent, DefenceRequest))
     else
-      redirect_to(defence_requests_path, alert: flash_message(:failed_details_sent, DefenceRequest))
+      redirect_to(dashboard_path, alert: flash_message(:failed_details_sent, DefenceRequest))
     end
   end
 
@@ -108,21 +97,13 @@ class DefenceRequestsController < BaseController
 
   def queue
     if @defence_request.queue && @defence_request.save
-      redirect_to(defence_requests_path, notice: flash_message(:sent_for_processing, DefenceRequest))
+      redirect_to(dashboard_path, notice: flash_message(:sent_for_processing, DefenceRequest))
     else
-      redirect_to(defence_requests_path, alert: flash_message(:failed_send_for_processing, DefenceRequest))
+      redirect_to(dashboard_path, alert: flash_message(:failed_send_for_processing, DefenceRequest))
     end
   end
 
   private
-
-  def get_defence_request_scopes
-    @draft_requests = policy_scope(DefenceRequest).draft.order(created_at: :asc)
-    @queued_requests = policy_scope(DefenceRequest).queued.order(created_at: :asc)
-    @acknowledged_requests = policy_scope(DefenceRequest).acknowledged.order(created_at: :asc)
-    @accepted_requests = policy_scope(DefenceRequest).accepted.order(created_at: :asc)
-    @aborted_requests = policy_scope(DefenceRequest).aborted.order(created_at: :asc)
-  end
 
   def associate_cco
     @defence_request.cco = current_user
