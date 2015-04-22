@@ -1,5 +1,5 @@
 <% content_for :javascript_includes do %>
-  <%= javascript_include_tag "dashboard_poller" %>
+  <%= javascript_include_tag "dashboard_poller" unless Settings.dsds.dashboard_refresh_disabled %>
 <% end %>
 
 <%= flash_messages %>
