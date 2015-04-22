@@ -14,22 +14,26 @@ class TransitionDefenceRequestsController < BaseController
   private
 
   def authorize_transition
-    authorize defence_request, "#{transition_params.fetch(:transition_to)}?"
+    authorize defence_request, "#{requested_transition}?"
   end
 
   def transition
-    DefenceRequestTransition.new(defence_request, requested_transition, current_user)
+    DefenceRequestTransitions::Builder.new(transition_params).build
   end
 
   def requested_transition
-    transition_params.fetch(:transition_to)
+    params.fetch(:transition_to)
   end
 
   def defence_request
-    DefenceRequest.find(transition_params.fetch(:defence_request_id))
+    DefenceRequest.find(params.fetch(:defence_request_id))
   end
 
   def transition_params
-    params.permit(:defence_request_id, :transition_to)
+    {
+      defence_request: defence_request,
+      transition_to: requested_transition,
+      user: current_user,
+    }
   end
 end
