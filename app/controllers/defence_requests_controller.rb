@@ -50,35 +50,6 @@ class DefenceRequestsController < BaseController
     @solicitors = (firm_solicitors + solicitors).uniq
   end
 
-  def acknowledge
-    if @defence_request.acknowledge && associate_cco && @defence_request.save && @defence_request.generate_dscc_number!
-      redirect_to(dashboard_path, notice: flash_message(:acknowledged, DefenceRequest))
-    else
-      redirect_to(dashboard_path, alert: flash_message(:failed_acknowledge, DefenceRequest))
-    end
-  end
-
-  def abort
-  end
-
-  def reason_aborted
-    @defence_request.reason_aborted = defence_request_params[:reason_aborted]
-
-    if @defence_request.abort && @defence_request.save
-      redirect_to dashboard_path, notice: flash_message(:aborted, DefenceRequest)
-    else
-      render :abort
-    end
-  end
-
-  def accept
-    if @defence_request.accept && @defence_request.save
-      redirect_to(dashboard_path, notice: flash_message(:accept, DefenceRequest))
-    else
-      redirect_to(dashboard_path, alert: flash_message(:failed_accept, DefenceRequest))
-    end
-  end
-
   def resend_details
     if @defence_request.resend_details
       redirect_to(dashboard_path, notice: flash_message(:details_sent, DefenceRequest))
@@ -95,30 +66,10 @@ class DefenceRequestsController < BaseController
     end
   end
 
-  def queue
-    if @defence_request.queue && @defence_request.save
-      redirect_to(dashboard_path, notice: flash_message(:sent_for_processing, DefenceRequest))
-    else
-      redirect_to(dashboard_path, alert: flash_message(:failed_send_for_processing, DefenceRequest))
-    end
-  end
-
   private
-
-  def associate_cco
-    @defence_request.cco = current_user
-  end
 
   def update_and_accept?
     params[:commit] == "Update and Accept"
-  end
-
-  def solicitor_details_missing?
-    !@defence_request.solicitor && (defence_request_params[:solicitor_name].blank? || defence_request_params[:solicitor_firm].blank?)
-  end
-
-  def dscc_number_missing?
-    defence_request_params[:dscc_number].blank?
   end
 
   def find_defence_request

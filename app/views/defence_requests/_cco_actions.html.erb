@@ -1,0 +1,11 @@
+<%= link_to t("show"), defence_request_path(def_req) %>
+<% if policy(def_req).edit? %>
+  <%= link_to t("edit"), edit_defence_request_path(def_req) %>
+<% end %>
+<%= button_to t("acknowledge"), transition_defence_request_path(defence_request_id: def_req.id, transition_to: "acknowledge") %>
+<% if policy(def_req).accept? %>
+  <%= button_to t("accepted"), transition_defence_request_path(defence_request_id: def_req, transition_to: "accept") %>
+<% end %>
+<% if policy(def_req).resend_details? %>
+  <%= button_to t("resend_details"), resend_details_defence_request_path(def_req), data: { confirm: "Are you sure?" } %>
+<% end %>

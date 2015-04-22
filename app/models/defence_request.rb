@@ -41,7 +41,6 @@ class DefenceRequest < ActiveRecord::Base
     event :finish do
       transitions from: [:acknowledged, :accepted], to: :finished
     end
-
   end
 
   validates :reason_aborted, presence: true, if: :aborted?

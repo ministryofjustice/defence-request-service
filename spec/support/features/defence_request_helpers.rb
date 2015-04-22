@@ -1,7 +1,7 @@
 module DefenceRequestHelpers
-  def stub_defence_request_with(method:, value:)
-    allow_any_instance_of(DefenceRequest).
-      to receive(method).and_return(value)
+  def stub_defence_request_transition(value:)
+    allow_any_instance_of(DefenceRequestTransition).
+      to receive(:complete).and_return(value)
   end
 
   def expect_email_with_case_details_to_have_been_sent_to_assigned_solicitor

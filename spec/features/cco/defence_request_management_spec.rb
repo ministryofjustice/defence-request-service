@@ -45,7 +45,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
       end
 
       specify "are shown a message if the request cannot be acknowledged" do
-        stub_defence_request_with method: :acknowledge, value: false
+        stub_defence_request_transition value: false
         cco_user = create :cco_user
         create :defence_request, :queued
 
@@ -130,7 +130,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
         end
 
         specify "are shown an error if the request cannot be accepted" do
-          stub_defence_request_with method: :accept, value: false
+          stub_defence_request_transition value: false
           cco_user = create :cco_user
           create(
             :defence_request,

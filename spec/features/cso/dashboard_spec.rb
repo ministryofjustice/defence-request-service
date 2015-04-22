@@ -35,8 +35,8 @@ RSpec.feature "Custody Suite Officers viewing their dashboard" do
   end
 
   specify "are shown an error message if a case cannot be sent for processing" do
-    stub_defence_request_with method: :queue, value: false
-    cso_user = create :cso_user
+    stub_defence_request_transition value: false
+    cso_user = create :cco_user
     create :defence_request, :draft
 
     login_with cso_user
