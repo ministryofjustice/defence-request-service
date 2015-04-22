@@ -733,7 +733,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
       expect(page).to have_content("Time of Arrival 1 January 2001 - 01:01")
       expect(page).to have_content("Time of Detention Authorised 1 January 2001 - 01:01")
       expect(page).to have_content("Comments commenty-comments-are here: ")
-      expect(page).to have_content("DSCC number 123456")
+      expect(page).to have_content("DSCC number #{fully_loaded_dr.dscc_number}")
       expect(page).to have_content("Interview Start Time 1 January 2001 - 01:01")
       expect(page).to have_content("Solicitor Name solicitor_name-")
       expect(page).to have_content("Solicitor Expected Time of Arrival 1 January 2001 - 01:01")
