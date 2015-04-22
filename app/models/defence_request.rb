@@ -66,6 +66,8 @@ class DefenceRequest < ActiveRecord::Base
 
   validates :interpreter_type, presence: true, if: :interpreter_required
 
+  validates :dscc_number, uniqueness: true, allow_nil: true
+
   audited
 
   SCHEMES = [ "No Scheme",
