@@ -7,5 +7,5 @@
   <%= button_to t("accepted"), accept_defence_request_path(def_req), method: :patch %>
 <% end %>
 <% if policy(def_req).resend_details? %>
-  <%= button_to t("resend_details"), resend_details_defence_request_path(def_req), confirm: "Are you sure?" %>
+  <%= button_to t("resend_details"), resend_details_defence_request_path(def_req), data: { confirm: "Are you sure?" } %>
 <% end %>
