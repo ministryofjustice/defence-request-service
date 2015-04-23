@@ -1,14 +1,4 @@
 module HelperMethods
-  def login_with_role(role, uid)
-    mock_token
-    mock_profile(options: { uid: uid, roles: [role] })
-
-    sign_in_using_dsds_auth
-  end
-
-  def sign_in_using_dsds_auth
-    visit root_path
-  end
 
   def create_a_defence_request
     visit new_defence_request_path
@@ -37,11 +27,6 @@ module HelperMethods
       fill_in 'Comments', with: 'This is a very bad man. Send him down...'
       click_button 'Create Defence Request'
     end
-  end
-
-
-  def sign_out
-    click_link('Sign out')
   end
 
   def date_then_as_hash
