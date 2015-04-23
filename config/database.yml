@@ -15,3 +15,7 @@ development:
 test:
   <<: *default
   database: defence-solicitor_test
+
+production:
+  <<: *default
+  database: defence-solicitor_production

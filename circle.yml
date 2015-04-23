@@ -1,6 +1,19 @@
 machine:
   ruby:
     version: 2.2.2
+  services:
+    - docker
 test:
   override:
     - bundle exec rake --trace
+deployment:
+  create_containers:
+    branch: [master, docker_container_repository_92999546]
+    commands:
+      # Log into the docker container. Note that this requires these environment variables
+      # to be stored in the CircleCI environment config
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      # Ensure that the docker container built contains absolutely nothing unexpected
+      # that might have been installed by CircleCI (eg an updated database.yml)
+      - (git clean -fd ; git reset --hard) || true
+      - DOCKER_IMAGE_TAG=$CIRCLE_BUILD_NUM annotate-output make
