@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150420095935) do
+ActiveRecord::Schema.define(version: 20150423144847) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,18 +75,19 @@ ActiveRecord::Schema.define(version: 20150420095935) do
     t.string   "investigating_officer_shoulder_number"
     t.string   "investigating_officer_contact_number"
     t.text     "circumstances_of_arrest"
+    t.uuid     "solicitor_uid"
+    t.uuid     "cco_uid"
     t.datetime "time_of_arrest"
     t.datetime "time_of_detention_authorised"
     t.boolean  "fit_for_interview",                     default: true,  null: false
     t.text     "unfit_for_interview_reason"
     t.boolean  "interpreter_required",                  default: false, null: false
-    t.uuid     "solicitor_uid"
-    t.uuid     "cco_uid"
     t.text     "interpreter_type"
     t.uuid     "organisation_uid"
   end
 
   add_index "defence_requests", ["cco_uid"], name: "index_defence_requests_on_cco_uid", using: :btree
+  add_index "defence_requests", ["organisation_uid"], name: "index_defence_requests_on_organisation_uid", using: :btree
   add_index "defence_requests", ["solicitor_uid"], name: "index_defence_requests_on_solicitor_uid", using: :btree
 
 end
