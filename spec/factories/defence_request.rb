@@ -49,6 +49,7 @@ FactoryGirl.define do
 
   trait :acknowledged do
     state 'acknowledged'
+    dscc_number &generate_dscc_number
     association :cco, factory: :cco_user
   end
 

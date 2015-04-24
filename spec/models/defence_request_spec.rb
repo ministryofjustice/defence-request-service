@@ -115,13 +115,10 @@ RSpec.describe DefenceRequest, type: :model do
     end
 
     describe 'acknowledged' do
-      let(:state) { :acknowledged }
-      include_examples 'allowed transitions', [ :finish, :abort ]
+      subject { FactoryGirl.create(:defence_request, :acknowledged) }
 
-      context 'with dscc number' do
-        subject { FactoryGirl.create(:defence_request, :acknowledged, :with_dscc_number) }
-        include_examples 'allowed transitions', [ :accept, :finish, :abort ]
-      end
+      let(:state) { :acknowledged }
+      include_examples 'allowed transitions', [ :accept, :finish, :abort ]
     end
 
     describe 'accepted' do
