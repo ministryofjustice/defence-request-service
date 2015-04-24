@@ -1,24 +1,22 @@
 module DefenceRequestTransitions
-  class Acknowledge
+  class Abort
     def initialize(transition_params)
       @defence_request = transition_params.fetch(:defence_request)
       @requested_transition = transition_params.fetch(:transition_to)
+      @transition_info = transition_params.fetch(:transition_info)
       @user = transition_params.fetch(:user)
     end
 
     def complete
-      ActiveRecord::Base.transaction do
-        set_cco
-        transition_defence_request
-      end
+      set_transition_info && transition_defence_request
     end
 
     private
 
-    attr_reader :defence_request, :requested_transition, :user
+    attr_reader :defence_request, :requested_transition, :transition_info, :user
 
-    def set_cco
-      defence_request.cco_uid = user.uid
+    def set_transition_info
+      return true if defence_request.reason_aborted = transition_info
     end
 
     def transition_defence_request

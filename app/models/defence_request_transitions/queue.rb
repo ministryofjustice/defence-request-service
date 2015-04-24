@@ -6,9 +6,7 @@ module DefenceRequestTransitions
     end
 
     def complete
-      ActiveRecord::Base.transaction do
-        transition_defence_request
-      end
+      transition_defence_request
     end
 
     private

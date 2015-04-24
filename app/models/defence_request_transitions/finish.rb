@@ -1,25 +1,17 @@
 module DefenceRequestTransitions
-  class Acknowledge
+  class Finish
     def initialize(transition_params)
       @defence_request = transition_params.fetch(:defence_request)
       @requested_transition = transition_params.fetch(:transition_to)
-      @user = transition_params.fetch(:user)
     end
 
     def complete
-      ActiveRecord::Base.transaction do
-        set_cco
-        transition_defence_request
-      end
+      transition_defence_request
     end
 
     private
 
-    attr_reader :defence_request, :requested_transition, :user
-
-    def set_cco
-      defence_request.cco_uid = user.uid
-    end
+    attr_reader :defence_request, :requested_transition
 
     def transition_defence_request
       trigger_transition && defence_request.save!

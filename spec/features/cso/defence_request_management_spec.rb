@@ -76,9 +76,11 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
             to_not have_css "#defence_request_appropriate_adult_reason[disabled]"
         end
 
-        xspecify "can choose own solicitor and pick a solicitor using a from search box from the form", js: true do
+        specify "can choose own solicitor and pick a solicitor using a from search box from the form", js: true do
           stub_solicitor_search_for_bob_smith
-          visit root_path
+          cso_user = create :cso_user
+
+          login_with_role "cso", cso_user.uid
           click_link "New Defence Request"
           choose "Own"
           fill_in "q", with: "Bob Smith"
@@ -96,10 +98,11 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           end
         end
 
-        xspecify "a solicitor with a apostrophe renders correctly", js: true do
+        specify "a solicitor with a apostrophe renders correctly", js: true do
           stub_solicitor_search_for_dave_oreilly
+          cso_user = create :cso_user
 
-          visit root_path
+          login_with_role "cso", cso_user.uid
           click_link "New Defence Request"
           choose "Own"
           fill_in "q", with: "Dave O'Reilly"
@@ -115,11 +118,12 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           end
         end
 
-        xspecify "can perform multiple own solicitor searches", js: true do
+        specify "can perform multiple own solicitor searches", js: true do
           stub_solicitor_search_for_bob_smith
           stub_solicitor_search_for_barry_jones
+          cso_user = create :cso_user
 
-          visit root_path
+          login_with_role "cso", cso_user.uid
           click_link "New Defence Request"
           choose "Own"
           fill_in "q", with: "Bob Smith"
@@ -135,10 +139,11 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
         end
       end
 
-      xspecify "are shown a message when no results are found for their search", js: true do
+      specify "are shown a message when no results are found for their search", js: true do
         stub_solicitor_search_for_mystery_man
+        cso_user = create :cso_user
 
-        visit root_path
+        login_with_role "cso", cso_user.uid
         click_link "New Defence Request"
         choose "Own"
         fill_in "q", with: "Mystery Man"
@@ -147,9 +152,11 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
         expect(page).to have_content "No results found"
       end
 
-      xspecify "can clear the solicitor search results with a close button", js: true do
+      specify "can clear the solicitor search results with a close button", js: true do
         stub_solicitor_search_for_bob_smith
-        visit root_path
+        cso_user = create :cso_user
+
+        login_with_role "cso", cso_user.uid
         click_link "New Defence Request"
         choose "Own"
         fill_in "q", with: "Bob Smith"
@@ -163,9 +170,11 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
       end
     end
 
-    xspecify "can clear the solicitor search results by pressing the ESC key", js: true do
+    specify "can clear the solicitor search results by pressing the ESC key", js: true do
       stub_solicitor_search_for_bob_smith
-      visit root_path
+      cso_user = create :cso_user
+
+      login_with_role "cso", cso_user.uid
       click_link "New Defence Request"
       choose "Own"
       fill_in "q", with: "Bob Smith"
@@ -177,10 +186,11 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
       expect(page).not_to have_content "Bobson Smith"
     end
 
-    xspecify "has the solicitor search results cleared when toggling between \"duty\" or \"own\" solicitor", js: true do
+    specify "has the solicitor search results cleared when toggling between \"duty\" or \"own\" solicitor", js: true do
       stub_solicitor_search_for_bob_smith
+      cso_user = create :cso_user
 
-      visit root_path
+      login_with_role "cso", cso_user.uid
       click_link "New Defence Request"
       choose "Own"
       fill_in "q", with: "Bob Smith"
@@ -258,6 +268,17 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           click_link "Show"
 
           expect(page).to_not have_selector ".time-of-arrival"
+        end
+
+        specify "can mark the request as finished" do
+          cso_user = create :cso_user
+          create :defence_request, :accepted
+
+          login_with_role "cso", cso_user.uid
+          click_button "Finish"
+
+          expect(page).to have_content "Defence Request successfully finished"
+
         end
       end
     end

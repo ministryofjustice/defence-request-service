@@ -1,5 +1,6 @@
 <%= link_to t("show"), defence_request_path(def_req) %>
-<%= link_to t("abort"), abort_defence_request_path(def_req) %>
+<%= link_to t("abort"), new_abort_defence_request_path(defence_request_id: def_req.id, transition_to: "abort") %>
 <%= link_to t("edit"), edit_defence_request_path(def_req) %>
+<%= button_to t("finish"), transition_defence_request_path(defence_request_id: def_req.id, transition_to: "finish") %>
 <%= button_to t("resend_details"), resend_details_defence_request_path(def_req), data: { confirm: "Are you sure?" } %>
 <%= button_to t("send_for_processing"), transition_defence_request_path(defence_request_id: def_req.id, transition_to: "queue") %>

@@ -84,12 +84,12 @@ class DefenceRequestPolicy < ApplicationPolicy
     cso && record.draft?
   end
 
-  def abort?
-    cso && record.can_execute_abort?
+  def finish?
+    cso && record.can_execute_finish?
   end
 
-  def reason_aborted?
-    abort?
+  def abort?
+    cso && record.can_execute_abort?
   end
 
   private

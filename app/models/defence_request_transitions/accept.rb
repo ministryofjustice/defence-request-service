@@ -3,10 +3,11 @@ module DefenceRequestTransitions
     def initialize(transition_params)
       @defence_request = transition_params.fetch(:defence_request)
       @requested_transition = transition_params.fetch(:transition_to)
+      @user = transition_params.fetch(:user)
     end
 
     def complete
-      ActiveRecord::Base.transaction { transition_defence_request }
+      set_cco && transition_defence_request
     end
 
     private
@@ -14,7 +15,7 @@ module DefenceRequestTransitions
     attr_reader :defence_request, :requested_transition, :user
 
     def set_cco
-      defence_request.cco = user
+      return true if defence_request.cco = user
     end
 
     def transition_defence_request

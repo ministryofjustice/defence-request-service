@@ -16,6 +16,8 @@ unless ENV["NO_COVERAGE"]
     add_group "Policies", "app/policies"
     add_group "Services", "app/services"
     add_group "Validators", "app/validators"
+    add_group "Forms", "app/forms"
+    add_group "TransitionStrategies", "app/models/defence_request_transitions"
 
     if defined?(CodeClimate)
       formatter SimpleCov::Formatter::MultiFormatter[

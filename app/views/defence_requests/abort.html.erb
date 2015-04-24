@@ -4,8 +4,8 @@
 <%= form_for @defence_request, url: reason_aborted_defence_request_path, method: :patch do |f| %>
   <div class="form-group">
     <fieldset>
-      <%= f.label :reason_aborted, t('reason_aborted') %>
-      <%= f.text_area :reason_aborted, rows: '10', class: 'text-field text-field-wide' %>
+      <%= f.label :transition_info, t("reason_aborted") %>
+      <%= f.text_area :transition_info, rows: '10', class: 'text-field text-field-wide' %>
     </fieldset>
   </div>
   <%= f.submit(t('abort')) %>

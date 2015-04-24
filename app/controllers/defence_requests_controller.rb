@@ -1,6 +1,6 @@
 class DefenceRequestsController < BaseController
-  before_action :find_defence_request, except: [:new, :create, :solicitors_search]
-  before_action :set_policy, except: [:solicitors_search]
+  before_action :find_defence_request, except: [:new, :create]
+  before_action :set_policy
   before_action :new_defence_request_form, only: [:show, :new, :create, :edit, :update, :solicitor_time_of_arrival]
 
   before_action ->(c) { authorize defence_request, "#{c.action_name}?" }
@@ -36,18 +36,6 @@ class DefenceRequestsController < BaseController
         render :edit
       end
     end
-  end
-
-  def solicitors_search
-    query_string = URI.escape(params[:q])
-    search_url = URI.parse "#{Settings.dsds.solicitor_search_url_prefix}/search/?q=#{query_string}"
-    search_json = JSON.parse(HTTParty.post(search_url).body)
-
-    # Below is evil, this is a quick hack to search for solicitors and firms in the same box until we figure out how
-    # we should do it properly, probably with a proper search endpoint on the api using postgres full text search.
-    solicitors = search_json["solicitors"].map { |s| s.tap { |t| t["firm_name"] = t["firm"]["name"]; t.delete "firm"} }
-    firm_solicitors = search_json["firms"].map {|f| f["solicitors"].map { |s| s.tap { |t| t["firm_name"] = f["name"] } } }.flatten
-    @solicitors = (firm_solicitors + solicitors).uniq
   end
 
   def resend_details
