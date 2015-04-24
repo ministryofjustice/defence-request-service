@@ -7,10 +7,7 @@ module DefenceRequestTransitions
     end
 
     def complete
-      ActiveRecord::Base.transaction do
-        set_cco
-        transition_defence_request
-      end
+      set_cco && transition_defence_request
     end
 
     private
@@ -18,7 +15,7 @@ module DefenceRequestTransitions
     attr_reader :defence_request, :requested_transition, :user
 
     def set_cco
-      defence_request.cco_uid = user.uid
+      return true if defence_request.cco_uid = user.uid
     end
 
     def transition_defence_request

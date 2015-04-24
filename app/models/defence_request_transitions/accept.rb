@@ -15,7 +15,7 @@ module DefenceRequestTransitions
     attr_reader :defence_request, :requested_transition, :user
 
     def set_cco
-      return true if defence_request.cco = user
+      return true if defence_request.cco_uid = user.uid
     end
 
     def transition_defence_request
