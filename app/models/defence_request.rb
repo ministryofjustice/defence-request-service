@@ -33,7 +33,7 @@ class DefenceRequest < ActiveRecord::Base
     end
 
     event :accept, success: :send_solicitor_case_details do
-      transitions from: [:acknowledged], to: :accepted, guard: :dscc_number?
+      transitions from: [:acknowledged], to: :accepted, guard: [:dscc_number?, :solicitor_name?, :solicitor_firm?, :phone_number?]
     end
 
     event :abort do

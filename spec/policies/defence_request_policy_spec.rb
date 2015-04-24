@@ -141,7 +141,7 @@ RSpec.describe DefenceRequestPolicy do
         let (:allowed_actions) { [
           :show
         ] }
-        let! (:defreq) { FactoryGirl.create(:defence_request, :acknowledged, cco: other_cco) }
+        let! (:defreq) { FactoryGirl.create(:defence_request, :accepted, cco: other_cco) }
         specify { expect(subject).to permit_actions_and_forbid_all_others actions }
       end
 
