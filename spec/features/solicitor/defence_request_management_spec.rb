@@ -7,10 +7,11 @@ RSpec.feature "Solicitors managing defence requests" do
       accepted_defence_request = create(
         :defence_request,
         :accepted,
-        solicitor_uid: solicitor_user.uid
+        solicitor_uid: solicitor_user.uid,
+        organisation_uid: solicitor_user.organisation_uids.first
       )
 
-      login_with_role "solicitor", solicitor_user.uid
+      login_with_user solicitor_user
       click_link "Show"
 
       expect(page).to have_content accepted_defence_request.solicitor_name
@@ -18,9 +19,11 @@ RSpec.feature "Solicitors managing defence requests" do
 
     specify "can edit the expected arrival time from the show page of the request" do
       solicitor_user = create :solicitor_user
-      create :defence_request, :accepted, solicitor_uid: solicitor_user.uid
+      create :defence_request, :accepted,
+        solicitor_uid: solicitor_user.uid,
+        organisation_uid: solicitor_user.organisation_uids.first
 
-      login_with_role "solicitor", solicitor_user.uid
+      login_with_user solicitor_user
       click_link "Show"
       within ".time-of-arrival" do
         fill_in "defence_request[solicitor_time_of_arrival][day]", with: "01"
@@ -36,9 +39,11 @@ RSpec.feature "Solicitors managing defence requests" do
 
     specify "are shown a message if the time of arrival cannot be updated due to errors" do
       solicitor_user = create :solicitor_user
-      create :defence_request, :accepted, solicitor_uid: solicitor_user.uid
+      create :defence_request, :accepted,
+        solicitor_uid: solicitor_user.uid,
+        organisation_uid: solicitor_user.organisation_uids.first
 
-      login_with_role "solicitor", solicitor_user.uid
+      login_with_user solicitor_user
       click_link "Show"
       within ".time-of-arrival" do
         fill_in "defence_request[solicitor_time_of_arrival][day]", with: "I"
@@ -65,10 +70,13 @@ RSpec.feature "Solicitors managing defence requests" do
   context "with cases they are not assigned to" do
     specify  "can not see the show page" do
       solicitor_user = create :solicitor_user
+      other_solicitor = create(:solicitor_user)
+
       defence_request_assigned_to_other_solicitor = create(
         :defence_request,
         :accepted,
-        solicitor_uid: create(:solicitor_user).uid
+        solicitor_uid: other_solicitor.uid,
+        organisation_uid: other_solicitor.organisation_uids.first
       )
 
       login_with_role "solicitor", solicitor_user.uid

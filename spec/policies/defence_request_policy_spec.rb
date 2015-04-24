@@ -215,7 +215,12 @@ RSpec.describe DefenceRequestPolicy do
     describe "scope" do
       let (:draft_dr) { FactoryGirl.create(:defence_request, :draft, solicitor_uid: user.uid) }
       let (:accepted_dr) { FactoryGirl.create(:defence_request, :accepted) }
-      let (:accepted_and_assigned_dr) { FactoryGirl.create(:defence_request, :accepted, solicitor_uid: user.uid) }
+      let (:accepted_and_assigned_dr) do
+        FactoryGirl.create(:defence_request, :accepted,
+          solicitor_uid: user.uid,
+          organisation_uid: user.organisation_uids.first
+        )
+      end
 
       it "returns DRs that are assigned to the solicitor and have been accepted" do
         expect(Pundit.policy_scope(user, DefenceRequest)).to eq [accepted_and_assigned_dr]
