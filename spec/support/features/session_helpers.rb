@@ -1,12 +1,6 @@
 module SessionHelpers
-  def login_with_role(role, uid)
-    mock_token
-    mock_profile(options: { uid: uid, roles: [role] })
 
-    sign_in_using_dsds_auth
-  end
-
-  def login_with_user(user)
+  def login_with(user)
     mock_token
     mock_profile(
       options: {

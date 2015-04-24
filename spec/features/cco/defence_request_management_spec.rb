@@ -6,7 +6,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
       cco_user = create :cco_user
       accepted_defence_request = create :defence_request, :accepted
 
-      login_with_role "cco", cco_user.uid
+      login_with cco_user
       click_link "Show"
 
       expect(page).to have_content accepted_defence_request.solicitor_name
@@ -16,7 +16,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
       cco_user = create :cco_user
       create :defence_request, :accepted
 
-      login_with_role "cco", cco_user.uid
+      login_with cco_user
       click_link "Show"
 
       expect(page).to_not have_selector ".time-of-arrival"
@@ -29,7 +29,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
         cco_user = create :cco_user
         create :defence_request, :queued, cco_uid: cco_user.uid
 
-        login_with_role "cco", cco_user.uid
+        login_with cco_user
 
         expect(page).not_to have_link "Edit"
       end
@@ -38,7 +38,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
         cco_user = create :cco_user
         create :defence_request, :queued, cco_uid: cco_user.uid
 
-        login_with_role "cco", cco_user.uid
+        login_with cco_user
         click_button "Acknowledge"
 
         expect(page).to have_content "Defence Request successfully acknowledged"
@@ -49,7 +49,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
         cco_user = create :cco_user
         create :defence_request, :queued
 
-        login_with_role "cco", cco_user.uid
+        login_with cco_user
         click_button "Acknowledge"
 
         expect(page).to have_content "Defence Request was not acknowledged"
@@ -59,7 +59,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
         cco_user = create :cco_user
         create :defence_request, :queued
 
-        login_with_role "cco", cco_user.uid
+        login_with cco_user
 
         expect(page).to_not have_button "Accepted"
       end
@@ -70,7 +70,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
         cco_user = create :cco_user
         create :defence_request, :acknowledged, cco_uid: cco_user.uid
 
-        login_with_role "cco", cco_user.uid
+        login_with cco_user
         click_link "Edit"
         fill_in "Full Name", with: "Henry Billy Bob"
         fill_in "Telephone number", with: "00112233445566"
@@ -88,7 +88,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
           cco_uid: cco_user.uid
         )
 
-        login_with_role "cco", cco_user.uid
+        login_with cco_user
         click_link "Edit"
         fill_in "DSCC number", with: "NUMBERWANG"
         click_button "Update Defence Request"
@@ -104,7 +104,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
           cco_uid: cco_user.uid
         )
 
-        login_with_role "cco", cco_user.uid
+        login_with cco_user
         click_link "Edit"
         fill_in "DSCC number", with: "123456"
         click_button "Update and Accept"
@@ -121,7 +121,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
           cco_uid: cco_user.uid
         )
 
-        login_with_role "cco", cco_user.uid
+        login_with cco_user
         click_link "Edit"
         click_button "Update and Accept"
 
@@ -139,7 +139,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
             cco_uid: cco_user.uid
           )
 
-          login_with_role "cco", cco_user.uid
+          login_with cco_user
           click_button "Accepted"
 
           expect(page).to have_content "Defence Request was marked as accepted"
@@ -155,7 +155,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
             cco_uid: cco_user.uid
           )
 
-          login_with_role "cco", cco_user.uid
+          login_with cco_user
           click_button "Accepted"
 
           expect(page).
@@ -173,7 +173,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
             cco_uid: cco_user.uid
           )
 
-          login_with_role "cco", cco_user.uid
+          login_with cco_user
 
           expect(page).to_not have_button "Accepted"
         end
@@ -187,7 +187,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
             cco_uid: cco_user.uid
           )
 
-          login_with_role "cco", cco_user.uid
+          login_with cco_user
           click_link "Edit"
           fill_in "Full Name", with: "Dodgy Dave"
           fill_in "Name of firm", with: ""
@@ -206,7 +206,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
             cco_uid: cco_user.uid
           )
 
-          login_with_role "cco", cco_user.uid
+          login_with cco_user
           click_link "Edit"
           fill_in "Full Name", with: "Dodgy Dave"
           fill_in "Name of firm", with: "Innocent your honour"
@@ -229,7 +229,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
         cco_uid: cco_user.uid
       )
 
-      login_with_role "cco", cco_user.uid
+      login_with cco_user
       click_link "Edit"
       fill_in "defence_request_solicitor_time_of_arrival_day", with: "01"
       fill_in "defence_request_solicitor_time_of_arrival_month", with: "01"

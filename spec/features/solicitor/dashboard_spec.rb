@@ -14,7 +14,7 @@ RSpec.feature "Solicitors viewing their dashboard" do
     )
     not_accepted_defence_request = create :defence_request, offences: "Extortion"
 
-    login_with_user solicitor_user
+    login_with solicitor_user
 
     expect(page).to have_content accepted_defence_request.offences
     expect(page).to_not have_content not_accepted_defence_request.offences
@@ -31,7 +31,7 @@ RSpec.feature "Solicitors viewing their dashboard" do
       )
       acknowledged_defence_request = create :defence_request, :acknowledged
 
-      login_with_user solicitor_user
+      login_with solicitor_user
 
       expect(page).to have_content(accepted_defence_request.detainee_name)
       expect(page).to_not have_content(acknowledged_defence_request.detainee_name)

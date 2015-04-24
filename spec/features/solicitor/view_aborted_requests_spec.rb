@@ -11,7 +11,7 @@ RSpec.feature "Solicitors viewing aborted requests" do
         organisation_uid: solicitor.organisation_uids.first
     )
 
-    login_with_user solicitor
+    login_with solicitor
 
     click_link "Show"
 

@@ -10,7 +10,7 @@ RSpec.feature "Custody Center Operatives viewing their dashboard" do
     acknowledged_defence_request = create :defence_request, :acknowledged
     queued_defence_request = create :defence_request, :queued
 
-    login_with_role "cco", cco_user.uid
+    login_with cco_user
 
     expect(page).to have_content aborted_defence_request.solicitor_name
     expect(page).to have_content acknowledged_defence_request.solicitor_name
@@ -22,7 +22,7 @@ RSpec.feature "Custody Center Operatives viewing their dashboard" do
     acknowledged_defence_request = create :defence_request, :acknowledged
     queued_defence_request = create :defence_request, :queued
 
-    login_with_role "cco", cco_user.uid
+    login_with cco_user
 
     acknowledged_defence_request.update!(
       solicitor_name: "Queued Req. Updated Solicitor Name"
@@ -41,7 +41,7 @@ RSpec.feature "Custody Center Operatives viewing their dashboard" do
     cco_user = create :cco_user
     create :defence_request, :accepted
 
-    login_with_role "cco", cco_user.uid
+    login_with cco_user
     click_button "Resend details"
 
     refresh_dashboard
@@ -55,7 +55,7 @@ RSpec.feature "Custody Center Operatives viewing their dashboard" do
     cco_user = create :cco_user
     create :defence_request, :with_solicitor, :accepted
 
-    login_with_role "cco", cco_user.uid
+    login_with cco_user
     click_button "Resend details"
     page.execute_script "window.confirm"
     wait_for_dashboard_refresh

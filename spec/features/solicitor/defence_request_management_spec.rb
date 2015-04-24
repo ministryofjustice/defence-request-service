@@ -11,7 +11,7 @@ RSpec.feature "Solicitors managing defence requests" do
         organisation_uid: solicitor_user.organisation_uids.first
       )
 
-      login_with_user solicitor_user
+      login_with solicitor_user
       click_link "Show"
 
       expect(page).to have_content accepted_defence_request.solicitor_name
@@ -23,7 +23,7 @@ RSpec.feature "Solicitors managing defence requests" do
         solicitor_uid: solicitor_user.uid,
         organisation_uid: solicitor_user.organisation_uids.first
 
-      login_with_user solicitor_user
+      login_with solicitor_user
       click_link "Show"
       within ".time-of-arrival" do
         fill_in "defence_request[solicitor_time_of_arrival][day]", with: "01"
@@ -43,7 +43,7 @@ RSpec.feature "Solicitors managing defence requests" do
         solicitor_uid: solicitor_user.uid,
         organisation_uid: solicitor_user.organisation_uids.first
 
-      login_with_user solicitor_user
+      login_with solicitor_user
       click_link "Show"
       within ".time-of-arrival" do
         fill_in "defence_request[solicitor_time_of_arrival][day]", with: "I"
@@ -79,7 +79,7 @@ RSpec.feature "Solicitors managing defence requests" do
         organisation_uid: other_solicitor.organisation_uids.first
       )
 
-      login_with_role "solicitor", solicitor_user.uid
+      login_with solicitor_user
       visit defence_request_path defence_request_assigned_to_other_solicitor
 
       expect(page).

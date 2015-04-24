@@ -7,7 +7,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
         create :defence_request, :duty_solicitor
         cso_user = create :cso_user
 
-        login_with_role "cso", cso_user.uid
+        login_with cso_user
         click_link "Edit"
 
         expect(page).to have_css "#defence_request_solicitor_name[disabled]"
@@ -19,7 +19,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
         specify "can fill in form manually with all relevant details for own solicitor", js: true do
           cso_user = create :cso_user
 
-          login_with_role "cso", cso_user.uid
+          login_with cso_user
           click_link "New Defence Request"
           choose "Own"
           fill_in_defence_request_form
@@ -32,7 +32,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
         specify "can not see a DSCC field on the defence request form" do
           cso_user = create :cso_user
 
-          login_with_role "cso", cso_user.uid
+          login_with cso_user
           click_link "New Defence Request"
 
           expect(page).not_to have_field "DSCC Number"
@@ -41,7 +41,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
         specify "can not see the solicitor time of arrival field on the defence request form" do
           cso_user = create :cso_user
 
-          login_with_role "cso", cso_user.uid
+          login_with cso_user
           click_link "New Defence Request"
 
           expect(page).not_to have_field "Expected Solicitor Time of Arrival"
@@ -50,7 +50,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
         specify "are shown some errors if the request cannot be created due to invalid fields" do
           cso_user = create :cso_user
 
-          login_with_role "cso", cso_user.uid
+          login_with cso_user
           click_link "New Defence Request"
           within ".detainee" do
             fill_in "Full Name", with: ""
@@ -65,7 +65,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
         specify "appropriate_adult toggles appropriate_adult_reason", js: true do
           cso_user = create :cso_user
 
-          login_with_role "cso", cso_user.uid
+          login_with cso_user
           click_link "New Defence Request"
           choose "Own"
           within ".detainee" do
@@ -202,7 +202,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           cso_user = create :cso_user
           create :defence_request
 
-          login_with_role "cso", cso_user.uid
+          login_with cso_user
           click_link "Edit"
           fill_in_defence_request_form edit: true
           click_button "Update Defence Request"
@@ -214,7 +214,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           cso_user = create :cso_user
           create :defence_request
 
-          login_with_role "cso", cso_user.uid
+          login_with cso_user
           click_link "Edit"
           within ".detainee" do
             fill_in "Age", with: "MOOOSE ON THE LOOOSE!?!"
@@ -231,7 +231,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           cso_user = create :cso_user
           create :defence_request, :queued
 
-          login_with_role "cso", cso_user.uid
+          login_with cso_user
           abort_defence_request
 
           expect(page).to have_content "Defence Request successfully aborted"
@@ -241,7 +241,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           cso_user = create :cso_user
           create :defence_request, :queued
 
-          login_with_role "cso", cso_user.uid
+          login_with cso_user
           abort_defence_request reason: ""
 
           expect(page).to have_content "Reason aborted: can't be blank"
@@ -254,7 +254,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           cso_user = create :cso_user
           create :defence_request, :accepted
 
-          login_with_role "cso", cso_user.uid
+          login_with cso_user
           click_link "Show"
 
           expect(page).to_not have_selector ".time-of-arrival"
@@ -283,7 +283,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
         :with_time_of_detention_authorised,
       )
 
-      login_with_role "cso", cso_user.uid
+      login_with cso_user
       click_link "Show"
 
       expect(page).to have_content defence_request.dscc_number
