@@ -171,12 +171,9 @@ RSpec.describe DefenceRequest, type: :model do
     let(:defence_requests) { DefenceRequest.related_to_solicitor(solicitor) }
 
     context "when associated requests exist" do
-      before do
+      it "returns requests" do
         firm_uid = solicitor.organisation_uids.first
         @defence_request = create(:defence_request, organisation_uid: firm_uid)
-      end
-
-      it "returns requests" do
         expect(defence_requests).to eq( [@defence_request] )
       end
     end
