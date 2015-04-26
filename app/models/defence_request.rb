@@ -1,6 +1,4 @@
 class DefenceRequest < ActiveRecord::Base
-  DSCC_SUFFIX = 'Z'
-
   include ActiveModel::Transitions
 
   attr_accessor :cco, :solicitor
@@ -93,35 +91,19 @@ class DefenceRequest < ActiveRecord::Base
     super(format_phone_number(new_value))
   end
 
-  # Generates a new dscc number and saves the model in one go, should not be called
-  # with a dirty model, or changes will be blown lost.
   def generate_dscc_number!
-    return false unless persisted? && valid?
+    if result = DsccNumberGenerator.new(self).generate!
 
-    self.class.connection.execute dscc_number_generation_sql
-    reload
+      # Use raw_write_attribute here so the attributes are not marked as dirty
+      # as these values are the same as in the database
+      raw_write_attribute :dscc_number, result[:dscc_number]
+      raw_write_attribute :updated_at, Time.zone.parse(result[:updated_at])
+    else
+      false
+    end
   end
 
   private
-
-  def dscc_number_generation_sql
-    prefix = created_at.strftime('%y%m')
-
-    <<-SQL.strip_heredoc
-      BEGIN;
-      LOCK TABLE defence_requests IN ACCESS EXCLUSIVE MODE;
-
-      WITH next_dscc_number AS (SELECT cast(cast(substr(coalesce(max(dscc_number), '000000000'), 5,5) as integer) + 1 as text) as number
-                                FROM defence_requests
-                                WHERE dscc_number ~ '^#{prefix}')
-
-      UPDATE defence_requests SET dscc_number = (SELECT '#{prefix}' || lpad(number, 5, '0') || '#{DSCC_SUFFIX}'
-                                                 FROM next_dscc_number)
-      WHERE id = #{id};
-
-      COMMIT;
-    SQL
-  end
 
   def format_phone_number(phone_number)
     phone_number.to_s.gsub(/\D/, '') if phone_number

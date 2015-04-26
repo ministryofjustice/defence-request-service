@@ -9,7 +9,7 @@ FactoryGirl.define do
   generate_dscc_number = -> do
     n = FactoryGirl.sequence_by_name(:dscc_number_helper).next
     prefix = (created_at || Time.now).strftime("%y%m")
-    return "%s%05d%s" % [prefix, n, DefenceRequest::DSCC_SUFFIX]
+    return "%s%05d%s" % [prefix, n, DsccNumberGenerator::SUFFIX]
   end
 
   factory :defence_request, aliases: [:own_solicitor] do
@@ -49,7 +49,6 @@ FactoryGirl.define do
 
   trait :acknowledged do
     state 'acknowledged'
-    dscc_number &generate_dscc_number
     association :cco, factory: :cco_user
   end
 
