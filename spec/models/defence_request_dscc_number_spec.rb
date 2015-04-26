@@ -42,25 +42,25 @@ RSpec.describe DefenceRequest, "#generate_dscc_number!" do
   end
 
   context "No Defence Requests in same month" do
-    it "sets dscc_number to 'yymm00001Z'" do
+    it "sets dscc_number to 'yymm00000D'" do
       subject.generate_dscc_number!
-      expect(subject.dscc_number).to eq("#{dscc_prefix_from_timestamp(created_at_timestamp)}00001Z")
+      expect(subject.dscc_number).to eq("#{dscc_prefix_from_timestamp(created_at_timestamp)}00000D")
     end
   end
 
   context "Defence Requests in the same month" do
     it "sets dscc_number to the number after the last dscc_number" do
-      create :defence_request, :acknowledged, dscc_number: "#{dscc_prefix_from_timestamp(created_at_timestamp)}12344Z"
+      create :defence_request, :acknowledged, dscc_number: "#{dscc_prefix_from_timestamp(created_at_timestamp)}12344D"
       subject.generate_dscc_number!
-      expect(subject.dscc_number).to eq("#{dscc_prefix_from_timestamp(created_at_timestamp)}12345Z")
+      expect(subject.dscc_number).to eq("#{dscc_prefix_from_timestamp(created_at_timestamp)}12345D")
     end
   end
 
-  context "Defence Request in same month with max number (yymm99999Z)" do
-    it "sets dscc_number to the first number of following month" do
-      create :defence_request, :acknowledged, dscc_number: "#{dscc_prefix_from_timestamp(created_at_timestamp)}99999Z"
+  context "Defence Request in same month with max number (yymm99999D)" do
+    it "sets dscc_number with the next available suffix character" do
+      create :defence_request, :acknowledged, dscc_number: "#{dscc_prefix_from_timestamp(created_at_timestamp)}99999D"
       subject.generate_dscc_number!
-      expect(subject.dscc_number).to eq("#{dscc_prefix_from_timestamp(created_at_timestamp + 1.month)}00000Z")
+      expect(subject.dscc_number).to eq("#{dscc_prefix_from_timestamp(created_at_timestamp)}00000E")
     end
   end
 end

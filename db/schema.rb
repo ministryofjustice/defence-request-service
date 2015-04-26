@@ -11,12 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150421123400) do
+ActiveRecord::Schema.define(version: 20150426223300) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "btree_gist"
-  enable_extension "pg_trgm"
 
   create_table "audits", force: :cascade do |t|
     t.integer  "auditable_id"
@@ -59,7 +57,7 @@ ActiveRecord::Schema.define(version: 20150421123400) do
     t.string   "state"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "dscc_number"
+    t.string   "dscc_number"
     t.datetime "interview_start_time"
     t.integer  "solicitor_id"
     t.integer  "detainee_age"
@@ -86,7 +84,7 @@ ActiveRecord::Schema.define(version: 20150421123400) do
     t.text     "interpreter_type"
   end
 
-  add_index "defence_requests", ["dscc_number"], name: "dscc_number_index", using: :gist
+  add_index "defence_requests", ["dscc_number"], name: "index_defence_requests_on_dscc_number", unique: true, using: :btree
   add_index "defence_requests", ["solicitor_id"], name: "index_defence_requests_on_solicitor_id", using: :btree
 
   create_table "users", force: :cascade do |t|

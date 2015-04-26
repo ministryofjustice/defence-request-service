@@ -68,7 +68,7 @@ class DefenceRequest < ActiveRecord::Base
 
   validates :dscc_number, uniqueness: true, allow_nil: true
 
-  audited
+  # audited
 
   SCHEMES = [ "No Scheme",
               "Brighton Scheme 1",

@@ -9,7 +9,7 @@ FactoryGirl.define do
   generate_dscc_number = -> do
     n = FactoryGirl.sequence_by_name(:dscc_number_helper).next
     prefix = (created_at || Time.now).strftime("%y%m")
-    return "%s%05d%s" % [prefix, n, DsccNumberGenerator::SUFFIX]
+    return "%s%05d%s" % [prefix, n, DsccNumberGenerator::DEFAULT_SUFFIX]
   end
 
   factory :defence_request, aliases: [:own_solicitor] do
