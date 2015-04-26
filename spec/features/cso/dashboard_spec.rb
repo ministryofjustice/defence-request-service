@@ -5,7 +5,7 @@ RSpec.feature "Custody Suite Officers viewing their dashboard" do
   include DashboardHelper
 
   specify "can see all active defence requests in chronological order" do
-    cso_user = create :cco_user
+    cso_user = create :cso_user
     first_acknowledged_defence_request = create :defence_request, :acknowledged
     second_acknowledged_defence_request = create(
       :defence_request,
@@ -13,7 +13,7 @@ RSpec.feature "Custody Suite Officers viewing their dashboard" do
       created_at: first_acknowledged_defence_request.created_at + 1.hour
     )
 
-    login_with_role "cso", cso_user.uid
+    login_with cso_user
 
     expect(
       element_order_correct?(
@@ -24,10 +24,10 @@ RSpec.feature "Custody Suite Officers viewing their dashboard" do
   end
 
   specify "can send a draft case for processing" do
-    cso_user = create :cco_user
+    cso_user = create :cso_user
     create :defence_request, :draft
 
-    login_with_role "cso", cso_user.uid
+    login_with cso_user
     click_button "Send for Processing"
 
     expect(page).
@@ -36,10 +36,10 @@ RSpec.feature "Custody Suite Officers viewing their dashboard" do
 
   specify "are shown an error message if a case cannot be sent for processing" do
     stub_defence_request_with method: :queue, value: false
-    cso_user = create :cco_user
+    cso_user = create :cso_user
     create :defence_request, :draft
 
-    login_with_role "cso", cso_user.uid
+    login_with cso_user
     click_button "Send for Processing"
 
     expect(page).to have_content "Defence Request was not sent for processing"
@@ -59,30 +59,30 @@ RSpec.feature "Custody Suite Officers viewing their dashboard" do
   end
 
   specify "can abort queued defence request", js: true do
-    cso_user = create :cco_user
+    cso_user = create :cso_user
     create :defence_request, :queued
 
-    login_with_role "cso", cso_user.uid
+    login_with cso_user
     abort_defence_request
 
     expect(page).to have_content "Defence Request successfully aborted"
   end
 
   specify "can abort acknowledged defence request", js: true do
-    cso_user = create :cco_user
+    cso_user = create :cso_user
     create :defence_request, :acknowledged
 
-    login_with_role "cso", cso_user.uid
+    login_with cso_user
     abort_defence_request
 
     expect(page).to have_content "Defence Request successfully aborted"
   end
 
   specify "can abort accepted defence request", js: true do
-    cso_user = create :cco_user
+    cso_user = create :cso_user
     create :defence_request, :accepted
 
-    login_with_role "cso", cso_user.uid
+    login_with cso_user
     abort_defence_request
 
     expect(page).to have_content "Defence Request successfully aborted"

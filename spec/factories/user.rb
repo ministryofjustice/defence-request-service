@@ -50,8 +50,9 @@ FactoryGirl.define do
         name: "Example Solicitor User",
         email: "solicitor_user@example.com",
         roles: ["solicitor"],
-        organisation_uids: []
+        organisation_uids: [SecureRandom.uuid]
       )
     }
   end
+
 end

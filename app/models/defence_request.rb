@@ -10,8 +10,8 @@ class DefenceRequest < ActiveRecord::Base
   scope :not_draft, -> { where.not(state: "draft") }
   scope :ordered_by_created_at, -> { order(created_at: :asc) }
 
-  def self.has_solicitor(solicitor)
-    where(solicitor_uid: solicitor.uid)
+  def self.related_to_solicitor(solicitor)
+    where(organisation_uid: solicitor.organisation_uids.first)
   end
 
   state_machine auto_scopes: true do

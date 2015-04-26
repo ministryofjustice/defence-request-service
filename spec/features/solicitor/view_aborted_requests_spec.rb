@@ -7,10 +7,11 @@ RSpec.feature "Solicitors viewing aborted requests" do
       create(
         :defence_request,
         :aborted,
-        solicitor_uid: solicitor.uid
+        solicitor_uid: solicitor.uid,
+        organisation_uid: solicitor.organisation_uids.first
     )
 
-    login_with_role "solicitor", solicitor.uid
+    login_with solicitor
 
     click_link "Show"
 
