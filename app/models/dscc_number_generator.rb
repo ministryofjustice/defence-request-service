@@ -3,7 +3,7 @@ class DsccNumberGenerator
   #
   # Generates a DSCC number for a DefenceRequest in 1 query
   #
-  # Need to run within a table lock to elimate any race conditions if more
+  # Run within a table lock to elimate any race conditions when more
   # than 1 DSCC number is generated simultaneously
   #
   # Current DSCC number is yymmnnnnnc where
