@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 20150426223300) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
   create_table "audits", force: :cascade do |t|
     t.integer  "auditable_id"
@@ -59,9 +60,7 @@ ActiveRecord::Schema.define(version: 20150426223300) do
     t.datetime "updated_at"
     t.string   "dscc_number"
     t.datetime "interview_start_time"
-    t.integer  "solicitor_id"
     t.integer  "detainee_age"
-    t.integer  "cco_id"
     t.datetime "solicitor_time_of_arrival"
     t.text     "reason_aborted"
     t.text     "appropriate_adult_reason"
@@ -76,34 +75,20 @@ ActiveRecord::Schema.define(version: 20150426223300) do
     t.string   "investigating_officer_shoulder_number"
     t.string   "investigating_officer_contact_number"
     t.text     "circumstances_of_arrest"
+    t.uuid     "solicitor_uid"
+    t.uuid     "cco_uid"
     t.datetime "time_of_arrest"
     t.datetime "time_of_detention_authorised"
     t.boolean  "fit_for_interview",                     default: true,  null: false
     t.text     "unfit_for_interview_reason"
     t.boolean  "interpreter_required",                  default: false, null: false
     t.text     "interpreter_type"
+    t.uuid     "organisation_uid"
   end
 
+  add_index "defence_requests", ["cco_uid"], name: "index_defence_requests_on_cco_uid", using: :btree
   add_index "defence_requests", ["dscc_number"], name: "index_defence_requests_on_dscc_number", unique: true, using: :btree
-  add_index "defence_requests", ["solicitor_id"], name: "index_defence_requests_on_solicitor_id", using: :btree
-
-  create_table "users", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.inet     "current_sign_in_ip"
-    t.inet     "last_sign_in_ip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "role"
-  end
-
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "defence_requests", ["organisation_uid"], name: "index_defence_requests_on_organisation_uid", using: :btree
+  add_index "defence_requests", ["solicitor_uid"], name: "index_defence_requests_on_solicitor_uid", using: :btree
 
 end
