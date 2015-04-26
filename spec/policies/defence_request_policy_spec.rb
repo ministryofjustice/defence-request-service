@@ -8,10 +8,8 @@ RSpec.describe DefenceRequestPolicy do
   context "Custody Suite Officers" do
     let(:user)          { FactoryGirl.create(:cso_user) }
     let(:group_actions) { [
-      :index,
       :new,
       :create,
-      :refresh_dashboard,
       :solicitors_search
     ] }
 
@@ -80,8 +78,7 @@ RSpec.describe DefenceRequestPolicy do
   context "Call Center Operatives" do
     let(:user) { FactoryGirl.create(:cco_user) }
     let(:group_actions) {
-      [:index,
-       :refresh_dashboard]
+      []
     }
 
     context "with a draft DR" do
@@ -97,10 +94,22 @@ RSpec.describe DefenceRequestPolicy do
           :edit,
           :dscc_number_edit,
           :update,
+          :edit_solicitor_details
+        ] }
+        let! (:defreq) { FactoryGirl.create(:defence_request, :acknowledged, cco_uid: user.uid) }
+        specify { expect(subject).to permit_actions_and_forbid_all_others actions }
+      end
+
+      context "with an acknowledged DR with a dscc number" do
+        let (:allowed_actions) { [
+          :show,
+          :edit,
+          :dscc_number_edit,
+          :update,
           :accept,
           :edit_solicitor_details
         ] }
-        let! (:defreq) { FactoryGirl.create(:defence_request, :acknowledged, :with_dscc_number, cco: user) }
+        let! (:defreq) { FactoryGirl.create(:defence_request, :acknowledged, :with_dscc_number, cco_uid: user.uid) }
         specify { expect(subject).to permit_actions_and_forbid_all_others actions }
       end
 
@@ -113,7 +122,7 @@ RSpec.describe DefenceRequestPolicy do
           :solicitor_time_of_arrival,
           :edit_solicitor_details
         ] }
-        let (:defreq) { FactoryGirl.create(:defence_request, :accepted, cco: user) }
+        let (:defreq) { FactoryGirl.create(:defence_request, :accepted, cco_uid: user.uid) }
         specify { expect(subject).to permit_actions_and_forbid_all_others actions }
       end
 
@@ -141,7 +150,7 @@ RSpec.describe DefenceRequestPolicy do
         let (:allowed_actions) { [
           :show
         ] }
-        let! (:defreq) { FactoryGirl.create(:defence_request, :accepted, cco: other_cco) }
+        let! (:defreq) { FactoryGirl.create(:defence_request, :acknowledged, cco: other_cco) }
         specify { expect(subject).to permit_actions_and_forbid_all_others actions }
       end
 
@@ -167,8 +176,7 @@ RSpec.describe DefenceRequestPolicy do
   context "Solicitors" do
     let (:defreq) { FactoryGirl.create(:defence_request) }
     let(:user) { FactoryGirl.create(:solicitor_user)}
-    let(:group_actions) { [:index,
-                           :refresh_dashboard] }
+    let(:group_actions) { [] }
 
     context "DR they are assigned to" do
       context "with an accepted DR" do
@@ -177,13 +185,13 @@ RSpec.describe DefenceRequestPolicy do
           :solicitor_time_of_arrival,
           :solicitor_time_of_arrival_from_show
         ] }
-        let (:defreq) { FactoryGirl.create(:defence_request, :accepted, solicitor: user) }
+        let (:defreq) { FactoryGirl.create(:defence_request, :accepted, solicitor_uid: user.uid) }
         specify { expect(subject).to permit_actions_and_forbid_all_others actions }
       end
 
       context "with an aborted DR" do
         let (:allowed_actions) { [:show ] }
-        let (:defreq) { FactoryGirl.create(:defence_request, :aborted, solicitor: user) }
+        let (:defreq) { FactoryGirl.create(:defence_request, :aborted, solicitor_uid: user.uid) }
         specify { expect(subject).to permit_actions_and_forbid_all_others actions }
       end
     end
@@ -193,7 +201,7 @@ RSpec.describe DefenceRequestPolicy do
 
       context "with an accepted DR" do
         let (:allowed_actions) { [] }
-        let (:defreq) { FactoryGirl.create(:defence_request, :accepted, solicitor: other_solicitor) }
+        let (:defreq) { FactoryGirl.create(:defence_request, :accepted, solicitor_uid: other_solicitor.uid) }
         specify { expect(subject).to permit_actions_and_forbid_all_others actions }
       end
 
@@ -205,14 +213,18 @@ RSpec.describe DefenceRequestPolicy do
     end
 
     describe "scope" do
-      let (:draft_dr) { FactoryGirl.create(:defence_request, :draft, solicitor: user) }
+      let (:draft_dr) { FactoryGirl.create(:defence_request, :draft, solicitor_uid: user.uid) }
       let (:accepted_dr) { FactoryGirl.create(:defence_request, :accepted) }
-      let (:accepted_and_assigned_dr) { FactoryGirl.create(:defence_request, :accepted, solicitor: user) }
+      let (:accepted_and_assigned_dr) do
+        FactoryGirl.create(:defence_request, :accepted,
+          solicitor_uid: user.uid,
+          organisation_uid: user.organisation_uids.first
+        )
+      end
 
       it "returns DRs that are assigned to the solicitor and have been accepted" do
         expect(Pundit.policy_scope(user, DefenceRequest)).to eq [accepted_and_assigned_dr]
       end
     end
   end
-
 end
