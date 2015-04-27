@@ -6,11 +6,9 @@ RSpec.describe DefenceRequestTransitions::Accept, "#complete" do
   it "transitions the defence request to accept state" do
     defence_request = spy(:defence_request)
     user = spy(:user, uid: SecureRandom.uuid)
-    transition_to = "accept"
 
     DefenceRequestTransitions::Accept.new(
       defence_request: defence_request,
-      transition_to: transition_to,
       user: user,
     ).complete
 
@@ -22,13 +20,11 @@ RSpec.describe DefenceRequestTransitions::Accept, "#complete" do
   it "returns false if the defence_request could not be transitioned" do
     defence_request = spy(:defence_request)
     user = spy(:user, uid: SecureRandom.uuid)
-    transition_to = "accept"
 
     allow(defence_request).to receive(:can_accept?).and_return(false)
 
     transition = DefenceRequestTransitions::Accept.new(
       defence_request: defence_request,
-      transition_to: transition_to,
       user: user,
     ).complete
 
