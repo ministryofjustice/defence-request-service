@@ -16,7 +16,7 @@ class DefenceRequestForm
   end
 
   def self.model_name
-    ActiveModel::Name.new(self, nil, 'DefenceRequest')
+    ActiveModel::Name.new(self, nil, "DefenceRequest")
   end
 
   def initialize(defence_request)

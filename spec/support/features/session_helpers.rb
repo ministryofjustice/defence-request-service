@@ -20,6 +20,6 @@ module SessionHelpers
   end
 
   def sign_out
-    click_link('Sign out')
+    click_link("Sign out")
   end
 end

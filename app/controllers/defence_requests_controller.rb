@@ -45,8 +45,8 @@ class DefenceRequestsController < BaseController
 
     # Below is evil, this is a quick hack to search for solicitors and firms in the same box until we figure out how
     # we should do it properly, probably with a proper search endpoint on the api using postgres full text search.
-    solicitors = search_json['solicitors'].map { |s| s.tap { |t| t['firm_name'] = t['firm']['name']; t.delete 'firm'} }
-    firm_solicitors = search_json['firms'].map {|f| f['solicitors'].map { |s| s.tap { |t| t['firm_name'] = f['name'] } } }.flatten
+    solicitors = search_json["solicitors"].map { |s| s.tap { |t| t["firm_name"] = t["firm"]["name"]; t.delete "firm"} }
+    firm_solicitors = search_json["firms"].map {|f| f["solicitors"].map { |s| s.tap { |t| t["firm_name"] = f["name"] } } }.flatten
     @solicitors = (firm_solicitors + solicitors).uniq
   end
 
@@ -110,7 +110,7 @@ class DefenceRequestsController < BaseController
   end
 
   def update_and_accept?
-    params[:commit] == 'Update and Accept'
+    params[:commit] == "Update and Accept"
   end
 
   def solicitor_details_missing?

@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe DefenceRequestForm do
 
@@ -30,9 +30,9 @@ RSpec.describe DefenceRequestForm do
 
     context "with invalid params" do
       context "invalid attribute on the dr" do
-        let(:invalid_params) { params_for_dr.merge({ solicitor_name: '' }) }
+        let(:invalid_params) { params_for_dr.merge({ solicitor_name: "" }) }
 
-        it 'adds any errors from the dr, to itself' do
+        it "adds any errors from the dr, to itself" do
           expect(subject.submit invalid_params).to eql false
           expect(subject.errors.count).to eql 1
           expect(subject.errors[:solicitor_name]).to eql ["can't be blank"]
@@ -43,14 +43,14 @@ RSpec.describe DefenceRequestForm do
         context "that is has presence validated on the dr" do
           let(:invalid_params) { params_for_dr.merge({ time_of_arrival: invalid_time_of_arrival }) }
           context "blank" do
-            let(:invalid_time_of_arrival) { { year: '',
-                                              month: '',
-                                              day: '',
-                                              hour: '',
-                                              min: '' } }
+            let(:invalid_time_of_arrival) { { year: "",
+                                              month: "",
+                                              day: "",
+                                              hour: "",
+                                              min: "" } }
 
 
-            it 'adds errors from the field object to itself' do
+            it "adds errors from the field object to itself" do
               expect(subject.submit invalid_params).to eql false
               expect(subject.errors.count).to eql 1
               expect(subject.errors[:time_of_arrival]).to eql ["can't be blank"]
@@ -58,11 +58,11 @@ RSpec.describe DefenceRequestForm do
           end
 
           context "not blank" do
-            let(:invalid_time_of_arrival) { { year: 'I',
-                                              month: 'AM',
-                                              day: 'TOTALLY',
-                                              hour: 'BROKEN',
-                                              min: '!' } }
+            let(:invalid_time_of_arrival) { { year: "I",
+                                              month: "AM",
+                                              day: "TOTALLY",
+                                              hour: "BROKEN",
+                                              min: "!" } }
             it "adds errors from the field object to itself" do
               expect(subject.submit invalid_params).to eql false
               expect(subject.errors.count).to eql 1
@@ -80,27 +80,27 @@ RSpec.describe DefenceRequestForm do
           let(:invalid_params) { params_for_dr.merge({ interview_start_time: invalid_interview_start_time }) }
 
           context "blank" do
-            let(:invalid_interview_start_time) { { year: '',
-                                                   month: '',
-                                                   day: '',
-                                                   hour: '',
-                                                   min: '' } }
+            let(:invalid_interview_start_time) { { year: "",
+                                                   month: "",
+                                                   day: "",
+                                                   hour: "",
+                                                   min: "" } }
 
 
-            it 'it does not add any errors to itself' do
+            it "it does not add any errors to itself" do
               expect(subject.submit invalid_params).to eql true
               expect(subject.errors.count).to eql 0
             end
           end
 
           context "not blank" do
-            let(:invalid_interview_start_time) { { year: 'I',
-                                                   month: 'AM',
-                                                   day: 'REAAAALLY',
-                                                   hour: 'BROKEN',
-                                                   min: '!' } }
+            let(:invalid_interview_start_time) { { year: "I",
+                                                   month: "AM",
+                                                   day: "REAAAALLY",
+                                                   hour: "BROKEN",
+                                                   min: "!" } }
 
-            it 'adds errors from the field object to itself' do
+            it "adds errors from the field object to itself" do
               expect(subject.submit invalid_params).to eql false
               expect(subject.errors.count).to eql 1
               expect(subject.errors[:interview_start_time]).to eql [["Invalid Date or Time",

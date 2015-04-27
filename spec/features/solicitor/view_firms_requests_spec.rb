@@ -10,7 +10,7 @@ RSpec.feature "Solicitors viewing their firm's requests" do
         :aborted,
         solicitor_uid: nil,
         organisation_uid: solicitor.organisation_uids.first,
-        offences: 'Arson'
+        offences: "Arson"
     )
     other_firms_defence_request =
       create(
@@ -18,7 +18,7 @@ RSpec.feature "Solicitors viewing their firm's requests" do
         :aborted,
         solicitor_uid: nil,
         organisation_uid: another_solicitor.organisation_uids.first,
-        offences: 'Extortion'
+        offences: "Extortion"
     )
 
     login_with solicitor

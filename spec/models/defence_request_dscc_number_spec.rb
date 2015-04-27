@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe DefenceRequest, "#generate_dscc_number!" do
 
