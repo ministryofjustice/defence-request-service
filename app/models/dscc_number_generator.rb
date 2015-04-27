@@ -30,7 +30,7 @@ class DsccNumberGenerator
   end
 
   def generate!
-    validate_defence_request!    
+    validate_defence_request!
 
     # TODO: this method can be written in a better way. Look at this again earlier than 1030 at night.
     result = nil
@@ -53,7 +53,7 @@ class DsccNumberGenerator
   def validate_defence_request!
     raise ArgumentError.new("DefenceRequest cannot be nil") unless defence_request
     raise ArgumentError.new("DefenceRequest does not have a positive non-zero id") unless defence_request.try(:id).to_i > 0
-    raise ArgumentError.new("DefenceRequest does not have valid created_at timestamp") unless defence_request.try(:created_at).kind_of?(Time)
+    raise ArgumentError.new("DefenceRequest does not have valid created_at timestamp") unless defence_request.try(:created_at).is_a?(Time)
   end
 
   def try_generate(suffix)

@@ -3,10 +3,10 @@ require 'rails_helper'
 RSpec.describe DefenceRequest, "#generate_dscc_number!" do
 
   let!(:created_at_timestamp) { Time.now - 2.minutes }
-  subject { 
-    create :defence_request, :acknowledged, 
+  subject {
+    create :defence_request, :acknowledged,
       created_at: created_at_timestamp,
-      updated_at: created_at_timestamp 
+      updated_at: created_at_timestamp
   }
 
   def dscc_prefix_from_timestamp(timestamp)
@@ -45,11 +45,11 @@ RSpec.describe DefenceRequest, "#generate_dscc_number!" do
   it "does not interfere with other dirty attributes of the DefenceRequest" do
     subject.detainee_name = "Bob Seaker"
     expect { subject.generate_dscc_number! }.not_to change(subject, :changes)
-  end 
+  end
 
   context "with an existing dscc_number" do
     subject { create :defence_request, :acknowledged, :with_dscc_number, created_at: created_at_timestamp }
-  
+
     it "does not generate a new number" do
       expect { subject.generate_dscc_number! }.not_to change(subject, :dscc_number)
     end
