@@ -80,42 +80,31 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           stub_solicitor_search_for_bob_smith
           cso_user = create :cso_user
 
-          login_with_role "cso", cso_user.uid
+          login_with cso_user
           click_link "New Defence Request"
           choose "Own"
           fill_in "q", with: "Bob Smith"
-
           find(".solicitor-search", match: :first).click
-          expect(page).to have_content "Bobson Smith"
-          expect(page).to have_content "Bobby Bob Smithson"
-
           click_link "Bobson Smith"
-          expect(page).to_not have_content "Bobby Bob Smithson"
-          within ".solicitor-details" do
-            expect(page).to have_field "Full Name", with: "Bobson Smith"
-            expect(page).to have_field "Name of firm", with: "Kreiger LLC"
-            expect(page).to have_field "Telephone number", with: "248.412.8095"
-          end
+
+          expect(page).to have_field "Full Name", with: "Bobson Smith"
+          expect(page).to have_field "Name of firm", with: "Kreiger LLC"
+          expect(page).to have_field "Telephone number", with: "248.412.8095"
         end
 
         specify "a solicitor with a apostrophe renders correctly", js: true do
           stub_solicitor_search_for_dave_oreilly
           cso_user = create :cso_user
 
-          login_with_role "cso", cso_user.uid
+          login_with cso_user
           click_link "New Defence Request"
           choose "Own"
           fill_in "q", with: "Dave O'Reilly"
 
           find(".solicitor-search", match: :first).click
-
-          expect(page).to have_content "Dave O'Reilly"
-
           click_link "Dave O'Reilly"
 
-          within ".solicitor-details" do
-            expect(page).to have_field "Full Name", with: "Dave O'Reilly"
-          end
+          expect(page).to have_field "Full Name", with: "Dave O'Reilly"
         end
 
         specify "can perform multiple own solicitor searches", js: true do
@@ -123,13 +112,11 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           stub_solicitor_search_for_barry_jones
           cso_user = create :cso_user
 
-          login_with_role "cso", cso_user.uid
+          login_with cso_user
           click_link "New Defence Request"
           choose "Own"
           fill_in "q", with: "Bob Smith"
           find(".solicitor-search", match: :first).click
-
-          expect(page).to have_content "Bobson Smith"
 
           fill_in "q", with: "Barry Jones"
           click_button "Search"
@@ -143,7 +130,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
         stub_solicitor_search_for_mystery_man
         cso_user = create :cso_user
 
-        login_with_role "cso", cso_user.uid
+        login_with cso_user
         click_link "New Defence Request"
         choose "Own"
         fill_in "q", with: "Mystery Man"
@@ -156,16 +143,13 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
         stub_solicitor_search_for_bob_smith
         cso_user = create :cso_user
 
-        login_with_role "cso", cso_user.uid
+        login_with cso_user
         click_link "New Defence Request"
         choose "Own"
         fill_in "q", with: "Bob Smith"
         find(".solicitor-search", match: :first).click
-        expect(page).to have_content "Bobson Smith"
+        click_link("Close")
 
-        within(".solicitor-results-list") do
-          click_link("Close")
-        end
         expect(page).not_to have_content "Bobson Smith"
       end
     end
@@ -174,15 +158,13 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
       stub_solicitor_search_for_bob_smith
       cso_user = create :cso_user
 
-      login_with_role "cso", cso_user.uid
+      login_with cso_user
       click_link "New Defence Request"
       choose "Own"
       fill_in "q", with: "Bob Smith"
-
       find(".solicitor-search", match: :first).click
-      expect(page).to have_content "Bobson Smith"
-
       page.execute_script("$(\"body\").trigger($.Event(\"keydown\", { keyCode: 27 }))")
+
       expect(page).not_to have_content "Bobson Smith"
     end
 
@@ -190,17 +172,15 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
       stub_solicitor_search_for_bob_smith
       cso_user = create :cso_user
 
-      login_with_role "cso", cso_user.uid
+      login_with cso_user
       click_link "New Defence Request"
       choose "Own"
       fill_in "q", with: "Bob Smith"
       find(".solicitor-search", match: :first).click
       click_link "Bobson Smith"
       choose "Duty"
-
-      expect(page).to_not have_content "Bobson Smith"
-
       choose "Own"
+
       expect(page).to have_field "q", with: ""
     end
   end
@@ -274,11 +254,10 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           cso_user = create :cso_user
           create :defence_request, :accepted
 
-          login_with_role "cso", cso_user.uid
+          login_with cso_user
           click_button "Finish"
 
           expect(page).to have_content "Defence Request successfully finished"
-
         end
       end
     end

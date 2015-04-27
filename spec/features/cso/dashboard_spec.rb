@@ -40,8 +40,8 @@ RSpec.feature "Custody Suite Officers viewing their dashboard" do
       method: :complete,
       value: false
     )
-    cso_user = create :cco_user
-    create :defence_request, :draft
+    cso_user = create :cso_user
+    create :defence_request
 
     login_with cso_user
     click_button "Send for Processing"
