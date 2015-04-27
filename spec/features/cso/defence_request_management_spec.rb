@@ -75,123 +75,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           expect(page).
             to_not have_css "#defence_request_appropriate_adult_reason[disabled]"
         end
-
-        xspecify "can choose own solicitor and pick a solicitor using a from search box from the form", js: true do
-          stub_solicitor_search_for_bob_smith
-          visit root_path
-          click_link "New Defence Request"
-          choose "Own"
-          fill_in "q", with: "Bob Smith"
-
-          find(".solicitor-search", match: :first).click
-          expect(page).to have_content "Bobson Smith"
-          expect(page).to have_content "Bobby Bob Smithson"
-
-          click_link "Bobson Smith"
-          expect(page).to_not have_content "Bobby Bob Smithson"
-          within ".solicitor-details" do
-            expect(page).to have_field "Full Name", with: "Bobson Smith"
-            expect(page).to have_field "Name of firm", with: "Kreiger LLC"
-            expect(page).to have_field "Telephone number", with: "248.412.8095"
-          end
-        end
-
-        xspecify "a solicitor with a apostrophe renders correctly", js: true do
-          stub_solicitor_search_for_dave_oreilly
-
-          visit root_path
-          click_link "New Defence Request"
-          choose "Own"
-          fill_in "q", with: "Dave O'Reilly"
-
-          find(".solicitor-search", match: :first).click
-
-          expect(page).to have_content "Dave O'Reilly"
-
-          click_link "Dave O'Reilly"
-
-          within ".solicitor-details" do
-            expect(page).to have_field "Full Name", with: "Dave O'Reilly"
-          end
-        end
-
-        xspecify "can perform multiple own solicitor searches", js: true do
-          stub_solicitor_search_for_bob_smith
-          stub_solicitor_search_for_barry_jones
-
-          visit root_path
-          click_link "New Defence Request"
-          choose "Own"
-          fill_in "q", with: "Bob Smith"
-          find(".solicitor-search", match: :first).click
-
-          expect(page).to have_content "Bobson Smith"
-
-          fill_in "q", with: "Barry Jones"
-          click_button "Search"
-
-          find_link("Barry Jones").visible?
-          expect(page).to_not have_content "Bobson Smith"
-        end
       end
-
-      xspecify "are shown a message when no results are found for their search", js: true do
-        stub_solicitor_search_for_mystery_man
-
-        visit root_path
-        click_link "New Defence Request"
-        choose "Own"
-        fill_in "q", with: "Mystery Man"
-        find(".solicitor-search", match: :first).click
-
-        expect(page).to have_content "No results found"
-      end
-
-      xspecify "can clear the solicitor search results with a close button", js: true do
-        stub_solicitor_search_for_bob_smith
-        visit root_path
-        click_link "New Defence Request"
-        choose "Own"
-        fill_in "q", with: "Bob Smith"
-        find(".solicitor-search", match: :first).click
-        expect(page).to have_content "Bobson Smith"
-
-        within(".solicitor-results-list") do
-          click_link("Close")
-        end
-        expect(page).not_to have_content "Bobson Smith"
-      end
-    end
-
-    xspecify "can clear the solicitor search results by pressing the ESC key", js: true do
-      stub_solicitor_search_for_bob_smith
-      visit root_path
-      click_link "New Defence Request"
-      choose "Own"
-      fill_in "q", with: "Bob Smith"
-
-      find(".solicitor-search", match: :first).click
-      expect(page).to have_content "Bobson Smith"
-
-      page.execute_script("$(\"body\").trigger($.Event(\"keydown\", { keyCode: 27 }))")
-      expect(page).not_to have_content "Bobson Smith"
-    end
-
-    xspecify "has the solicitor search results cleared when toggling between \"duty\" or \"own\" solicitor", js: true do
-      stub_solicitor_search_for_bob_smith
-
-      visit root_path
-      click_link "New Defence Request"
-      choose "Own"
-      fill_in "q", with: "Bob Smith"
-      find(".solicitor-search", match: :first).click
-      click_link "Bobson Smith"
-      choose "Duty"
-
-      expect(page).to_not have_content "Bobson Smith"
-
-      choose "Own"
-      expect(page).to have_field "q", with: ""
     end
   end
 
@@ -258,6 +142,18 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           click_link "Show"
 
           expect(page).to_not have_selector ".time-of-arrival"
+        end
+
+        specify "can mark the request as finished" do
+          cso_user = create :cso_user
+          create :defence_request, :accepted
+
+          login_with cso_user
+          click_link "Finish"
+          fill_in "Comments", with: "Splendid."
+          click_button "Finish"
+
+          expect(page).to have_content "Defence Request successfully finished"
         end
       end
     end

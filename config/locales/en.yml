@@ -25,7 +25,6 @@ en:
   change_password: "Change Password"
   circumstances_of_arrest: Circumstances of Arrest
   city: City
-  close: Close
   comments: "Comments"
   confirm: "Confirm"
   contact_us: "contact us"
@@ -56,8 +55,8 @@ en:
   error: error
   expected_time_of_arrival: "Solicitor Time of Arrival"
   expired: "Session expired"
-  feedback: "Feedback"
   female: "Female"
+  finish: Finish
   fit_for_interview: Fit for Interview?
   full_name: "Full Name"
   gender: "Gender"
@@ -109,6 +108,7 @@ en:
   time_of_arrest: Time of Arrest
   time_of_arrival: "Time of Arrival"
   time_of_detention_authorised: Time of Detention Authorised
+  transition_info: Reason aborted
   unavailable: "Unavailable"
   unfit_for_interview_reason: Reason unfit for interview
   update: "Update"
@@ -119,22 +119,22 @@ en:
   year: "Year"
 
   models:
-    aborted: "%{model} successfully aborted"
+    abort: "%{model} successfully aborted"
     accept: "%{model} was marked as accepted"
-    acknowledged: "%{model} successfully acknowledged"
-    close: "%{model} successfully closed"
+    acknowledge: "%{model} successfully acknowledged"
+    finish: "%{model} successfully finished"
     create: "%{model} successfully created"
     destroy: "%{model} successfully deleted"
     details_sent: "Details successfully sent"
-    sent_for_processing: "%{model} successfully sent for processing"
+    queue: "%{model} successfully sent for processing"
     dscc_number_required: "A Valid DSCC number is required to update and accept a %{model}"
     failed_abort: "%{model} was not aborted"
     failed_accept: "%{model} was not marked as accepted"
     failed_acknowledge: "%{model} was not acknowledged"
-    failed_close: "%{model} was not closed"
+    failed_finish: "%{model} was not finished"
     failed_destroy: "%{model} was not deleted"
     failed_details_sent: "Details were not sent"
-    failed_send_for_processing: "%{model} was not sent for processing"
+    failed_queue: "%{model} was not sent for processing"
     solicitor_details_required: "Valid solicitor details are required to update and accept a %{model}"
     update: "%{model} successfully updated"
     updated_and_accepted: "%{model} successfully updated and marked as accepted"
@@ -182,10 +182,14 @@ en:
               invalid_min: "Minute is invalid"
   activemodel:
     models:
+      abort_defence_request_form: "Abort Defence Request"
       defence_request_form: "Defence Request"
       defence_request: "Defence Request"
     errors:
       models:
+        abort_defence_request_form:
+          attributes:
+            transition_info: Reason aborted
         defence_request:
           attributes:
             tie_of_arrival:

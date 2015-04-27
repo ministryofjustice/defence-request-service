@@ -1,7 +1,6 @@
 module DefenceRequestHelpers
-  def stub_defence_request_with(method:, value:)
-    allow_any_instance_of(DefenceRequest).
-      to receive(method).and_return(value)
+  def stub_defence_request_transition_strategy(strategy:, method:, value:)
+    allow_any_instance_of(strategy).to receive(method).and_return(value)
   end
 
   def expect_email_with_case_details_to_have_been_sent_to_assigned_solicitor
@@ -84,29 +83,5 @@ module DefenceRequestHelpers
 
     expect(audit.auditable_type).to eq "DefenceRequest"
     expect(audit.action).to eq "create"
-  end
-
-  def stub_solicitor_search_for_dave_oreilly
-    body = File.open "spec/fixtures/dave_oreilly_solicitor_search.json"
-    stub_request(:post, "http://solicitor-search.herokuapp.com/search/?q=Dave%20O'Reilly").
-      to_return(body: body, status: 200)
-  end
-
-  def stub_solicitor_search_for_bob_smith
-    body = File.open "spec/fixtures/bob_smith_solicitor_search.json"
-    stub_request(:post, "http://solicitor-search.herokuapp.com/search/?q=Bob%20Smith").
-      to_return(body: body, status: 200)
-  end
-
-  def stub_solicitor_search_for_barry_jones
-    body = File.open "spec/fixtures/barry_jones_solicitor_search.json"
-    stub_request(:post, "http://solicitor-search.herokuapp.com/search/?q=Barry%20Jones").
-      to_return(body: body, status: 200)
-  end
-
-  def stub_solicitor_search_for_mystery_man
-    body = {solicitors: [], firms: []}.to_json
-    stub_request(:post, "http://solicitor-search.herokuapp.com/search/?q=Mystery%20Man").
-      to_return(body: body, status: 200)
   end
 end

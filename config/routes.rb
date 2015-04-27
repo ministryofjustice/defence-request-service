@@ -4,25 +4,21 @@ Rails.application.routes.draw do
   resource :dashboard, only: [:show]
   get "/refresh_dashboard", to: "dashboards#refresh_dashboard"
 
-  get "/auth/:provider/callback", to: "sessions#create"
-
   resources :defence_requests, except: [:index] do
-    collection do
-      post "solicitors_search"
-    end
     member do
-      get "close"
-      patch "close" => "defence_requests#feedback", as: "close_feedback"
-      put "queue"
-      put "acknowledge"
-      get "abort"
-      patch "abort" => "defence_requests#reason_aborted", as: "reason_aborted"
-      patch "accept" => "defence_requests#accept"
       post "resend_details"
-      patch "solicitor_time_of_arrival" => "defence_requests#solicitor_time_of_arrival", as: "solicitor_time_of_arrival"
+      patch "solicitor_time_of_arrival",
+        to: "defence_requests#solicitor_time_of_arrival",
+        as: "solicitor_time_of_arrival"
     end
   end
 
+  resource :abort_defence_request, only: [:new, :create]
+  resource :finish_defence_request, only: [:new, :create]
+  resource :solicitor_search, only: [:create]
+  resource :transition_defence_request, only: [:new, :create]
+
+  get "/auth/:provider/callback", to: "sessions#create"
   get "/status" => "status#index"
   get "/help", controller: :static, action: :help, as: :help
   get "/maintenance", controller: :static, action: :maintenance, as: :maintenance

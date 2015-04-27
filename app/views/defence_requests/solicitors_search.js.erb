@@ -1,16 +1,18 @@
-$('.solicitor-results-list').html("<a href='#' class='button close-search btn-solicitor-results-close' role='button' >Close</a>\
-                                    <table> \
-                                     <thead>\
-                                     <tr>\
-                                     <th scope='col'><%= t('full_name') %></th>\
-                                     <th scope='col'><%= t('name_of_firm') %></th>\
-                                     <th class='numeric' scope='col'><%= t('telephone_number') %></th>\
-                                     <th class='numeric' scope='col'><%= t('email') %></th>\
-                                     </tr>\
-                                     </thead>\
-                                     <tbody class='results-body'>  \
-                                     </tbody>\
-                                     </table>");
+$('.solicitor-results-list').html(
+  "<a href='#' class='button close-search btn-solicitor-results-close' role='button' >Close</a>\
+  <table> \
+  <thead>\
+  <tr>\
+  <th scope='col'><%= t('full_name') %></th>\
+  <th scope='col'><%= t('name_of_firm') %></th>\
+  <th class='numeric' scope='col'><%= t('telephone_number') %></th>\
+  <th class='numeric' scope='col'><%= t('email') %></th>\
+  </tr>\
+  </thead>\
+  <tbody class='results-body'>  \
+  </tbody>\
+  </table>"
+);
 
 $('.btn-solicitor-results-close').bind('click', function() {
   $('.solicitor-results-list').html('');
@@ -21,12 +23,14 @@ $('.btn-solicitor-results-close').bind('click', function() {
 <% end %>
 
 <% @solicitors.each do |solicitor| %>
-  $('.results-body').append("<tr>\
-                                     <td><a href='#' class='list-group-item solicitor-result' id=<%= solicitor_id solicitor %>><%= solicitor['name'] %></a></td>\
-                                     <td><%= solicitor['firm_name'] %></td>\
-                                     <td><%= solicitor['mobile'] %></td>\
-                                     <td><%= solicitor['email'] %></td>\
-                                     </tr>");
+  $('.results-body').append(
+      "<tr>\
+      <td><a href='#' class='list-group-item solicitor-result' id=<%= solicitor_id solicitor %>><%= solicitor['name'] %></a></td>\
+      <td><%= solicitor['firm_name'] %></td>\
+      <td><%= solicitor['mobile'] %></td>\
+      <td><%= solicitor['email'] %></td>\
+      </tr>"
+  );
 
   $('#<%= solicitor_id solicitor %>').click(function(e) {
     e.preventDefault();

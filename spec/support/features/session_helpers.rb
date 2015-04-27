@@ -1,5 +1,4 @@
 module SessionHelpers
-
   def login_with(user)
     mock_token
     mock_profile(

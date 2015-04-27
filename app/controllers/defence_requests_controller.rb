@@ -1,6 +1,6 @@
 class DefenceRequestsController < BaseController
-  before_action :find_defence_request, except: [:new, :create, :solicitors_search]
-  before_action :set_policy, except: [:solicitors_search]
+  before_action :find_defence_request, except: [:new, :create]
+  before_action :set_policy
   before_action :new_defence_request_form, only: [:show, :new, :create, :edit, :update, :solicitor_time_of_arrival]
 
   before_action ->(c) { authorize defence_request, "#{c.action_name}?" }
@@ -38,47 +38,6 @@ class DefenceRequestsController < BaseController
     end
   end
 
-  def solicitors_search
-    query_string = URI.escape(params[:q])
-    search_url = URI.parse "#{Settings.dsds.solicitor_search_url_prefix}/search/?q=#{query_string}"
-    search_json = JSON.parse(HTTParty.post(search_url).body)
-
-    # Below is evil, this is a quick hack to search for solicitors and firms in the same box until we figure out how
-    # we should do it properly, probably with a proper search endpoint on the api using postgres full text search.
-    solicitors = search_json["solicitors"].map { |s| s.tap { |t| t["firm_name"] = t["firm"]["name"]; t.delete "firm"} }
-    firm_solicitors = search_json["firms"].map {|f| f["solicitors"].map { |s| s.tap { |t| t["firm_name"] = f["name"] } } }.flatten
-    @solicitors = (firm_solicitors + solicitors).uniq
-  end
-
-  def acknowledge
-    if @defence_request.acknowledge && associate_cco && @defence_request.save && @defence_request.generate_dscc_number!
-      redirect_to(dashboard_path, notice: flash_message(:acknowledged, DefenceRequest))
-    else
-      redirect_to(dashboard_path, alert: flash_message(:failed_acknowledge, DefenceRequest))
-    end
-  end
-
-  def abort
-  end
-
-  def reason_aborted
-    @defence_request.reason_aborted = defence_request_params[:reason_aborted]
-
-    if @defence_request.abort && @defence_request.save
-      redirect_to dashboard_path, notice: flash_message(:aborted, DefenceRequest)
-    else
-      render :abort
-    end
-  end
-
-  def accept
-    if @defence_request.accept && @defence_request.save
-      redirect_to(dashboard_path, notice: flash_message(:accept, DefenceRequest))
-    else
-      redirect_to(dashboard_path, alert: flash_message(:failed_accept, DefenceRequest))
-    end
-  end
-
   def resend_details
     if @defence_request.resend_details
       redirect_to(dashboard_path, notice: flash_message(:details_sent, DefenceRequest))
@@ -95,30 +54,10 @@ class DefenceRequestsController < BaseController
     end
   end
 
-  def queue
-    if @defence_request.queue && @defence_request.save
-      redirect_to(dashboard_path, notice: flash_message(:sent_for_processing, DefenceRequest))
-    else
-      redirect_to(dashboard_path, alert: flash_message(:failed_send_for_processing, DefenceRequest))
-    end
-  end
-
   private
-
-  def associate_cco
-    @defence_request.cco = current_user
-  end
 
   def update_and_accept?
     params[:commit] == "Update and Accept"
-  end
-
-  def solicitor_details_missing?
-    !@defence_request.solicitor && (defence_request_params[:solicitor_name].blank? || defence_request_params[:solicitor_firm].blank?)
-  end
-
-  def dscc_number_missing?
-    defence_request_params[:dscc_number].blank?
   end
 
   def find_defence_request

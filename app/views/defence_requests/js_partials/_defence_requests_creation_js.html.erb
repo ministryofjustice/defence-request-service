@@ -16,7 +16,7 @@
     var submit_search_request = function () {
       $.ajax({
         type:'POST',
-        url:'<%= solicitors_search_defence_requests_path %>',
+        url:'<%= solicitor_search_path %>',
         cache:false,
         data: { q: $('.search-text-field').val() },
       });
