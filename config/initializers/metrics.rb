@@ -29,8 +29,8 @@ ActiveSupport::Notifications.subscribe "process_action.action_controller" do |na
   METRICS.increment "controller.method.#{payload[:method].downcase}"
   METRICS.increment "controller.#{payload[:controller].downcase}.#{payload[:action].downcase}"
 
-  METRICS.timing 'controller.view.total_render_time', payload[:view_runtime], 1
-  METRICS.timing 'controller.db.total_query_time', payload[:db_runtime], 1
+  METRICS.timing "controller.view.total_render_time", payload[:view_runtime], 1
+  METRICS.timing "controller.db.total_query_time", payload[:db_runtime], 1
 
 end
 
@@ -57,19 +57,19 @@ ActiveSupport::Notifications.subscribe "sql.active_record" do |name, start, fini
   case payload[:sql]
     when /^SELECT/
       payload[:sql] =~ SELECT_DELETE
-      METRICS.increment('sql.select')
+      METRICS.increment("sql.select")
       METRICS.timing("sql.#{$1}.select.query_time", (finish - start) * 1000, 1)
     when /^DELETE/
       payload[:sql] =~ SELECT_DELETE
-      METRICS.increment('sql.delete')
+      METRICS.increment("sql.delete")
       METRICS.timing("sql.#{$1}.delete.query_time", (finish - start) * 1000, 1)
     when /^INSERT/
       payload[:sql] =~ INSERT
-      METRICS.increment('sql.insert')
+      METRICS.increment("sql.insert")
       METRICS.timing("sql.#{$1}.insert.query_time", (finish - start) * 1000, 1)
     when /^UPDATE/
       payload[:sql] =~ UPDATE
-      METRICS.increment('sql.update')
+      METRICS.increment("sql.update")
       METRICS.timing("sql.#{$1}.update.query_time", (finish - start) * 1000, 1)
   end
 end
