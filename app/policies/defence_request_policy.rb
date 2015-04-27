@@ -61,11 +61,11 @@ class DefenceRequestPolicy < ApplicationPolicy
   end
 
   def accept?
-    cco && record.can_execute_accept?
+    user_is_the_assigned_cco && record.can_execute_accept?
   end
 
   def resend_details?
-    (cco || cso) && record.accepted?
+    (user_is_the_assigned_cco || cso) && record.accepted?
   end
 
   def edit_solicitor_details?
@@ -73,7 +73,7 @@ class DefenceRequestPolicy < ApplicationPolicy
   end
 
   def solicitor_time_of_arrival?
-    (user_is_the_assigned_solicitor && !record.aborted?) || (record.accepted? && (cco || cso))
+    (user_is_the_assigned_solicitor && !record.aborted?) || (record.accepted? && (user_is_the_assigned_cco || cso))
   end
 
   def solicitor_time_of_arrival_from_show?

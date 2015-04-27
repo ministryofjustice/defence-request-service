@@ -80,33 +80,17 @@ RSpec.feature "Call Center Operatives managing defence requests" do
         expect(page).to have_content "00112233445566"
       end
 
-      specify "can add/edit the DSCC number on the request" do
-        cco_user = create :cco_user
-        create(
-          :defence_request,
-          :acknowledged,
-          cco_uid: cco_user.uid
-        )
-
-        login_with cco_user
-        click_link "Edit"
-        fill_in "DSCC number", with: "NUMBERWANG"
-        click_button "Update Defence Request"
-
-        expect(page).to have_content "Defence Request successfully updated"
-      end
-
-      specify "can mark the request as accepted its edit page while adding a dscc number" do
+      specify "can transition the request to accepted from its edit page" do
         cco_user = create :cco_user
         acknowledged_defence_request = create(
           :defence_request,
           :acknowledged,
+          :with_dscc_number,
           cco_uid: cco_user.uid
         )
 
         login_with cco_user
         click_link "Edit"
-        fill_in "DSCC number", with: "123456"
         click_button "Update and Accept"
 
         expect(page).
@@ -191,26 +175,6 @@ RSpec.feature "Call Center Operatives managing defence requests" do
           click_link "Edit"
           fill_in "Full Name", with: "Dodgy Dave"
           fill_in "Name of firm", with: ""
-          click_button "Update and Accept"
-
-          expect(page).
-            to have_content "Defence Request was not updated or marked as accepted"
-        end
-
-        specify "can only mark the request as accepted from the edit page with a dscc number" do
-          cco_user = create :cco_user
-          create(
-            :defence_request,
-            :duty_solicitor,
-            :acknowledged,
-            cco_uid: cco_user.uid
-          )
-
-          login_with cco_user
-          click_link "Edit"
-          fill_in "Full Name", with: "Dodgy Dave"
-          fill_in "Name of firm", with: "Innocent your honour"
-          fill_in "DSCC number", with: ""
           click_button "Update and Accept"
 
           expect(page).

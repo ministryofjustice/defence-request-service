@@ -31,7 +31,7 @@ class DefenceRequest < ActiveRecord::Base
     end
 
     event :accept, success: :send_solicitor_case_details do
-      transitions from: [:acknowledged], to: :accepted, guard: :dscc_number?
+      transitions from: [:acknowledged], to: :accepted, guard: [:dscc_number?, :solicitor_name?, :solicitor_firm?, :phone_number?]
     end
 
     event :abort do
@@ -66,6 +66,8 @@ class DefenceRequest < ActiveRecord::Base
 
   validates :interpreter_type, presence: true, if: :interpreter_required
 
+  validates :dscc_number, uniqueness: true, allow_nil: true
+
   audited
 
   SCHEMES = [ "No Scheme",
@@ -87,6 +89,18 @@ class DefenceRequest < ActiveRecord::Base
 
   def phone_number=(new_value)
     super(format_phone_number(new_value))
+  end
+
+  def generate_dscc_number!
+    if result = DsccNumberGenerator.new(self).generate!
+
+      # Use raw_write_attribute here so the attributes are not marked as dirty
+      # as these values are the same as in the database
+      raw_write_attribute :dscc_number, result[:dscc_number]
+      raw_write_attribute :updated_at, Time.zone.parse(result[:updated_at])
+    else
+      false
+    end
   end
 
   private

@@ -2,6 +2,16 @@ FactoryGirl.define do
   now = Time.new(2001,1,1,1,1)
   twenty_one_years_ago = Time.current - 21.years
 
+  sequence(:dscc_number_helper) do |n|
+    n
+  end
+
+  generate_dscc_number = -> do
+    n = FactoryGirl.sequence_by_name(:dscc_number_helper).next
+    prefix = (created_at || Time.now).strftime("%y%m")
+    return "%s%05d%s" % [prefix, n, DsccNumberGenerator::DEFAULT_SUFFIX]
+  end
+
   factory :defence_request, aliases: [:own_solicitor] do
     solicitor_type 'own'
     sequence(:solicitor_name) { |n| "solicitor_name-#{n}" }
@@ -46,24 +56,24 @@ FactoryGirl.define do
     association :solicitor, factory: :solicitor_user
   end
 
+  trait :with_dscc_number do
+    dscc_number &generate_dscc_number
+  end
+
   trait :accepted do
     state 'accepted'
-    dscc_number '123456'
+    dscc_number &generate_dscc_number
     association :solicitor, factory: :solicitor_user
   end
 
   trait :aborted do
-    dscc_number '123456'
+    dscc_number &generate_dscc_number
     reason_aborted 'This has been closed for a reason.'
     state 'aborted'
   end
 
   trait :finished do
     state 'finished'
-  end
-
-  trait :with_dscc_number do
-    dscc_number '123456'
   end
 
   trait :appropriate_adult do

@@ -51,7 +51,7 @@ class DefenceRequestsController < BaseController
   end
 
   def acknowledge
-    if @defence_request.acknowledge && associate_cco && @defence_request.save
+    if @defence_request.acknowledge && associate_cco && @defence_request.save && @defence_request.generate_dscc_number!
       redirect_to(dashboard_path, notice: flash_message(:acknowledged, DefenceRequest))
     else
       redirect_to(dashboard_path, alert: flash_message(:failed_acknowledge, DefenceRequest))
