@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root "dashboards#show"
 
   resource :dashboard, only: [:show]
+  get "/dashboards/closed", to: "dashboards#closed", as: "dashboard_closed"
   get "/refresh_dashboard", to: "dashboards#refresh_dashboard"
 
   get "/auth/:provider/callback", to: "sessions#create"

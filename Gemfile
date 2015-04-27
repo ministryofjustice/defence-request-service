@@ -41,6 +41,7 @@ group :development, :test do
   gem "byebug"
   gem "factory_girl_rails"
   gem "pry-rails"
+  gem "pry-remote"
   gem "quiet_assets", "~> 1.1"
   gem "rspec-rails", "~> 3.2.0"
   gem "rubocop", "~> 0.30"

@@ -1,0 +1,30 @@
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag "dashboard_poller" unless Settings.dsds.dashboard_refresh_disabled %>
+<% end %>
+
+<%= flash_messages %>
+
+<h1><%= "#{t(@dashboard.user_role)}  #{t('dashboard')}" %></h1>
+<h2><%= params[:action] %></h2>
+
+<% if policy(:defence_request).create? %>
+  <div class="new_defence_request">
+    <%= link_to t("new_defence_request"), new_defence_request_path, role: "button", class: "button" %>
+  </div>
+<% end %>
+
+<div class="tabs">
+  <div class="active">
+    <%= link_to t("active"), dashboard_path %>
+  </div>
+  <div class="closed">
+    <%= link_to t("closed"), dashboard_closed_path %>
+  </div>
+</div>
+
+<table class="dashboard">
+  <%= render "defence_requests/defence_requests_table_head" %>
+  <tbody>
+  <%= render "defence_requests/defence_requests_table_body", requests: @dashboard.defence_requests %>
+  </tbody>
+</table>

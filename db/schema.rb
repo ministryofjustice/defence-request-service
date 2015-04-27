@@ -91,4 +91,15 @@ ActiveRecord::Schema.define(version: 20150426223300) do
   add_index "defence_requests", ["organisation_uid"], name: "index_defence_requests_on_organisation_uid", using: :btree
   add_index "defence_requests", ["solicitor_uid"], name: "index_defence_requests_on_solicitor_uid", using: :btree
 
+  create_table "roles", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "roles_users", force: :cascade do |t|
+    t.integer "role_id"
+    t.integer "user_id"
+  end
+
 end

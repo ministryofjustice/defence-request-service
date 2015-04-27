@@ -106,7 +106,7 @@ class DefenceRequestsController < BaseController
   private
 
   def associate_cco
-    @defence_request.cco = current_user
+    @defence_request.cco_uid = current_user.uid
   end
 
   def update_and_accept?

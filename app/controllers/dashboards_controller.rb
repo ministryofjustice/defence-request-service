@@ -5,6 +5,10 @@ class DashboardsController < BaseController
     @dashboard = dashboard
   end
 
+  def closed
+    @dashboard = dashboard(:finished)
+  end
+
   def refresh_dashboard
     @defence_requests = defence_requests_scoped_by_policy
 
@@ -13,10 +17,11 @@ class DashboardsController < BaseController
 
   private
 
-  def dashboard
+  def dashboard(*additional_scopes)
     Dashboard.new(
       current_user,
-      defence_requests_scoped_by_policy
+      defence_requests_scoped_by_policy,
+      additional_scopes
     )
   end
 

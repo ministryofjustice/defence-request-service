@@ -202,6 +202,9 @@ GEM
       slop (~> 3.4)
     pry-rails (0.3.3)
       pry (>= 0.9.10)
+    pry-remote (0.1.8)
+      pry (~> 0.9)
+      slop (~> 3.0)
     pundit (0.3.0)
       activesupport (>= 3.0.0)
     quiet_assets (1.1.0)
@@ -364,6 +367,7 @@ DEPENDENCIES
   pg
   poltergeist
   pry-rails
+  pry-remote
   pundit (~> 0.3.0)
   quiet_assets (~> 1.1)
   rack-timeout
