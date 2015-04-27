@@ -22,7 +22,7 @@ RSpec.describe DefenceRequestTransitions::Queue, "#complete" do
     user = spy(:user)
     transition_to = "queue"
 
-    allow(defence_request).to receive(:queue).and_raise(Transitions::InvalidTransition)
+    allow(defence_request).to receive(:can_queue?).and_return(false)
 
     transition = DefenceRequestTransitions::Queue.new(
       defence_request: defence_request,

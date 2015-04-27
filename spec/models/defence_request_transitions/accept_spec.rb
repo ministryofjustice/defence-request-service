@@ -1,4 +1,5 @@
 require_relative "../../../app/models/defence_request_transitions/accept"
+require "securerandom"
 require "transitions"
 
 RSpec.describe DefenceRequestTransitions::Accept, "#complete" do
@@ -23,7 +24,7 @@ RSpec.describe DefenceRequestTransitions::Accept, "#complete" do
     user = spy(:user, uid: SecureRandom.uuid)
     transition_to = "accept"
 
-    allow(defence_request).to receive(:accept).and_raise(Transitions::InvalidTransition)
+    allow(defence_request).to receive(:can_accept?).and_return(false)
 
     transition = DefenceRequestTransitions::Accept.new(
       defence_request: defence_request,

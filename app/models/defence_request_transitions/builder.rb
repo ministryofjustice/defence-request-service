@@ -1,6 +1,7 @@
 module DefenceRequestTransitions
   class Builder
     def initialize(transition_params)
+      @requested_transition = transition_params.delete(:transition_to)
       @transition_params = transition_params
     end
 
@@ -10,7 +11,7 @@ module DefenceRequestTransitions
 
     private
 
-    attr_reader :transition_params
+    attr_reader :transition_params, :requested_transition
 
     def build_transition_strategy
       strategy.new(transition_params)
@@ -18,10 +19,6 @@ module DefenceRequestTransitions
 
     def strategy
       "DefenceRequestTransitions::#{requested_transition.classify}".constantize
-    end
-
-    def requested_transition
-      transition_params.fetch(:transition_to)
     end
   end
 end

@@ -1,4 +1,5 @@
 require_relative "../../../app/models/defence_request_transitions/acknowledge"
+require "securerandom"
 require "transitions"
 
 RSpec.describe DefenceRequestTransitions::Acknowledge, "#complete" do
@@ -23,8 +24,7 @@ RSpec.describe DefenceRequestTransitions::Acknowledge, "#complete" do
     user = spy(:user, uid: SecureRandom.uuid)
     transition_to = "acknowledge"
 
-    allow(defence_request).to receive(:acknowledge).
-      and_raise(Transitions::InvalidTransition)
+    allow(defence_request).to receive(:can_acknowledge?).and_return(false)
 
     transition = DefenceRequestTransitions::Acknowledge.new(
       defence_request: defence_request,

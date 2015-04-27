@@ -25,7 +25,7 @@ RSpec.describe DefenceRequestTransitions::Abort, "#complete" do
     transition_to = "abort"
     transition_info = "transition information"
 
-    allow(defence_request).to receive(:abort).and_raise(Transitions::InvalidTransition)
+    allow(defence_request).to receive(:can_abort?).and_return(false)
 
     transition = DefenceRequestTransitions::Abort.new(
       defence_request: defence_request,
