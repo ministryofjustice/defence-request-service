@@ -7,7 +7,9 @@ Rails.application.routes.draw do
   resources :defence_requests, except: [:index] do
     member do
       post "resend_details"
-      patch "solicitor_time_of_arrival" => "defence_requests#solicitor_time_of_arrival", as: "solicitor_time_of_arrival"
+      patch "solicitor_time_of_arrival",
+        to: "defence_requests#solicitor_time_of_arrival",
+        as: "solicitor_time_of_arrival"
     end
   end
 
