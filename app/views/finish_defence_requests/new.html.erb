@@ -1,13 +1,12 @@
-<%= render 'shared/error_and_flash', object: @finish_defence_request_form %>
+<%= render "shared/error_and_flash", object: @finish_defence_request_form %>
 
 <h1>Finish Defence Request</h1>
 
 <%= form_for @finish_defence_request_form, url: finish_defence_request_path do |form| %>
   <div class="form-group">
     <fieldset>
-      <%= hidden_field_tag :transition_to, "finish" %>
       <%= hidden_field_tag :defence_request_id, @finish_defence_request_form.defence_request_id %>
-      <%= form.label :transition_info, t("feedback") %>
+      <%= form.label :transition_info, t("comments") %>
       <%= form.text_area :transition_info, rows: "10", class: "text-field text-field-wide" %>
     </fieldset>
   </div>

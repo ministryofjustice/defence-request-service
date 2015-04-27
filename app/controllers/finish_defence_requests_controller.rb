@@ -15,7 +15,7 @@ class FinishDefenceRequestsController < BaseController
     )
 
     if @finish_defence_request_form.submit
-      redirect_to dashboard_path, notice: "All good"
+      redirect_to dashboard_path, notice: flash_message(:finish, DefenceRequest)
     else
       render :new
     end
@@ -28,7 +28,7 @@ class FinishDefenceRequestsController < BaseController
   end
 
   def requested_transition
-    params.fetch(:transition_to)
+    "finish"
   end
 
   def defence_request

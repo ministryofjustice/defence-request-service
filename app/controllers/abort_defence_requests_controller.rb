@@ -28,7 +28,7 @@ class AbortDefenceRequestsController < BaseController
   end
 
   def requested_transition
-    params.fetch(:transition_to)
+    "abort"
   end
 
   def defence_request
