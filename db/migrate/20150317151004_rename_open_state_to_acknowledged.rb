@@ -1,6 +1,6 @@
 class RenameOpenStateToAcknowledged < ActiveRecord::Migration
   class DummyDefenseRequest < ActiveRecord::Base
-    self.table_name = 'defence_requests'
+    self.table_name = "defence_requests"
   end
 
   def up

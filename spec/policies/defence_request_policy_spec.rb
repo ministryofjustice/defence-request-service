@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe DefenceRequestPolicy do
   subject { DefenceRequestPolicy.new user, defreq }

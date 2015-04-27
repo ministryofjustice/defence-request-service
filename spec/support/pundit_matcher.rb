@@ -46,12 +46,12 @@ RSpec::Matchers.define :permit_actions_and_forbid_all_others do |permitted_actio
     permitted_message = if !failed_permitted.empty?
                           ["Expected actions to be permitted:", failed_permitted].join "\n"
                         else
-                          ''
+                          ""
                         end
     disallowed_message = if !failed_forbidden.empty?
                            ["Expected actions to be forbidden:", failed_forbidden].join "\n"
                          else
-                           ''
+                           ""
                          end
     [permitted_message, disallowed_message].join "\n"*2
   end

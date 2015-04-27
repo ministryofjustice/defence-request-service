@@ -1,7 +1,7 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe DefenceRequest, type: :model do
-  describe 'validations' do
+  describe "validations" do
 
     it { expect(subject).to validate_presence_of :gender }
     it { expect(subject).to validate_presence_of :detainee_age }
@@ -10,7 +10,7 @@ RSpec.describe DefenceRequest, type: :model do
     it { expect(subject).to validate_presence_of :offences }
     it { expect(subject).to validate_numericality_of :detainee_age }
 
-    context 'own solicitor' do
+    context "own solicitor" do
       before do
         subject.solicitor_type = "own"
       end
@@ -20,7 +20,7 @@ RSpec.describe DefenceRequest, type: :model do
       it { expect(subject).to_not validate_presence_of :scheme }
     end
 
-    context 'duty solicitor' do
+    context "duty solicitor" do
       before do
         subject.solicitor_type = "duty"
       end
@@ -30,42 +30,42 @@ RSpec.describe DefenceRequest, type: :model do
       it { expect(subject).to_not validate_presence_of :phone_number }
     end
 
-    context 'appropriate_adult_reason required' do
+    context "appropriate_adult_reason required" do
       before do
         subject.appropriate_adult = true
       end
       it { expect(subject).to validate_presence_of :appropriate_adult_reason }
     end
 
-    context 'appropriate_adult_reason not required' do
+    context "appropriate_adult_reason not required" do
       before do
         subject.appropriate_adult = false
       end
       it { expect(subject).to_not validate_presence_of :appropriate_adult_reason }
     end
 
-    context 'unfit_for_interview_reason required' do
+    context "unfit_for_interview_reason required" do
       before do
         subject.fit_for_interview = false
       end
       it { expect(subject).to validate_presence_of :unfit_for_interview_reason }
     end
 
-    context 'unfit_for_interview_reason not required' do
+    context "unfit_for_interview_reason not required" do
       before do
         subject.fit_for_interview = true
       end
       it { expect(subject).to_not validate_presence_of :unfit_for_interview_reason }
     end
 
-    context 'interpreter_type required' do
+    context "interpreter_type required" do
       before do
         subject.interpreter_required = true
       end
       it { expect(subject).to validate_presence_of :interpreter_type }
     end
 
-    context 'interpreter_type not required' do
+    context "interpreter_type not required" do
       before do
         subject.interpreter_required = false
       end
@@ -73,79 +73,79 @@ RSpec.describe DefenceRequest, type: :model do
     end
   end
 
-  describe 'states' do
+  describe "states" do
 
-    it 'allows for correct transitions' do
+    it "allows for correct transitions" do
       expect(DefenceRequest.available_states).to eq [:aborted, :accepted, :acknowledged, :draft, :finished, :queued]
       expect(DefenceRequest.available_events).to eq [:abort, :accept, :acknowledge, :finish, :queue]
     end
 
-    shared_examples 'transition possible' do |event|
+    shared_examples "transition possible" do |event|
       specify { expect{ subject.send(event) }.to_not raise_error }
       specify { expect( subject.send("can_execute_#{event}?".to_sym) ).to eq true }
     end
 
-    shared_examples 'transition impossible' do |event|
+    shared_examples "transition impossible" do |event|
       specify { expect( subject.send("can_execute_#{event}?".to_sym) ).to eq false }
     end
 
-    shared_examples 'allowed transitions' do |allowed_events|
+    shared_examples "allowed transitions" do |allowed_events|
       specify { expect(subject.current_state).to eql state }
 
-      describe 'possible transitions' do
-        allowed_events.each { |e| it_behaves_like 'transition possible', e }
+      describe "possible transitions" do
+        allowed_events.each { |e| it_behaves_like "transition possible", e }
       end
 
-      describe 'impossible transitions' do
+      describe "impossible transitions" do
         disallowed_events = (DefenceRequest.available_events - allowed_events)
-        disallowed_events.each { |e| it_behaves_like 'transition impossible', e }
+        disallowed_events.each { |e| it_behaves_like "transition impossible", e }
       end
     end
 
     subject { FactoryGirl.create(:defence_request, state) }
 
-    describe 'draft' do
+    describe "draft" do
       let(:state) { :draft }
-      include_examples 'allowed transitions', [ :queue ]
+      include_examples "allowed transitions", [ :queue ]
     end
 
-    describe 'queued' do
+    describe "queued" do
       let(:state) { :queued }
-      include_examples 'allowed transitions', [ :acknowledge, :abort ]
+      include_examples "allowed transitions", [ :acknowledge, :abort ]
     end
 
-    describe 'acknowledged' do
+    describe "acknowledged" do
       subject { FactoryGirl.create(:defence_request, :acknowledged) }
 
       let(:state) { :acknowledged }
-      include_examples 'allowed transitions', [:finish, :abort ]
+      include_examples "allowed transitions", [:finish, :abort ]
     end
 
-    describe 'acknowledged with dscc_number' do
+    describe "acknowledged with dscc_number" do
       subject { FactoryGirl.create(:defence_request, :acknowledged, :with_dscc_number) }
 
       let(:state) { :acknowledged }
-      include_examples 'allowed transitions', [ :accept, :finish, :abort ]
+      include_examples "allowed transitions", [ :accept, :finish, :abort ]
     end
 
-    describe 'accepted' do
+    describe "accepted" do
       let(:state) { :accepted }
-      include_examples 'allowed transitions', [ :finish, :abort ]
+      include_examples "allowed transitions", [ :finish, :abort ]
     end
 
-    describe 'finished' do
+    describe "finished" do
       let(:state) { :finished }
-      include_examples 'allowed transitions', []
+      include_examples "allowed transitions", []
     end
   end
 
-  describe 'callbacks' do
-    context 'marked as accepted' do
+  describe "callbacks" do
+    context "marked as accepted" do
       before do
         @dr_with_dscc = FactoryGirl.create(:defence_request, :with_dscc_number, :acknowledged)
       end
 
-      it 'notifies the solicitor'  do
+      it "notifies the solicitor"  do
         expect(@dr_with_dscc).to receive(:send_solicitor_case_details).and_call_original
         @dr_with_dscc.accept
       end
@@ -155,17 +155,17 @@ RSpec.describe DefenceRequest, type: :model do
       @persisted_request = FactoryGirl.create(:defence_request)
     end
 
-    context 'interview time changes' do
-      it 'notifies the solicitor'  do
+    context "interview time changes" do
+      it "notifies the solicitor"  do
         expect(@persisted_request).to receive(:notify_interview_start_change).and_call_original
-        @persisted_request.update_attribute(:interview_start_time, DateTime.parse('13-04-1992 9:50'))
+        @persisted_request.update_attribute(:interview_start_time, DateTime.parse("13-04-1992 9:50"))
       end
     end
 
-    context 'save happens without change' do
-      it 'does not notify the solicitor' do
+    context "save happens without change" do
+      it "does not notify the solicitor" do
         expect(@persisted_request).to_not receive(:notify_interview_start_change)
-        @persisted_request.update_attribute(:detainee_name, 'Eamonn Holmes')
+        @persisted_request.update_attribute(:detainee_name, "Eamonn Holmes")
       end
     end
   end

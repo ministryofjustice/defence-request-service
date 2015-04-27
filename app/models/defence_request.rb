@@ -106,7 +106,7 @@ class DefenceRequest < ActiveRecord::Base
   private
 
   def format_phone_number(phone_number)
-    phone_number.to_s.gsub(/\D/, '') if phone_number
+    phone_number.to_s.gsub(/\D/, "") if phone_number
   end
 
   def notify_interview_start_change

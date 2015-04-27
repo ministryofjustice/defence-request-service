@@ -38,7 +38,7 @@ class DsccNumberGenerator
     loop do
       result = try_generate next_suffix
 
-      break if suffixes.empty? || result.first['dscc_number']
+      break if suffixes.empty? || result.first["dscc_number"]
     end
 
     result.first.symbolize_keys if result.first
@@ -61,11 +61,11 @@ class DsccNumberGenerator
   end
 
   def prefix
-    created_at.strftime('%y%m')
+    created_at.strftime("%y%m")
   end
 
   def previous_month_prefix
-    (created_at - 1.month).strftime('%y%m')
+    (created_at - 1.month).strftime("%y%m")
   end
 
   def next_suffix

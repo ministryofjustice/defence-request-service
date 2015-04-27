@@ -1,4 +1,4 @@
-require File.expand_path('../boot', __FILE__)
+require File.expand_path("../boot", __FILE__)
 
 # Pick the frameworks you want:
 require "active_model/railtie"
@@ -38,21 +38,21 @@ module DefenceSolicitor
       generate.view_specs false
     end
 
-    config.relative_url_root = ENV['RAILS_RELATIVE_URL_ROOT'] || ''
+    config.relative_url_root = ENV["RAILS_RELATIVE_URL_ROOT"] || ""
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
     config.use_govuk_elements_form_builder = false
     # app title appears in the header bar
-    config.proposition_title = 'Defence Solicitor Deployment Service'
+    config.proposition_title = "Defence Solicitor Deployment Service"
     # phase governs text indicators and highlight colours
     # presumed values: alpha, beta, live
-    config.phase = 'alpha'
+    config.phase = "alpha"
     # product type may also govern highlight colours
     # known values: information, service
-    config.product_type = 'service'
+    config.product_type = "service"
     # Feedback URL (URL for feedback link in phase banner)
     # Use 'auto_add_path' for it to add a path link to the new_feedback route
-    config.feedback_url = config.relative_url_root + '/feedback/new'
+    config.feedback_url = config.relative_url_root + "/feedback/new"
 
     config.action_mailer.default_url_options = Settings.action_mailer.default_url_options.to_h
     config.action_mailer.smtp_settings = Settings.action_mailer.smtp_settings.to_h

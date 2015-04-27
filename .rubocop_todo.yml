@@ -100,12 +100,6 @@ Style/SpaceInsideBrackets:
 Style/SpaceInsideParens:
   Enabled: false
 
-# Offense count: 225
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/StringLiterals:
-  Enabled: false
-
 # Offense count: 4
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
