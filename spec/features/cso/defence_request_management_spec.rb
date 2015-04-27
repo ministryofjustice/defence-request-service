@@ -76,7 +76,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
             to_not have_css "#defence_request_appropriate_adult_reason[disabled]"
         end
 
-        specify "can choose own solicitor and pick a solicitor using a from search box from the form", js: true do
+        xspecify "can choose own solicitor and pick a solicitor using a from search box from the form", js: true do
           stub_solicitor_search_for_bob_smith
           cso_user = create :cso_user
 
@@ -92,7 +92,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           expect(page).to have_field "Telephone number", with: "248.412.8095"
         end
 
-        specify "a solicitor with a apostrophe renders correctly", js: true do
+        xspecify "a solicitor with a apostrophe renders correctly", js: true do
           stub_solicitor_search_for_dave_oreilly
           cso_user = create :cso_user
 
@@ -107,7 +107,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           expect(page).to have_field "Full Name", with: "Dave O'Reilly"
         end
 
-        specify "can perform multiple own solicitor searches", js: true do
+        xspecify "can perform multiple own solicitor searches", js: true do
           stub_solicitor_search_for_bob_smith
           stub_solicitor_search_for_barry_jones
           cso_user = create :cso_user
@@ -126,7 +126,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
         end
       end
 
-      specify "are shown a message when no results are found for their search", js: true do
+      xspecify "are shown a message when no results are found for their search", js: true do
         stub_solicitor_search_for_mystery_man
         cso_user = create :cso_user
 
@@ -139,7 +139,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
         expect(page).to have_content "No results found"
       end
 
-      specify "can clear the solicitor search results with a close button", js: true do
+      xspecify "can clear the solicitor search results with a close button", js: true do
         stub_solicitor_search_for_bob_smith
         cso_user = create :cso_user
 
@@ -154,7 +154,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
       end
     end
 
-    specify "can clear the solicitor search results by pressing the ESC key", js: true do
+    xspecify "can clear the solicitor search results by pressing the ESC key", js: true do
       stub_solicitor_search_for_bob_smith
       cso_user = create :cso_user
 
@@ -168,7 +168,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
       expect(page).not_to have_content "Bobson Smith"
     end
 
-    specify "has the solicitor search results cleared when toggling between \"duty\" or \"own\" solicitor", js: true do
+    xspecify "has the solicitor search results cleared when toggling between \"duty\" or \"own\" solicitor", js: true do
       stub_solicitor_search_for_bob_smith
       cso_user = create :cso_user
 
