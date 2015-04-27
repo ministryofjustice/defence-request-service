@@ -13,6 +13,20 @@ RSpec.describe DefenceRequest, "#generate_dscc_number!" do
     timestamp.strftime("%y%m")
   end
 
+  describe "validations" do
+    it "raises an error when called on a new (unsaved) DefenceRequest" do
+      expect { DefenceRequest.new.generate_dscc_number! }.to raise_error(ArgumentError)
+    end
+
+    it "raises an error when DefenceRequest does not have a valid id" do
+      expect { DefenceRequest.new(id: 0).generate_dscc_number! }.to raise_error(ArgumentError)
+    end
+
+    it "raises an error when DefenceRequest does not have a valid created_at" do
+      expect { DefenceRequest.new(id: 12, created_at: nil).generate_dscc_number! }.to raise_error(ArgumentError)
+    end
+  end
+
   it "sets the generated dscc_number as an attribute on the DefenceRequest" do
     subject.generate_dscc_number!
     expect(subject.dscc_number).to eq(DefenceRequest.last.dscc_number)

@@ -21,12 +21,17 @@ class DsccNumberGenerator
 
   DEFAULT_SUFFIX = "D".freeze
 
+  class NotPersistedError < StandardError
+  end
+
   def initialize(defence_request)
     @defence_request = defence_request
     @suffixes = (DEFAULT_SUFFIX.."Z").to_a
   end
 
   def generate!
+    validate_defence_request!    
+
     # TODO: this method can be written in a better way. Look at this again earlier than 1030 at night.
     result = nil
 
@@ -44,6 +49,12 @@ class DsccNumberGenerator
   attr_reader :defence_request, :suffixes
 
   delegate :id, :created_at, to: :defence_request
+
+  def validate_defence_request!
+    raise ArgumentError.new("DefenceRequest cannot be nil") unless defence_request
+    raise ArgumentError.new("DefenceRequest does not have a positive non-zero id") unless defence_request.try(:id).to_i > 0
+    raise ArgumentError.new("DefenceRequest does not have valid created_at timestamp") unless defence_request.try(:created_at).kind_of?(Time)
+  end
 
   def try_generate(suffix)
     defence_request.class.connection.execute(dscc_number_generation_sql(suffix))
