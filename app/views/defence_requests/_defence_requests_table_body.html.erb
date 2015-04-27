@@ -9,7 +9,7 @@
     <td><%= def_req.custody_number %></td>
     <td class="offences"><%= truncate(def_req.offences, length: 50) %></td>
     <td><%= date_and_time_formatter(def_req.solicitor_time_of_arrival) %></td>
-    <td class='actions'><%= render "defence_requests/#{current_user.roles.uniq.first}_actions", def_req: def_req %></td>
+    <td class='actions'><%= render "defence_requests/actions", def_req: def_req %></td>
     </td>
   <% end %>
 <% end %>
