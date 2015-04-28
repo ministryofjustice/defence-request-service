@@ -8,6 +8,7 @@ en:
   acknowledge: "Acknowledge"
   acknowledged_defence_request: "Acknowledged Defence Requests"
   actions: "Actions"
+  active: "Active (%{count})"
   add_expected_time_of_arrival: "Add Expected Time of Arrival"
   address_1: "Address 1"
   address_2: "Address 2"
@@ -26,6 +27,7 @@ en:
   circumstances_of_arrest: Circumstances of Arrest
   city: City
   close: Close
+  closed: "Closed (%{count})"
   comments: "Comments"
   confirm: "Confirm"
   contact_us: "contact us"
@@ -117,8 +119,6 @@ en:
   view_the_case_details: "View the case details"
   what_type_is_being_requested: "What type of solicitor is being requested?"
   year: "Year"
-  active: "Active (%{count})"
-  closed: "Closed (%{count})"
 
   models:
     aborted: "%{model} successfully aborted"

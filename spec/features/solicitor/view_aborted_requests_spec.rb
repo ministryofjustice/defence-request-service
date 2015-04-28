@@ -13,7 +13,7 @@ RSpec.feature "Solicitors viewing aborted requests" do
 
     login_with solicitor
 
-    click_link "Closed"
+    click_link "Closed (1)"
     click_link "Show"
 
     expect(page).

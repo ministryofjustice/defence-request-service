@@ -7,8 +7,8 @@ RSpec.feature "Solicitors viewing their dashboard" do
     solicitor_user = create :solicitor_user
     login_with solicitor_user
 
-    expect(page).to have_link("Active")
-    expect(page).to have_link("Closed")
+    expect(page).to have_link("Active (0)")
+    expect(page).to have_link("Closed (0)")
   end
 
   context "tabs" do
@@ -46,7 +46,7 @@ RSpec.feature "Solicitors viewing their dashboard" do
 
       before :each do
         login_with solicitor_user
-        click_link("Active")
+        click_link("Active (1)")
       end
 
       specify "can only see active requests that they have accepted" do
@@ -60,7 +60,7 @@ RSpec.feature "Solicitors viewing their dashboard" do
     context "closed" do
       before :each do
         login_with solicitor_user
-        click_link("Closed")
+        click_link("Closed (1)")
       end
 
       specify "can only see finished requests that they have accepted" do
