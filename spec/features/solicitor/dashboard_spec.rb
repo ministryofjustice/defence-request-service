@@ -7,8 +7,8 @@ RSpec.feature "Solicitors viewing their dashboard" do
     solicitor_user = create :solicitor_user
     login_with solicitor_user
 
-    expect(page).to have_link('Active')
-    expect(page).to have_link('Closed')
+    expect(page).to have_link("Active")
+    expect(page).to have_link("Closed")
   end
 
   context "tabs" do
@@ -67,7 +67,7 @@ RSpec.feature "Solicitors viewing their dashboard" do
         expect(page).to_not have_content active_accepted_defence_request.offences
         expect(page).to_not have_content active_not_accepted_defence_request.offences
         expect(page).to have_content finished_accepted_defence_request.offences
-        # expect(page).to_not have_content finished_not_accepted_defence_request.offences
+        expect(page).to_not have_content finished_not_accepted_defence_request.offences
       end
     end
   end

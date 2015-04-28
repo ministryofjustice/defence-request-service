@@ -8,7 +8,7 @@ class DefenceRequest < ActiveRecord::Base
   scope :accepted_aborted_or_finished, -> { where(state: ["accepted", "aborted", "finished"]) }
   scope :not_aborted, -> { where.not(state: "aborted") }
   scope :not_draft, -> { where.not(state: "draft") }
-  scope :not_finished, -> { where.not(state: "finished") }
+  scope :not_finished, -> { where.not(state: ["finished", "aborted"]) }
   scope :ordered_by_created_at, -> { order(created_at: :asc) }
 
   def self.related_to_solicitor(solicitor)

@@ -22,6 +22,7 @@ RSpec.feature "Solicitors viewing their firm's requests" do
     )
 
     login_with solicitor
+    click_link("Closed")
 
     expect(page).to     have_content firms_defence_request.offences
     expect(page).to_not have_content other_firms_defence_request.offences

@@ -2,11 +2,15 @@ class DashboardsController < BaseController
   skip_after_action :verify_authorized
 
   def show
-    @dashboard = dashboard(:not_finished)
+    if dashboard.user_role == "solicitor"
+      @dashboard = dashboard(:not_finished)
+    else
+      @dashboard = dashboard
+    end
   end
 
   def closed
-    @dashboard = dashboard(:finished)
+    @dashboard = dashboard(:finished, :aborted)
   end
 
   def refresh_dashboard
