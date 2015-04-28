@@ -1,16 +1,13 @@
 class DashboardsController < BaseController
   skip_after_action :verify_authorized
+  before_filter :set_dashboard_count, only: [:show, :closed]
 
   def show
-    if dashboard.user_role == "solicitor"
-      @dashboard = dashboard(:not_finished)
-    else
-      @dashboard = dashboard
-    end
+    @dashboard = active_dashboard
   end
 
   def closed
-    @dashboard = dashboard(:finished, :aborted)
+    @dashboard = closed_dashboard
   end
 
   def refresh_dashboard
@@ -20,6 +17,23 @@ class DashboardsController < BaseController
   end
 
   private
+
+  def active_dashboard
+    if dashboard.user_role == "solicitor"
+      @_active_dashboard ||= dashboard(:not_finished)
+    else
+      @_active_dashboard ||= dashboard
+    end
+  end
+
+  def closed_dashboard
+    @_closed_dashboard ||= dashboard(:finished, :aborted)
+  end
+
+  def set_dashboard_count
+    @active_count ||= active_dashboard.defence_requests.count
+    @closed_count ||= closed_dashboard.defence_requests.count
+  end
 
   def dashboard(*additional_scopes)
     Dashboard.new(

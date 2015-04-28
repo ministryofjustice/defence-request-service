@@ -117,8 +117,8 @@ en:
   view_the_case_details: "View the case details"
   what_type_is_being_requested: "What type of solicitor is being requested?"
   year: "Year"
-  active: "Active"
-  closed: "Closed"
+  active: "Active (%{count})"
+  closed: "Closed (%{count})"
 
   models:
     aborted: "%{model} successfully aborted"
