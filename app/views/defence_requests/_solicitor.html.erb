@@ -1,0 +1,35 @@
+<section class="defence-requests">
+  <ul>
+    <% (1..6).each do |_| %>
+        <li>
+          <div class="defence-request-box">
+            <a href="#detail" title="request detail for 1503789A" class="detail-link"></a>
+            <dl>
+              <dt class="visuallyhidden">Arrival time</dt>
+              <dd class="time-of-arrival">11:00</dd>
+              <dt class="visuallyhidden">Detainee name</dt>
+              <dd class="name">Novotny, Jakub</dd>
+              <dt class="visuallyhidden">Offences</dt>
+              <dd class="offences">Laziness</dd>
+              <dt class="visuallyhidden">DSCC</dt>
+              <dd class="dscc">1503789A</dd>
+            </dl>
+            <dl>
+              <dt class="visuallyhidden">Custody Address</dt>
+              <dd>Custody suite 1, Croydon, SE27 9NA</dd>
+              <dt class="visuallyhidden">Custody Phone Number</dt>
+              <dd><a href="tel:02079460573">020 7946 0573</a></dd>
+            </dl>
+            <dl class="time-field">
+              <dt class="interview-label">Interview at</dt>
+              <dd class="interview-value">15:00</dd>
+            </dl>
+            <dl class="time-field">
+              <dt>Arriving at</dt>
+              <dd>14:45</dd>
+            </dl>
+          </div>
+        </li>
+    <% end %>
+  </ul>
+</section>
