@@ -13,7 +13,7 @@ class DefenceRequestPolicy < ApplicationPolicy
       elsif user.roles.include?("cco")
         scope.not_draft
       elsif user.roles.include?("solicitor")
-        scope.related_to_solicitor(user).accepted_or_aborted
+        scope.related_to_solicitor(user).accepted_aborted_or_finished
       else
         scope.none
       end
