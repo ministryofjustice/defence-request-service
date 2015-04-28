@@ -1,0 +1,8 @@
+<div class="tabs">
+  <div class="active">
+    <%= link_to t("active", count: @active_count), dashboard_path %>
+  </div>
+  <div class="closed">
+    <%= link_to t("closed", count: @closed_count), dashboard_closed_path %>
+  </div>
+</div>

@@ -1,21 +1,32 @@
 class Dashboard
-  def initialize(user, defence_requests_scoped_by_policy, additional_scopes = nil)
+  def initialize(user, defence_requests_scoped_by_policy)
     @user = user
     @defence_requests_scoped_by_policy = defence_requests_scoped_by_policy
-    @additional_scopes = additional_scopes
-  end
-
-  def defence_requests
-    additional_scopes.blank? ? ordered_defence_requests : scoped_defence_requests(additional_scopes)
   end
 
   def user_role
     user.roles.uniq.first
   end
 
+  def defence_requests(type)
+    type == :active ? active_defence_requests : closed_defence_requests
+  end
+
   private
 
-  attr_reader :user, :defence_requests_scoped_by_policy, :additional_scopes
+  attr_reader :user, :defence_requests_scoped_by_policy
+
+  def active_defence_requests
+    if user_role == "solicitor"
+      scoped_defence_requests([:not_finished])
+    else
+      ordered_defence_requests
+    end
+  end
+
+  def closed_defence_requests
+    scoped_defence_requests([:finished, :aborted])
+  end
 
   def scoped_defence_requests(scopes)
     scopes.map { |scope| ordered_defence_requests.send(scope) }.flatten
