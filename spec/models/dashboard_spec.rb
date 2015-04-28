@@ -1,4 +1,4 @@
-require "spec_helper"
+require "rails_helper"
 require_relative "../../app/models/dashboard"
 
 RSpec.describe Dashboard, "#defence_requests" do
@@ -9,6 +9,16 @@ RSpec.describe Dashboard, "#defence_requests" do
     Dashboard.new(user, defence_requests).defence_requests
 
     expect(defence_requests).to have_received(:ordered_by_created_at)
+  end
+
+  it "returns the passed in defence requests scoped by additional scopes" do
+    user = double(:user)
+    defence_requests = spy(:defence_requests)
+
+    Dashboard.new(user, defence_requests, [:finished, :queued]).defence_requests
+
+    expect(defence_requests).to have_received(:finished)
+    expect(defence_requests).to have_received(:queued)
   end
 end
 
