@@ -5,9 +5,10 @@ class DefenceRequest < ActiveRecord::Base
 
   after_update :notify_interview_start_change, if: :interview_start_time_changed?
 
-  scope :accepted_or_aborted, -> { where(state: ["accepted", "aborted"]) }
+  scope :accepted_aborted_or_finished, -> { where(state: ["accepted", "aborted", "finished"]) }
   scope :not_aborted, -> { where.not(state: "aborted") }
   scope :not_draft, -> { where.not(state: "draft") }
+  scope :not_finished, -> { where.not(state: "finished") }
   scope :ordered_by_created_at, -> { order(created_at: :asc) }
 
   def self.related_to_solicitor(solicitor)

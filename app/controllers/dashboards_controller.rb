@@ -2,7 +2,7 @@ class DashboardsController < BaseController
   skip_after_action :verify_authorized
 
   def show
-    @dashboard = dashboard
+    @dashboard = dashboard(:not_finished)
   end
 
   def closed

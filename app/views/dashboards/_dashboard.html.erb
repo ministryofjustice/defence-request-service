@@ -5,7 +5,6 @@
 <%= flash_messages %>
 
 <h1><%= "#{t(@dashboard.user_role)}  #{t('dashboard')}" %></h1>
-<h2><%= params[:action] %></h2>
 
 <% if policy(:defence_request).create? %>
   <div class="new_defence_request">
@@ -13,14 +12,16 @@
   </div>
 <% end %>
 
-<div class="tabs">
-  <div class="active">
-    <%= link_to t("active"), dashboard_path %>
+<% if @dashboard.user_role == "solicitor" %>
+  <div class="tabs">
+    <div class="active">
+      <%= link_to t("active"), dashboard_path %>
+    </div>
+    <div class="closed">
+      <%= link_to t("closed"), dashboard_closed_path %>
+    </div>
   </div>
-  <div class="closed">
-    <%= link_to t("closed"), dashboard_closed_path %>
-  </div>
-</div>
+<% end %>
 
 <table class="dashboard">
   <%= render "defence_requests/defence_requests_table_head" %>
