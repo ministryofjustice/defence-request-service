@@ -8,7 +8,7 @@ test:
     - bundle exec rake --trace
 deployment:
   create_containers:
-    branch: [master, docker_container_repository_92999546]
+    branch: master
     commands:
       # Log into the docker container. Note that this requires these environment variables
       # to be stored in the CircleCI environment config
