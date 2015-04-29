@@ -10,14 +10,14 @@ class SolicitorArrivalTimesController < BaseController
   end
 
   def edit
-    render 'defence_requests/solicitor_arrival_time'
+    render "defence_requests/solicitor_arrival_time"
   end
 
   def update
     if @defence_request_form.submit(defence_request_params)
       redirect_to(defence_request_path(@defence_request), notice: flash_message(:solicitor_time_of_arrival_added, DefenceRequest))
     else
-      render 'defence_requests/solicitor_arrival_time'
+      render "defence_requests/solicitor_arrival_time"
     end
   end
 
