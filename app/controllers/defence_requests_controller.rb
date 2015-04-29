@@ -1,14 +1,17 @@
 class DefenceRequestsController < BaseController
   before_action :find_defence_request, except: [:new, :create]
-  before_action :set_policy
+  before_action :set_policy_with_context, only: [:show, :solicitor_time_of_arrival]
+  before_action :set_policy, except: [:show, :solicitor_time_of_arrival]
   before_action :new_defence_request_form, only: [:show, :new, :create, :edit, :update, :solicitor_time_of_arrival]
 
-  before_action ->(c) { authorize defence_request, "#{c.action_name}?" }
+  before_action ->(c) { authorize PolicyContext.new(defence_request, current_user), "#{c.action_name}?" }
 
   def show
+    set_policy_with_context
   end
 
   def new
+    set_policy_with_context
   end
 
   def create
@@ -47,6 +50,8 @@ class DefenceRequestsController < BaseController
   end
 
   def solicitor_time_of_arrival
+    set_policy_with_context
+
     if @defence_request_form.submit(defence_request_params)
       redirect_to(defence_request_path(@defence_request), notice: flash_message(:solicitor_time_of_arrival_added, DefenceRequest))
     else
@@ -62,6 +67,10 @@ class DefenceRequestsController < BaseController
 
   def find_defence_request
     @defence_request = DefenceRequest.find(params[:id])
+  end
+
+  def set_policy_with_context
+    @policy = policy(PolicyContext.new(defence_request, current_user))
   end
 
   def set_policy

@@ -20,17 +20,18 @@ class DefenceRequestPolicy < ApplicationPolicy
     end
   end
 
-  def show?
-    (cso && !record.aborted?) || ((cco  || user_is_the_assigned_solicitor) && !record.draft?)
-  end
+  # def show?
+  #   (cso && !record.aborted?) || ((cco  || user_is_the_assigned_solicitor) &&
+  #   !record.draft?)
+  # end
 
-  def new?
-    cso
-  end
+  # def new?
+  #   cso
+  # end
 
-  def create?
-    cso
-  end
+  # def create?
+  #   cso
+  # end
 
   def edit?
     ((cso && record.draft?) || (user_is_the_assigned_cco && !record.draft? && !record.queued?)) && !record.aborted?
@@ -68,17 +69,17 @@ class DefenceRequestPolicy < ApplicationPolicy
     (user_is_the_assigned_cco || cso) && record.accepted?
   end
 
-  def edit_solicitor_details?
-    (record.own_solicitor? || user_is_the_assigned_cco) && edit?
-  end
+  # def edit_solicitor_details?
+  #   (record.own_solicitor? || user_is_the_assigned_cco) && edit?
+  # end
 
-  def solicitor_time_of_arrival?
-    (user_is_the_assigned_solicitor && !record.aborted?) || (record.accepted? && (user_is_the_assigned_cco || cso))
-  end
+  # def solicitor_time_of_arrival?
+  #   (user_is_the_assigned_solicitor && !record.aborted?) || (record.accepted? && (user_is_the_assigned_cco || cso))
+  # end
 
-  def solicitor_time_of_arrival_from_show?
-    user_is_the_assigned_solicitor && !record.aborted?
-  end
+  # def solicitor_time_of_arrival_from_show?
+  #   user_is_the_assigned_solicitor && !record.aborted?
+  # end
 
   def queue?
     cso && record.draft?

@@ -1,8 +1,8 @@
-<%= link_to t("show"), defence_request_path(def_req) if policy(def_req).show? %>
-<%= link_to t("abort"), new_abort_defence_request_path(defence_request_id: def_req.id) if policy(def_req).abort? %>
-<%= link_to t("edit"), edit_defence_request_path(def_req) if policy(def_req).edit? %>
-<%= button_to t("acknowledge"), transition_defence_request_path(defence_request_id: def_req.id, transition_to: "acknowledge") if policy(def_req).acknowledge? %>
-<%= button_to t("accepted"), transition_defence_request_path(defence_request_id: def_req.id, transition_to: "accept") if policy(def_req).accept? %>
-<%= button_to t("resend_details"), resend_details_defence_request_path(def_req), data: { confirm: "Are you sure?" } if policy(def_req).resend_details? %>
-<%= button_to t("send_for_processing"), transition_defence_request_path(defence_request_id: def_req.id, transition_to: "queue") if policy(def_req).queue? %>
-<%= link_to t("finish"), new_finish_defence_request_path(defence_request_id: def_req.id) if policy(def_req).finish? %>
+<%= link_to t("show"), defence_request_path(def_req) %>
+<%= link_to t("abort"), new_abort_defence_request_path(defence_request_id: def_req.id)  %>
+<%= link_to t("edit"), edit_defence_request_path(def_req)  %>
+<%= button_to t("acknowledge"), transition_defence_request_path(defence_request_id: def_req.id, transition_to: "acknowledge")  %>
+<%= button_to t("accepted"), transition_defence_request_path(defence_request_id: def_req.id, transition_to: "accept") %>
+<%= button_to t("resend_details"), resend_details_defence_request_path(def_req), data: { confirm: "Are you sure?" } %>
+<%= button_to t("send_for_processing"), transition_defence_request_path(defence_request_id: def_req.id, transition_to: "queue") %>
+<%= link_to t("finish"), new_finish_defence_request_path(defence_request_id: def_req.id) %>
