@@ -16,11 +16,13 @@ en:
   appropriate_adult: "Appropriate Adult"
   appropriate_adult_reason: "Reason for appropriate adult"
   appropriate_adult_required: "Appropriate adult required?"
+  arriving_at: "Arriving at"
   call_call_center: "Please call the Call Centre on 0999 999 9999"
   cancel: "Cancel"
   cancel_and_delete_all_details: "Cancel and delete all details"
   case_aborted: "This case has been aborted for the following reason"
   case_details: "Case Details"
+  case_details_for: "Case Details for %{dscc}"
   cco: "Call Center Operative"
   change_password: "Change Password"
   circumstances_of_arrest: Circumstances of Arrest
@@ -34,6 +36,7 @@ en:
   cso: "Custody Suite Officer"
   custody_address: Custody Address
   custody_number: "Custody number"
+  custody_phone_number: "Custody Phone Number"
   dashboard: 'Dashboard'
   date_hint: "eg. 28 04 1996"
   date_of_birth: "Date of Birth"
@@ -66,6 +69,7 @@ en:
   house_name: House name or number
   interpreter_required: "Interpreter Required"
   interpreter_type: "Interpreter Type"
+  interview_at: "Interview at"
   interview_start_time: "Interview Start Time"
   interview_start_time_change: "Interview start time change"
   investigating_officer_contact_number: Investigating Officer Contact Number
