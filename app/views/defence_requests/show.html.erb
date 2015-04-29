@@ -147,12 +147,7 @@
     </tbody>
   </table>
   <br/>
-  <% if @policy.solicitor_time_of_arrival_from_show? %>
-    <div class="time-of-arrival">
-      <%= form_for(@defence_request, url: solicitor_time_of_arrival_defence_request_path, method: :patch) do |f| %>
-        <%= render('defence_requests/form_partials/solicitor_time_of_arrival', f: f) if @policy.solicitor_time_of_arrival_from_show? %>
-        <%= f.submit(t('add_expected_time_of_arrival'), class: 'button') %>
-      <% end %>
-    </div>
-  <% end %>
+
+  <p><%= link_to t('add_expected_time_of_arrival'), edit_defence_request_solicitor_arrival_time_path(@defence_request), class: 'button' %></p>
+
 </div>

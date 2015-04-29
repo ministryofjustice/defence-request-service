@@ -1,8 +1,8 @@
 class DefenceRequestsController < BaseController
 
   before_action :find_defence_request, except: [:new, :create]
-  before_action :set_policy_with_context, only: [:show, :new, :create, :edit, :update, :resend_details, :solicitor_time_of_arrival]
-  before_action :new_defence_request_form, only: [:show, :new, :create, :edit, :update, :solicitor_time_of_arrival]
+  before_action :set_policy_with_context, only: [:show, :new, :create, :edit, :update, :resend_details]
+  before_action :new_defence_request_form, only: [:show, :new, :create, :edit, :update]
 
   before_action ->(c) { authorize PolicyContext.new(defence_request, current_user), "#{c.action_name}?" }
 
@@ -44,14 +44,6 @@ class DefenceRequestsController < BaseController
       redirect_to(dashboard_path, notice: flash_message(:details_sent, DefenceRequest))
     else
       redirect_to(dashboard_path, alert: flash_message(:failed_details_sent, DefenceRequest))
-    end
-  end
-
-  def solicitor_time_of_arrival
-    if @defence_request_form.submit(defence_request_params)
-      redirect_to(defence_request_path(@defence_request), notice: flash_message(:solicitor_time_of_arrival_added, DefenceRequest))
-    else
-      render :show
     end
   end
 

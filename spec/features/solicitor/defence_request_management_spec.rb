@@ -28,6 +28,7 @@ RSpec.feature "Solicitors managing defence requests" do
 
       login_with solicitor_user
       click_link "Case Details for #{accepted_defence_request.dscc_number}"
+      click_link "Add an estimated time of arrival"
       within ".time-of-arrival" do
         fill_in "defence_request[solicitor_time_of_arrival][day]", with: "01"
         fill_in "defence_request[solicitor_time_of_arrival][month]", with: "01"
@@ -35,7 +36,7 @@ RSpec.feature "Solicitors managing defence requests" do
         fill_in "defence_request[solicitor_time_of_arrival][hour]", with: "01"
         fill_in "defence_request[solicitor_time_of_arrival][min]", with: "01"
       end
-      click_button "Add Expected Time of Arrival"
+      click_button "Save"
 
       expect(page).to have_content "1 January 2001 - 01:01"
     end
@@ -51,6 +52,7 @@ RSpec.feature "Solicitors managing defence requests" do
 
       login_with solicitor_user
       click_link "Case Details for #{accepted_defence_request.dscc_number}"
+      click_link "Add an estimated time of arrival"
       within ".time-of-arrival" do
         fill_in "defence_request[solicitor_time_of_arrival][day]", with: "I"
         fill_in "defence_request[solicitor_time_of_arrival][month]", with: "AM"
@@ -58,7 +60,7 @@ RSpec.feature "Solicitors managing defence requests" do
         fill_in "defence_request[solicitor_time_of_arrival][hour]", with: "VERY"
         fill_in "defence_request[solicitor_time_of_arrival][min]", with: "BROKEN"
       end
-      click_button "Add Expected Time of Arrival"
+      click_button "Save"
 
       expect(page).to have_content(
         [
