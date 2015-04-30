@@ -7,11 +7,9 @@ class DefenceRequestsController < BaseController
   before_action ->(c) { authorize PolicyContext.new(defence_request, current_user), "#{c.action_name}?" }
 
   def show
-    set_policy_with_context
   end
 
   def new
-    set_policy_with_context
   end
 
   def create
@@ -50,8 +48,6 @@ class DefenceRequestsController < BaseController
   end
 
   def solicitor_time_of_arrival
-    set_policy_with_context
-
     if @defence_request_form.submit(defence_request_params)
       redirect_to(defence_request_path(@defence_request), notice: flash_message(:solicitor_time_of_arrival_added, DefenceRequest))
     else
