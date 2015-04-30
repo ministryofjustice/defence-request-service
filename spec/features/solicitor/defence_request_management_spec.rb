@@ -39,6 +39,18 @@ RSpec.feature "Solicitors managing defence requests" do
       click_button "Save"
 
       expect(page).to have_content "1 January 2001 - 01:01"
+
+      click_link "Add an estimated time of arrival"
+      within ".time-of-arrival" do
+        fill_in "defence_request[solicitor_time_of_arrival][day]", with: "02"
+        fill_in "defence_request[solicitor_time_of_arrival][month]", with: "02"
+        fill_in "defence_request[solicitor_time_of_arrival][year]", with: "2002"
+        fill_in "defence_request[solicitor_time_of_arrival][hour]", with: "02"
+        fill_in "defence_request[solicitor_time_of_arrival][min]", with: "02"
+      end
+      click_link "Cancel"
+
+      expect(page).to have_content "1 January 2001 - 01:01"
     end
 
     specify "are shown a message if the time of arrival cannot be updated due to errors" do

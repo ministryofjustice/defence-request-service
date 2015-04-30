@@ -17,6 +17,8 @@ en:
   appropriate_adult: "Appropriate Adult"
   appropriate_adult_reason: "Reason for appropriate adult"
   appropriate_adult_required: "Appropriate adult required?"
+  arrival_time: "Arrival time"
+  arrival_time_cancel: "Cancel"
   arrival_time_save: "Save"
   arriving_at: "Arriving at"
   call_call_center: "Please call the Call Centre on 0999 999 9999"
