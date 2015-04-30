@@ -70,7 +70,7 @@ class DefenceRequestsController < BaseController
   end
 
   def set_policy_with_context
-    @policy = policy(PolicyContext.new(defence_request, current_user))
+    @policy ||= policy(PolicyContext.new(defence_request, current_user))
   end
 
   def defence_request
