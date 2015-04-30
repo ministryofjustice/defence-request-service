@@ -15,5 +15,6 @@ deployment:
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
       # Ensure that the docker container built contains absolutely nothing unexpected
       # that might have been installed by CircleCI (eg an updated database.yml)
-      - (git clean -fd ; git reset --hard) || true
+      - git clean --force -d
+      - git reset --hard
       - DOCKER_IMAGE_TAG=$CIRCLE_BUILD_NUM annotate-output make
