@@ -2,9 +2,20 @@ require "rails_helper"
 
 RSpec.feature "Solicitors managing defence requests" do
   context "with cases they are assigned to" do
-    specify "can see the show page of the request" do
+
+    def enter_time day:, month:, year:, hour:, min:
+      within ".time-of-arrival" do
+        fill_in "defence_request[solicitor_time_of_arrival][day]", with: day
+        fill_in "defence_request[solicitor_time_of_arrival][month]", with: month
+        fill_in "defence_request[solicitor_time_of_arrival][year]", with: year
+        fill_in "defence_request[solicitor_time_of_arrival][hour]", with: hour
+        fill_in "defence_request[solicitor_time_of_arrival][min]", with: min
+      end
+    end
+
+    def login_as_solicitor_with_accepted_defence_request
       solicitor_user = create :solicitor_user
-      accepted_defence_request = create(
+      @accepted_defence_request = create(
         :defence_request,
         :accepted,
         solicitor_uid: solicitor_user.uid,
@@ -12,66 +23,37 @@ RSpec.feature "Solicitors managing defence requests" do
       )
 
       login_with solicitor_user
-      click_link "Case Details for #{accepted_defence_request.dscc_number}"
+    end
 
-      expect(page).to have_content accepted_defence_request.solicitor_name
+    specify "can see the show page of the request" do
+      login_as_solicitor_with_accepted_defence_request
+      click_link "Case Details for #{@accepted_defence_request.dscc_number}"
+
+      expect(page).to have_content @accepted_defence_request.solicitor_name
     end
 
     specify "can edit the expected arrival time from the show page of the request" do
-      solicitor_user = create :solicitor_user
-      accepted_defence_request = create(
-        :defence_request,
-        :accepted,
-        solicitor_uid: solicitor_user.uid,
-        organisation_uid: solicitor_user.organisation_uids.first
-      )
-
-      login_with solicitor_user
-      click_link "Case Details for #{accepted_defence_request.dscc_number}"
+      login_as_solicitor_with_accepted_defence_request
+      click_link "Case Details for #{@accepted_defence_request.dscc_number}"
       click_link "Add an estimated time of arrival"
-      within ".time-of-arrival" do
-        fill_in "defence_request[solicitor_time_of_arrival][day]", with: "01"
-        fill_in "defence_request[solicitor_time_of_arrival][month]", with: "01"
-        fill_in "defence_request[solicitor_time_of_arrival][year]", with: "2001"
-        fill_in "defence_request[solicitor_time_of_arrival][hour]", with: "01"
-        fill_in "defence_request[solicitor_time_of_arrival][min]", with: "01"
-      end
+
+      enter_time day: "01", month: "01", year: "2001", hour: "01", min: "01"
       click_button "Save"
 
       expect(page).to have_content "1 January 2001 - 01:01"
 
       click_link "Add an estimated time of arrival"
-      within ".time-of-arrival" do
-        fill_in "defence_request[solicitor_time_of_arrival][day]", with: "02"
-        fill_in "defence_request[solicitor_time_of_arrival][month]", with: "02"
-        fill_in "defence_request[solicitor_time_of_arrival][year]", with: "2002"
-        fill_in "defence_request[solicitor_time_of_arrival][hour]", with: "02"
-        fill_in "defence_request[solicitor_time_of_arrival][min]", with: "02"
-      end
+      enter_time day: "02", month: "02", year: "2002", hour: "02", min: "02"
       click_link "Cancel"
 
       expect(page).to have_content "1 January 2001 - 01:01"
     end
 
     specify "are shown a message if the time of arrival cannot be updated due to errors" do
-      solicitor_user = create :solicitor_user
-      accepted_defence_request = create(
-        :defence_request,
-        :accepted,
-        solicitor_uid: solicitor_user.uid,
-        organisation_uid: solicitor_user.organisation_uids.first
-      )
-
-      login_with solicitor_user
-      click_link "Case Details for #{accepted_defence_request.dscc_number}"
+      login_as_solicitor_with_accepted_defence_request
+      click_link "Case Details for #{@accepted_defence_request.dscc_number}"
       click_link "Add an estimated time of arrival"
-      within ".time-of-arrival" do
-        fill_in "defence_request[solicitor_time_of_arrival][day]", with: "I"
-        fill_in "defence_request[solicitor_time_of_arrival][month]", with: "AM"
-        fill_in "defence_request[solicitor_time_of_arrival][year]", with: "VERY"
-        fill_in "defence_request[solicitor_time_of_arrival][hour]", with: "VERY"
-        fill_in "defence_request[solicitor_time_of_arrival][min]", with: "BROKEN"
-      end
+      enter_time day: "i", month: "n", year: "v", hour: "a", min: "lid"
       click_button "Save"
 
       expect(page).to have_content(
