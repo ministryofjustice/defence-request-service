@@ -1,5 +1,7 @@
 class SolicitorArrivalTimesController < BaseController
 
+  include DefenceRequestAuthorization
+
   before_action :find_defence_request
   before_action :set_policy_with_context
   before_action :new_defence_request_form
@@ -23,20 +25,8 @@ class SolicitorArrivalTimesController < BaseController
 
   private
 
-  def find_defence_request
-    @defence_request = DefenceRequest.find(params[:defence_request_id])
-  end
-
-  def set_policy_with_context
-    @policy ||= policy(PolicyContext.new(defence_request, current_user))
-  end
-
-  def defence_request
-    @defence_request ||= DefenceRequest.new
-  end
-
-  def new_defence_request_form
-    @defence_request_form ||= DefenceRequestForm.new @defence_request
+  def defence_request_id
+    params[:defence_request_id]
   end
 
   def defence_request_params
