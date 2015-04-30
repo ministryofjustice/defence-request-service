@@ -1,8 +1,5 @@
 FROM defence-request-service:base_localbuild
 
-# For developer use only
-ENV RAILS_ENV development
-
 # Base packages:
 #   - postgresql-client
 #
@@ -28,6 +25,7 @@ RUN ln -sf /usr/local/share/phantomjs-1.9.7-linux-x86_64/bin/phantomjs /usr/loca
 ###############################################################################
 # Defaults for executing container
 ###############################################################################
+ENV RAILS_ENV development
 VOLUME /usr/src/app
 WORKDIR /usr/src/app
 
