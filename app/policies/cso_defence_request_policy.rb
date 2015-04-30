@@ -1,13 +1,26 @@
 class CsoDefenceRequestPolicy < ApplicationPolicy
-  attr_reader :user, :record
+  class Scope
+    attr_reader :user, :scope
+
+    def initialize(user, scope)
+      @user = user
+      @scope = scope.record
+    end
+
+    def resolve
+      scope.not_aborted
+    end
+  end
+
+  attr_reader :policy_user, :policy_record
 
   def initialize(user, context)
-    @user = user
-    @record = context.record
+    @policy_user = user
+    @policy_record = context.record
   end
 
   def show?
-    !record.aborted?
+    !policy_record.aborted?
   end
 
   def new?
@@ -19,24 +32,60 @@ class CsoDefenceRequestPolicy < ApplicationPolicy
   end
 
   def edit?
-    (record.draft? || (user_is_the_assigned_cco && !record.draft? && !record.queued?)) && !record.aborted?
+    policy_record.draft? && !policy_record.aborted?
+  end
+
+  def update?
+    edit?
   end
 
   def edit_solicitor_details?
-    user_is_the_assigned_cco && edit?
+    policy_record.own_solicitor? && edit?
   end
 
   def solicitor_time_of_arrival?
-    record.accepted? && user_is_the_assigned_cco
+    policy_record.accepted?
   end
 
   def add_case_time_of_arrival?
-    create? && record.new_record?
+    create? && policy_record.new_record?
+  end
+
+  def interview_start_time_edit?
+    !policy_record.new_record? && policy_record.draft?
+  end
+
+  def solicitor_time_of_arrival_from_show?
+    false
+  end
+
+  def dscc_number_edit?
+    false
+  end
+
+  def abort?
+    policy_record.can_execute_abort?
+  end
+
+  def solicitors_search?
+    true
+  end
+
+  def resend_details?
+    policy_record.accepted?
+  end
+
+  def queue?
+    policy_record.draft?
+  end
+
+  def finish?
+    policy_record.can_execute_finish?
   end
 
   private
 
   def user_is_the_assigned_cco
-    record.cco_uid == user.uid
+    policy_record.cco_uid == policy_user.uid
   end
 end

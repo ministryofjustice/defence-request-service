@@ -51,4 +51,8 @@ module ApplicationHelper
       val[0..len].upcase
     end
   end
+
+  def check_policy_clause(policy, clause)
+    policy.respond_to?(clause) ? policy.send(clause) : false
+  end
 end

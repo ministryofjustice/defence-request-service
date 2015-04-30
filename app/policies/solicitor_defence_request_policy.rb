@@ -1,26 +1,39 @@
 class SolicitorDefenceRequestPolicy < ApplicationPolicy
-  attr_reader :user, :record
+  class Scope
+    attr_reader :user, :scope
+
+    def initialize(user, scope)
+      @user = user
+      @scope = scope.record
+    end
+
+    def resolve
+      scope.related_to_solicitor(user).accepted_or_aborted
+    end
+  end
+
+  attr_reader :policy_user, :policy_record
 
   def initialize(user, context)
-    @user = user
-    @record = context.record
+    @policy_user = user
+    @policy_record = context.record
   end
 
   def solicitor_time_of_arrival?
-    user_is_the_assigned_solicitor && !record.aborted?
+    user_is_the_assigned_solicitor && !policy_record.aborted?
   end
 
   def solicitor_time_of_arrival_from_show?
-    user_is_the_assigned_solicitor && !record.aborted?
+    user_is_the_assigned_solicitor && !policy_record.aborted?
   end
 
   def show?
-    user_is_the_assigned_solicitor && !record.draft?
+    user_is_the_assigned_solicitor && !policy_record.draft?
   end
 
   private
 
   def user_is_the_assigned_solicitor
-    record.solicitor_uid == user.uid
+    policy_record.solicitor_uid == policy_user.uid
   end
 end

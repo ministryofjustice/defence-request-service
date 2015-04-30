@@ -30,9 +30,9 @@ RSpec::Matchers.define :permit_actions_and_forbid_all_others do |permitted_actio
   end
 
   match do |policy|
-    remove_question_mark = ->(method_name) { method_name.to_s.chop.to_sym }
+    remove_question_mark = ->(method_name) { method_name.to_s.chomp("?").to_sym }
     all_actions = subject.public_methods(false).map &remove_question_mark
-    forbidden_actions = all_actions - permitted_actions
+    forbidden_actions = all_actions - permitted_actions - [:policy_user, :policy_record]
     permitted_actions.each do |action|
       failed_permitted << permitted_fail_message.call(subject, action) if !policy.public_send("#{action}?")
     end

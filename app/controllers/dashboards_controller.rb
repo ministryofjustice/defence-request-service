@@ -21,6 +21,6 @@ class DashboardsController < BaseController
   end
 
   def defence_requests_scoped_by_policy
-    policy_scope(DefenceRequest)
+    policy_scope(PolicyContext.new(DefenceRequest, current_user))
   end
 end

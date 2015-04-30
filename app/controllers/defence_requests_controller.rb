@@ -1,7 +1,7 @@
 class DefenceRequestsController < BaseController
+
   before_action :find_defence_request, except: [:new, :create]
-  before_action :set_policy_with_context, only: [:show, :solicitor_time_of_arrival]
-  before_action :set_policy, except: [:show, :solicitor_time_of_arrival]
+  before_action :set_policy_with_context, only: [:show, :new, :create, :edit, :update, :resend_details, :solicitor_time_of_arrival]
   before_action :new_defence_request_form, only: [:show, :new, :create, :edit, :update, :solicitor_time_of_arrival]
 
   before_action ->(c) { authorize PolicyContext.new(defence_request, current_user), "#{c.action_name}?" }
@@ -71,10 +71,6 @@ class DefenceRequestsController < BaseController
 
   def set_policy_with_context
     @policy = policy(PolicyContext.new(defence_request, current_user))
-  end
-
-  def set_policy
-    @policy ||= policy(defence_request)
   end
 
   def defence_request
