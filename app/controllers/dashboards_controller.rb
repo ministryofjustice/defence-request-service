@@ -2,6 +2,7 @@ class DashboardsController < BaseController
   skip_after_action :verify_authorized
 
   def show
+    @policy = policy(PolicyContext.new(DefenceRequest, current_user))
     @dashboard = dashboard
   end
 
@@ -21,6 +22,6 @@ class DashboardsController < BaseController
   end
 
   def defence_requests_scoped_by_policy
-    policy_scope(DefenceRequest)
+    policy_scope(PolicyContext.new(DefenceRequest, current_user))
   end
 end

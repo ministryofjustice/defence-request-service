@@ -24,7 +24,7 @@ class FinishDefenceRequestsController < BaseController
   private
 
   def authorize_finishing_defence_request
-    authorize defence_request, "#{requested_transition}?"
+    authorize PolicyContext.new(defence_request, current_user), "#{requested_transition}?"
   end
 
   def requested_transition

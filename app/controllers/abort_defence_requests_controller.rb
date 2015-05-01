@@ -24,7 +24,7 @@ class AbortDefenceRequestsController < BaseController
   private
 
   def authorize_aborting_defence_request
-    authorize defence_request, "#{requested_transition}?"
+    authorize PolicyContext.new(defence_request, current_user), "#{requested_transition}?"
   end
 
   def requested_transition

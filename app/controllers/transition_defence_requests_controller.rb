@@ -14,7 +14,7 @@ class TransitionDefenceRequestsController < BaseController
   private
 
   def authorize_transition
-    authorize defence_request, "#{requested_transition}?"
+    authorize PolicyContext.new(defence_request, current_user), "#{requested_transition}?"
   end
 
   def transition
