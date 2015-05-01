@@ -7,7 +7,7 @@ class DashboardsController < BaseController
   end
 
   def refresh_dashboard
-    @defence_requests = defence_requests_scoped_by_policy
+    @dashboard = dashboard
 
     respond_to { |format| format.js }
   end

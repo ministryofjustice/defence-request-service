@@ -1,3 +1,7 @@
+@import "colours";
+@import "elements/elements-typography";
+@import "grid_layout";
+
 table.dashboard {
   width: 100%;
   th { font-size: 15px; }
@@ -28,3 +32,71 @@ table.dashboard {
   padding-top: 14px;
 }
 
+.defence-requests {
+  ul {
+    list-style: none;
+    margin: 0;
+
+
+    li {
+      @include media(tablet) {
+        @include grid-column(1/2);
+      }
+
+      @include media(desktop) {
+        @include grid-column(1/3);
+      }
+    }
+
+    $detail-button-width: $gutter-two-thirds;
+
+    .defence-request-box {
+      background: $grey-3;
+      padding: $gutter-half;
+      position: relative;
+    }
+
+    .detail-link {
+      background: image-url('chevron-right_govuk-blue_24.png') center no-repeat;
+      display: block;
+      width: $detail-button-width;
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+
+    dl {
+      margin-right: $detail-button-width;
+
+      dd.name {
+        @include bold-24();
+      }
+      dd.offences {
+        @include bold-19();
+      }
+      dd.time-of-arrival {
+        float: right;
+        color: $grey-1;
+      }
+
+      &.time-field {
+        background: $white;
+        padding: $gutter-one-quarter;
+        border: 1px solid $grey-2;
+        margin: $gutter-one-quarter ($gutter-half + $detail-button-width) $gutter-one-quarter $gutter-half;
+
+        dt {
+          display: inline-block;
+          padding-right: $gutter-one-quarter;
+        }
+        dt:after {
+          content: ":";
+        }
+        dd {
+          display: inline-block;
+        }
+      }
+    }
+  }
+}

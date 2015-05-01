@@ -12,19 +12,22 @@ RSpec.feature "Solicitors managing defence requests" do
       )
 
       login_with solicitor_user
-      click_link "Show"
+      click_link "Case Details for #{accepted_defence_request.dscc_number}"
 
       expect(page).to have_content accepted_defence_request.solicitor_name
     end
 
     specify "can edit the expected arrival time from the show page of the request" do
       solicitor_user = create :solicitor_user
-      create :defence_request, :accepted,
+      accepted_defence_request = create(
+        :defence_request,
+        :accepted,
         solicitor_uid: solicitor_user.uid,
         organisation_uid: solicitor_user.organisation_uids.first
+      )
 
       login_with solicitor_user
-      click_link "Show"
+      click_link "Case Details for #{accepted_defence_request.dscc_number}"
       within ".time-of-arrival" do
         fill_in "defence_request[solicitor_time_of_arrival][day]", with: "01"
         fill_in "defence_request[solicitor_time_of_arrival][month]", with: "01"
@@ -39,12 +42,15 @@ RSpec.feature "Solicitors managing defence requests" do
 
     specify "are shown a message if the time of arrival cannot be updated due to errors" do
       solicitor_user = create :solicitor_user
-      create :defence_request, :accepted,
+      accepted_defence_request = create(
+        :defence_request,
+        :accepted,
         solicitor_uid: solicitor_user.uid,
         organisation_uid: solicitor_user.organisation_uids.first
+      )
 
       login_with solicitor_user
-      click_link "Show"
+      click_link "Case Details for #{accepted_defence_request.dscc_number}"
       within ".time-of-arrival" do
         fill_in "defence_request[solicitor_time_of_arrival][day]", with: "I"
         fill_in "defence_request[solicitor_time_of_arrival][month]", with: "AM"

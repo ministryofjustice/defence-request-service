@@ -18,7 +18,7 @@ gem "pg"
 gem "pundit", "~> 1.0.0"
 gem "rails", "4.2.1"
 gem "rails_config", "~> 0.4.2"
-gem "sass-rails", "~> 5.0"
+gem "sass-rails", "~> 5.0.2"
 gem "sdoc", "~> 0.4.0", group: :doc
 gem "sucker_punch", "~> 1.0"
 gem "transitions", require: ["transitions", "active_model/transitions"]
@@ -27,7 +27,7 @@ gem "unicorn", "~> 4.8.3"
 
 # MOJ styles
 gem "moj_template", "~> 0.23.0"
-gem "govuk_frontend_toolkit", "~> 2.0.1"
+gem "govuk_frontend_toolkit", "~> 3.4.2"
 gem "govuk_elements_rails", "~> 0.1.1"
 
 group :development do

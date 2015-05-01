@@ -12,9 +12,13 @@
   </div>
 <% end %>
 
-<table class="dashboard">
-  <%= render "defence_requests/defence_requests_table_head" %>
-  <tbody>
-    <%= render "defence_requests/defence_requests_table_body", requests: @dashboard.defence_requests %>
-  </tbody>
-</table>
+<% if @dashboard.user_role == "solicitor" %>
+    <%= render "defence_requests/solicitor", requests: @dashboard.defence_requests %>
+<% else %>
+    <table class="dashboard">
+      <%= render "defence_requests/defence_requests_table_head" %>
+      <tbody>
+        <%= render "defence_requests/defence_requests_table_body", requests: @dashboard.defence_requests %>
+      </tbody>
+    </table>
+<% end %>
