@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount JasmineRails::Engine => "/specs" if defined?(JasmineRails)
   root "dashboards#show"
 
   resource :dashboard, only: [:show]

@@ -3,11 +3,11 @@ require "rails_helper"
 RSpec.feature "Solicitors managing defence requests" do
   context "with cases they are assigned to" do
 
-    def enter_time day:, month:, year:, hour:, min:
+    def enter_time hour:, min:, day: nil, month: nil, year: nil
       within ".time-of-arrival" do
-        fill_in "defence_request[solicitor_time_of_arrival][day]", with: day
-        fill_in "defence_request[solicitor_time_of_arrival][month]", with: month
-        fill_in "defence_request[solicitor_time_of_arrival][year]", with: year
+        fill_in "defence_request[solicitor_time_of_arrival][day]", with: day if day
+        fill_in "defence_request[solicitor_time_of_arrival][month]", with: month if month
+        fill_in "defence_request[solicitor_time_of_arrival][year]", with: year if year
         fill_in "defence_request[solicitor_time_of_arrival][hour]", with: hour
         fill_in "defence_request[solicitor_time_of_arrival][min]", with: min
       end
@@ -36,17 +36,46 @@ RSpec.feature "Solicitors managing defence requests" do
       login_as_solicitor_with_accepted_defence_request
       click_link "Case Details for #{@accepted_defence_request.dscc_number}"
       click_link "Add an estimated time of arrival"
-
-      enter_time day: "01", month: "01", year: "2001", hour: "01", min: "01"
+      enter_time hour: "01", min: "12"
       click_button "Save"
+      today = Date.today.to_s(:full)
+      expect( find("#solicitor_time_of_arrival") ).to have_content "#{today} - 01:12"
 
-      expect(page).to have_content "1 January 2001 - 01:01"
+      click_link "Add an estimated time of arrival"
+      enter_time day: "21", month: "11", year: "2002", hour: "01", min: "12"
+      click_button "Save"
+      expect( find("#solicitor_time_of_arrival") ).to have_content "21 November 2002 - 01:12"
 
       click_link "Add an estimated time of arrival"
       enter_time day: "02", month: "02", year: "2002", hour: "02", min: "02"
       click_link "Cancel"
 
-      expect(page).to have_content "1 January 2001 - 01:01"
+      expect( find("#solicitor_time_of_arrival") ).to have_content "21 November 2002 - 01:12"
+    end
+
+    specify "can edit the expected arrival time from the show page of the request with JS enabled", js: true do
+      login_as_solicitor_with_accepted_defence_request
+      click_link "Case Details for #{@accepted_defence_request.dscc_number}"
+      click_link "Add an estimated time of arrival"
+      enter_time hour: "23", min: "02"
+      click_button "Save"
+
+      today = Date.today.to_s(:full)
+      expect( find("#solicitor_time_of_arrival") ).to have_content "#{today} - 23:02"
+
+      click_link "Add an estimated time of arrival"
+      click_link "Tomorrow"
+      enter_time hour: "00", min: "03"
+      click_button "Save"
+      tomorrow = (Date.today + 1).to_s(:full)
+      expect( find("#solicitor_time_of_arrival") ).to have_content "#{tomorrow} - 00:03"
+
+      click_link "Add an estimated time of arrival"
+      click_link "Tomorrow"
+      click_link "Today"
+      enter_time hour: "23", min: "59"
+      click_button "Save"
+      expect( find("#solicitor_time_of_arrival") ).to have_content "#{today} - 23:59"
     end
 
     specify "are shown a message if the time of arrival cannot be updated due to errors" do

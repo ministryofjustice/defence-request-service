@@ -32,7 +32,6 @@ gem "govuk_elements_rails", "~> 0.1.1"
 
 group :development do
   gem "guard-rspec", require: false
-  gem "terminal-notifier-guard"
   gem "web-console", "~> 2.0"
 end
 

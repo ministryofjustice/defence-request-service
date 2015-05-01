@@ -117,6 +117,8 @@ en:
   time_of_arrest: Time of Arrest
   time_of_arrival: "Time of Arrival"
   time_of_detention_authorised: Time of Detention Authorised
+  today: Today
+  tomorrow: Tomorrow
   transition_info: Reason aborted
   unavailable: "Unavailable"
   unfit_for_interview_reason: Reason unfit for interview
