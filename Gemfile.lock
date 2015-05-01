@@ -140,6 +140,9 @@ GEM
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
+    guard-rubocop (1.2.0)
+      guard (~> 2.0)
+      rubocop (~> 0.20)
     hashie (3.4.1)
     hitimes (1.2.2)
     httparty (0.13.3)
@@ -377,6 +380,7 @@ DEPENDENCIES
   govuk_frontend_toolkit (~> 3.4.2)
   guard-jasmine!
   guard-rspec
+  guard-rubocop
   httparty (~> 0.13.3)
   jasmine (~> 2.0.2)
   jasmine-core (~> 2.0.0)
@@ -391,7 +395,7 @@ DEPENDENCIES
   omniauth-dsds!
   omniauth-oauth2
   pg
-  phantomjs (~> 1.9.8)
+  phantomjs (~> 1.9.7)
   poltergeist
   pry-rails
   pundit (~> 1.0.0)
