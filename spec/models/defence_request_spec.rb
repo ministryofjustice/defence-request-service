@@ -76,8 +76,8 @@ RSpec.describe DefenceRequest, type: :model do
   describe "states" do
 
     it "allows for correct transitions" do
-      expect(DefenceRequest.available_states).to eq [:aborted, :accepted, :acknowledged, :draft, :finished, :queued]
-      expect(DefenceRequest.available_events).to eq [:abort, :accept, :acknowledge, :finish, :queue]
+      expect(DefenceRequest.available_states).to contain_exactly(:aborted, :accepted, :acknowledged, :draft, :completed, :queued)
+      expect(DefenceRequest.available_events).to contain_exactly(:abort, :accept, :acknowledge, :complete, :queue)
     end
 
     shared_examples "transition possible" do |event|
@@ -118,23 +118,23 @@ RSpec.describe DefenceRequest, type: :model do
       subject { FactoryGirl.create(:defence_request, :acknowledged) }
 
       let(:state) { :acknowledged }
-      include_examples "allowed transitions", [:finish, :abort ]
+      include_examples "allowed transitions", [:complete, :abort ]
     end
 
     describe "acknowledged with dscc_number" do
       subject { FactoryGirl.create(:defence_request, :acknowledged, :with_dscc_number) }
 
       let(:state) { :acknowledged }
-      include_examples "allowed transitions", [ :accept, :finish, :abort ]
+      include_examples "allowed transitions", [ :accept, :complete, :abort ]
     end
 
     describe "accepted" do
       let(:state) { :accepted }
-      include_examples "allowed transitions", [ :finish, :abort ]
+      include_examples "allowed transitions", [ :complete, :abort ]
     end
 
-    describe "finished" do
-      let(:state) { :finished }
+    describe "completed" do
+      let(:state) { :completed }
       include_examples "allowed transitions", []
     end
   end

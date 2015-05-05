@@ -79,8 +79,8 @@ class CsoDefenceRequestPolicy < ApplicationPolicy
     policy_record.draft?
   end
 
-  def finish?
-    policy_record.can_execute_finish?
+  def complete?
+    policy_record.can_execute_complete?
   end
 
   private

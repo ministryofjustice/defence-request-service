@@ -28,6 +28,7 @@ en:
   circumstances_of_arrest: Circumstances of Arrest
   city: City
   comments: "Comments"
+  complete: Complete
   confirm: "Confirm"
   contact_us: "contact us"
   continue: "Continue"
@@ -59,7 +60,6 @@ en:
   expected_time_of_arrival: "Solicitor Time of Arrival"
   expired: "Session expired"
   female: "Female"
-  finish: Finish
   fit_for_interview: Fit for Interview?
   full_name: "Full Name"
   gender: "Gender"
@@ -126,8 +126,8 @@ en:
     abort: "%{model} successfully aborted"
     accept: "%{model} was marked as accepted"
     acknowledge: "%{model} successfully acknowledged"
-    finish: "%{model} successfully finished"
     create: "%{model} successfully created"
+    complete: "%{model} successfully completed"
     destroy: "%{model} successfully deleted"
     details_sent: "Details successfully sent"
     queue: "%{model} successfully sent for processing"
