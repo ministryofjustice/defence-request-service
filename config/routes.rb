@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   resource :transition_defence_request, only: [:new, :create]
 
   get "/auth/:provider/callback", to: "sessions#create"
+  get "/auth/failure", to: "sessions#failure"
+
   get "/status" => "status#index"
   get "/help", controller: :static, action: :help, as: :help
   get "/maintenance", controller: :static, action: :maintenance, as: :maintenance
