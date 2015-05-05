@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.feature "Call Center Operatives managing defence requests" do
+  include AuthClientHelper
+
   context "with any request" do
     specify "can see the show page of the request" do
       cco_user = create :cco_user
@@ -37,6 +39,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
       specify "can acknowledge the request" do
         cco_user = create :cco_user
         dr =  create :defence_request, :queued, cco_uid: cco_user.uid
+        mock_organisations([{uid: SecureRandom.uuid}])
 
         login_with cco_user
         click_button "Acknowledge"
