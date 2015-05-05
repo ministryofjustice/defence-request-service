@@ -149,11 +149,9 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           create :defence_request, :accepted
 
           login_with cso_user
-          click_link "Finish"
-          fill_in "Comments", with: "Splendid."
-          click_button "Finish"
+          click_button "Complete"
 
-          expect(page).to have_content "Defence Request successfully finished"
+          expect(page).to have_content "Defence Request successfully completed"
         end
       end
     end

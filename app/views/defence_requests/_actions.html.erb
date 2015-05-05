@@ -7,4 +7,4 @@
 <%= button_to t("accepted"), transition_defence_request_path(defence_request_id: def_req.id, transition_to: "accept") if check_policy_clause(policy, :accept?) %>
 <%= button_to t("resend_details"), resend_details_defence_request_path(def_req), data: { confirm: "Are you sure?" } if check_policy_clause(policy, :resend_details?) %>
 <%= button_to t("send_for_processing"), transition_defence_request_path(defence_request_id: def_req.id, transition_to: "queue") if check_policy_clause(policy, :queue?)%>
-<%= link_to t("finish"), new_finish_defence_request_path(defence_request_id: def_req.id) if check_policy_clause(policy, :finish?) %>
+<%= button_to t("complete"), transition_defence_request_path(defence_request_id: def_req.id, transition_to: :complete) if check_policy_clause(policy, :complete?) %>

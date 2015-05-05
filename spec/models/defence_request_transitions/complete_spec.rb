@@ -1,24 +1,24 @@
-require_relative "../../../app/models/defence_request_transitions/finish"
+require_relative "../../../app/models/defence_request_transitions/complete"
 require "transitions"
 
-RSpec.describe DefenceRequestTransitions::Finish, "#complete" do
+RSpec.describe DefenceRequestTransitions::Complete, "#complete" do
   it "transitions the defence request to finish state" do
     defence_request = spy(:defence_request)
 
-    DefenceRequestTransitions::Finish.new(
+    DefenceRequestTransitions::Complete.new(
       defence_request: defence_request,
     ).complete
 
-    expect(defence_request).to have_received(:finish)
+    expect(defence_request).to have_received(:complete)
     expect(defence_request).to have_received(:save!)
   end
 
   it "returns false if the defence_request could not be transitioned" do
     defence_request = spy(:defence_request)
 
-    allow(defence_request).to receive(:can_finish?).and_return(false)
+    allow(defence_request).to receive(:can_complete?).and_return(false)
 
-    transition = DefenceRequestTransitions::Finish.new(
+    transition = DefenceRequestTransitions::Complete.new(
       defence_request: defence_request,
     ).complete
 

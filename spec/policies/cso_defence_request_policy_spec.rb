@@ -46,7 +46,7 @@ RSpec.describe CsoDefenceRequestPolicy do
       let (:allowed_actions) { [
         :show,
         :abort,
-        :finish
+        :complete
       ] }
       let (:defreq) { FactoryGirl.create(:defence_request, :acknowledged) }
       specify { expect(subject).to permit_actions_and_forbid_all_others actions }
@@ -56,7 +56,7 @@ RSpec.describe CsoDefenceRequestPolicy do
       let (:allowed_actions) { [
         :show,
         :abort,
-        :finish,
+        :complete,
         :resend_details,
         :solicitor_time_of_arrival
       ] }

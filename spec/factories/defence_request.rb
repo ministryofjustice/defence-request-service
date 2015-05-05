@@ -72,8 +72,8 @@ FactoryGirl.define do
     state "aborted"
   end
 
-  trait :finished do
-    state "finished"
+  trait :completed do
+    state "completed"
   end
 
   trait :appropriate_adult do

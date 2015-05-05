@@ -20,7 +20,7 @@ class DefenceRequest < ActiveRecord::Base
     state :acknowledged
     state :accepted
     state :aborted
-    state :finished
+    state :completed
 
     event :queue do
       transitions from: [:draft], to: :queued
@@ -38,8 +38,8 @@ class DefenceRequest < ActiveRecord::Base
       transitions from: [:queued, :acknowledged, :accepted], to: :aborted
     end
 
-    event :finish do
-      transitions from: [:acknowledged, :accepted], to: :finished
+    event :complete do
+      transitions from: [:acknowledged, :accepted], to: :completed
     end
   end
 
