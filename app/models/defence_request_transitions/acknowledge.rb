@@ -17,8 +17,11 @@ module DefenceRequestTransitions
       return true if defence_request.cco_uid = user.uid
     end
 
+    # Note: In the unlikely event that we cannot generate a dscc_number the dr
+    # is going to end up in a broken state. We will move this into a delayed
+    # job where we will handle this case.
     def acknowledge_defence_request
-      run_transition && defence_request.save!
+      run_transition && defence_request.save! && defence_request.generate_dscc_number!
     end
 
     def run_transition
