@@ -18,7 +18,7 @@ module DefenceRequestTransitions
     end
 
     def acknowledge_defence_request
-      run_transition && defence_request.save!
+      run_transition && defence_request.save! && defence_request.generate_dscc_number!
     end
 
     def run_transition

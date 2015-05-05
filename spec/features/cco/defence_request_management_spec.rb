@@ -36,12 +36,15 @@ RSpec.feature "Call Center Operatives managing defence requests" do
 
       specify "can acknowledge the request" do
         cco_user = create :cco_user
-        create :defence_request, :queued, cco_uid: cco_user.uid
+        dr =  create :defence_request, :queued, cco_uid: cco_user.uid
 
         login_with cco_user
         click_button "Acknowledge"
 
         expect(page).to have_content "Defence Request successfully acknowledged"
+
+        click_link "Show"
+        expect(page).to have_content "#{dr.dscc_number}"
       end
 
       specify "are shown a message if the request cannot be acknowledged" do
@@ -123,7 +126,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
           create(
             :defence_request,
             :acknowledged,
-            dscc_number: "012345",
+            :with_dscc_number,
             cco_uid: cco_user.uid
           )
 
