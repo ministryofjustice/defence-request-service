@@ -185,4 +185,15 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
       expect(page).to have_content defence_request.dscc_number
     end
   end
+
+  specify "can follow a link back to the dashboard" do
+    cso_user = create :cso_user
+    create :defence_request
+
+    login_with cso_user
+    click_link "Show"
+
+    click_link "Dashboard"
+    expect(page).to have_content "Custody Suite Officer Dashboard"
+  end
 end
