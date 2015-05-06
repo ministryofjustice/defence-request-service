@@ -8,7 +8,7 @@ RUN touch /etc/inittab
 
 # Add application server
 COPY ./docker/runit/application-server/run /etc/service/application-server/run
-RUN chmod +x /etc/service/application-server
+RUN chmod +x /etc/service/application-server/run
 
 ###############################################################################
 # Add code and set work directory. Generally everything from this
@@ -43,6 +43,9 @@ EXPOSE $UNICORN_PORT
 # Add volumes for log files
 VOLUME /usr/src/app/logs
 VOLUME /var/log
+
+# Don't run logstash, statsd, or sshd
+RUN rm -rf /etc/service/logstash /etc/service/statsd /etc/service/sshd
 
 # Run all services by default
 CMD ["/usr/bin/runsvdir", "-P", "/etc/service"]
