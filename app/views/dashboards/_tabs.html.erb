@@ -1,8 +1,8 @@
 <ul class="tabs">
-  <li class="tab <%= "active_tab" if params[:action] == "show" %>">
+  <li class="tab <%= active_tab?("show") %>">
     <%= link_to t("active", count: @active_count), dashboard_path %>
   </li>
-  <li class="tab <%= "active_tab" if params[:action] == "closed" %>">
+  <li class="tab <%= active_tab?("closed") %>">
     <%= link_to t("closed", count: @closed_count), dashboard_closed_path %>
   </li>
   <li class="filler">
