@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:create]
+  skip_before_action :authenticate_user!, only: [:create, :failure]
 
   def create
     session[:user_token] = auth_hash.fetch(:credentials).fetch(:token)

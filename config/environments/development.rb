@@ -43,3 +43,7 @@ Rails.application.configure do
   # Configure ActiveJob queue adapter
   config.active_job.queue_adapter = :sucker_punch
 end
+
+OmniAuth.config.on_failure = Proc.new { |env|
+  OmniAuth::FailureEndpoint.new(env).redirect_to_failure
+}
