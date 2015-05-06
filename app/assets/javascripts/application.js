@@ -14,6 +14,6 @@
 //= require dsds
 //= require date_chooser
 //= require govuk/selection-buttons.js
-//= require js_alt_text.js
-//= require prevent_moj_console_spam.js
-//= require page_initialise.js
+//= require prevent_moj_console_spam
+//= require remove_nonjs
+//= require page_initialise
