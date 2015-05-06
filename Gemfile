@@ -54,6 +54,7 @@ group :test do
   gem "poltergeist"
   gem "shoulda-matchers", require: false
   gem "simplecov", require: false
+  gem "site_prism", require: false
   gem "webmock", require: false
 end
 
