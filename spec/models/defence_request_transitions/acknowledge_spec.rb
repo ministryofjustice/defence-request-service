@@ -15,8 +15,12 @@ RSpec.describe DefenceRequestTransitions::Acknowledge, "#complete", :mock_auth_a
     ).complete
   end
 
-  before do
-    mock_auth_api_organisations([{uid: organisation_uid}])
+  let(:auth_api_mock_setup) do
+    {
+      organisations: {
+        { types: [:law_firm] } => [create(:organisation, uid: organisation_uid, type: :law_firm)]
+      }
+    }
   end
 
   it "transitions the defence request to acknowledge state" do
@@ -47,12 +51,21 @@ RSpec.describe DefenceRequestTransitions::Acknowledge, "#complete", :mock_auth_a
     expect(result).to eq false
   end
 
-  it "returns false if an organisation is not assigned" do
-    mock_auth_api_organisations([])
+  context "something" do
+    let(:auth_api_mock_setup) do
+      {
+        organisations: {
+          { types: [:law_firm] } => []
+        }
+      }
+    end
 
-    result = subject
+    it "returns false if an organisation is not assigned" do
 
-    expect(defence_request).to be_acknowledged
-    expect(result).to eq false
+      result = subject
+
+      expect(defence_request).to be_acknowledged
+      expect(result).to eq false
+    end
   end
 end

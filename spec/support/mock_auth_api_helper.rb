@@ -1,8 +1,11 @@
 module MockAuthApiHelper
-  def mock_auth_api_client
+  MockAuthApiNotSetup = Class.new(Exception)
+
+  def mock_auth_api_client(setup)
     @old_service = ServiceRegistry.service(:auth_api_client)
-    MockClient.reset_mock
     ServiceRegistry.register(:auth_api_client, MockClient)
+
+    MockClient.setup_mock(setup)
   end
 
   def clean_auth_api_client_mock
@@ -17,26 +20,24 @@ module MockAuthApiHelper
     def initialize(token)
     end
 
-    def organisations(params = {})
-      self.class.mocked_organisations
-    end
+    [:organisations, :profiles].each do |resource|
+      define_method(resource) do |params|
+        calls = self.class.calls
 
-    def self.reset_mock
-      @mocked_organisations = []
-    end
-
-    def self.mock_organisations(organisations)
-      @mocked_organisations = organisations.map do |organisation|
-        if organisation.is_a?(Hash)
-          Drs::AuthClient::Models::Organisation.new(organisation)
+        if calls[resource] && calls[resource][params]
+          calls[resource][params]
         else
-          organisation
+          raise MockAuthApiNotSetup.new("#{resource} with #{params} is not setup")
         end
       end
     end
 
-    def self.mocked_organisations
-      @mocked_organisations ||= []
+    def self.calls
+      @calls ||= []
+    end
+
+    def self.setup_mock(calls)
+      @calls = calls
     end
   end
 end
@@ -45,7 +46,7 @@ RSpec.configure do |config|
   config.include MockAuthApiHelper, mock_auth_api: true
 
   config.around(:each, mock_auth_api: true) do |example|
-    mock_auth_api_client
+    mock_auth_api_client(auth_api_mock_setup)
     example.run
     clean_auth_api_client_mock
   end
