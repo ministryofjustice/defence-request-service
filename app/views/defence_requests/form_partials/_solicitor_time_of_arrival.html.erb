@@ -1,3 +1,4 @@
+<% today, tomorrow, initial_date, initial_date_type = data_chooser_setup(@defence_request.solicitor_time_of_arrival) %>
 <div class="form-group">
   <fieldset class="inline time-select date-chooser">
     <h1><%= t('arrival_time') %></h1>
@@ -11,28 +12,26 @@
         <%= t.label t('min') %>
         <%= t.text_field :min, size: 2, placeholder: 'MM', class: 'minute text-field' %>
       </div>
-      <div class="js-only-inline-block date-select">
-        <% @today = Date.today %>
-        <% @tomorrow = @today + 1 %>
+      <div class="date-chooser-select js-only-inline-block" data-initial-date="<%= initial_date_type %>">
         <label>
-          <span class="today" data-date-display="<%= @today.to_s(:full) %>" data-day="<%= @today.day %>" data-month="<%= @today.month %>" data-year="<%= @today.year %>"><%= t('today') %></span>
-          <span class="tomorrow" data-date-display="<%= @tomorrow.to_s(:full) %>" data-day="<%= @tomorrow.day %>" data-month="<%= @tomorrow.month %>" data-year="<%= @tomorrow.year %>"><%= t('tomorrow') %></span>
+          <span class="today" data-date-display="<%= today.to_s(:full) %>" data-day="<%= today.day %>" data-month="<%= today.month %>" data-year="<%= today.year %>"><%= t('today') %></span>
+          <span class="tomorrow" data-date-display="<%= tomorrow.to_s(:full) %>" data-day="<%= tomorrow.day %>" data-month="<%= tomorrow.month %>" data-year="<%= tomorrow.year %>"><%= t('tomorrow') %></span>
         </label>
-        <p class="text-field date-display"><%= @today.to_s(:full) %></p>
+        <p class="date-chooser-display text-field"><%= initial_date.to_s(:full) %></p>
       </div>
-      <div class="hide date-values">
+      <div class="hide date-chooser-values">
         <div class="date-field-wrapper">-</div>
         <div class="date-field-wrapper">
           <%= t.label t('day') %>
-          <%= t.text_field :day, size: 2, placeholder: 'DD', class: 'day text-field', value: @today.day %>
+          <%= t.text_field :day, size: 2, placeholder: 'DD', class: 'day text-field', value: initial_date.day %>
         </div>
         <div class="date-field-wrapper">
           <%= t.label t('month') %>
-          <%= t.text_field :month, size: 2, placeholder: 'MM', class: 'month text-field', value: @today.month %>
+          <%= t.text_field :month, size: 2, placeholder: 'MM', class: 'month text-field', value: initial_date.month %>
         </div>
         <div class="date-field-wrapper">
           <%= t.label t('year') %>
-          <%= t.text_field :year, size: 4, placeholder: 'YYYY', class: 'year text-field', value: @today.year %>
+          <%= t.text_field :year, size: 4, placeholder: 'YYYY', class: 'year text-field', value: initial_date.year %>
         </div>
       </div>
     <% end %>

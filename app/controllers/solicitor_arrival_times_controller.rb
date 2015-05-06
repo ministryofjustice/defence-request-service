@@ -12,18 +12,22 @@ class SolicitorArrivalTimesController < BaseController
   end
 
   def edit
-    render "defence_requests/solicitor_arrival_time"
+    render_edit_view
   end
 
   def update
     if @defence_request_form.submit(defence_request_params)
       redirect_to(defence_request_path(@defence_request), notice: flash_message(:solicitor_time_of_arrival_added, DefenceRequest))
     else
-      render "defence_requests/solicitor_arrival_time"
+      render_edit_view
     end
   end
 
   private
+
+  def render_edit_view
+    render "defence_requests/solicitor_arrival_time"
+  end
 
   def defence_request_id
     params[:defence_request_id]

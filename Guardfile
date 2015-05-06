@@ -41,12 +41,8 @@ group :red_green_refactor, halt_on_fail: true do
 
     # Capybara features specs
     watch(rails.view_dirs)     { |m| rspec.spec.("features/#{m[1]}") }
+    watch("app/controllers/solicitor_arrival_times_controller.rb") { "spec/features/solicitor/defence_request_management_spec.rb" }
 
-    # Turnip features and steps
-    watch(%r{^spec/acceptance/(.+)\.feature$})
-    watch(%r{^spec/acceptance/steps/(.+)_steps\.rb$}) do |m|
-      Dir[File.join("**/#{m[1]}.feature")][0] || "spec/acceptance"
-    end
   end
 
   guard :rubocop do
