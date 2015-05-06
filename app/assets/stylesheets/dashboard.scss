@@ -64,10 +64,6 @@ ul.tabs {
     border:  1px solid #000;
     border-bottom: 0;
   }
-  li.active_tab {
-    border:  1px solid #000;
-    border-bottom: 0;
-  }
 
   li a:hover {
     color: $grey-1;
@@ -81,7 +77,6 @@ ul.tabs {
     height: 30px;
   }
 }
-
 
 .form-links {
   display: inline-block;

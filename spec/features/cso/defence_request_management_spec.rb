@@ -144,7 +144,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           expect(page).to_not have_selector ".time-of-arrival"
         end
 
-        specify "can mark the request as finished" do
+        specify "can mark the request as completed" do
           cso_user = create :cso_user
           create :defence_request, :accepted
 

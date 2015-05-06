@@ -8,7 +8,7 @@ class SolicitorDefenceRequestPolicy < ApplicationPolicy
     end
 
     def resolve
-      scope.related_to_solicitor(user).accepted_aborted_or_finished
+      scope.related_to_solicitor(user).accepted_aborted_or_completed
     end
   end
 

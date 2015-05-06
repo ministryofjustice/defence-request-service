@@ -28,11 +28,11 @@ class DashboardsController < BaseController
 
   def set_defence_requests
     if @dashboard.user_role == "solicitor"
-      @active_defence_requests = @dashboard.defence_requests.not_completed
+      @active_defence_requests = @dashboard.defence_requests.active
     else
       @active_defence_requests = @dashboard.defence_requests
     end
-    @closed_defence_requests = @dashboard.defence_requests.completed
+    @closed_defence_requests = @dashboard.defence_requests.finished
   end
 
   def set_dashboard_count

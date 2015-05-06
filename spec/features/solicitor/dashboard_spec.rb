@@ -17,18 +17,18 @@ RSpec.feature "Solicitors viewing their dashboard" do
       create :defence_request, offences: "Extortion"
     }
 
-    let!(:finished_accepted_defence_request) {
+    let!(:completed_accepted_defence_request) {
       create(
         :defence_request,
-        :finished,
+        :completed,
         solicitor_uid: solicitor_user.uid,
         organisation_uid: solicitor_user.organisation_uids.first,
         offences: "Theft"
       )
     }
 
-    let!(:finished_not_accepted_defence_request) {
-      create :defence_request, :finished, offences: "Genocide"
+    let!(:completed_not_accepted_defence_request) {
+      create :defence_request, :completed, offences: "Genocide"
     }
 
     let!(:solicitor_user) {
@@ -50,8 +50,8 @@ RSpec.feature "Solicitors viewing their dashboard" do
       specify "can only see active requests that they have accepted" do
         expect(page).to have_content active_accepted_defence_request.offences
         expect(page).to_not have_content active_not_accepted_defence_request.offences
-        expect(page).to_not have_content finished_accepted_defence_request.offences
-        expect(page).to_not have_content finished_not_accepted_defence_request.offences
+        expect(page).to_not have_content completed_accepted_defence_request.offences
+        expect(page).to_not have_content completed_not_accepted_defence_request.offences
       end
     end
 
@@ -61,11 +61,11 @@ RSpec.feature "Solicitors viewing their dashboard" do
         click_link("Closed (1)")
       end
 
-      specify "can only see finished requests that they have accepted" do
+      specify "can only see completed requests that they have accepted" do
         expect(page).to_not have_content active_accepted_defence_request.offences
         expect(page).to_not have_content active_not_accepted_defence_request.offences
-        expect(page).to have_content finished_accepted_defence_request.offences
-        expect(page).to_not have_content finished_not_accepted_defence_request.offences
+        expect(page).to have_content completed_accepted_defence_request.offences
+        expect(page).to_not have_content completed_not_accepted_defence_request.offences
       end
     end
   end
