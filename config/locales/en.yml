@@ -8,6 +8,7 @@ en:
   acknowledge: "Acknowledge"
   acknowledged_defence_request: "Acknowledged Defence Requests"
   actions: "Actions"
+  active: "Active (%{count})"
   add_expected_time_of_arrival: "Add Expected Time of Arrival"
   address_1: "Address 1"
   address_2: "Address 2"
@@ -27,6 +28,7 @@ en:
   change_password: "Change Password"
   circumstances_of_arrest: Circumstances of Arrest
   city: City
+  closed: "Closed (%{count})"
   comments: "Comments"
   complete: Complete
   confirm: "Confirm"

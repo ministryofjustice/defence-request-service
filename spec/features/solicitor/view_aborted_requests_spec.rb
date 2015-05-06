@@ -12,7 +12,7 @@ RSpec.feature "Solicitors viewing aborted requests" do
     )
 
     login_with solicitor
-
+    click_link "Closed"
     click_link "Case Details for #{aborted_defence_request.dscc_number}"
 
     expect(page).

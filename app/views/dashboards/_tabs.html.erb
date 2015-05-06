@@ -1,0 +1,10 @@
+<ul class="tabs">
+  <li class="tab <%= "active_tab" if params[:action] == "show" %>">
+    <%= link_to t("active", count: @active_count), dashboard_path %>
+  </li>
+  <li class="tab <%= "active_tab" if params[:action] == "closed" %>">
+    <%= link_to t("closed", count: @closed_count), dashboard_closed_path %>
+  </li>
+  <li class="filler">
+  </li>
+</ul>
