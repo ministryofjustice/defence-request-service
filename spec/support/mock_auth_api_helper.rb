@@ -18,21 +18,25 @@ module MockAuthApiHelper
     end
 
     def organisations(params = {})
-      @@organisations
+      self.class.mocked_organisations
     end
 
     def self.reset_mock
-      @@organisations = []
+      @mocked_organisations = []
     end
 
     def self.mock_organisations(organisations)
-      @@organisations = organisations.map do |organisation|
+      @mocked_organisations = organisations.map do |organisation|
         if organisation.is_a?(Hash)
           Drs::AuthClient::Models::Organisation.new(organisation)
         else
           organisation
         end
       end
+    end
+
+    def self.mocked_organisations
+      @mocked_organisations ||= []
     end
   end
 end
