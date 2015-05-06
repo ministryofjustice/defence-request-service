@@ -11,7 +11,7 @@
         <%= t.label t('min') %>
         <%= t.text_field :min, size: 2, placeholder: 'MM', class: 'minute text-field' %>
       </div>
-      <div class="date-field-wrapper js-only-inline-block date-select">
+      <div class="js-only-inline-block date-select">
         <% @today = Date.today %>
         <% @tomorrow = @today + 1 %>
         <label>
