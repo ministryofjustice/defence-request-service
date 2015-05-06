@@ -15,18 +15,5 @@
 //= require date_chooser
 //= require govuk/selection-buttons.js
 //= require js_alt_text.js
-
-// Prevents MOJ console spam
-moj.Modules.devs = {
-  init: function() {
-  }
-};
-
-// Enable any date choosers on page
-jQuery(function() {
-  $( ".date-chooser" ).each(function( index ) {
-    new window.DateChooser($(this));
-    console.log( index + ": " + $( this ).text() );
-  });
-});
-
+//= require prevent_moj_console_spam.js
+//= require page_initialise.js
