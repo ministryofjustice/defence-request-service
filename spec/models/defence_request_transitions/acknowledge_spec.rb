@@ -1,10 +1,8 @@
 require "rails_helper"
 
-RSpec.describe DefenceRequestTransitions::Acknowledge, "#complete" do
+RSpec.describe DefenceRequestTransitions::Acknowledge, "#complete", :mock_auth_api do
   let(:defence_request) { create(:defence_request, :duty_solicitor, :queued, dscc_number: nil ) }
   let(:user) { spy(:user, uid: SecureRandom.uuid) }
-
-  include AuthClientHelper
 
   let(:auth_token) { "TOKEN" }
   let(:organisation_uid) { SecureRandom.uuid }
@@ -18,7 +16,7 @@ RSpec.describe DefenceRequestTransitions::Acknowledge, "#complete" do
   end
 
   before do
-    mock_organisations([{uid: organisation_uid}])
+    mock_auth_api_organisations([{uid: organisation_uid}])
   end
 
   it "transitions the defence request to acknowledge state" do
@@ -50,7 +48,7 @@ RSpec.describe DefenceRequestTransitions::Acknowledge, "#complete" do
   end
 
   it "returns false if an organisation is not assigned" do
-    mock_organisations([])
+    mock_auth_api_organisations([])
 
     result = subject
 

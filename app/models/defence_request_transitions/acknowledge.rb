@@ -22,7 +22,7 @@ module DefenceRequestTransitions
     # later the rota service will provide organisation_uid and it'll be
     # assigned using a delayed job of some sort
     def set_organisation_uid
-      client = Drs::AuthClient::Client.new(@auth_token)
+      client = ServiceRegistry.service(:auth_api_client).new(@auth_token)
       organisations = client.organisations(types: [:law_firm])
 
       if organisations.empty?
