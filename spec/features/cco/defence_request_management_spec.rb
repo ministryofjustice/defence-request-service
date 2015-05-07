@@ -25,6 +25,14 @@ RSpec.feature "Call Center Operatives managing defence requests" do
 
   context "with requests they are assigned to" do
     context "that have not yet been acknowledged" do
+      let(:auth_api_mock_setup) do
+        {
+          organisations: {
+            { types: [:law_firm] } => [create(:organisation)]
+          }
+        }
+      end
+
       specify "cannot edit the request" do
         cco_user = create :cco_user
         create :defence_request, :queued, cco_uid: cco_user.uid
@@ -34,7 +42,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
         expect(page).not_to have_link "Edit"
       end
 
-      specify "can acknowledge the request" do
+      specify "can acknowledge the request", :mock_auth_api do
         cco_user = create :cco_user
         dr =  create :defence_request, :queued, cco_uid: cco_user.uid
 

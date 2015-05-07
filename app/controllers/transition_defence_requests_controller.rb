@@ -34,6 +34,7 @@ class TransitionDefenceRequestsController < BaseController
       defence_request: defence_request,
       transition_to: requested_transition,
       user: current_user,
+      auth_token: session[:user_token]
     }
   end
 end

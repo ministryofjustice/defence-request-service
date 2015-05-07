@@ -1,4 +1,12 @@
 GIT
+  remote: git://github.com/ministryofjustice/defence-request-service-auth.git
+  revision: 8565b686726ba8c0d892a76deeebd73802fc0c37
+  specs:
+    drs-auth_client (0.2.0)
+      activesupport (~> 4.2.0)
+      faraday (~> 0.9.1)
+
+GIT
   remote: git://github.com/ministryofjustice/defence-request-service-omniauth-dsds.git
   revision: 21b99f498a1b0e77eeb096e040e2762cacd57531
   tag: v0.7.1
@@ -343,6 +351,7 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   database_cleaner
   dotenv-rails (~> 2.0.0)
+  drs-auth_client!
   factory_girl_rails
   faker (~> 1.4.3)
   govuk_elements_rails (~> 0.1.1)
