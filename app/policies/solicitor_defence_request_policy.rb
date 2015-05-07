@@ -28,12 +28,16 @@ class SolicitorDefenceRequestPolicy < ApplicationPolicy
   end
 
   def show?
-    user_is_the_assigned_solicitor && !policy_record.draft?
+    (user_is_the_assigned_solicitor || user_is_from_the_same_organisation) && !policy_record.draft?
   end
 
   private
 
   def user_is_the_assigned_solicitor
     policy_record.solicitor_uid == policy_user.uid
+  end
+
+  def user_is_from_the_same_organisation
+    policy_user.organisation_uids.include?(policy_record.organisation_uid)
   end
 end
