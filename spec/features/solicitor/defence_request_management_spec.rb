@@ -79,6 +79,16 @@ RSpec.feature "Solicitors managing defence requests" do
       enter_time hour: "23", min: "59"
       click_button "Save"
       expect( find("#solicitor_time_of_arrival") ).to have_content "#{today} - 23:59"
+
+      click_link "Add an estimated time of arrival"
+      enter_time day: "21", month: "11", year: "2002", hour: "01", min: "12"
+      click_button "Save"
+      expect( find("#solicitor_time_of_arrival") ).to have_content "21 November 2002 - 01:12"
+
+      click_link "Add an estimated time of arrival"
+      enter_time day: "02", month: "02", year: "2002", hour: "02", min: "02"
+      click_link "Cancel"
+      expect( find("#solicitor_time_of_arrival") ).to have_content "21 November 2002 - 01:12"
     end
 
     specify "are shown a message if the time of arrival cannot be updated due to errors" do
