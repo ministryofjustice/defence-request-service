@@ -13,7 +13,7 @@
         <%= t.text_field :min, size: 2, placeholder: 'MM', class: 'minute text-field' %>
       </div>
       <div class="date-chooser-select js-only-inline-block" data-initial-date="<%= initial_date_type %>">
-        <label>
+        <label class="form-label">
           <span class="today" data-date-display="<%= today.to_s(:full) %>" data-day="<%= today.day %>" data-month="<%= today.month %>" data-year="<%= today.year %>"><%= t('today') %></span>
           <span class="tomorrow" data-date-display="<%= tomorrow.to_s(:full) %>" data-day="<%= tomorrow.day %>" data-month="<%= tomorrow.month %>" data-year="<%= tomorrow.year %>"><%= t('tomorrow') %></span>
         </label>
