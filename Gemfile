@@ -44,7 +44,6 @@ group :development, :test do
   gem "rspec-rails", "~> 3.2.0"
   gem "rubocop", "~> 0.30"
   gem "phantomjs", "~> 1.9.7"
-  gem "jasmine-core", "~> 2.0.0"
   gem "jasmine", "~> 2.0.2"
   gem "jasmine-rails", "~> 0.10.2"
   gem "jasmine-jquery-rails", "~> 2.0.2"

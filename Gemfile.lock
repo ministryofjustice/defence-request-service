@@ -382,7 +382,6 @@ DEPENDENCIES
   guard-rubocop
   httparty (~> 0.13.3)
   jasmine (~> 2.0.2)
-  jasmine-core (~> 2.0.0)
   jasmine-jquery-rails (~> 2.0.2)
   jasmine-rails (~> 0.10.2)
   jbuilder (~> 2.0)
