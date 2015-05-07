@@ -11,25 +11,30 @@ class DateChooser
     @today = selectors.find(".today")
     @tomorrow = selectors.find(".tomorrow")
 
+    @today.on "click", (event) =>
+      @toggleDate( @today, @tomorrow )
+      event.preventDefault()
+
+    @tomorrow.on "click", (event) =>
+      @toggleDate( @tomorrow, @today )
+      event.preventDefault()
+
     switch initialDate
       when "today"
-        @enableLink @tomorrow, @today
+        @enableLink @tomorrow
       when "tomorrow"
-        @enableLink @today, @tomorrow
+        @enableLink @today
       else
-        @enableLink @today, @tomorrow
-        @enableLink @tomorrow, @today
+        @enableLink @today
+        @enableLink @tomorrow
 
-  enableLink: (selector, otherSelector) =>
+  enableLink: (selector) =>
     selector.html( "<a href>" + selector.text() + "</a>" )
-    selector.on "click", (event) =>
-      @toggleDate( selector, otherSelector )
-      event.preventDefault()
 
   toggleDate: (selector, otherSelector) =>
     selector.html( selector.text() )
     @setDate selector
-    @enableLink otherSelector, selector
+    @enableLink otherSelector
 
   setDate: (selector) =>
     day = selector.data("day")
