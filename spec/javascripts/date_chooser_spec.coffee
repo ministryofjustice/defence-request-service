@@ -7,9 +7,6 @@ expectDateValuesToEqual = (day, month, year, chooserDiv) ->
   expect( chooserDiv.find('.month').eq(0).val() ).toEqual month
   expect( chooserDiv.find('.year').eq(0).val() ).toEqual year
 
-expectDateDisplayToEqual = (text, chooserDiv) ->
-  expect( chooserDiv.find('.date-chooser-display').eq(0).text() ).toEqual text
-
 dateChooserHtml = (initialDate) ->
   $("""
   <body>
@@ -23,15 +20,11 @@ dateChooserHtml = (initialDate) ->
       <label for="defence_request_solicitor_time_of_arrival_Min">Min</label>
       <input size="2" placeholder="MM" class="minute text-field" type="text" name="defence_request[solicitor_time_of_arrival][min]" id="defence_request_solicitor_time_of_arrival_min" />
     </div>
-    <div class="date-chooser-select date-field-wrapper js-only-inline-block" data-initial-date="#{ initialDate }">
-      <label>
+    <div class="date-chooser-values">
+      <label class="date-chooser-select form-label" data-initial-date="#{ initialDate }">
         <span class="today" data-date-display="30 April 2015" data-day="30" data-month="4" data-year="2015">Today</span>
         <span class="tomorrow" data-date-display="01 May 2015"data-day="1" data-month="5" data-year="2015">Tomorrow</span>
       </label>
-      <p class="date-chooser-display text-field">30 April 2015</p>
-    </div>
-    <div class="hide date-chooser-values">
-      <div class="date-field-wrapper">-</div>
       <div class="date-field-wrapper">
         <label for="defence_request_solicitor_time_of_arrival_Day">Day</label>
         <input size="2" placeholder="DD" class="day text-field" value="30" type="text" name="defence_request[solicitor_time_of_arrival][day]" id="defence_request_solicitor_time_of_arrival_day" />
@@ -67,9 +60,6 @@ sharedBehaviourForClickingTomorrow = (element, context) ->
     it "changes date values to tomorrow's date", ->
       expectDateValuesToEqual( "1", "5", "2015", context.chooserDiv )
 
-    it "changes date display to tomorrow's date", ->
-      expectDateDisplayToEqual( "01 May 2015", context.chooserDiv )
-
     it "makes Today a link", ->
       expect( context.today.find('a').size() ).toEqual 1
 
@@ -85,9 +75,6 @@ sharedBehaviourForClickingTomorrowThenToday = (element, context) ->
 
     it "changes date values to today's date", ->
       expectDateValuesToEqual( "30", "4", "2015", @chooserDiv )
-
-    it "changes date display to today's date", ->
-      expectDateDisplayToEqual( "30 April 2015", @chooserDiv )
 
     it "makes Tomorrow a link", ->
       expect( @tomorrow.find('a').size() ).toEqual 1
@@ -151,9 +138,6 @@ describe "DateChooser", ->
 
       it "leaves date values unchanged", ->
         expectDateValuesToEqual( "30", "4", "2015", @chooserDiv )
-
-      it "leaves date display unchanged", ->
-        expectDateDisplayToEqual( "30 April 2015", @chooserDiv )
 
     sharedBehaviourForClickingTomorrow(element, this)
 
