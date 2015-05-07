@@ -49,14 +49,62 @@ dateChooserHtml = (initialDate) ->
   </body>
   """)
 
-dateChooserSetup = (element, test) ->
+dateChooserSetup = (element, context) ->
   $(document.body).append(element)
 
   chooserDivs = $(".date-chooser")
-  test.chooserDiv = chooserDivs.eq(0)
-  test.chooser = new window.DateChooser( test.chooserDiv )
-  test.today = test.chooserDiv.find('.today')
-  test.tomorrow = test.chooserDiv.find('.tomorrow')
+  context.chooserDiv = chooserDivs.eq(0)
+  context.chooser = new window.DateChooser( context.chooserDiv )
+  context.today = context.chooserDiv.find('.today')
+  context.tomorrow = context.chooserDiv.find('.tomorrow')
+
+sharedBehaviourForClickingTomorrow = (element, context) ->
+  describe "clicking 'Tomorrow'", ->
+    beforeEach ->
+      dateChooserSetup(element, context)
+      context.tomorrow.find('a').click()
+
+    it "changes date values to tomorrow's date", ->
+      expectDateValuesToEqual( "1", "5", "2015", context.chooserDiv )
+
+    it "changes date display to tomorrow's date", ->
+      expectDateDisplayToEqual( "01 May 2015", context.chooserDiv )
+
+    it "makes Today a link", ->
+      expect( context.today.find('a').size() ).toEqual 1
+
+    it "removes link from Tomorrow", ->
+      expect( context.tomorrow.find('a').size() ).toEqual 0
+
+sharedBehaviourForClickingTomorrowThenToday = (element, context) ->
+  describe "click 'Tomorrow' and then click 'Today'", ->
+    beforeEach ->
+      dateChooserSetup(element, context)
+      @tomorrow.find('a').click()
+      @today.find('a').click()
+
+    it "changes date values to today's date", ->
+      expectDateValuesToEqual( "30", "4", "2015", @chooserDiv )
+
+    it "changes date display to today's date", ->
+      expectDateDisplayToEqual( "30 April 2015", @chooserDiv )
+
+    it "makes Tomorrow a link", ->
+      expect( @tomorrow.find('a').size() ).toEqual 1
+
+    it "removes link from Today", ->
+      expect( @today.find('a').size() ).toEqual 0
+
+enablesTodayLink = (element, context) ->
+  it "makes Today a link", ->
+    dateChooserSetup(element, context)
+    expect( context.today.find('a').size() ).toEqual 1
+
+enablesTomorrowLink = (element, context) ->
+  it "makes Tomorrow a link", ->
+    dateChooserSetup(element, context)
+    expect( @tomorrow.find('a').size() ).toEqual 1
+
 
 describe "DateChooser", ->
   element = null
@@ -66,14 +114,26 @@ describe "DateChooser", ->
     element.remove()
     element = null
 
+  describe "when initial date not 'today' or 'tomorrow'", ->
+    beforeEach ->
+      element = dateChooserHtml("any_other_value")
+      dateChooserSetup(element, this)
+
+    describe "after initialization", ->
+      enablesTodayLink(element, this)
+      enablesTomorrowLink(element, this)
+
+    sharedBehaviourForClickingTomorrow(element, this)
+
+    sharedBehaviourForClickingTomorrowThenToday(element, this)
+
   describe "when initial date 'tomorrow'", ->
     beforeEach ->
       element = dateChooserHtml("tomorrow")
       dateChooserSetup(element, this)
 
     describe "after initialization", ->
-      it "makes Today a link", ->
-        expect( @today.find('a').size() ).toEqual 1
+      enablesTodayLink(element, this)
 
       it "does not make Tomorrow a link", ->
         expect( @tomorrow.find('a').size() ).toEqual 0
@@ -84,47 +144,17 @@ describe "DateChooser", ->
       dateChooserSetup(element, this)
 
     describe "after initialization", ->
-      it "leaves date values defaulted to today's date", ->
-        expectDateValuesToEqual( "30", "4", "2015", @chooserDiv )
-
-      it "leaves date display defaulted to today's date", ->
-        expectDateDisplayToEqual( "30 April 2015", @chooserDiv )
-
-      it "makes Tomorrow a link", ->
-        expect( @tomorrow.find('a').size() ).toEqual 1
+      enablesTomorrowLink(element, this)
 
       it "does not make Today a link", ->
         expect( @today.find('a').size() ).toEqual 0
 
-    describe "clicking 'Tomorrow'", ->
-      beforeEach ->
-        @tomorrow.find('a').click()
-
-      it "changes date values to tomorrow's date", ->
-        expectDateValuesToEqual( "1", "5", "2015", @chooserDiv )
-
-      it "changes date display to tomorrow's date", ->
-        expectDateDisplayToEqual( "01 May 2015", @chooserDiv )
-
-      it "makes Today a link", ->
-        expect( @today.find('a').size() ).toEqual 1
-
-      it "removes link from Tomorrow", ->
-        expect( @tomorrow.find('a').size() ).toEqual 0
-
-    describe "click 'Tomorrow' and then click 'Today'", ->
-      beforeEach ->
-        @tomorrow.find('a').click()
-        @today.find('a').click()
-
-      it "changes date values to today's date", ->
+      it "leaves date values unchanged", ->
         expectDateValuesToEqual( "30", "4", "2015", @chooserDiv )
 
-      it "changes date display to today's date", ->
+      it "leaves date display unchanged", ->
         expectDateDisplayToEqual( "30 April 2015", @chooserDiv )
 
-      it "makes Tomorrow a link", ->
-        expect( @tomorrow.find('a').size() ).toEqual 1
+    sharedBehaviourForClickingTomorrow(element, this)
 
-      it "removes link from Today", ->
-        expect( @today.find('a').size() ).toEqual 0
+    sharedBehaviourForClickingTomorrowThenToday(element, this)

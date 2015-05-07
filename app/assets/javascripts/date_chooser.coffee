@@ -11,10 +11,14 @@ class DateChooser
     @today = selectors.find(".today")
     @tomorrow = selectors.find(".tomorrow")
 
-    if initialDate == "today"
-      @enableLink @tomorrow, @today
-    else if initialDate == "tomorrow"
-      @enableLink @today, @tomorrow
+    switch initialDate
+      when "today"
+        @enableLink @tomorrow, @today
+      when "tomorrow"
+        @enableLink @today, @tomorrow
+      else
+        @enableLink @today, @tomorrow
+        @enableLink @tomorrow, @today
 
   enableLink: (selector, otherSelector) =>
     selector.html( "<a href>" + selector.text() + "</a>" )
