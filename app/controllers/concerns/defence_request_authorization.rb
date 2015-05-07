@@ -13,7 +13,7 @@ module DefenceRequestAuthorization
   end
 
   def new_defence_request_form
-    @defence_request_form ||= DefenceRequestForm.new @defence_request
+    @defence_request_form ||= DefenceRequestForm.new(@defence_request)
   end
 
 end
