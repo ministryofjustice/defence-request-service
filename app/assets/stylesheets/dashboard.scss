@@ -36,6 +36,9 @@ ul.tabs {
     @include media(mobile) {
       @include grid-column(1/2, $full-width: mobile);
     }
+    @include media(tablet) {
+      @include grid-column(1/3);
+    }
     @include media(desktop) {
       @include grid-column(1/3);
     }
