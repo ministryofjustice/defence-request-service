@@ -1,0 +1,1 @@
+Date::DATE_FORMATS[:full] = "%e %B %Y"

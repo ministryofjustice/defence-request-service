@@ -1,10 +1,11 @@
 class DefenceRequestsController < BaseController
 
-  before_action :find_defence_request, except: [:new, :create]
-  before_action :set_policy_with_context, only: [:show, :new, :create, :edit, :update, :resend_details, :solicitor_time_of_arrival]
-  before_action :new_defence_request_form, only: [:show, :new, :create, :edit, :update, :solicitor_time_of_arrival]
+  include DefenceRequestConcern
 
-  before_action ->(c) { authorize PolicyContext.new(defence_request, current_user), "#{c.action_name}?" }
+  before_action :find_defence_request, except: [:new, :create]
+  before_action :new_defence_request_form, only: [:show, :new, :create, :edit, :update]
+
+  before_action ->(c) { authorize_defence_request_access(c.action_name) }
 
   def show
   end
@@ -47,34 +48,14 @@ class DefenceRequestsController < BaseController
     end
   end
 
-  def solicitor_time_of_arrival
-    if @defence_request_form.submit(defence_request_params)
-      redirect_to(defence_request_path(@defence_request), notice: flash_message(:solicitor_time_of_arrival_added, DefenceRequest))
-    else
-      render :show
-    end
-  end
-
   private
+
+  def defence_request_id
+    :id
+  end
 
   def update_and_accept?
     params[:commit] == "Update and Accept"
-  end
-
-  def find_defence_request
-    @defence_request = DefenceRequest.find(params[:id])
-  end
-
-  def set_policy_with_context
-    @policy ||= policy(PolicyContext.new(defence_request, current_user))
-  end
-
-  def defence_request
-    @defence_request ||= DefenceRequest.new
-  end
-
-  def new_defence_request_form
-    @defence_request_form ||= DefenceRequestForm.new @defence_request
   end
 
   def defence_request_params

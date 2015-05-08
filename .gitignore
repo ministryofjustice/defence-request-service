@@ -14,10 +14,12 @@
 /tmp/sockets/*
 /tmp/pids/*
 /tmp/sessions/*
+/tmp/jasmine/*
 
 *.DS_Store
 *.swo
 *.swp
+*.bak
 /coverage
 
 # Add back any keep files that might have been excluded by the above

@@ -33,7 +33,6 @@ gem "govuk_elements_rails", "~> 0.1.1"
 
 group :development do
   gem "guard-rspec", require: false
-  gem "terminal-notifier-guard"
   gem "web-console", "~> 2.0"
 end
 
@@ -45,6 +44,12 @@ group :development, :test do
   gem "quiet_assets", "~> 1.1"
   gem "rspec-rails", "~> 3.2.0"
   gem "rubocop", "~> 0.30"
+  gem "phantomjs", "~> 1.9.7"
+  gem "jasmine", "~> 2.0.2"
+  gem "jasmine-rails", "~> 0.10.2"
+  gem "jasmine-jquery-rails", "~> 2.0.2"
+  gem "guard-jasmine", git: "https://github.com/guard/guard-jasmine", branch: "jasmine-2"
+  gem "guard-rubocop"
 end
 
 group :test do

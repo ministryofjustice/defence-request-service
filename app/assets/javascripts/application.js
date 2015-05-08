@@ -12,4 +12,7 @@
 //
 //= require jquery_ujs
 //= require dsds
+//= require date_chooser
 //= require govuk/selection-buttons.js
+//= require prevent_moj_console_spam
+//= require page_initialise

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount JasmineRails::Engine => "/specs" if defined?(JasmineRails)
   root "dashboards#show"
 
   resource :dashboard, only: [:show]
@@ -6,11 +7,9 @@ Rails.application.routes.draw do
   get "/refresh_dashboard", to: "dashboards#refresh_dashboard"
 
   resources :defence_requests, except: [:index] do
+    resource :solicitor_arrival_time, only: [:edit, :update]
     member do
       post "resend_details"
-      patch "solicitor_time_of_arrival",
-        to: "defence_requests#solicitor_time_of_arrival",
-        as: "solicitor_time_of_arrival"
     end
   end
 

@@ -1,13 +1,14 @@
 class AbortDefenceRequestsController < BaseController
-  def new
-    authorize_aborting_defence_request
 
+  include DefenceRequestConcern
+  before_action :find_defence_request
+  before_action ->(c) { authorize_defence_request_access(:abort) }
+
+  def new
     @abort_defence_request_form = AbortDefenceRequestForm.new(defence_request)
   end
 
   def create
-    authorize_aborting_defence_request
-
     @abort_defence_request_form = AbortDefenceRequestForm.new(
       defence_request,
       transition,
@@ -23,16 +24,8 @@ class AbortDefenceRequestsController < BaseController
 
   private
 
-  def authorize_aborting_defence_request
-    authorize PolicyContext.new(defence_request, current_user), "#{requested_transition}?"
-  end
-
-  def requested_transition
-    "abort"
-  end
-
-  def defence_request
-    DefenceRequest.find(params.fetch(:defence_request_id))
+  def defence_request_id
+    :defence_request_id
   end
 
   def abort_defence_request_params
@@ -46,7 +39,7 @@ class AbortDefenceRequestsController < BaseController
   def transition_params
     {
       defence_request: defence_request,
-      transition_to: requested_transition,
+      transition_to: "abort",
       user: current_user,
       transition_info: abort_defence_request_params.fetch(:transition_info)
     }

@@ -9,7 +9,7 @@ en:
   acknowledged_defence_request: "Acknowledged Defence Requests"
   actions: "Actions"
   active: "Active (%{count})"
-  add_expected_time_of_arrival: "Add Expected Time of Arrival"
+  add_expected_time_of_arrival: "Add an estimated time of arrival"
   address_1: "Address 1"
   address_2: "Address 2"
   adult: "Adult?"
@@ -17,6 +17,9 @@ en:
   appropriate_adult: "Appropriate Adult"
   appropriate_adult_reason: "Reason for appropriate adult"
   appropriate_adult_required: "Appropriate adult required?"
+  arrival_time: "Arrival time"
+  arrival_time_cancel: "Cancel"
+  arrival_time_save: "Save"
   arriving_at: "Arriving at"
   call_call_center: "Please call the Call Centre on 0999 999 9999"
   cancel: "Cancel"
@@ -114,6 +117,8 @@ en:
   time_of_arrest: Time of Arrest
   time_of_arrival: "Time of Arrival"
   time_of_detention_authorised: Time of Detention Authorised
+  today: Today
+  tomorrow: Tomorrow
   transition_info: Reason aborted
   unavailable: "Unavailable"
   unfit_for_interview_reason: Reason unfit for interview
