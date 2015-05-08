@@ -31,9 +31,15 @@ RSpec.describe SolicitorDefenceRequestPolicy do
     end
 
     context "DR their organisation is assigned to" do
-      context "with a DR which is not a draft" do
+      context "not in draft state" do
         let(:allowed_actions) { [ :show ] }
         let(:defreq) { FactoryGirl.create(:defence_request, :accepted, organisation_uid: user.organisation_uids.first) }
+        specify { expect(subject).to permit_actions_and_forbid_all_others actions }
+      end
+
+      context "in draft state" do
+        let(:allowed_actions) { [] }
+        let(:defreq) { FactoryGirl.create(:defence_request, :draft, organisation_uid: user.organisation_uids.first) }
         specify { expect(subject).to permit_actions_and_forbid_all_others actions }
       end
     end
