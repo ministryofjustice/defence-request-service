@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resource :interview_start_time_defence_request, only: [:new, :create]
   resource :abort_defence_request, only: [:new, :create]
   resource :finish_defence_request, only: [:new, :create]
   resource :solicitor_search, only: [:create]

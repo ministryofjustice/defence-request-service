@@ -1,0 +1,112 @@
+<table>
+  <tbody>
+  <tr>
+    <td><%= t('detainee_name') %></td>
+    <td><%= @defence_request.detainee_name %></td>
+  </tr>
+  <tr>
+    <td><%= t('gender') %></td>
+    <td><%= @defence_request.gender %></td>
+  </tr>
+  <tr>
+    <td><%= t('date_of_birth') %></td>
+    <td><%= date_formatter(@defence_request.date_of_birth) %></td>
+  </tr>
+  <tr>
+    <td><%= t('appropriate_adult_required') %></td>
+    <td><%= boolean_formatter(@defence_request.appropriate_adult) %></td>
+  </tr>
+  <tr>
+    <td><%= t('appropriate_adult_reason') %></td>
+    <td><%= @defence_request.appropriate_adult_reason %></td>
+  </tr>
+  <tr>
+    <td><%= t('interpreter_required') %></td>
+    <td><%= @defence_request.interpreter_required %></td>
+  </tr>
+  <tr>
+    <td><%= t('interpreter_type') %></td>
+    <td><%= @defence_request.interpreter_type %></td>
+  </tr>
+  <tr>
+    <td><%= t('house_name') %></td>
+    <td><%= @defence_request.house_name %></td>
+  </tr>
+  <tr>
+    <td><%= t('address_1') %></td>
+    <td><%= @defence_request.address_1 %></td>
+  </tr>
+  <tr>
+    <td><%= t('address_2') %></td>
+    <td><%= @defence_request.address_2 %></td>
+  </tr>
+  <tr>
+    <td><%= t('city') %></td>
+    <td><%= @defence_request.city %></td>
+  </tr>
+  <tr>
+    <td><%= t('county') %></td>
+    <td><%= @defence_request.county %></td>
+  </tr>
+  <tr>
+    <td><%= t('postcode') %></td>
+    <td><%= @defence_request.postcode %></td>
+  </tr>
+  <tr>
+    <td><%= t('offences') %></td>
+    <td><%= @defence_request.offences %></td>
+  </tr>
+  <tr>
+    <td><%= t('circumstances_of_arrest') %></td>
+    <td><%= @defence_request.circumstances_of_arrest %></td>
+  </tr>
+  <tr>
+    <td><%= t('fit_for_interview') %></td>
+    <td><%= boolean_formatter(@defence_request.fit_for_interview) %></td>
+  </tr>
+  <tr>
+    <td><%= t('unfit_for_interview_reason') %></td>
+    <td><%= @defence_request.unfit_for_interview_reason %></td>
+  </tr>
+  <tr>
+    <td><%= t('investigating_officer_name') %></td>
+    <td><%= @defence_request.investigating_officer_name %></td>
+  </tr>
+  <tr>
+    <td><%= t('investigating_officer_shoulder_number') %></td>
+    <td><%= @defence_request.investigating_officer_shoulder_number %></td>
+  </tr>
+  <tr>
+    <td><%= t('investigating_officer_contact_number') %></td>
+    <td><%= @defence_request.investigating_officer_contact_number %></td>
+  </tr>
+  <tr>
+    <td><%= t('time_of_arrest') %></td>
+    <td><%= date_and_time_formatter(@defence_request.time_of_arrest) %></td>
+  </tr>
+  <tr>
+    <td><%= t('time_of_arrival') %></td>
+    <td><%= date_and_time_formatter(@defence_request.time_of_arrival) %></td>
+  </tr>
+  <tr>
+    <td><%= t('time_of_detention_authorised') %></td>
+    <td><%= date_and_time_formatter(@defence_request.time_of_detention_authorised) %></td>
+  </tr>
+  <tr>
+    <td><%= t('comments') %></td>
+    <td><%= @defence_request.comments %></td>
+  </tr>
+  <tr>
+    <td><%= t('dscc_number') %></td>
+    <td><%= @defence_request.dscc_number %></td>
+  </tr>
+  <tr>
+    <td><%= t('interview_start_time') %></td>
+    <td><%= date_and_time_formatter(@defence_request.interview_start_time) %></td>
+  </tr>
+  <tr class="solicitor-time-of-arrival">
+    <td><%= t('solicitor_time_of_arrival') %></td>
+    <td><%= date_and_time_formatter(@defence_request.solicitor_time_of_arrival) %></td>
+  </tr>
+  </tbody>
+</table>

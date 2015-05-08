@@ -15,4 +15,5 @@
 //= require date_chooser
 //= require govuk/selection-buttons.js
 //= require prevent_moj_console_spam
+//= require modules/moj.tabs
 //= require page_initialise

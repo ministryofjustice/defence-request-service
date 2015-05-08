@@ -55,4 +55,8 @@ module ApplicationHelper
   def check_policy_clause(policy, clause)
     policy.respond_to?(clause) ? policy.send(clause) : false
   end
+
+  def user_has_role?(role)
+    current_user.roles.include?(role)
+  end
 end
