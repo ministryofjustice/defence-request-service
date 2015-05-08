@@ -3,10 +3,9 @@ class DefenceRequestsController < BaseController
   include DefenceRequestAuthorization
 
   before_action :find_defence_request, except: [:new, :create]
-  before_action :set_policy_with_context, only: [:show, :new, :create, :edit, :update, :resend_details]
   before_action :new_defence_request_form, only: [:show, :new, :create, :edit, :update]
 
-  before_action ->(c) { authorize PolicyContext.new(defence_request, current_user), "#{c.action_name}?" }
+  before_action ->(c) { authorize_defence_request_access(c.action_name) }
 
   def show
   end
@@ -53,10 +52,6 @@ class DefenceRequestsController < BaseController
 
   def update_and_accept?
     params[:commit] == "Update and Accept"
-  end
-
-  def defence_request_id
-    params[:id]
   end
 
   def defence_request_params

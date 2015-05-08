@@ -3,13 +3,9 @@ class SolicitorArrivalTimesController < BaseController
   include DefenceRequestAuthorization
 
   before_action :find_defence_request
-  before_action :set_policy_with_context
   before_action :new_defence_request_form
 
-  before_action ->(c) do
-    policy = PolicyContext.new(defence_request, current_user)
-    authorize policy, "solicitor_time_of_arrival?"
-  end
+  before_action ->(c) { authorize_defence_request_access(:solicitor_time_of_arrival) }
 
   def edit
     render_edit_view
@@ -27,10 +23,6 @@ class SolicitorArrivalTimesController < BaseController
 
   def render_edit_view
     render "defence_requests/solicitor_arrival_time"
-  end
-
-  def defence_request_id
-    params[:defence_request_id]
   end
 
   def defence_request_params

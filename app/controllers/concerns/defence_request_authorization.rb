@@ -1,11 +1,10 @@
 module DefenceRequestAuthorization
 
-  def find_defence_request
-    @defence_request = DefenceRequest.find(defence_request_id)
-  end
+  private
 
-  def set_policy_with_context
-    @policy ||= policy(PolicyContext.new(defence_request, current_user))
+  def find_defence_request
+    defence_request_id = params[:defence_request_id] || params[:id]
+    @defence_request = DefenceRequest.find(defence_request_id)
   end
 
   def defence_request
@@ -13,7 +12,13 @@ module DefenceRequestAuthorization
   end
 
   def new_defence_request_form
-    @defence_request_form ||= DefenceRequestForm.new(@defence_request)
+    @defence_request_form ||= DefenceRequestForm.new(defence_request)
+  end
+
+  def authorize_defence_request_access action
+    policy_context = PolicyContext.new(defence_request, current_user)
+    @policy ||= policy(policy_context)
+    authorize policy_context, "#{action}?"
   end
 
 end
