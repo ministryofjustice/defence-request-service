@@ -3,8 +3,7 @@ module DefenceRequestAuthorization
   private
 
   def find_defence_request
-    defence_request_id = params[:defence_request_id] || params[:id]
-    @defence_request = DefenceRequest.find(defence_request_id)
+    @defence_request = DefenceRequest.find(params[defence_request_id])
   end
 
   def defence_request

@@ -17,6 +17,10 @@ class TransitionDefenceRequestsController < BaseController
 
   private
 
+  def defence_request_id
+    :defence_request_id
+  end
+
   def transition
     DefenceRequestTransitions::Builder.new(transition_params).build
   end

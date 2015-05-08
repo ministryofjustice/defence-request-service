@@ -50,6 +50,10 @@ class DefenceRequestsController < BaseController
 
   private
 
+  def defence_request_id
+    :id
+  end
+
   def update_and_accept?
     params[:commit] == "Update and Accept"
   end

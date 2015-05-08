@@ -21,6 +21,10 @@ class SolicitorArrivalTimesController < BaseController
 
   private
 
+  def defence_request_id
+    :defence_request_id
+  end
+
   def render_edit_view
     render "defence_requests/solicitor_arrival_time"
   end

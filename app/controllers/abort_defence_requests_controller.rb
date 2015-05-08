@@ -24,6 +24,10 @@ class AbortDefenceRequestsController < BaseController
 
   private
 
+  def defence_request_id
+    :defence_request_id
+  end
+
   def abort_defence_request_params
     params.require(:abort_defence_request_form).permit(:transition_info)
   end
