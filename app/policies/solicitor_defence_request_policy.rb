@@ -31,6 +31,10 @@ class SolicitorDefenceRequestPolicy < ApplicationPolicy
     user_is_the_assigned_solicitor && !policy_record.draft?
   end
 
+  def interview_start_time_edit?
+    false
+  end
+
   private
 
   def user_is_the_assigned_solicitor
