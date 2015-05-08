@@ -36,6 +36,8 @@ RSpec.feature "Solicitors managing defence requests" do
       login_as_solicitor_with_accepted_defence_request
       click_link "Case Details for #{@accepted_defence_request.dscc_number}"
       click_link "Add an estimated time of arrival"
+
+      expect(page).to have_css ".date-chooser-select.js-only"
       enter_time hour: "01", min: "12"
       click_button "Save"
       today = Date.today.to_s(:full)
