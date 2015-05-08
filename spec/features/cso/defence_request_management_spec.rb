@@ -133,15 +133,16 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
         end
       end
 
-      context "with accepted requests" do
+      context "with accepted requests", js: true do
         specify "can not edit the expected arrival time from request show page" do
           cso_user = create :cso_user
           create :defence_request, :accepted
 
           login_with cso_user
           click_link "Show"
+          click_link "Interview"
 
-          expect(page).to_not have_selector ".time-of-arrival"
+          expect(page).to_not have_selector ".edit-time-of-arrival"
         end
 
         specify "can mark the request as completed" do

@@ -13,3 +13,4 @@
 //= require jquery_ujs
 //= require dsds
 //= require govuk/selection-buttons.js
+//= require modules/moj.tabs

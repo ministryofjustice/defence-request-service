@@ -1,0 +1,7 @@
+<% if @defence_request.aborted? %>
+  <h1><%= t('case_aborted') %></h1>
+  <p><%= @defence_request.reason_aborted %></p>
+  <p><%= t('call_call_center') if user_has_role?("solicitor") %></p>
+<% else %>
+  <h1><%= t('case_details') %></h1>
+<% end %>

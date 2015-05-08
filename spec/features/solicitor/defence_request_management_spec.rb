@@ -2,19 +2,34 @@ require "rails_helper"
 
 RSpec.feature "Solicitors managing defence requests" do
   context "with cases they are assigned to" do
-    specify "can see the show page of the request" do
-      solicitor_user = create :solicitor_user
-      accepted_defence_request = create(
-        :defence_request,
-        :accepted,
-        solicitor_uid: solicitor_user.uid,
-        organisation_uid: solicitor_user.organisation_uids.first
-      )
+    let!(:solicitor_user){ create :solicitor_user }
+    let!(:accepted_defence_request){ create(
+      :defence_request,
+      :accepted,
+      solicitor_uid: solicitor_user.uid,
+      organisation_uid: solicitor_user.organisation_uids.first
+    ) }
+    context "tabs" do
+      specify "can see active and closed tabs", js: true do
+        login_with solicitor_user
+        click_link "Case Details for #{accepted_defence_request.dscc_number}"
+        expect(page).to have_link("Case Details")
+        expect(page).to have_link("Interview")
+      end
 
-      login_with solicitor_user
-      click_link "Case Details for #{accepted_defence_request.dscc_number}"
+      context "Case Details tab" do
+        specify "can see the show page of the request" do
+          # login_with solicitor_user
+          # click_link "Case Details for #{accepted_defence_request.dscc_number}"
+          #
+          # expect(page).to have_content accepted_defence_request.solicitor_name
+        end
 
-      expect(page).to have_content accepted_defence_request.solicitor_name
+      end
+
+      context "Interview tab" do
+        #SOMETHING HERE
+      end
     end
 
     specify "can edit the expected arrival time from the show page of the request" do

@@ -10,6 +10,7 @@ en:
   actions: "Actions"
   active: "Active (%{count})"
   add_expected_time_of_arrival: "Add Expected Time of Arrival"
+  add_interview_start_time: "Add Interview Start Time"
   address_1: "Address 1"
   address_2: "Address 2"
   adult: "Adult?"
@@ -71,6 +72,7 @@ en:
   house_name: House name or number
   interpreter_required: "Interpreter Required"
   interpreter_type: "Interpreter Type"
+  interview: "Interview"
   interview_at: "Interview at"
   interview_start_time: "Interview Start Time"
   interview_start_time_change: "Interview start time change"
@@ -141,6 +143,7 @@ en:
     failed_destroy: "%{model} was not deleted"
     failed_details_sent: "Details were not sent"
     failed_queue: "%{model} was not sent for processing"
+    interview_start_time: "Interview start time updated"
     solicitor_details_required: "Valid solicitor details are required to update and accept a %{model}"
     update: "%{model} successfully updated"
     updated_and_accepted: "%{model} successfully updated and marked as accepted"
