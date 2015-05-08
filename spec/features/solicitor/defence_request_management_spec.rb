@@ -89,6 +89,7 @@ RSpec.feature "Solicitors managing defence requests" do
     specify "can edit the expected arrival time from the show page of the request with JS enabled", js: true do
       login_as_solicitor_with_accepted_defence_request
       click_link "Case Details for #{@accepted_defence_request.dscc_number}"
+      click_link "Interview"
       click_link "Add an estimated time of arrival"
       enter_time hour: "23", min: "02"
       click_button "Save"
@@ -96,6 +97,7 @@ RSpec.feature "Solicitors managing defence requests" do
       today = Date.today.to_s(:full)
       expect( find("#solicitor_time_of_arrival") ).to have_content "#{today} - 23:02"
 
+      click_link "Interview"
       click_link "Add an estimated time of arrival"
       click_link "Tomorrow"
       enter_time hour: "00", min: "03"
@@ -103,21 +105,25 @@ RSpec.feature "Solicitors managing defence requests" do
       tomorrow = (Date.today + 1).to_s(:full)
       expect( find("#solicitor_time_of_arrival") ).to have_content "#{tomorrow} - 00:03"
 
+      click_link "Interview"
       click_link "Add an estimated time of arrival"
       click_button "Save"
       expect( find("#solicitor_time_of_arrival") ).to have_content "#{tomorrow} - 00:03"
 
+      click_link "Interview"
       click_link "Add an estimated time of arrival"
       click_link "Today"
       enter_time hour: "23", min: "59"
       click_button "Save"
       expect( find("#solicitor_time_of_arrival") ).to have_content "#{today} - 23:59"
 
+      click_link "Interview"
       click_link "Add an estimated time of arrival"
       enter_time day: "21", month: "11", year: "2002", hour: "01", min: "12"
       click_button "Save"
       expect( find("#solicitor_time_of_arrival") ).to have_content "21 November 2002 - 01:12"
 
+      click_link "Interview"
       click_link "Add an estimated time of arrival"
       enter_time day: "02", month: "02", year: "2002", hour: "02", min: "02"
       click_link "Cancel"
