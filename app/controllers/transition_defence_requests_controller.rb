@@ -1,6 +1,6 @@
 class TransitionDefenceRequestsController < BaseController
 
-  include DefenceRequestAuthorization
+  include DefenceRequestConcern
 
   def create
     find_defence_request

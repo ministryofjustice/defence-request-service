@@ -1,4 +1,4 @@
-module DefenceRequestAuthorization
+module DefenceRequestConcern
 
   private
 

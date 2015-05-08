@@ -1,6 +1,6 @@
 class DefenceRequestsController < BaseController
 
-  include DefenceRequestAuthorization
+  include DefenceRequestConcern
 
   before_action :find_defence_request, except: [:new, :create]
   before_action :new_defence_request_form, only: [:show, :new, :create, :edit, :update]

@@ -1,6 +1,6 @@
 class AbortDefenceRequestsController < BaseController
 
-  include DefenceRequestAuthorization
+  include DefenceRequestConcern
   before_action :find_defence_request
   before_action ->(c) { authorize_defence_request_access(:abort) }
 

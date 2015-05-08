@@ -1,6 +1,6 @@
 class SolicitorArrivalTimesController < BaseController
 
-  include DefenceRequestAuthorization
+  include DefenceRequestConcern
 
   before_action :find_defence_request
   before_action :new_defence_request_form
