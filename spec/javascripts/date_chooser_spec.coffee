@@ -21,7 +21,7 @@ dateChooserHtml = (initialDate) ->
       <input size="2" placeholder="MM" class="minute text-field" type="text" name="defence_request[solicitor_time_of_arrival][min]" id="defence_request_solicitor_time_of_arrival_min" />
     </div>
     <div class="date-chooser-values">
-      <label class="date-chooser-select form-label" data-initial-date="#{ initialDate }">
+      <label class="date-chooser-select form-label js-only" data-initial-date="#{ initialDate }">
         <span class="today" data-date-display="30 April 2015" data-day="30" data-month="4" data-year="2015">Today</span>
         <span class="tomorrow" data-date-display="01 May 2015"data-day="1" data-month="5" data-year="2015">Tomorrow</span>
       </label>
@@ -50,6 +50,7 @@ dateChooserSetup = (element, context) ->
   context.chooser = new window.DateChooser( context.chooserDiv )
   context.today = context.chooserDiv.find('.today')
   context.tomorrow = context.chooserDiv.find('.tomorrow')
+  context.day = context.chooserDiv.find('.day')
 
 sharedBehaviourForClickingTomorrow = (element, context) ->
   describe "clicking 'Tomorrow'", ->
@@ -65,6 +66,9 @@ sharedBehaviourForClickingTomorrow = (element, context) ->
 
     it "removes link from Tomorrow", ->
       expect( context.tomorrow.find('a').size() ).toEqual 0
+
+    it "sets focus on day input field", ->
+      expect( context.day ).toBeFocused()
 
 sharedBehaviourForClickingTomorrowThenToday = (element, context) ->
   describe "click 'Tomorrow' and then click 'Today'", ->

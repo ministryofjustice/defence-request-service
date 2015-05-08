@@ -10,6 +10,7 @@ class DateChooser
     @values = chooser.find(".date-chooser-values")
     @today = selectors.find(".today")
     @tomorrow = selectors.find(".tomorrow")
+    @dayInput = @chooser.find(".day")
 
     @today.on "click", (event) =>
       @toggleDate( @today, @tomorrow )
@@ -35,6 +36,7 @@ class DateChooser
     selector.html( selector.text() )
     @setDate selector
     @enableLink otherSelector
+    @dayInput.focus()
 
   setDate: (selector) =>
     day = selector.data("day")
