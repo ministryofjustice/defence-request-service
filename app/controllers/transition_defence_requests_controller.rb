@@ -1,6 +1,10 @@
 class TransitionDefenceRequestsController < BaseController
+
+  include DefenceRequestConcern
+
   def create
-    authorize_transition
+    find_defence_request
+    authorize_defence_request_access(requested_transition)
 
     if transition.complete
       redirect_to dashboard_path,
@@ -13,8 +17,8 @@ class TransitionDefenceRequestsController < BaseController
 
   private
 
-  def authorize_transition
-    authorize PolicyContext.new(defence_request, current_user), "#{requested_transition}?"
+  def defence_request_id
+    :defence_request_id
   end
 
   def transition
@@ -23,10 +27,6 @@ class TransitionDefenceRequestsController < BaseController
 
   def requested_transition
     params.fetch(:transition_to)
-  end
-
-  def defence_request
-    DefenceRequest.find(params.fetch(:defence_request_id))
   end
 
   def transition_params
