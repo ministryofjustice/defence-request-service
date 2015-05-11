@@ -118,7 +118,7 @@ RSpec.describe DefenceRequestForm do
   end
 end
 
-def datetime_to_params datetime
+def datetime_to_params(datetime)
   { year: datetime.year.to_s,
     month: datetime.month.to_s,
     day: datetime.day.to_s,
@@ -126,7 +126,7 @@ def datetime_to_params datetime
     min: datetime.min.to_s }
 end
 
-def date_to_params datetime
+def date_to_params(datetime)
   { year: datetime.year.to_s,
     month: datetime.month.to_s,
     day: datetime.day.to_s }

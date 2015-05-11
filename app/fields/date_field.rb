@@ -25,7 +25,7 @@ class DateField
     Date.new year.to_i, month.to_i, day.to_i rescue nil
   end
 
-  def self.from_persisted_value date
+  def self.from_persisted_value(date)
     DateField.new.tap do |dob|
       if date
         dob.day = date.day

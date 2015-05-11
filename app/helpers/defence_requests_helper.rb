@@ -1,10 +1,10 @@
 module DefenceRequestsHelper
 
-  def solicitor_id solicitor_hash
+  def solicitor_id(solicitor_hash)
     "solicitor-#{solicitor_hash['id']}"
   end
 
-  def data_chooser_setup date_to_edit
+  def data_chooser_setup(date_to_edit)
     today = Date.today
     tomorrow = today + 1
     initial_date = (date_to_edit || today).to_date

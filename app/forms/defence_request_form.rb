@@ -31,7 +31,7 @@ class DefenceRequestForm
     register_field :solicitor, SolicitorField
   end
 
-  def register_field field_name, klass, opts={}
+  def register_field(field_name, klass, opts={})
     @fields[field_name] = klass.from_persisted_value @defence_request.send field_name
   end
 

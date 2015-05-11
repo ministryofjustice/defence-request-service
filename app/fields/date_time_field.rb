@@ -25,7 +25,7 @@ class DateTimeField
     DateTime.new year.to_i, month.to_i, day.to_i, hour.to_i, min.to_i rescue nil
   end
 
-  def self.from_persisted_value datetime
+  def self.from_persisted_value(datetime)
     DateTimeField.new.tap do |v|
       if datetime
         v.day = datetime.day
