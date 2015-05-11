@@ -11,7 +11,7 @@ class SolicitorField
     [email, solicitor_uid].any? &:present?
   end
 
-  def self.from_persisted_value solicitor
+  def self.from_persisted_value(solicitor)
     if solicitor
       SolicitorField.new(
         solicitor_uid: solicitor.uid,

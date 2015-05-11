@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.feature "Solicitors managing defence requests" do
   context "with cases they are assigned to" do
 
-    def enter_time hour:, min:, day: nil, month: nil, year: nil
+    def enter_time(hour:, min:, day: nil, month: nil, year: nil)
       within ".time-of-arrival" do
         fill_in "defence_request[solicitor_time_of_arrival][day]", with: day if day
         fill_in "defence_request[solicitor_time_of_arrival][month]", with: month if month
