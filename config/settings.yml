@@ -6,6 +6,7 @@ dsds:
 
 rails:
   secret_key_base: <%= ENV.fetch("SECRET_KEY_BASE") %>
+  force_ssl: <%= ENV.fetch("FORCE_SSL", true) %>
 
 action_mailer:
   default_url_options:
