@@ -2,79 +2,67 @@ require "rails_helper"
 
 RSpec.feature "Custody Suite Officers managing defence requests" do
   context "creating a new request" do
-    context "duty solicitor" do
-      specify "can not edit name Solicitor Name, Solicitor Firm or Phone Number" do
-        create :defence_request, :duty_solicitor
+    context "own solicitor" do
+      specify "can fill in form manually with all relevant details for own solicitor", js: true do
         cso_user = create :cso_user
 
         login_with cso_user
-        click_link "Edit"
+        click_link "New Defence Request"
+        choose "Own"
+        fill_in_defence_request_form
+        click_button "Create Defence Request"
 
-        expect(page).to have_css "#defence_request_solicitor_name[disabled]"
-        expect(page).to have_css "#defence_request_solicitor_firm[disabled]"
-        expect(page).to have_css "#defence_request_phone_number[disabled]"
+        an_audit_should_exist_for_the_defence_request_creation
+        expect(page).to have_content "Defence Request successfully created"
+      end
+    end
+
+    context "duty solicitor" do
+      specify "can not see a DSCC field on the defence request form" do
+        cso_user = create :cso_user
+
+        login_with cso_user
+        click_link "New Defence Request"
+
+        expect(page).not_to have_field "DSCC Number"
       end
 
-      context "own solicitor" do
-        specify "can fill in form manually with all relevant details for own solicitor", js: true do
-          cso_user = create :cso_user
+      specify "can not see the solicitor time of arrival field on the defence request form" do
+        cso_user = create :cso_user
 
-          login_with cso_user
-          click_link "New Defence Request"
-          choose "Own"
-          fill_in_defence_request_form
-          click_button "Create Defence Request"
+        login_with cso_user
+        click_link "New Defence Request"
 
-          an_audit_should_exist_for_the_defence_request_creation
-          expect(page).to have_content "Defence Request successfully created"
+        expect(page).not_to have_field "Expected Solicitor Time of Arrival"
+      end
+
+      specify "are shown some errors if the request cannot be created due to invalid fields" do
+        cso_user = create :cso_user
+
+        login_with cso_user
+        click_link "New Defence Request"
+        within ".detainee" do
+          fill_in "Full Name", with: ""
+        end
+        click_button "Create Defence Request"
+
+        expect(page).
+          to have_content "You need to fix the errors on this page before continuing"
+        expect(page).to have_content "Detainee name: can't be blank"
+      end
+
+      specify "appropriate_adult toggles appropriate_adult_reason", js: true do
+        cso_user = create :cso_user
+
+        login_with cso_user
+        click_link "New Defence Request"
+        choose "Own"
+        within ".detainee" do
+          choose "defence_request_appropriate_adult_true"
         end
 
-        specify "can not see a DSCC field on the defence request form" do
-          cso_user = create :cso_user
-
-          login_with cso_user
-          click_link "New Defence Request"
-
-          expect(page).not_to have_field "DSCC Number"
-        end
-
-        specify "can not see the solicitor time of arrival field on the defence request form" do
-          cso_user = create :cso_user
-
-          login_with cso_user
-          click_link "New Defence Request"
-
-          expect(page).not_to have_field "Expected Solicitor Time of Arrival"
-        end
-
-        specify "are shown some errors if the request cannot be created due to invalid fields" do
-          cso_user = create :cso_user
-
-          login_with cso_user
-          click_link "New Defence Request"
-          within ".detainee" do
-            fill_in "Full Name", with: ""
-          end
-          click_button "Create Defence Request"
-
-          expect(page).
-            to have_content "You need to fix the errors on this page before continuing"
-          expect(page).to have_content "Detainee name: can't be blank"
-        end
-
-        specify "appropriate_adult toggles appropriate_adult_reason", js: true do
-          cso_user = create :cso_user
-
-          login_with cso_user
-          click_link "New Defence Request"
-          choose "Own"
-          within ".detainee" do
-            choose "defence_request_appropriate_adult_true"
-          end
-
-          expect(page).
-            to_not have_css "#defence_request_appropriate_adult_reason[disabled]"
-        end
+        expect(page).
+          to_not have_css "#defence_request_appropriate_adult_reason[disabled]"
       end
     end
   end

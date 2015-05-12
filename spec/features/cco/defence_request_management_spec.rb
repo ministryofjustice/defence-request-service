@@ -9,7 +9,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
       login_with cco_user
       click_link "Show"
 
-      expect(page).to have_content accepted_defence_request.solicitor_name
+      expect(page).to have_content accepted_defence_request.detainee_name
     end
 
     specify "can not edit expected time of arrival from the request show page" do
@@ -81,20 +81,6 @@ RSpec.feature "Call Center Operatives managing defence requests" do
     end
 
     context "that have been acknowledged by this cco" do
-      specify "can edit the solicitors details on the request" do
-        cco_user = create :cco_user
-        create :defence_request, :acknowledged, cco_uid: cco_user.uid
-
-        login_with cco_user
-        click_link "Edit"
-        fill_in "Full Name", with: "Henry Billy Bob"
-        fill_in "Telephone number", with: "00112233445566"
-        click_button "Update Defence Request"
-
-        expect(page).to have_content "Henry Billy Bob"
-        expect(page).to have_content "00112233445566"
-      end
-
       specify "can transition the request to accepted from its edit page" do
         cco_user = create :cco_user
         acknowledged_defence_request = create(
@@ -109,7 +95,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
         click_button "Update and Accept"
 
         expect(page).
-          to have_content acknowledged_defence_request.solicitor_name
+          to have_content acknowledged_defence_request.detainee_name
       end
 
       specify "can not choose 'Update and Accept' from the request's edit page without adding a dscc number" do
@@ -163,41 +149,6 @@ RSpec.feature "Call Center Operatives managing defence requests" do
 
           expect(page).
             to have_content "Defence Request was not marked as accepted"
-        end
-      end
-
-      context "that have the 'duty' solicitor type" do
-        specify "can't  mark the request as accepted from the dashboard without solicitor details" do
-          cco_user = create :cco_user
-          create(
-            :defence_request,
-            :duty_solicitor,
-            :acknowledged,
-            cco_uid: cco_user.uid
-          )
-
-          login_with cco_user
-
-          expect(page).to_not have_button "Accepted"
-        end
-
-        specify "can only mark the request as accepted from the edit page with solicitor details" do
-          cco_user = create :cco_user
-          create(
-            :defence_request,
-            :duty_solicitor,
-            :acknowledged,
-            cco_uid: cco_user.uid
-          )
-
-          login_with cco_user
-          click_link "Edit"
-          fill_in "Full Name", with: "Dodgy Dave"
-          fill_in "Name of firm", with: ""
-          click_button "Update and Accept"
-
-          expect(page).
-            to have_content "Defence Request was not updated or marked as accepted"
         end
       end
     end

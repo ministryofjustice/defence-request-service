@@ -12,9 +12,9 @@ RSpec.feature "Custody Center Operatives viewing their dashboard" do
 
     login_with cco_user
 
-    expect(page).to have_content aborted_defence_request.solicitor_name
-    expect(page).to have_content acknowledged_defence_request.solicitor_name
-    expect(page).to have_content queued_defence_request.solicitor_name
+    expect(page).to have_content aborted_defence_request.detainee_name
+    expect(page).to have_content acknowledged_defence_request.detainee_name
+    expect(page).to have_content queued_defence_request.detainee_name
   end
 
   specify "view refreshed data on the dashboard with after a period", js: true do
@@ -25,10 +25,10 @@ RSpec.feature "Custody Center Operatives viewing their dashboard" do
     login_with cco_user
 
     acknowledged_defence_request.update!(
-      solicitor_name: "Queued Req. Updated Solicitor Name"
+      detainee_name: "Queued Req. Updated Solicitor Name"
     )
     queued_defence_request.update!(
-      solicitor_name: "Acknowledged Req. Updated Solicitor Name"
+      detainee_name: "Acknowledged Req. Updated Solicitor Name"
     )
 
     refresh_dashboard
