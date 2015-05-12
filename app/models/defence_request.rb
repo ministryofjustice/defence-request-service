@@ -33,7 +33,7 @@ class DefenceRequest < ActiveRecord::Base
     end
 
     event :accept, success: :send_solicitor_case_details do
-      transitions from: [:acknowledged], to: :accepted, guard: [:dscc_number?, :solicitor_name?, :solicitor_firm?, :phone_number?]
+      transitions from: [:acknowledged], to: :accepted, guard: [:dscc_number?]
     end
 
     event :abort do
@@ -47,17 +47,10 @@ class DefenceRequest < ActiveRecord::Base
 
   validates :reason_aborted, presence: true, if: :aborted?
 
-  validates :solicitor_name,
-            :solicitor_firm,
-            :phone_number, presence: true, if: :own_solicitor?
-
-  validates :scheme, presence: true, if: :duty_solicitor?
-
   validates :detainee_name,
             :offences,
             :gender,
-            :time_of_arrival,
-            :custody_number, presence: true
+            :time_of_arrival, presence: true
 
   validates :detainee_age, numericality: true, presence: true
 
@@ -88,10 +81,6 @@ class DefenceRequest < ActiveRecord::Base
     solicitor_type == "own"
   end
 
-  def phone_number=(new_value)
-    super(format_phone_number(new_value))
-  end
-
   def generate_dscc_number!
     if result = DsccNumberGenerator.new(self).generate!
 
@@ -105,10 +94,6 @@ class DefenceRequest < ActiveRecord::Base
   end
 
   private
-
-  def format_phone_number(phone_number)
-    phone_number.to_s.gsub(/\D/, "") if phone_number
-  end
 
   def notify_interview_start_change
     Mailer.notify_interview_start_change(self, solicitor).deliver_later if solicitor
