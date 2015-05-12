@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150426223300) do
+ActiveRecord::Schema.define(version: 20150512121906) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,14 +42,9 @@ ActiveRecord::Schema.define(version: 20150426223300) do
 
   create_table "defence_requests", force: :cascade do |t|
     t.string   "solicitor_type",                                        null: false
-    t.string   "solicitor_name"
-    t.string   "solicitor_firm"
-    t.string   "scheme"
-    t.string   "phone_number"
     t.string   "detainee_name"
     t.string   "gender"
     t.datetime "date_of_birth"
-    t.string   "custody_number"
     t.string   "offences"
     t.datetime "time_of_arrival"
     t.text     "comments"
@@ -70,7 +65,6 @@ ActiveRecord::Schema.define(version: 20150426223300) do
     t.string   "city"
     t.string   "county"
     t.string   "postcode"
-    t.string   "custody_address"
     t.string   "investigating_officer_name"
     t.string   "investigating_officer_shoulder_number"
     t.string   "investigating_officer_contact_number"
