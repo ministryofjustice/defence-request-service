@@ -169,7 +169,6 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
         :unfit_for_interview,
         :with_address,
         :with_circumstance_of_arrest,
-        :with_custody_address,
         :with_dscc_number,
         :with_interpreter_required,
         :with_investigating_officer,
