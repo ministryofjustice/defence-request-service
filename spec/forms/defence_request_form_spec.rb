@@ -6,17 +6,11 @@ RSpec.describe DefenceRequestForm do
   subject { DefenceRequestForm.new FactoryGirl.create(:defence_request) }
 
   let (:params_for_dr)   { {  solicitor_type: defence_request.solicitor_type,
-                              solicitor_name: defence_request.solicitor_name,
-                              solicitor_firm: defence_request.solicitor_firm,
-                              solicitor: { email: (defence_request.solicitor ? defence_request.solicitor.email : "") },
-                              scheme: defence_request.scheme,
-                              phone_number: defence_request.phone_number,
                               detainee_name: defence_request.detainee_name,
                               gender: defence_request.gender,
                               detainee_age: defence_request.detainee_age,
                               offences: defence_request.offences,
                               time_of_arrival: datetime_to_params(defence_request.time_of_arrival),
-                              custody_number: defence_request.custody_number,
                               comments: defence_request.comments } }
 
 
@@ -30,12 +24,12 @@ RSpec.describe DefenceRequestForm do
 
     context "with invalid params" do
       context "invalid attribute on the dr" do
-        let(:invalid_params) { params_for_dr.merge({ solicitor_name: "" }) }
+        let(:invalid_params) { params_for_dr.merge({ detainee_name: "" }) }
 
         it "adds any errors from the dr, to itself" do
           expect(subject.submit invalid_params).to eql false
           expect(subject.errors.count).to eql 1
-          expect(subject.errors[:solicitor_name]).to eql ["can't be blank"]
+          expect(subject.errors[:detainee_name]).to eql ["can't be blank"]
         end
       end
 
