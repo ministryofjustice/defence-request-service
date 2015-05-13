@@ -12,6 +12,14 @@ class Dashboard
     user.roles.uniq.first
   end
 
+  def active_defence_requests
+    @_active_defence_requests ||= defence_requests.active
+  end
+
+  def closed_defence_requests
+    @_closed_defence_requests ||= defence_requests.closed
+  end
+
   private
 
   attr_reader :user, :defence_requests_scoped_by_policy

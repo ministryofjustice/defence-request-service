@@ -15,12 +15,12 @@
 <%= render 'tabs' %>
 
 <% if @dashboard.user_role == "solicitor" %>
-  <%= render "defence_requests/solicitor", requests: @defence_requests  %>
+  <%= render "defence_requests/solicitor", requests: requests  %>
 <% else %>
   <table class="dashboard">
     <%= render "defence_requests/defence_requests_table_head" %>
     <tbody>
-    <%= render "defence_requests/defence_requests_table_body", requests: @defence_requests %>
+    <%= render "defence_requests/defence_requests_table_body", requests: requests %>
     </tbody>
   </table>
 <% end %>
