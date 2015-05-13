@@ -4,19 +4,6 @@ RSpec.feature "Custody Center Operatives viewing their dashboard" do
   include ActiveJobHelper
   include DashboardHelper
 
-  xspecify "view queued, acknowledged and aborted defence requests tables" do
-    cco_user = create :cco_user
-    aborted_defence_request = create :defence_request, :aborted
-    acknowledged_defence_request = create :defence_request, :acknowledged
-    queued_defence_request = create :defence_request, :queued
-
-    login_with cco_user
-
-    expect(page).to have_content aborted_defence_request.detainee_name
-    expect(page).to have_content acknowledged_defence_request.detainee_name
-    expect(page).to have_content queued_defence_request.detainee_name
-  end
-
   specify "view refreshed data on the dashboard with after a period", js: true do
     cco_user = create :cco_user
     acknowledged_defence_request = create :defence_request, :acknowledged
@@ -61,5 +48,39 @@ RSpec.feature "Custody Center Operatives viewing their dashboard" do
     wait_for_dashboard_refresh
 
     expect(page).to have_content "Details were not sent"
+  end
+
+  context "tabs" do
+    context "active" do
+      specify "view queued, acknowledged and defence requests" do
+        cco_user = create :cco_user
+        aborted_defence_request = create :defence_request, :aborted
+        acknowledged_defence_request = create :defence_request, :acknowledged
+        queued_defence_request = create :defence_request, :queued
+
+        login_with cco_user
+        click_link "Active (2)"
+
+        expect(page).to have_content acknowledged_defence_request.solicitor_name
+        expect(page).to have_content queued_defence_request.solicitor_name
+        expect(page).to_not have_content aborted_defence_request.solicitor_name
+      end
+    end
+
+    context "closed" do
+      specify "can see aborted defence-requests" do
+        cco_user = create :cco_user
+        aborted_defence_request = create :defence_request, :aborted
+        acknowledged_defence_request = create :defence_request, :acknowledged
+        queued_defence_request = create :defence_request, :queued
+
+        login_with cco_user
+        click_link "Closed (1)"
+
+        expect(page).to have_content aborted_defence_request.solicitor_name
+        expect(page).to_not have_content acknowledged_defence_request.solicitor_name
+        expect(page).to_not have_content queued_defence_request.solicitor_name
+      end
+    end
   end
 end
