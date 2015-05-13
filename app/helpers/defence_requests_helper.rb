@@ -14,7 +14,7 @@ module DefenceRequestsHelper
                           "tomorrow"
                         elsif initial_date < today
                           "in_past"
-                        elsif
+                        else
                           "after_tomorrow"
                         end
     [today, tomorrow, initial_date, initial_date_type]
