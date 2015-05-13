@@ -179,7 +179,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
     login_with cso_user
     click_link "Show"
 
-    click_link "Dashboard"
+    click_link "< Back to requests"
     expect(page).to have_content "Custody Suite Officer Dashboard"
   end
 end

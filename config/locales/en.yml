@@ -22,6 +22,7 @@ en:
   arrival_time_cancel: "Cancel"
   arrival_time_save: "Save"
   arriving_at: "Arriving at"
+  back_to_requests: "< Back to requests"
   call_call_center: "Please call the Call Centre on 0999 999 9999"
   cancel: "Cancel"
   cancel_and_delete_all_details: "Cancel and delete all details"

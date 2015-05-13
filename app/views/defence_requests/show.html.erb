@@ -1,35 +1,33 @@
 <%= render 'shared/error_and_flash', object: @defence_request_form %>
 
-<div class="inner group">
-  <%= link_to t('dashboard'), dashboard_path %>
+<%= link_to t('back_to_requests'), dashboard_path %>
 
-  <h1 class="detainee"><%= @defence_request.detainee_name %></h1>
-  <h2 class="dscc"><%= t('dscc') %>: <%= @defence_request.dscc_number %></h2>
+<h1 class="detainee"><%= @defence_request.detainee_name %></h1>
+<h2 class="dscc"><%= t('dscc') %>: <%= @defence_request.dscc_number %></h2>
 
-  <% if @defence_request.aborted? %>
-    <h1><%= t('case_aborted') %></h1>
-    <p><%= @defence_request.reason_aborted %></p>
-    <p><%= t('call_call_center') if user_has_role?("solicitor") %></p>
-  <% end %>
+<% if @defence_request.aborted? %>
+  <h1><%= t('case_aborted') %></h1>
+  <p><%= @defence_request.reason_aborted %></p>
+  <p><%= t('call_call_center') if user_has_role?("solicitor") %></p>
+<% end %>
 
-  <%= content_tag("div", class: "js-tabs", id: "edit-tabs", data: { activatefirst: 'true' }) do %>
-    <ul class="cf tabs js-tabs-nav">
-      <li>
-        <a href="#case-details">Case Details</a>
-      </li>
-      <li>
-        <a href="#interview">Interview</a>
-      </li>
-      <li class="filler">
-      </li>
-    </ul>
-    <div class="js-tabs-content">
-      <div id="case-details">
-        <%= render 'defence_requests/show_partials/case_details_tab' %>
-      </div>
-      <div id="interview">
-        <%= render 'defence_requests/show_partials/interview_tab' %>
-      </div>
+<%= content_tag("div", class: "js-tabs", id: "edit-tabs", data: { activatefirst: 'true' }) do %>
+  <ul class="cf tabs js-tabs-nav">
+    <li>
+      <a href="#case-details">Case Details</a>
+    </li>
+    <li>
+      <a href="#interview">Interview</a>
+    </li>
+    <li class="filler">
+    </li>
+  </ul>
+  <div class="js-tabs-content">
+    <div id="case-details">
+      <%= render 'defence_requests/show_partials/case_details_tab' %>
     </div>
-  <% end %>
-</div>
+    <div id="interview">
+      <%= render 'defence_requests/show_partials/interview_tab' %>
+    </div>
+  </div>
+<% end %>
