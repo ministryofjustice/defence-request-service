@@ -1,12 +1,9 @@
 <% requests.each do |def_req| %>
   <%= content_tag_for(:tr, def_req, class: "defence-request") do %>
     <td class="state"><%= dashboard_limit_formatter(def_req.state, 2) %></td>
-    <td class="sol-name"><%= truncate(def_req.solicitor_name, length: 40) %></td>
-    <td><%= def_req.phone_number %></td>
     <td class="det-name"><%= truncate(def_req.detainee_name, length: 40) %></td>
     <td class="gender"><%= dashboard_limit_formatter(def_req.gender, 0) %></td>
     <td class="adult"><%= boolean_formatter(def_req.adult) %></td>
-    <td><%= def_req.custody_number %></td>
     <td class="offences"><%= truncate(def_req.offences, length: 50) %></td>
     <td><%= date_and_time_formatter(def_req.solicitor_time_of_arrival) %></td>
     <td class="actions"><%= render "defence_requests/actions", def_req: def_req %></td>

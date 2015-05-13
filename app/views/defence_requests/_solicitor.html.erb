@@ -17,13 +17,6 @@
               <dt class="visuallyhidden"><%= t('dscc_number') %></dt>
               <dd class="dscc"><%= dr.dscc_number %></dd>
             </dl>
-            <dl>
-              <dt class="visuallyhidden"><%= t('custody_address') %></dt>
-              <dd><%= dr.custody_address %></dd>
-
-              <dt class="visuallyhidden"><%= t('custody_phone_number') %></dt>
-              <dd><a href="tel:11111111">111111111</a></dd>
-            </dl>
             <% if dr.interview_start_time %>
                 <dl class="time-field">
                   <dt><%= t('interview_at') %></dt>

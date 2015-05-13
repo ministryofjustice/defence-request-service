@@ -14,15 +14,8 @@ module DefenceRequestHelpers
   end
 
   def fill_in_defence_request_form(options = {})
-    within ".solicitor-details" do
-      fill_in "Full Name", with: "Bob Smith"
-      fill_in "Name of firm", with: "Acme Solicitors"
-      fill_in "Telephone number", with: "0207 284 0000"
-    end
-
     if options.fetch(:edit) { false }
       within ".case-details" do
-        fill_in "Custody number", with: "#CUST-9876"
         fill_in "Offences", with: "BadMurder"
         fill_in "defence_request_interview_start_time_day", with: "01"
         fill_in "defence_request_interview_start_time_month", with: "01"
@@ -32,8 +25,6 @@ module DefenceRequestHelpers
       end
     else
       within ".case-details" do
-        fill_in "Custody number", with: "#CUST-01234"
-        fill_in "defence_request_custody_address", with: "The Nick"
         fill_in "defence_request_investigating_officer_name", with: "Dave Mc.Copper"
         fill_in "defence_request_investigating_officer_shoulder_number", with: "987654"
         fill_in "defence_request_investigating_officer_contact_number", with: "0207 111 0000"

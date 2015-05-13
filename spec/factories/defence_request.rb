@@ -14,15 +14,10 @@ FactoryGirl.define do
 
   factory :defence_request, aliases: [:own_solicitor] do
     solicitor_type "own"
-    sequence(:solicitor_name) { |n| "solicitor_name-#{n}" }
-    sequence(:solicitor_firm) { |n| "solicitor_firm-#{n}" }
-    scheme 1
-    phone_number "447810480123"
     sequence(:detainee_name) { |n| "detainee_name-#{n}" }
     gender "male"
     date_of_birth twenty_one_years_ago
     detainee_age 21
-    sequence(:custody_number) { |n| "custody_number-#{n}" }
     offences "Theft"
     time_of_arrival now
     sequence(:comments) { |n| "commenty-comments-are here: #{n}" }
@@ -33,10 +28,6 @@ FactoryGirl.define do
 
   trait :duty_solicitor do
     solicitor_type "duty"
-    solicitor_name nil
-    solicitor_firm nil
-    scheme "No Scheme"
-    phone_number ""
   end
 
   trait :draft do
@@ -106,10 +97,6 @@ FactoryGirl.define do
     investigating_officer_name "Dave Mc.Copper"
     investigating_officer_shoulder_number "987654"
     investigating_officer_contact_number "0207 111 0000"
-  end
-
-  trait :with_custody_address do
-    custody_address "The Nick"
   end
 
   trait :with_time_of_arrest do

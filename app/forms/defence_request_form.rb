@@ -4,10 +4,10 @@ class DefenceRequestForm
 
   attr_reader :defence_request, :fields
 
-  DELEGATED_ATTRIBUTES =  :solicitor_type, :solicitor_name, :solicitor_firm, :phone_number, :detainee_name, :gender,
-                          :detainee_age, :offences, :scheme, :custody_number, :comments, :appropriate_adult,
+  DELEGATED_ATTRIBUTES =  :solicitor_type, :detainee_name, :gender,
+                          :detainee_age, :offences, :comments, :appropriate_adult,
                           :appropriate_adult_reason, :house_name, :address_1, :address_2, :city, :county, :postcode,
-                          :circumstances_of_arrest, :custody_address, :investigating_officer_name,
+                          :circumstances_of_arrest, :investigating_officer_name,
                           :investigating_officer_shoulder_number, :investigating_officer_contact_number,
                           :fit_for_interview, :unfit_for_interview_reason, :interpreter_required, :interpreter_type
 
@@ -28,7 +28,6 @@ class DefenceRequestForm
     register_field :time_of_detention_authorised, DateTimeField
     register_field :solicitor_time_of_arrival, DateTimeField
     register_field :interview_start_time, DateTimeField
-    register_field :solicitor, SolicitorField
   end
 
   def register_field(field_name, klass, opts={})
