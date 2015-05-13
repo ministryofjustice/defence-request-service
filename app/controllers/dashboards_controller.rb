@@ -3,7 +3,6 @@ class DashboardsController < BaseController
   before_action :set_policy_with_context, except: [:refresh_dashboard]
   before_action :set_dashboard
   before_action :set_defence_requests, only: [:show, :closed]
-  before_action :set_dashboard_count, only: [:show, :closed]
 
   def show
     @defence_requests = @active_defence_requests
@@ -27,15 +26,8 @@ class DashboardsController < BaseController
   end
 
   def set_defence_requests
-    if @dashboard.user_role == "solicitor"
-      @active_defence_requests = @dashboard.defence_requests.active
-    else
-      @active_defence_requests = @dashboard.defence_requests
-    end
+    @active_defence_requests = @dashboard.defence_requests.active
     @closed_defence_requests = @dashboard.defence_requests.finished
-  end
-
-  def set_dashboard_count
     @active_count = @active_defence_requests.count
     @closed_count = @closed_defence_requests.count
   end

@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.feature "Custody Center Operatives viewing aborted requests" do
-  specify "can see 'aborted' defence requests" do
+  xspecify "can see 'aborted' defence requests" do
     cco_user = create :cco_user
     aborted_defence_request = create :defence_request, :aborted
 

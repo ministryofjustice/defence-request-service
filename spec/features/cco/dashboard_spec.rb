@@ -4,7 +4,7 @@ RSpec.feature "Custody Center Operatives viewing their dashboard" do
   include ActiveJobHelper
   include DashboardHelper
 
-  specify "view queued, acknowledged and aborted defence requests tables" do
+  xspecify "view queued, acknowledged and aborted defence requests tables" do
     cco_user = create :cco_user
     aborted_defence_request = create :defence_request, :aborted
     acknowledged_defence_request = create :defence_request, :acknowledged

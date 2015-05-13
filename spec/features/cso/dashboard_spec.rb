@@ -92,6 +92,58 @@ RSpec.feature "Custody Suite Officers viewing their dashboard" do
     expect(page).to have_content "Defence Request successfully aborted"
   end
 
+  context "tabs" do
+
+    let!(:active_defence_request) { create(
+      :defence_request,
+      :accepted,
+      offences: "Other cod-related offences"
+    ) }
+
+    let!(:other_active_defence_request) {
+      create :defence_request, offences: "Use of edible crab as bait"
+    }
+
+    let!(:completed_defence_request) {
+      create(
+        :defence_request,
+        :completed,
+        offences: "Illegal strengthening bag"
+      )
+    }
+
+    specify "can see active and closed tabs"  do
+      cso_user = create :cso_user
+      login_with  cso_user
+      expect(page).to have_link("Active (2)")
+      expect(page).to have_link("Closed (1)")
+    end
+
+    context "active" do
+      specify "can only see active requests" do
+        cso_user = create :cso_user
+        login_with  cso_user
+
+        click_link "Active (2)"
+        expect(page).to have_content active_defence_request.offences
+        expect(page).to have_content other_active_defence_request.offences
+        expect(page).to_not have_content completed_defence_request.offences
+      end
+    end
+
+    context "closed" do
+      specify "can only see closed requests" do
+        cso_user = create :cso_user
+        login_with  cso_user
+
+        click_link "Closed (1)"
+        expect(page).to have_content completed_defence_request.offences
+        expect(page).to_not have_content active_defence_request.offences
+        expect(page).to_not have_content other_active_defence_request.offences
+      end
+    end
+  end
+
   def element_order_correct?(first_element, second_element)
     !!(/#{first_element}.*#{second_element}/m =~ page.body)
   end
