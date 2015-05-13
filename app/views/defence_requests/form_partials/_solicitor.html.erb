@@ -1,6 +1,8 @@
-<div class='solicitor-details' <%= "class=hidden" if @defence_request_form.defence_request.new_record? %>>
-  <h3><%= t('solicitor_details') %></h3>
-  <div class="details">
-    <%= render('defence_requests/form_partials/solicitor_time_of_arrival', f: f) if check_policy_clause(@policy, :solicitor_time_of_arrival?) %>
-  </div>
-</div>
+<% if check_policy_clause(@policy, :solicitor_time_of_arrival?) %>
+    <div class='solicitor-details' <%= "class=hidden" if @defence_request_form.defence_request.new_record? %>>
+      <h3><%= t('solicitor_details') %></h3>
+      <div class="details">
+        <%= render('defence_requests/form_partials/solicitor_time_of_arrival', f: f) %>
+      </div>
+    </div>
+<% end %>

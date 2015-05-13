@@ -10,8 +10,10 @@
 
   <%= render('defence_requests/form_partials/case_details', f: f) if @policy.create? %>
 
-  <div class="form-group">
-    <%= f.label :dscc_number, t('dscc_number'), class: 'form-label-bold' %>
-    <%= f.label :dscc_number, @defence_request.dscc_number %>
-  </div>
+  <% unless @defence_request.dscc_number.blank? %>
+      <div class="form-group">
+        <span class="form-label"><%= t("dscc_number"); %></span>
+        <span><%= @defence_request.dscc_number %></span>
+      </div>
+  <% end %>
 </div>
