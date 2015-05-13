@@ -60,6 +60,7 @@ RSpec.feature "Solicitors managing defence requests" do
       login_as_solicitor_with_accepted_defence_request
       click_link "Case Details for #{@accepted_defence_request.dscc_number}"
 
+      expect(page).to have_content @accepted_defence_request.dscc_number
       expect(page).to have_content @accepted_defence_request.detainee_name
     end
 
