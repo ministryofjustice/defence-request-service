@@ -11,6 +11,20 @@
   <p><%= t('call_call_center') if user_has_role?("solicitor") %></p>
 <% end %>
 
+<dl class="labels">
+  <dt><%= t('gender') %></dt>
+  <dd><%= @defence_request.gender %></dd>
+
+  <dt><%= t('date_of_birth') %></dt>
+  <dd><%= date_formatter(@defence_request.date_of_birth) %></dd>
+
+  <dt><%= t('age') %></dt>
+  <dd><%= @defence_request.detainee_age %></dd>
+
+  <dt><%= t('address') %></dt>
+  <dd><%= detainee_address(@defence_request) %></dd>
+</dl>
+
 <%= content_tag("div", class: "js-tabs", id: "edit-tabs", data: { activatefirst: 'true' }) do %>
   <ul class="cf tabs js-tabs-nav">
     <li>

@@ -5,14 +5,6 @@
     <td><%= @defence_request.detainee_name %></td>
   </tr>
   <tr>
-    <td><%= t('gender') %></td>
-    <td><%= @defence_request.gender %></td>
-  </tr>
-  <tr>
-    <td><%= t('date_of_birth') %></td>
-    <td><%= date_formatter(@defence_request.date_of_birth) %></td>
-  </tr>
-  <tr>
     <td><%= t('appropriate_adult_required') %></td>
     <td><%= boolean_formatter(@defence_request.appropriate_adult) %></td>
   </tr>
@@ -31,26 +23,6 @@
   <tr>
     <td><%= t('house_name') %></td>
     <td><%= @defence_request.house_name %></td>
-  </tr>
-  <tr>
-    <td><%= t('address_1') %></td>
-    <td><%= @defence_request.address_1 %></td>
-  </tr>
-  <tr>
-    <td><%= t('address_2') %></td>
-    <td><%= @defence_request.address_2 %></td>
-  </tr>
-  <tr>
-    <td><%= t('city') %></td>
-    <td><%= @defence_request.city %></td>
-  </tr>
-  <tr>
-    <td><%= t('county') %></td>
-    <td><%= @defence_request.county %></td>
-  </tr>
-  <tr>
-    <td><%= t('postcode') %></td>
-    <td><%= @defence_request.postcode %></td>
   </tr>
   <tr>
     <td><%= t('offences') %></td>

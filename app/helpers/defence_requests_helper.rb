@@ -20,4 +20,14 @@ module DefenceRequestsHelper
     [today, tomorrow, initial_date, initial_date_type]
   end
 
+  def detainee_address(defence_request)
+    attributes = %i[address_1 address_2 city county postcode]
+    fields = attributes.map { |f| defence_request.send(f) }.compact
+
+    if fields.blank?
+      t("address_not_given")
+    else
+      fields.join(", ")
+    end
+  end
 end

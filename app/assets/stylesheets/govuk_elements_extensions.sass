@@ -19,8 +19,14 @@ h1
   span
     @extend .heading-secondary
 
+  &.detainee
+    margin-bottom: 0.2em
+
 h2
   @extend .heading-large
+
+  &.dscc
+    margin-top: 0.2em
 
 h3
   @extend .heading-medium
@@ -222,8 +228,17 @@ fieldset.time-select select
 .form-group
   margin-bottom: 1px
 
-h1.detainee
-  margin-bottom: 0.2em
+dl
+  &.labels
+    dt
+      float: left
+      margin-right: .5em
+      line-height: 2em
+    dd
+      font-weight: bold
+      line-height: 2em
+dd
+  margin: 0
 
-h2.dscc
-  margin-top: 0.2em
+.js-tabs
+  clear: left
