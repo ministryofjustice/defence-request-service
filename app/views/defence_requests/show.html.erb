@@ -3,7 +3,14 @@
 <div class="inner group">
   <%= link_to t('dashboard'), dashboard_path %>
 
-  <%= render 'defence_requests/show_partials/aborted' %>
+  <h1 class="detainee"><%= @defence_request.detainee_name %></h1>
+  <h2 class="dscc"><%= t('dscc') %>: <%= @defence_request.dscc_number %></h2>
+
+  <% if @defence_request.aborted? %>
+    <h1><%= t('case_aborted') %></h1>
+    <p><%= @defence_request.reason_aborted %></p>
+    <p><%= t('call_call_center') if user_has_role?("solicitor") %></p>
+  <% end %>
 
   <%= content_tag("div", class: "js-tabs", id: "edit-tabs", data: { activatefirst: 'true' }) do %>
     <ul class="cf tabs js-tabs-nav">
