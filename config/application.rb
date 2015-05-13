@@ -43,7 +43,7 @@ module DefenceSolicitor
     config.active_record.raise_in_transactional_callbacks = true
     config.use_govuk_elements_form_builder = false
     # app title appears in the header bar
-    config.proposition_title = "Defence Solicitor Deployment Service"
+    config.proposition_title = "Defence request service"
     # phase governs text indicators and highlight colours
     # presumed values: alpha, beta, live
     config.phase = "alpha"
