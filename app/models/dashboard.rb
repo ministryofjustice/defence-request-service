@@ -13,11 +13,11 @@ class Dashboard
   end
 
   def active_defence_requests
-    @_active_defence_requests ||= defence_requests.active
+    @_active_defence_requests ||= defence_requests.select(&:active?)
   end
 
   def closed_defence_requests
-    @_closed_defence_requests ||= defence_requests.closed
+    @_closed_defence_requests ||= defence_requests.select(&:closed?)
   end
 
   private
