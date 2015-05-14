@@ -12,7 +12,7 @@
   <% if @defence_request.appropriate_adult %>
     <%= display_value "appropriate_adult_reason", @defence_request.appropriate_adult_reason %>
   <% end %>
-  <%= display_value "interpreter_required", @defence_request.interpreter_required %>
+  <%= display_value "interpreter_required", boolean_formatter(@defence_request.interpreter_required) %>
   <% if @defence_request.interpreter_required %>
     <%= display_value "interpreter_type", @defence_request.interpreter_type %>
   <% end %>
