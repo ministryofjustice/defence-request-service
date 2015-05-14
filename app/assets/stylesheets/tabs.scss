@@ -113,5 +113,9 @@ ul.tabs {
     font-weight: 600;
     color: black;
     height: 30px;
+    @include media(mobile) {
+      font-size: 14px;
+      padding: 6px;
+    }
   }
 }
