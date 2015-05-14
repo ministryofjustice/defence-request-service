@@ -60,6 +60,7 @@ en:
   detainee_details: "Detainee details"
   detainee_dob: "Detainee date of birth (optional)"
   detainee_name: "Detainee name"
+  detention_details: "Detention details"
   dscc: "DSCC"
   dscc_number: "DSCC number"
   duty: 'Duty'

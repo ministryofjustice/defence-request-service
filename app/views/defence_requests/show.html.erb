@@ -1,47 +1,47 @@
-<%= render 'shared/error_and_flash', object: @defence_request_form %>
+<%= render "shared/error_and_flash", object: @defence_request_form %>
 
-<%= link_to t('back_to_requests'), dashboard_path %>
+<%= link_to t("back_to_requests"), dashboard_path %>
 
 <h1 class="detainee"><%= @defence_request.detainee_name %></h1>
-<h2 class="dscc"><%= t('dscc') %>: <%= @defence_request.dscc_number %></h2>
+<h2 class="dscc"><%= t("dscc") %>: <%= @defence_request.dscc_number %></h2>
 
 <% if @defence_request.aborted? %>
-  <h1><%= t('case_aborted') %></h1>
+  <h1><%= t("case_aborted") %></h1>
   <p><%= @defence_request.reason_aborted %></p>
-  <p><%= t('call_call_center') if user_has_role?("solicitor") %></p>
+  <p><%= t("call_call_center") if user_has_role?("solicitor") %></p>
 <% end %>
 
 <dl class="labels">
-  <dt><%= t('gender') %></dt>
+  <dt><%= t("gender") %></dt>
   <dd><%= @defence_request.gender %></dd>
 
-  <dt><%= t('date_of_birth') %></dt>
+  <dt><%= t("date_of_birth") %></dt>
   <dd><%= date_formatter(@defence_request.date_of_birth) %></dd>
 
-  <dt><%= t('age') %></dt>
+  <dt><%= t("age") %></dt>
   <dd><%= @defence_request.detainee_age %></dd>
 
-  <dt><%= t('address') %></dt>
+  <dt><%= t("address") %></dt>
   <dd><%= detainee_address(@defence_request) %></dd>
 </dl>
 
-<%= content_tag("div", class: "js-tabs", id: "edit-tabs", data: { activatefirst: 'true' }) do %>
+<%= content_tag("div", class: "js-tabs", id: "edit-tabs", data: { activatefirst: "true" }) do %>
   <ul class="cf tabs js-tabs-nav">
     <li>
-      <a href="#case-details">Case Details</a>
+      <a href="#interview">Interview</a>
     </li>
     <li>
-      <a href="#interview">Interview</a>
+      <a href="#case-details"><%= t("detention_details") %></a>
     </li>
     <li class="filler">
     </li>
   </ul>
   <div class="js-tabs-content">
-    <div id="case-details">
-      <%= render 'defence_requests/show_partials/case_details_tab' %>
-    </div>
     <div id="interview">
-      <%= render 'defence_requests/show_partials/interview_tab' %>
+      <%= render "defence_requests/show_partials/interview_tab" %>
+    </div>
+    <div id="case-details">
+      <%= render "defence_requests/show_partials/case_details_tab" %>
     </div>
   </div>
 <% end %>
