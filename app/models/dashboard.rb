@@ -10,9 +10,9 @@ class Dashboard
 
   def visible_requests
     case @visibility
-      when "active"
+      when :active
         active_defence_requests
-      when "closed"
+      when :closed
         closed_defence_requests
       else
         active_defence_requests
