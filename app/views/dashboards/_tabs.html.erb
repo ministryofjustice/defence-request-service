@@ -1,9 +1,9 @@
 <ul class="tabs">
-  <li class="tab <%= tab_class(type: "show") %>">
-    <%= link_to t("active", count: @dashboard.active_defence_requests.count), dashboard_path("active") %>
+  <li class="tab <%= tab_class(type: :active) %>">
+    <%= link_to t("active", count: @dashboard.active_defence_requests.count), active_dashboard_path %>
   </li>
-  <li class="tab <%= tab_class(type: "closed") %>">
-    <%= link_to t("closed", count: @dashboard.closed_defence_requests.count), dashboard_path("closed") %>
+  <li class="tab <%= tab_class(type: :closed) %>">
+    <%= link_to t("closed", count: @dashboard.closed_defence_requests.count), closed_dashboard_path %>
   </li>
   <li class="filler">
   </li>
