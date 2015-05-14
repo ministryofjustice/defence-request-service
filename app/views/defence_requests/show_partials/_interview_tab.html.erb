@@ -1,6 +1,4 @@
-<h1>Interview Time</h1>
-
-  <% if @policy.interview_start_time_edit? %>
+<% if @policy.interview_start_time_edit? %>
   <div class="edit-time-of-arrival">
     <%= form_for(@defence_request_form, url: interview_start_time_defence_request_path) do |f| %>
       <%= render('shared/date_time_form_part', attribute_name: :interview_start_time, f: f) %>
@@ -8,31 +6,34 @@
       <%= f.submit(t('add_interview_start_time'), class: 'button') %>
     <% end %>
   </div>
-  <% else %>
-  <div class="show-time-of-arrival">
-    <%= @defence_request.interview_start_time? ? date_and_time_formatter(@defence_request.interview_start_time) : "Interview Time Pending" %>
-  </div>
-  <% end %>
+<% else %>
+  <dl class="labels">
+    <%= interview_start_time @defence_request %>
+  </dl>
+<% end %>
 
-<h1>Solicitor Time of Arrival</h1>
+<% if @defence_request.solicitor_time_of_arrival? %>
+  <dl class="labels">
+    <%= display_value "solicitor_time_of_arrival", date_and_time_formatter(@defence_request.solicitor_time_of_arrival), id: "solicitor_time_of_arrival" %>
+  </dl>
+<% end %>
+
 <% if @policy.solicitor_time_of_arrival_from_show? %>
   <p><%= link_to t('add_expected_time_of_arrival'), edit_defence_request_solicitor_arrival_time_path(@defence_request), class: 'button' %></p>
-<% else %>
-  <%= @defence_request.solicitor_time_of_arrival? ? date_and_time_formatter(@defence_request.solicitor_time_of_arrival) : "Solicitor Time of Arrival" %>
 <% end %>
+
 <div class="location">
-  <h2>Location:</h2>
-  <p>This is a made up address because its not implemented <%= link_to "XX9 9XX", "X" %></p>
+  <h2>Location</h2>
+  <p>This is a made up address because it's not implemented <%= link_to "XX9 9XX", "X" %></p>
 </div>
-<div class="Contacts">
-  <h3>Custody officer:</h3>
-  <p>MADE UP NAME</p>
-  <h3>Custody suite contact number:</h3>
-  <tel>00000000000000</tel>
-  <h2>Contacts:</h2>
-  <p>MADE UP ADDRESS</p>
-  <h3>Investigating officer:</h3>
-  <p>MADE UP NAME</p>
-  <h3>Investigating officer contact number:</h3>
-  <tel>99999999999999</tel>
-</div>
+
+<dl class="labels contacts">
+  <h2>Contacts</h2>
+
+  <dt>Custody officer</dt> <dd>Made up name</dd>
+  <dt>Custody suite contact number</dt> <dd> <tel>000 0000 0000</tel> </dd>
+
+  <%= display_value "investigating_officer_name", @defence_request.investigating_officer_name %>
+  <%= display_value "investigating_officer_shoulder_number", @defence_request.investigating_officer_shoulder_number %>
+  <%= display_value "investigating_officer_contact_number", @defence_request.investigating_officer_contact_number %>
+</dl>

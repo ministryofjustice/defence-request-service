@@ -25,9 +25,18 @@ module DefenceRequestsHelper
     fields = attributes.map { |f| defence_request.send(f) }.compact
 
     if fields.blank?
-      t("address_not_given")
+      I18n.t("address_not_given")
     else
       fields.join(", ")
     end
+  end
+
+  def interview_start_time(defence_request)
+    value = if @defence_request.interview_start_time?
+              date_and_time_formatter(@defence_request.interview_start_time)
+            else
+              I18n.t("interview_time_pending")
+            end
+    display_value "interview_start_time", value
   end
 end

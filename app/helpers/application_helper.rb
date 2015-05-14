@@ -63,6 +63,6 @@ module ApplicationHelper
   def display_value(label_key, value, options={})
     label = I18n.t(label_key)
     value = value.blank? ? "-" : value
-    content_tag(:dt, label) + content_tag(:dd, value, id: options[:id])
+    content_tag(:dt, label) + " " + content_tag(:dd, value, id: options[:id])
   end
 end
