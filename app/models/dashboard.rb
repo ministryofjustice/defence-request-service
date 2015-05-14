@@ -4,6 +4,21 @@ class Dashboard
     @defence_requests_scoped_by_policy = defence_requests_scoped_by_policy
   end
 
+  def set_visibility!(visibility)
+    @visibility = visibility
+  end
+
+  def visible_requests
+    case @visibility
+      when "active"
+        active_defence_requests
+      when "closed"
+        closed_defence_requests
+      else
+        active_defence_requests
+    end
+  end
+
   def defence_requests
     ordered_defence_requests
   end
@@ -27,4 +42,5 @@ class Dashboard
   def ordered_defence_requests
     defence_requests_scoped_by_policy.ordered_by_created_at
   end
+
 end

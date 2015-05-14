@@ -2,8 +2,7 @@ Rails.application.routes.draw do
   mount JasmineRails::Engine => "/specs" if defined?(JasmineRails)
   root "dashboards#show"
 
-  resource :dashboard, only: [:show]
-  get "/dashboards/closed", to: "dashboards#closed", as: "dashboard_closed"
+  get "/dashboards/show(/:id)", to: "dashboards#show", as: :dashboard
   get "/refresh_dashboard", to: "dashboards#refresh_dashboard"
 
   resources :defence_requests, except: [:index] do

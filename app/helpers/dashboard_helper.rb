@@ -1,6 +1,5 @@
 module DashboardHelper
-
-  def css_class_for_action(action, css_class)
-    css_class if params[:action] == action
+  def tab_class(type:)
+    "active_tab" unless params[:id] && params[:id] != type
   end
 end

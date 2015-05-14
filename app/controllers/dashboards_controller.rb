@@ -4,9 +4,7 @@ class DashboardsController < BaseController
   before_action :set_dashboard
 
   def show
-  end
-
-  def closed
+    @dashboard.set_visibility! params[:id]
   end
 
   def refresh_dashboard
