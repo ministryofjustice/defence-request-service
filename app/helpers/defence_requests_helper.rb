@@ -21,7 +21,7 @@ module DefenceRequestsHelper
   end
 
   def detainee_address(defence_request)
-    attributes = %i[address_1 address_2 city county postcode]
+    attributes = %i[house_name address_1 address_2 city county postcode]
     fields = attributes.map { |f| defence_request.send(f) }.compact
 
     if fields.blank?
