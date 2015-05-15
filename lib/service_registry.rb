@@ -2,7 +2,7 @@ class ServiceRegistry
   ServiceNotRegistered = Class.new(ArgumentError)
 
   def self.register(name, service)
-    services[name] = service
+    services.store(name, service)
   end
 
   def self.service(name)
@@ -12,6 +12,19 @@ class ServiceRegistry
   end
 
   def self.services
-    @services ||= {}
+    ServiceRegistryStore
+  end
+end
+
+class ServiceRegistryStore
+  class << self
+    extend Forwardable
+    def_delegators :services, :fetch, :store
+
+    private
+
+    def services
+      @store ||= {}
+    end
   end
 end
