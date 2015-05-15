@@ -15,13 +15,26 @@ module DefenceRequestsHelper
     end
   end
 
-  def interview_start_time(defence_request)
-    value = if @defence_request.interview_start_time?
-              date_and_time_formatter(@defence_request.interview_start_time)
-            else
-              I18n.t("interview_time_pending")
-            end
-    display_value "interview_start_time", value
+  def interview_at(defence_request)
+    if defence_request.interview_start_time?
+      time = defence_request.interview_start_time.to_s(:time)
+      content_tag :dl, class: "time-at" do
+        display_value "interview_at", time
+      end
+    else
+      content_tag :dl, class: "time-at" do
+        display_value "interview_time", I18n.t("pending")
+      end
+    end
+  end
+
+  def arriving_at(defence_request)
+    if defence_request.solicitor_time_of_arrival?
+      time = defence_request.solicitor_time_of_arrival.to_s(:time)
+      content_tag :dl, class: "time-at" do
+        display_value "arriving_at", time, id: :solicitor_time_of_arrival
+      end
+    end
   end
 
   def data_chooser_setup(time_to_edit, set_default_date)

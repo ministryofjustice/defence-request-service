@@ -6,19 +6,19 @@
     <%= f.submit(t("add_interview_start_time"), class: "button") %>
   <% end %>
 <% else %>
-  <dl class="labels">
-    <%= interview_start_time @defence_request %>
-  </dl>
+  <%= interview_at @defence_request %>
 <% end %>
 
 <% if @defence_request.solicitor_time_of_arrival? %>
-  <dl class="labels">
-    <%= display_value "solicitor_time_of_arrival", date_and_time_formatter(@defence_request.solicitor_time_of_arrival), id: "solicitor_time_of_arrival" %>
-  </dl>
+  <%= arriving_at @defence_request %>
 <% end %>
 
 <% if @policy.solicitor_time_of_arrival_from_show? %>
-  <p><%= link_to t("add_expected_time_of_arrival"), edit_defence_request_solicitor_arrival_time_path(@defence_request), class: "button" %></p>
+  <% if @defence_request.solicitor_time_of_arrival? %>
+    <p><%= link_to t("update_time_of_arrival"), edit_defence_request_solicitor_arrival_time_path(@defence_request) %></p>
+  <% else %>
+    <p><%= link_to t("add_expected_time_of_arrival"), edit_defence_request_solicitor_arrival_time_path(@defence_request), class: "button time-at" %></p>
+  <% end %>
 <% end %>
 
 <div class="location">

@@ -87,7 +87,7 @@ en:
   interview_planning_help: As soon as an interview time is agreed with the investigating officer, you should update this page.
   interview_start_time: Interview start time
   interview_start_time_change: "Interview start time change"
-  interview_time_pending: Pending
+  interview_time: Interview time
   investigating_officer_contact_number: Investigating officer contact number
   investigating_officer_name: Investigating officer name
   investigating_officer_shoulder_number: Investigating officer shoulder number
@@ -102,6 +102,7 @@ en:
   not_authorized: "You are not authorised to perform this action"
   offences: "Offences"
   own: 'Own'
+  pending: pending
   phone_number: "Phone number"
   postcode: Postcode
   prohibit_save: Please review the following %{count}
@@ -136,6 +137,7 @@ en:
   update: "Update"
   update_and_accept: "Update and Accept"
   update_from: "Update from"
+  update_time_of_arrival: "Update time of arrival"
   view_the_case_details: "View the case details"
   what_type_is_being_requested: "What type of solicitor is being requested?"
   year: "Year"
