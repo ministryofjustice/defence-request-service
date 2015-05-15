@@ -29,7 +29,7 @@ module DefenceRequestTransitions
         false
       else
         defence_request.organisation_uid = organisations.first.uid
-        true
+        defence_request.save!
       end
     end
 
