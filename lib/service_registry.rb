@@ -1,5 +1,5 @@
 class ServiceRegistry
-  ServiceNotRegistered = Class.new(ArgumentError)
+  class ServiceNotRegistered < ArgumentError; end
 
   def self.register(name, service)
     services.store(name, service)
