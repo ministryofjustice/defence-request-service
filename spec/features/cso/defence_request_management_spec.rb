@@ -68,8 +68,8 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
   end
 
   context "with requests they are assigned to" do
-    context "own solicitor" do
-      context "with requests that have not been queued yet" do
+    context "and own solicitor" do
+      context "and requests not yet queued" do
         specify "can edit all relevant details of the request", js: true do
           cso_user = create :cso_user
           create :defence_request

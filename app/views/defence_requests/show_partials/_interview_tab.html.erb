@@ -1,9 +1,11 @@
 <% if @policy.interview_start_time_edit? %>
+  <h3><%= t("interview_planning") %></h3>
+  <p><span class="hint"><%= t("interview_planning_help") %></span></p>
   <div class="edit-time-of-arrival">
     <%= form_for(@defence_request_form, url: interview_start_time_defence_request_path) do |f| %>
-      <%= render('shared/date_time_form_part', attribute_name: :interview_start_time, f: f) %>
+      <%= render("shared/date_time_form_part", attribute: :interview_start_time, show_label: false, set_default_date: true, f: f) %>
       <%= hidden_field_tag :defence_request_id, @defence_request_form.defence_request.id %>
-      <%= f.submit(t('add_interview_start_time'), class: 'button') %>
+      <%= f.submit(t("add_interview_start_time"), class: "button") %>
     <% end %>
   </div>
 <% else %>
@@ -19,7 +21,7 @@
 <% end %>
 
 <% if @policy.solicitor_time_of_arrival_from_show? %>
-  <p><%= link_to t('add_expected_time_of_arrival'), edit_defence_request_solicitor_arrival_time_path(@defence_request), class: 'button' %></p>
+  <p><%= link_to t("add_expected_time_of_arrival"), edit_defence_request_solicitor_arrival_time_path(@defence_request), class: "button" %></p>
 <% end %>
 
 <div class="location">

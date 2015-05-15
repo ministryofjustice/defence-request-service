@@ -1,19 +1,23 @@
 <h3><%= t('case_details') %></h3>
 <div class="case-details">
-  <%= render('shared/date_time_form_part', attribute_name: :time_of_arrest, f: f) %>
+  <%= render('shared/date_time_form_part', attribute: :time_of_arrest, show_label: true, set_default_date: false, f: f) %>
 
-  <%= render('shared/date_time_form_part', attribute_name: :time_of_arrival, f: f) if @policy.add_case_time_of_arrival? %>
+  <% if @policy.add_case_time_of_arrival? %>
+    <%= render('shared/date_time_form_part', attribute: :time_of_arrival, show_label: true, set_default_date: false, f: f) %>
+  <% end %>
 
-  <%= render('shared/date_time_form_part', attribute_name: :time_of_detention_authorised, f: f) %>
+  <%= render('shared/date_time_form_part', attribute: :time_of_detention_authorised, show_label: true, set_default_date: false, f: f) %>
 
-  <%= render('shared/date_time_form_part', attribute_name: :interview_start_time, f: f) if @policy.interview_start_time_edit? %>
+  <% if @policy.interview_start_time_edit? %>
+    <%= render('shared/date_time_form_part', attribute: :interview_start_time, show_label: true, set_default_date: false, f: f) %>
+  <% end %>
 
   <%= render('defence_requests/form_partials/case_details', f: f) if @policy.create? %>
 
   <% unless @defence_request.dscc_number.blank? %>
-      <div class="form-group">
-        <span class="form-label"><%= t("dscc_number"); %></span>
-        <span><%= @defence_request.dscc_number %></span>
-      </div>
+    <div class="form-group">
+      <span class="form-label"><%= t("dscc_number"); %></span>
+      <span><%= @defence_request.dscc_number %></span>
+    </div>
   <% end %>
 </div>

@@ -83,6 +83,8 @@ en:
   interpreter_type: Interpreter type
   interview: "Interview"
   interview_at: "Interview at"
+  interview_planning: Interview planning
+  interview_planning_help: As soon as an interview time is agreed with the investigating officer, you should update this page.
   interview_start_time: Interview start time
   interview_start_time_change: "Interview start time change"
   interview_time_pending: Pending
