@@ -1,13 +1,10 @@
 <% if @policy.interview_start_time_edit? %>
   <h3><%= t("interview_planning") %></h3>
   <p><span class="hint"><%= t("interview_planning_help") %></span></p>
-  <div class="edit-time-of-arrival">
-    <%= form_for(@defence_request_form, url: interview_start_time_defence_request_path) do |f| %>
-      <%= render("shared/date_time_form_part", attribute: :interview_start_time, show_label: false, set_default_date: true, f: f) %>
-      <%= hidden_field_tag :defence_request_id, @defence_request_form.defence_request.id %>
-      <%= f.submit(t("add_interview_start_time"), class: "button") %>
-    <% end %>
-  </div>
+  <%= form_for(@defence_request, url: defence_request_interview_start_time_path(defence_request_id: @defence_request.id), method: :patch) do |f| %>
+    <%= render("shared/date_time_form_part", attribute: :interview_start_time, show_label: false, set_default_date: false, f: f) %>
+    <%= f.submit(t("add_interview_start_time"), class: "button") %>
+  <% end %>
 <% else %>
   <dl class="labels">
     <%= interview_start_time @defence_request %>

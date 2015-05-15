@@ -9,12 +9,12 @@ Rails.application.routes.draw do
 
   resources :defence_requests, except: [:index] do
     resource :solicitor_arrival_time, only: [:edit, :update]
+    resource :interview_start_time, only: [:update]
     member do
       post "resend_details"
     end
   end
 
-  resource :interview_start_time_defence_request, only: [:new, :create]
   resource :abort_defence_request, only: [:new, :create]
   resource :finish_defence_request, only: [:new, :create]
   resource :solicitor_search, only: [:create]

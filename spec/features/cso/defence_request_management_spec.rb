@@ -130,7 +130,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           click_link "Show"
           click_link "Interview"
 
-          expect(page).to_not have_selector ".edit-time-of-arrival"
+          expect(page).to_not have_selector ".time-of-arrival"
         end
 
         specify "can mark the request as completed" do
