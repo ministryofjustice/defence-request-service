@@ -41,7 +41,7 @@ module ApplicationHelper
   end
 
   def boolean_formatter(val)
-    (val ? "&#10003;" : "&#10007;").html_safe
+    val ? I18n.t("yes") : I18n.t("no")
   end
 
   def dashboard_limit_formatter(val, len)
