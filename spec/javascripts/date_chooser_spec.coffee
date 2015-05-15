@@ -7,7 +7,7 @@ expectDateValuesToEqual = (day, month, year, chooserDiv) ->
   expect( chooserDiv.find('.month').eq(0).val() ).toEqual month
   expect( chooserDiv.find('.year').eq(0).val() ).toEqual year
 
-dateChooserHtml = (initialDate) ->
+dateChooserHtml = (initialDate, dayValue, monthValue, yearValue) ->
   $("""
   <body>
   <fieldset class="inline time-select date-chooser">
@@ -27,15 +27,15 @@ dateChooserHtml = (initialDate) ->
       </label>
       <div class="date-field-wrapper">
         <label for="defence_request_solicitor_time_of_arrival_Day">Day</label>
-        <input size="2" placeholder="DD" class="day text-field" value="30" type="text" name="defence_request[solicitor_time_of_arrival][day]" id="defence_request_solicitor_time_of_arrival_day" />
+        <input size="2" placeholder="DD" class="day text-field" value="#{ dayValue }" type="text" name="defence_request[solicitor_time_of_arrival][day]" id="defence_request_solicitor_time_of_arrival_day" />
       </div>
       <div class="date-field-wrapper">
         <label for="defence_request_solicitor_time_of_arrival_Month">Month</label>
-        <input size="2" placeholder="MM" class="month text-field" value="4" type="text" name="defence_request[solicitor_time_of_arrival][month]" id="defence_request_solicitor_time_of_arrival_month" />
+        <input size="2" placeholder="MM" class="month text-field" value="#{ monthValue }" type="text" name="defence_request[solicitor_time_of_arrival][month]" id="defence_request_solicitor_time_of_arrival_month" />
       </div>
       <div class="date-field-wrapper">
         <label for="defence_request_solicitor_time_of_arrival_Year">Year</label>
-        <input size="4" placeholder="YYYY" class="year text-field" value="2015" type="text" name="defence_request[solicitor_time_of_arrival][year]" id="defence_request_solicitor_time_of_arrival_year" />
+        <input size="4" placeholder="YYYY" class="year text-field" value="#{ yearValue }" type="text" name="defence_request[solicitor_time_of_arrival][year]" id="defence_request_solicitor_time_of_arrival_year" />
       </div>
     </div>
   </fieldset>
@@ -105,14 +105,33 @@ describe "DateChooser", ->
     element.remove()
     element = null
 
-  describe "when initial date not 'today' or 'tomorrow'", ->
+  describe "when initial date blank", ->
     beforeEach ->
-      element = dateChooserHtml("any_other_value")
+      element = dateChooserHtml("any_other_value", "", "", "")
       dateChooserSetup(element, this)
 
     describe "after initialization", ->
       enablesTodayLink(element, this)
       enablesTomorrowLink(element, this)
+
+      it "leaves date values unchanged", ->
+        expectDateValuesToEqual( "", "", "", @chooserDiv )
+
+    sharedBehaviourForClickingTomorrow(element, this)
+
+    sharedBehaviourForClickingTomorrowThenToday(element, this)
+
+  describe "when initial date not 'today' or 'tomorrow'", ->
+    beforeEach ->
+      element = dateChooserHtml("any_other_value", "1", "1", "2014")
+      dateChooserSetup(element, this)
+
+    describe "after initialization", ->
+      enablesTodayLink(element, this)
+      enablesTomorrowLink(element, this)
+
+      it "leaves date values unchanged", ->
+        expectDateValuesToEqual( "1", "1", "2014", @chooserDiv )
 
     sharedBehaviourForClickingTomorrow(element, this)
 
@@ -120,7 +139,7 @@ describe "DateChooser", ->
 
   describe "when initial date 'tomorrow'", ->
     beforeEach ->
-      element = dateChooserHtml("tomorrow")
+      element = dateChooserHtml("tomorrow", "1", "5", "2015")
       dateChooserSetup(element, this)
 
     describe "after initialization", ->
@@ -129,9 +148,12 @@ describe "DateChooser", ->
       it "does not make Tomorrow a link", ->
         expect( @tomorrow.find('a').size() ).toEqual 0
 
+      it "leaves date values unchanged", ->
+        expectDateValuesToEqual( "1", "5", "2015", @chooserDiv )
+
   describe "when initial date 'today'", ->
     beforeEach ->
-      element = dateChooserHtml("today")
+      element = dateChooserHtml("today", "31", "4", "2015")
       dateChooserSetup(element, this)
 
     describe "after initialization", ->
@@ -141,7 +163,7 @@ describe "DateChooser", ->
         expect( @today.find('a').size() ).toEqual 0
 
       it "leaves date values unchanged", ->
-        expectDateValuesToEqual( "30", "4", "2015", @chooserDiv )
+        expectDateValuesToEqual( "31", "4", "2015", @chooserDiv )
 
     sharedBehaviourForClickingTomorrow(element, this)
 

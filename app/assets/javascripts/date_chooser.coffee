@@ -3,31 +3,35 @@ root = exports ? this
 class DateChooser
 
   constructor: (chooser) ->
-    @chooser = chooser
-    selectors = chooser.find(".date-chooser-select") # Today/Tomorrow selection
-    initialDate = selectors.data("initial-date")
     @dateDisplay = chooser.find(".date-chooser-display")
     @values = chooser.find(".date-chooser-values")
-    @today = selectors.find(".today")
-    @tomorrow = selectors.find(".tomorrow")
-    @dayInput = @chooser.find(".day")
+    @dayInput = chooser.find(".day")
 
-    @today.on "click", (event) =>
-      @toggleDate( @today, @tomorrow )
+    selectors = chooser.find(".date-chooser-select") # Today/Tomorrow selection
+    today = selectors.find(".today")
+    tomorrow = selectors.find(".tomorrow")
+    initialDate = selectors.data("initial-date")
+    @bindOnClickEvents(today, tomorrow)
+    @initializeLinks(initialDate, today, tomorrow)
+
+  bindOnClickEvents: (today, tomorrow) =>
+    today.on "click", (event) =>
+      @toggleDate( today, tomorrow )
       event.preventDefault()
 
-    @tomorrow.on "click", (event) =>
-      @toggleDate( @tomorrow, @today )
+    tomorrow.on "click", (event) =>
+      @toggleDate( tomorrow, today )
       event.preventDefault()
 
+  initializeLinks: (initialDate, today, tomorrow) =>
     switch initialDate
       when "today"
-        @enableLink @tomorrow
+        @enableLink tomorrow
       when "tomorrow"
-        @enableLink @today
+        @enableLink today
       else
-        @enableLink @today
-        @enableLink @tomorrow
+        @enableLink today
+        @enableLink tomorrow
 
   enableLink: (selector) =>
     selector.html( "<a href>" + selector.text() + "</a>" )
