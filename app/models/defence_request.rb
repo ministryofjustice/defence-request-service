@@ -9,8 +9,6 @@ class DefenceRequest < ActiveRecord::Base
   scope :not_aborted, -> { where.not(state: "aborted") }
   scope :not_draft, -> { where.not(state: "draft") }
   scope :ordered_by_created_at, -> { order(created_at: :asc) }
-  scope :active, -> { where.not(state: ["completed", "aborted"]) }
-  scope :finished, -> { where(state: ["completed", "aborted"]) }
 
   def self.related_to_solicitor(solicitor)
     where(organisation_uid: solicitor.organisation_uids.first)
@@ -23,6 +21,9 @@ class DefenceRequest < ActiveRecord::Base
     state :accepted
     state :aborted
     state :completed
+
+    ACTIVE_STATES = :draft, :queued, :acknowledged, :accepted
+    CLOSED_STATES = :aborted, :completed
 
     event :queue do
       transitions from: [:draft], to: :queued
@@ -91,6 +92,14 @@ class DefenceRequest < ActiveRecord::Base
     else
       false
     end
+  end
+
+  def active?
+    ACTIVE_STATES.include? state.to_sym
+  end
+
+  def closed?
+    CLOSED_STATES.include? state.to_sym
   end
 
   private

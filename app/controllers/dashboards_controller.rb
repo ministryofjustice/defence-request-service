@@ -2,15 +2,9 @@ class DashboardsController < BaseController
   skip_after_action :verify_authorized
   before_action :set_policy_with_context, except: [:refresh_dashboard]
   before_action :set_dashboard
-  before_action :set_defence_requests, only: [:show, :closed]
-  before_action :set_dashboard_count, only: [:show, :closed]
 
   def show
-    @defence_requests = @active_defence_requests
-  end
-
-  def closed
-    @defence_requests = @closed_defence_requests
+    @dashboard.set_visibility! params[:id]
   end
 
   def refresh_dashboard
@@ -24,20 +18,6 @@ class DashboardsController < BaseController
       current_user,
       defence_requests_scoped_by_policy
     )
-  end
-
-  def set_defence_requests
-    if @dashboard.user_role == "solicitor"
-      @active_defence_requests = @dashboard.defence_requests.active
-    else
-      @active_defence_requests = @dashboard.defence_requests
-    end
-    @closed_defence_requests = @dashboard.defence_requests.finished
-  end
-
-  def set_dashboard_count
-    @active_count = @active_defence_requests.count
-    @closed_count = @closed_defence_requests.count
   end
 
   def set_dashboard

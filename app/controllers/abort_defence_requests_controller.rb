@@ -16,7 +16,7 @@ class AbortDefenceRequestsController < BaseController
     )
 
     if @abort_defence_request_form.submit
-      redirect_to dashboard_path, notice: flash_message(:abort, DefenceRequest)
+      redirect_to closed_dashboard_path, notice: flash_message(:abort, DefenceRequest)
     else
       render :new
     end

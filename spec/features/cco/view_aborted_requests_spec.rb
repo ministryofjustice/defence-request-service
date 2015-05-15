@@ -6,6 +6,7 @@ RSpec.feature "Custody Center Operatives viewing aborted requests" do
     aborted_defence_request = create :defence_request, :aborted
 
     login_with cco_user
+    click_link "Closed (1)"
     click_link "Show"
 
     expect(page).
