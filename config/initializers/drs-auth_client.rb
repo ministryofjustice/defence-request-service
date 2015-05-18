@@ -1,3 +1,5 @@
+require_relative "../../lib/service_registry.rb"
+
 Drs::AuthClient.configure do |client|
   client.host = Settings.authentication.site_url
   client.version = :v1
