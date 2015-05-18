@@ -29,7 +29,6 @@ module DefenceRequestTransitions
         false
       else
         defence_request.organisation_uid = organisations.first.uid
-        true
       end
     end
 
@@ -37,7 +36,11 @@ module DefenceRequestTransitions
     # is going to end up in a broken state. We will move this into a delayed
     # job where we will handle this case.
     def acknowledge_defence_request
-      run_transition && defence_request.save! && defence_request.generate_dscc_number! && set_organisation_uid
+      run_transition &&
+        set_organisation_uid &&
+        defence_request.valid? &&
+        defence_request.generate_dscc_number! &&
+        defence_request.save
     end
 
     def run_transition
