@@ -50,10 +50,22 @@ RSpec.describe DefenceRequestsHelper, type: :helper do
 
   describe "arriving_at" do
     context "when arrival time set" do
-      it "renders correctly" do
-        request = create(:defence_request, :solicitor_time_of_arrival)
-        expected = %[<dl class="time-at"><dt>Arriving at</dt> <dd id="solicitor_time_of_arrival">01:01</dd></dl>]
-        expect(helper.arriving_at(request)).to eq(expected)
+      context "arrival time is today" do
+        it "renders just the time" do
+          time = Time.zone.now
+          request = create(:defence_request, solicitor_time_of_arrival: time)
+          expected = %[<dl class="time-at"><dt>Arriving at</dt> <dd id="solicitor_time_of_arrival">#{time.to_s(:time)}</dd></dl>]
+          expect(helper.arriving_at(request)).to eq(expected)
+        end
+      end
+
+      context "arrival time is not today" do
+        it "renders both the date and the time" do
+          time = Time.zone.now + 1.day
+          request = create(:defence_request, solicitor_time_of_arrival: time)
+          expected = %[<dl class="time-at"><dt>Arriving at</dt> <dd id="solicitor_time_of_arrival">#{time.to_s(:short)}</dd></dl>]
+          expect(helper.arriving_at(request)).to eq(expected)
+        end
       end
     end
   end

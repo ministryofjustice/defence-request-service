@@ -18,11 +18,7 @@ module DefenceRequestsHelper
   def interview_at(defence_request)
     if defence_request.interview_start_time?
 
-      if defence_request.interview_start_time.day == Time.zone.now.day
-        time = defence_request.interview_start_time.to_s(:time)
-      else
-        time = defence_request.interview_start_time.to_s(:short)
-      end
+      time = format_date_and_time defence_request.interview_start_time
 
       content_tag :dl, class: "time-at" do
         display_value "interview_at", time
@@ -36,7 +32,9 @@ module DefenceRequestsHelper
 
   def arriving_at(defence_request)
     if defence_request.solicitor_time_of_arrival?
-      time = defence_request.solicitor_time_of_arrival.to_s(:time)
+
+      time = format_date_and_time defence_request.solicitor_time_of_arrival
+
       content_tag :dl, class: "time-at" do
         display_value "arriving_at", time, id: :solicitor_time_of_arrival
       end
@@ -53,6 +51,14 @@ module DefenceRequestsHelper
   end
 
   private
+
+  #
+  # Formats the given date as a string with just time if the date is today
+  # Will format as date + time for dates that are not today
+  #
+  def format_date_and_time(date)
+    date.day == Time.zone.now.day ? date.to_s(:time) : date.to_s(:short)
+  end
 
   def initial_date(time_to_edit, set_default_date)
     if time_to_edit
