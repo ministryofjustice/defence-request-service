@@ -52,7 +52,7 @@ RSpec.describe DefenceRequestTransitions::Acknowledge, "#complete", :mock_auth_a
     expect(result).to eq false
   end
 
-  context "something" do
+  context "the api does not return a law firm" do
     let(:auth_api_mock_setup) do
       {
         organisations: {
