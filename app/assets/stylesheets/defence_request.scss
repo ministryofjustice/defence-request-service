@@ -1,3 +1,6 @@
+@import "colours";
+@import "elements/elements-typography";
+@import "grid_layout";
 
 .solicitor-results-list {
   padding-left: 14px;
@@ -61,4 +64,32 @@
 
 a.close-search {
   float: right;
+}
+
+.button.time-at {
+  width: 250px;
+  @include core-24();
+  padding-top: 0.5em;
+  padding-bottom: 0.3em;
+  padding-left: 0.6em;
+}
+
+dl.time-at {
+  background: $white;
+  padding: $gutter-one-quarter;
+  border: 1px solid $grey-1;
+  margin: $gutter-one-quarter 0px;
+  max-width: 350px;
+
+  dt {
+    @include bold-24();
+    display: inline-block;
+    padding-top: 0.5em;
+    padding-bottom: 0.3em;
+    padding-left: $gutter-one-quarter;
+  }
+  dd {
+    @include bold-24();
+    display: inline-block;
+  }
 }

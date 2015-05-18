@@ -41,7 +41,7 @@ module ApplicationHelper
   end
 
   def boolean_formatter(val)
-    (val ? "&#10003;" : "&#10007;").html_safe
+    val ? I18n.t("yes") : I18n.t("no")
   end
 
   def dashboard_limit_formatter(val, len)
@@ -54,5 +54,15 @@ module ApplicationHelper
 
   def check_policy_clause(policy, clause)
     policy.respond_to?(clause) ? policy.send(clause) : false
+  end
+
+  def user_has_role?(role)
+    current_user.roles.include?(role)
+  end
+
+  def display_value(label_key, value, options={})
+    label = I18n.t(label_key)
+    value = value.blank? ? "-" : value
+    content_tag(:dt, label) + " " + content_tag(:dd, value, id: options[:id])
   end
 end

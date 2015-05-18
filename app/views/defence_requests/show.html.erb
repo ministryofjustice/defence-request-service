@@ -1,133 +1,40 @@
-<%= render 'shared/error_and_flash', object: @defence_request_form  %>
+<%= render "shared/error_and_flash", object: @defence_request_form %>
 
-<div class="inner group">
-  <br/>
-  <%= link_to t('dashboard'), dashboard_path %>
-  <% if @defence_request.aborted? %>
-    <h1><%= t('case_aborted') %></h1>
+<%= link_to t("back_to_requests"), dashboard_path %>
 
-    <p><%= @defence_request.reason_aborted %></p>
+<h1 class="detainee"><%= @defence_request.detainee_name %></h1>
+<h2 class="dscc"><%= t("dscc") %>: <%= @defence_request.dscc_number %></h2>
 
-    <% if @current_user.roles.include?("solicitor") %>
-      <p><%= t('call_call_center') %></p>
-    <% end %>
-  <% else %>
-    <h1><%= t('case_details') %></h1>
-  <% end %>
-  <table>
-    <tbody>
-    <tr>
-      <td><%= t('detainee_name') %></td>
-      <td><%= @defence_request.detainee_name %></td>
-    </tr>
-    <tr>
-      <td><%= t('gender') %></td>
-      <td><%= @defence_request.gender %></td>
-    </tr>
-    <tr>
-      <td><%= t('date_of_birth') %></td>
-      <td><%= date_formatter(@defence_request.date_of_birth) %></td>
-    </tr>
-    <tr>
-      <td><%= t('appropriate_adult_required') %></td>
-      <td><%= boolean_formatter(@defence_request.appropriate_adult) %></td>
-    </tr>
-    <tr>
-      <td><%= t('appropriate_adult_reason') %></td>
-      <td><%= @defence_request.appropriate_adult_reason %></td>
-    </tr>
-    <tr>
-      <td><%= t('interpreter_required') %></td>
-      <td><%= @defence_request.interpreter_required %></td>
-    </tr>
-    <tr>
-      <td><%= t('interpreter_type') %></td>
-      <td><%= @defence_request.interpreter_type %></td>
-    </tr>
-    <tr>
-      <td><%= t('house_name') %></td>
-      <td><%= @defence_request.house_name %></td>
-    </tr>
-    <tr>
-      <td><%= t('address_1') %></td>
-      <td><%= @defence_request.address_1 %></td>
-    </tr>
-    <tr>
-      <td><%= t('address_2') %></td>
-      <td><%= @defence_request.address_2 %></td>
-    </tr>
-    <tr>
-      <td><%= t('city') %></td>
-      <td><%= @defence_request.city %></td>
-    </tr>
-    <tr>
-      <td><%= t('county') %></td>
-      <td><%= @defence_request.county %></td>
-    </tr>
-    <tr>
-      <td><%= t('postcode') %></td>
-      <td><%= @defence_request.postcode %></td>
-    </tr>
-    <tr>
-      <td><%= t('offences') %></td>
-      <td><%= @defence_request.offences %></td>
-    </tr>
-    <tr>
-      <td><%= t('circumstances_of_arrest') %></td>
-      <td><%= @defence_request.circumstances_of_arrest %></td>
-    </tr>
-    <tr>
-      <td><%= t('fit_for_interview') %></td>
-      <td><%= boolean_formatter(@defence_request.fit_for_interview) %></td>
-    </tr>
-    <tr>
-      <td><%= t('unfit_for_interview_reason') %></td>
-      <td><%= @defence_request.unfit_for_interview_reason %></td>
-    </tr>
-    <tr>
-      <td><%= t('investigating_officer_name') %></td>
-      <td><%= @defence_request.investigating_officer_name %></td>
-    </tr>
-    <tr>
-      <td><%= t('investigating_officer_shoulder_number') %></td>
-      <td><%= @defence_request.investigating_officer_shoulder_number %></td>
-    </tr>
-    <tr>
-      <td><%= t('investigating_officer_contact_number') %></td>
-      <td><%= @defence_request.investigating_officer_contact_number %></td>
-    </tr>
-    <tr>
-      <td><%= t('time_of_arrest') %></td>
-      <td><%= date_and_time_formatter(@defence_request.time_of_arrest) %></td>
-    </tr>
-    <tr>
-      <td><%= t('time_of_arrival') %></td>
-      <td><%= date_and_time_formatter(@defence_request.time_of_arrival) %></td>
-    </tr>
-    <tr>
-      <td><%= t('time_of_detention_authorised') %></td>
-      <td><%= date_and_time_formatter(@defence_request.time_of_detention_authorised) %></td>
-    </tr>
-    <tr>
-      <td><%= t('comments') %></td>
-      <td><%= @defence_request.comments %></td>
-    </tr>
-    <tr>
-      <td><%= t('dscc_number') %></td>
-      <td><%= @defence_request.dscc_number %></td>
-    </tr>
-    <tr>
-      <td><%= t('interview_start_time') %></td>
-      <td><%= date_and_time_formatter(@defence_request.interview_start_time) %></td>
-    </tr>
-    <tr class="solicitor-time-of-arrival">
-      <td><%= t('solicitor_time_of_arrival') %></td>
-      <td id="solicitor_time_of_arrival"><%= date_and_time_formatter(@defence_request.solicitor_time_of_arrival) %></td>
-    </tr>
-    </tbody>
-  </table>
-  <br/>
+<% if @defence_request.aborted? %>
+  <h1><%= t("case_aborted") %></h1>
+  <p><%= @defence_request.reason_aborted %></p>
+  <p><%= t("call_call_center") if user_has_role?("solicitor") %></p>
+<% end %>
 
-  <p><%= link_to t('add_expected_time_of_arrival'), edit_defence_request_solicitor_arrival_time_path(@defence_request), class: 'button' %></p>
+<dl class="labels">
+  <%= display_value "gender", @defence_request.gender %>
+  <%= display_value "date_of_birth", date_formatter(@defence_request.date_of_birth) %>
+  <%= display_value "age", @defence_request.detainee_age %>
+  <%= display_value "address", detainee_address(@defence_request) %>
+</dl>
 
-</div>
+<%= content_tag("div", class: "js-tabs", id: "edit-tabs", data: { activatefirst: "true" }) do %>
+  <ul class="cf tabs js-tabs-nav js-only">
+    <li>
+      <a href="#interview">Interview</a>
+    </li>
+    <li>
+      <a href="#case-details"><%= t("detention_details") %></a>
+    </li>
+    <li class="filler">
+    </li>
+  </ul>
+  <div class="js-tabs-content">
+    <div id="interview">
+      <%= render "defence_requests/show_partials/interview_tab" %>
+    </div>
+    <div id="case-details">
+      <%= render "defence_requests/show_partials/case_details_tab" %>
+    </div>
+  </div>
+<% end %>

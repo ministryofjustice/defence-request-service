@@ -68,8 +68,8 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
   end
 
   context "with requests they are assigned to" do
-    context "own solicitor" do
-      context "with requests that have not been queued yet" do
+    context "and own solicitor" do
+      context "and requests not yet queued" do
         specify "can edit all relevant details of the request", js: true do
           cso_user = create :cso_user
           create :defence_request
@@ -121,13 +121,14 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
         end
       end
 
-      context "with accepted requests" do
+      context "with accepted requests", js: true do
         specify "can not edit the expected arrival time from request show page" do
           cso_user = create :cso_user
           create :defence_request, :accepted
 
           login_with cso_user
           click_link "Show"
+          click_link "Interview"
 
           expect(page).to_not have_selector ".time-of-arrival"
         end
@@ -178,7 +179,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
     login_with cso_user
     click_link "Show"
 
-    click_link "Dashboard"
+    click_link "< Back to requests"
     expect(page).to have_content "Custody Suite Officer Dashboard"
   end
 end

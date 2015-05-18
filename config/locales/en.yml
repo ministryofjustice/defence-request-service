@@ -9,18 +9,23 @@ en:
   acknowledged_defence_request: "Acknowledged Defence Requests"
   actions: "Actions"
   active: "Active (%{count})"
-  add_expected_time_of_arrival: "Add an estimated time of arrival"
+  age: "Age"
+  add_expected_time_of_arrival: Estimate time of arrival
+  add_interview_start_time: "Add Interview Start Time"
+  address: "Address"
   address_1: "Address 1"
   address_2: "Address 2"
+  address_not_given: "Not given"
   adult: "Adult?"
   age: "Age"
-  appropriate_adult: "Appropriate Adult"
+  appropriate_adult: Appropriate adult
   appropriate_adult_reason: "Reason for appropriate adult"
-  appropriate_adult_required: "Appropriate adult required?"
+  appropriate_adult_required: Appropriate adult required
   arrival_time: "Arrival time"
   arrival_time_cancel: "Cancel"
   arrival_time_save: "Save"
   arriving_at: "Arriving at"
+  back_to_requests: "< Back to requests"
   call_call_center: "Please call the Call Centre on 0999 999 9999"
   cancel: "Cancel"
   cancel_and_delete_all_details: "Cancel and delete all details"
@@ -29,7 +34,7 @@ en:
   case_details_for: "Case Details for %{dscc}"
   cco: "Call Center Operative"
   change_password: "Change Password"
-  circumstances_of_arrest: Circumstances of Arrest
+  circumstances_of_arrest: Circumstances of arrest
   city: City
   closed: "Closed (%{count})"
   comments: "Comments"
@@ -55,6 +60,8 @@ en:
   detainee_details: "Detainee details"
   detainee_dob: "Detainee date of birth (optional)"
   detainee_name: "Detainee name"
+  detention_details: "Detention details"
+  dscc: "DSCC"
   dscc_number: "DSCC number"
   duty: 'Duty'
   edit: Edit
@@ -65,21 +72,25 @@ en:
   expected_time_of_arrival: "Solicitor Time of Arrival"
   expired: "Session expired"
   female: "Female"
-  fit_for_interview: Fit for Interview?
+  fit_for_interview: Is detainee fit for interview
   full_name: "Full Name"
   gender: "Gender"
   help: "Help"
   home: "Home"
   hour: "Hour"
   house_name: House name or number
-  interpreter_required: "Interpreter Required"
-  interpreter_type: "Interpreter Type"
+  interpreter_required: Interpreter required
+  interpreter_type: Interpreter type
+  interview: "Interview"
   interview_at: "Interview at"
-  interview_start_time: "Interview Start Time"
+  interview_planning: Interview planning
+  interview_planning_help: As soon as an interview time is agreed with the investigating officer, you should update this page.
+  interview_start_time: Interview start time
   interview_start_time_change: "Interview start time change"
-  investigating_officer_contact_number: Investigating Officer Contact Number
-  investigating_officer_name: Investigating Officer Name
-  investigating_officer_shoulder_number: Investigating Officer Shoulder Number
+  interview_time: Interview time
+  investigating_officer_contact_number: Investigating officer contact number
+  investigating_officer_name: Investigating officer name
+  investigating_officer_shoulder_number: Investigating officer shoulder number
   legal_advice_request: "Legal advice request"
   male: "Male"
   min: "Min"
@@ -91,6 +102,7 @@ en:
   not_authorized: "You are not authorised to perform this action"
   offences: "Offences"
   own: 'Own'
+  pending: pending
   phone_number: "Phone number"
   postcode: Postcode
   prohibit_save: Please review the following %{count}
@@ -107,16 +119,16 @@ en:
   solicitor_firm: "Solicitor Firm"
   solicitor_name: "Solicitor Name"
   solicitor_search: "You can search for a solicitor or firm using the search box below,<br> or enter manually."
-  solicitor_time_of_arrival: "Solicitor Expected Time of Arrival"
+  solicitor_time_of_arrival: Arriving at
   solicitor_type: "Solicitor Type"
   state: "State"
   telephone_number: "Telephone number"
   terms: "Terms"
   terms_and_conditions: "Terms and conditions and privacy policy"
   time_hint: "eg. 23 10"
-  time_of_arrest: Time of Arrest
-  time_of_arrival: "Time of Arrival"
-  time_of_detention_authorised: Time of Detention Authorised
+  time_of_arrest: Arrest time
+  time_of_arrival: Arrival time
+  time_of_detention_authorised: Detention authorised time
   today: Today
   tomorrow: Tomorrow
   transition_info: Reason aborted
@@ -125,6 +137,7 @@ en:
   update: "Update"
   update_and_accept: "Update and Accept"
   update_from: "Update from"
+  update_time_of_arrival: "Update time of arrival"
   view_the_case_details: "View the case details"
   what_type_is_being_requested: "What type of solicitor is being requested?"
   year: "Year"
@@ -146,6 +159,7 @@ en:
     failed_destroy: "%{model} was not deleted"
     failed_details_sent: "Details were not sent"
     failed_queue: "%{model} was not sent for processing"
+    interview_start_time: "Interview start time updated"
     solicitor_details_required: "Valid solicitor details are required to update and accept a %{model}"
     update: "%{model} successfully updated"
     updated_and_accepted: "%{model} successfully updated and marked as accepted"

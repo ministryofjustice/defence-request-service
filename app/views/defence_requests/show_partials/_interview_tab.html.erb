@@ -1,0 +1,37 @@
+<% if @policy.interview_start_time_edit? %>
+  <h3><%= t("interview_planning") %></h3>
+  <p><span class="hint"><%= t("interview_planning_help") %></span></p>
+  <%= form_for(@defence_request, url: defence_request_interview_start_time_path(defence_request_id: @defence_request.id), method: :patch) do |f| %>
+    <%= render("shared/date_time_form_part", attribute: :interview_start_time, show_label: false, set_default_date: false, f: f) %>
+    <%= f.submit(t("add_interview_start_time"), class: "button") %>
+  <% end %>
+<% else %>
+  <%= interview_at @defence_request %>
+<% end %>
+
+<% if @defence_request.solicitor_time_of_arrival? %>
+  <%= arriving_at @defence_request %>
+<% end %>
+
+<% if @policy.solicitor_time_of_arrival_from_show? %>
+  <% if @defence_request.solicitor_time_of_arrival? %>
+    <p><%= link_to t("update_time_of_arrival"), edit_defence_request_solicitor_arrival_time_path(@defence_request) %></p>
+  <% else %>
+    <p><%= link_to t("add_expected_time_of_arrival"), edit_defence_request_solicitor_arrival_time_path(@defence_request), class: "button time-at" %></p>
+  <% end %>
+<% end %>
+
+<div class="location">
+  <h3>Location</h3>
+  <p>This is a made up address because it's not implemented <%= link_to "XX9 9XX", "X" %></p>
+</div>
+
+<h3>Contacts</h3>
+<dl class="labels contacts">
+  <dt>Custody officer</dt> <dd>Made up name</dd>
+  <dt>Custody suite contact number</dt> <dd> <tel>000 0000 0000</tel> </dd>
+
+  <%= display_value "investigating_officer_name", @defence_request.investigating_officer_name %>
+  <%= display_value "investigating_officer_shoulder_number", @defence_request.investigating_officer_shoulder_number %>
+  <%= display_value "investigating_officer_contact_number", @defence_request.investigating_officer_contact_number %>
+</dl>

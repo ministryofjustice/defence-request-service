@@ -1,0 +1,284 @@
+// Give elements default CSS by extending from selectors in govuk elements
+
+$path: "";
+
+@import "elements/helpers";
+@import "elements/reset";
+@import "elements/elements-typography";
+@import "elements/layout";
+@import "elements/forms";
+@import "elements/tables";
+@import "elements/buttons";
+@import "elements/details";
+@import "elements/lists";
+@import "elements/panels";
+
+h1 {
+  @extend .heading-xlarge;
+  margin-right: 6%;
+  span {
+    @extend .heading-secondary;
+  }
+  &.detainee {
+    margin-bottom: 0.2em;
+  }
+}
+
+h2 {
+  @extend .heading-large;
+  &.dscc {
+    margin-top: 0.2em;
+  }
+}
+
+h3 {
+  @extend .heading-medium;
+}
+
+ul {
+  @extend .list-bullet;
+}
+
+fieldset.radio {
+  label {
+    @extend .block-label;
+  }
+}
+
+legend {
+  @extend .form-label;
+  color: black;
+}
+
+select {
+  @extend .form-label;
+}
+
+span.hint {
+  @extend .form-hint;
+  margin-top: 0px;
+}
+
+label[for] {
+  @extend .form-label;
+}
+
+label + input {
+  @extend .form-control;
+}
+
+label + textarea {
+  @extend .form-control;
+}
+
+fieldset, .sub-panel {
+  @extend .form-group;
+}
+
+.narrow {
+  width: 22%;
+  @include media(mobile) {
+    width: 40%;
+  }
+}
+
+.alert-summary {
+  @extend .validation-summary;
+  border: 3px solid $red;
+  h3 {
+    margin-top: 10px;
+  }
+}
+
+.notice-summary {
+  @extend .validation-summary;
+  border: 3px solid $green;
+  h3 {
+    margin-top: 10px;
+  }
+}
+
+.success-summary {
+  @extend .validation-summary;
+  border: 3px solid $green;
+  h3 {
+    margin-top: 10px;
+  }
+}
+
+span.error {
+  @extend .validation-message;
+}
+
+.js-enabled {
+  .hide {
+    display: none;
+  }
+}
+
+.js-only {
+  display: none;
+  .js-enabled & {
+    display: block;
+  }
+}
+
+.js-only-inline-block {
+  display: none;
+  .js-enabled & {
+    display: inline-block;
+  }
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.summary-header {
+  margin-top: 100px;
+  .section-header {
+    margin-top: 0px;
+    border: none;
+    @include media(mobile) {
+      margin-bottom: 10px;
+    }
+  }
+  .edit-link {
+    float: right;
+    margin-right: 15px;
+    @include media(mobile) {
+      float: left;
+      margin-left: 15px;
+      margin-bottom: 15px;
+    }
+  }
+}
+
+.summary-label {
+  color: $secondary-text-colour;
+  width: 30%;
+}
+
+textarea {
+  height: 110px;
+}
+
+section {
+  clear: left;
+}
+
+.form-group {
+  float: none;
+}
+
+[type="text"], [type="password"], textarea {
+  padding: 5px 4px 2px;
+  border: 1px solid $grey-2;
+}
+
+input[disabled="disabled"],
+input[readonly="readonly"],
+textarea[disabled],
+textarea[disabled="disabled"],
+textarea[readonly="readonly"] {
+  opacity: 1;
+  background-color: $grey-4;
+  color: $grey-1;
+  &:focus {
+    outline: none;
+  }
+}
+
+.button.primary {
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+
+.button.warning {
+  background-color: $yellow;
+}
+
+span.hint.inline {
+  display: inline;
+}
+
+fieldset.time-select select {
+  display: inline;
+}
+
+.panel {
+  border: 1px solid #bfc1c3;
+  padding-top: 45px;
+  padding-right: 40px;
+  padding-bottom: 30px;
+  padding-left: 30px;
+}
+
+.form-links {
+  display: inline-block;
+  padding-top: 14px;
+}
+
+.flash.success {
+  background-color: #ffe1e1;
+  border: 3px red solid;
+}
+
+.text-field {
+  text-transform: none;
+  border: 1px solid #bbbbbb;
+  margin: 0 0 1em;
+  padding: 0.5em;
+}
+
+.text-field-wide {
+  width: 80%;
+}
+
+.date-field-wrapper {
+  display: inline-block;
+  margin-right: 1em;
+}
+
+.date-chooser-values {
+  display: inline-block;
+}
+
+.time-field-wrapper {
+  display: inline-block;
+  margin-right: 1em;
+}
+
+.today {
+  margin-right: 5px;
+}
+
+.hidden {
+  display: none;
+}
+
+.form-group {
+  margin-bottom: 1px;
+}
+
+dl {
+  &.labels {
+    dt {
+      float: left;
+      margin-right: 0.5em;
+      line-height: 2em;
+    }
+    dd {
+      font-weight: bold;
+      line-height: 2em;
+    }
+  }
+}
+
+dd {
+  margin: 0;
+}

@@ -1,0 +1,21 @@
+<h3 class="nonjs"><%= t("detention_details")%></h3>
+<dl class="labels">
+  <%= display_value "time_of_arrest", date_and_time_formatter(@defence_request.time_of_arrest) %>
+  <%= display_value "time_of_arrival", date_and_time_formatter(@defence_request.time_of_arrival) %>
+  <%= display_value "time_of_detention_authorised", date_and_time_formatter(@defence_request.time_of_detention_authorised) %>
+  <%= display_value "offences", @defence_request.offences %>
+  <%= display_value "circumstances_of_arrest", @defence_request.circumstances_of_arrest %>
+  <%= display_value "fit_for_interview", boolean_formatter(@defence_request.fit_for_interview) %>
+  <% unless @defence_request.fit_for_interview %>
+    <%= display_value "unfit_for_interview_reason", @defence_request.unfit_for_interview_reason %>
+  <% end %>
+  <%= display_value "appropriate_adult_required", boolean_formatter(@defence_request.appropriate_adult) %>
+  <% if @defence_request.appropriate_adult %>
+    <%= display_value "appropriate_adult_reason", @defence_request.appropriate_adult_reason %>
+  <% end %>
+  <%= display_value "interpreter_required", boolean_formatter(@defence_request.interpreter_required) %>
+  <% if @defence_request.interpreter_required %>
+    <%= display_value "interpreter_type", @defence_request.interpreter_type %>
+  <% end %>
+  <%= display_value "comments", @defence_request.comments %>
+</dl>
