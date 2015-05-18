@@ -14,4 +14,10 @@ RSpec.feature "User authentication" do
 
     expect(current_path).to eq "/auth/failure"
   end
+
+  scenario "has a sign out link when logged in" do
+    cso_user = create :cso_user
+    login_with cso_user
+    expect(page).to have_link("Sign out", "/users/sign_out")
+  end
 end
