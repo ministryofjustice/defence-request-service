@@ -79,7 +79,7 @@ dl.time-at {
   padding: $gutter-one-quarter;
   border: 1px solid $grey-1;
   margin: $gutter-one-quarter 0px;
-  width: 260px;
+  max-width: 350px;
 
   dt {
     @include bold-24();

@@ -17,7 +17,13 @@ module DefenceRequestsHelper
 
   def interview_at(defence_request)
     if defence_request.interview_start_time?
-      time = defence_request.interview_start_time.to_s(:time)
+
+      if defence_request.interview_start_time.day == Time.zone.now.day
+        time = defence_request.interview_start_time.to_s(:time)
+      else
+        time = defence_request.interview_start_time.to_s(:short)
+      end
+
       content_tag :dl, class: "time-at" do
         display_value "interview_at", time
       end

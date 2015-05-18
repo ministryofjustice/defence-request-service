@@ -28,10 +28,22 @@ RSpec.describe DefenceRequestsHelper, type: :helper do
       end
     end
     context "when interview time set" do
-      it "renders correctly" do
-        request = create(:defence_request, :interview_start_time)
-        expected = %[<dl class="time-at"><dt>Interview at</dt> <dd>01:01</dd></dl>]
-        expect(helper.interview_at(request)).to eq(expected)
+      context "interview time is today" do
+        it "renders just the time" do
+          time = Time.zone.now
+          request = create(:defence_request, interview_start_time: time)
+          expected = %[<dl class="time-at"><dt>Interview at</dt> <dd>#{time.to_s(:time)}</dd></dl>]
+          expect(helper.interview_at(request)).to eq(expected)
+        end
+      end
+
+      context "interview time is not today" do
+        it "renders the date and the time" do
+          time = Time.zone.now + 1.day
+          request = create(:defence_request, interview_start_time: time)
+          expected = %[<dl class="time-at"><dt>Interview at</dt> <dd>#{time.to_s(:short)}</dd></dl>]
+          expect(helper.interview_at(request)).to eq(expected)
+        end
       end
     end
   end
