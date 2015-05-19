@@ -5,14 +5,7 @@ module DefenceRequestsHelper
   end
 
   def detainee_address(defence_request)
-    attributes = %i[house_name address_1 address_2 city county postcode]
-    fields = attributes.map { |f| defence_request.send(f) }.compact
-
-    if fields.blank?
-      I18n.t("address_not_given")
-    else
-      fields.join(", ")
-    end
+    defence_request.detainee_address.blank? ? I18n.t("address_not_given") : defence_request.detainee_address
   end
 
   def interview_at(defence_request)

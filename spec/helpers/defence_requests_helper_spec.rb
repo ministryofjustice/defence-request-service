@@ -12,7 +12,7 @@ RSpec.describe DefenceRequestsHelper, type: :helper do
 
     context "when address present" do
       it "returns address as single line" do
-        request = create(:defence_request, :with_address)
+        request = create(:defence_request, :with_detainee_address)
         expected = "House on the Hill, Letsby Avenue, Right up my street, London, Greater London, XX1 1XX"
         expect(helper.detainee_address(request)).to eq(expected)
       end

@@ -75,13 +75,8 @@ FactoryGirl.define do
     solicitor_time_of_arrival now
   end
 
-  trait :with_address do
-    house_name "House on the Hill"
-    address_1 "Letsby Avenue"
-    address_2 "Right up my street"
-    city "London"
-    county "Greater London"
-    postcode "XX1 1XX"
+  trait :with_detainee_address do
+    detainee_address "House on the Hill, Letsby Avenue, Right up my street, London, Greater London, XX1 1XX"
   end
 
   trait :with_circumstance_of_arrest do

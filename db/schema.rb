@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150519101603) do
+ActiveRecord::Schema.define(version: 20150519110738) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,12 +58,6 @@ ActiveRecord::Schema.define(version: 20150519101603) do
     t.datetime "solicitor_time_of_arrival"
     t.text     "reason_aborted"
     t.text     "appropriate_adult_reason"
-    t.string   "house_name"
-    t.string   "address_1"
-    t.string   "address_2"
-    t.string   "city"
-    t.string   "county"
-    t.string   "postcode"
     t.string   "investigating_officer_name"
     t.string   "investigating_officer_shoulder_number"
     t.string   "investigating_officer_contact_number"
@@ -77,6 +71,7 @@ ActiveRecord::Schema.define(version: 20150519101603) do
     t.boolean  "interpreter_required",                  default: false, null: false
     t.text     "interpreter_type"
     t.uuid     "organisation_uid"
+    t.string   "detainee_address"
   end
 
   add_index "defence_requests", ["cco_uid"], name: "index_defence_requests_on_cco_uid", using: :btree

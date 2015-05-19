@@ -136,7 +136,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
         :interview_start_time,
         :solicitor_time_of_arrival,
         :unfit_for_interview,
-        :with_address,
+        :with_detainee_address,
         :with_circumstance_of_arrest,
         :with_dscc_number,
         :with_interpreter_required,
