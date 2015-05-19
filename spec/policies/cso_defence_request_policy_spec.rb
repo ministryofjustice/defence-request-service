@@ -12,8 +12,7 @@ RSpec.describe CsoDefenceRequestPolicy do
     let(:user)          { FactoryGirl.create(:cso_user) }
     let(:group_actions) { [
       :new,
-      :create,
-      :solicitors_search
+      :create
     ] }
 
     context "with a new DR" do

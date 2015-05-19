@@ -63,10 +63,6 @@ class CsoDefenceRequestPolicy < ApplicationPolicy
     policy_record.can_execute_abort?
   end
 
-  def solicitors_search?
-    true
-  end
-
   def resend_details?
     policy_record.accepted?
   end

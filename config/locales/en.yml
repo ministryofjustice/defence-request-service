@@ -107,7 +107,6 @@ en:
   reason_aborted: Reason aborted
   resend_details: "Resend details"
   scheme: "Scheme"
-  search: "Search"
   send_for_processing: "Send for Processing"
   show: "Show"
   sign_out: "Sign out"
@@ -117,7 +116,6 @@ en:
   solicitor_email: "Solicitor Email"
   solicitor_firm: "Solicitor Firm"
   solicitor_name: "Solicitor Name"
-  solicitor_search: "You can search for a solicitor or firm using the search box below,<br> or enter manually."
   solicitor_time_of_arrival: Arriving at
   state: "State"
   telephone_number: "Telephone number"

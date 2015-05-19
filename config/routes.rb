@@ -17,7 +17,6 @@ Rails.application.routes.draw do
 
   resource :abort_defence_request, only: [:new, :create]
   resource :finish_defence_request, only: [:new, :create]
-  resource :solicitor_search, only: [:create]
   resource :transition_defence_request, only: [:new, :create]
 
   get "/auth/:provider/callback", to: "sessions#create"
