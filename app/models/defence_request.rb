@@ -74,14 +74,6 @@ class DefenceRequest < ActiveRecord::Base
     send_solicitor_case_details
   end
 
-  def duty_solicitor?
-    solicitor_type == "duty"
-  end
-
-  def own_solicitor?
-    solicitor_type == "own"
-  end
-
   def generate_dscc_number!
     if result = DsccNumberGenerator.new(self).generate!
 

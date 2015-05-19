@@ -12,8 +12,7 @@ FactoryGirl.define do
     return "%s%05d%s" % [prefix, n, DsccNumberGenerator::DEFAULT_SUFFIX]
   end
 
-  factory :defence_request, aliases: [:own_solicitor] do
-    solicitor_type "own"
+  factory :defence_request do
     sequence(:detainee_name) { |n| "detainee_name-#{n}" }
     gender "male"
     date_of_birth twenty_one_years_ago
@@ -24,10 +23,6 @@ FactoryGirl.define do
     adult [nil, true, false].sample
     appropriate_adult false
     fit_for_interview true
-  end
-
-  trait :duty_solicitor do
-    solicitor_type "duty"
   end
 
   trait :draft do

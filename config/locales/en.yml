@@ -63,7 +63,6 @@ en:
   detention_details: "Detention details"
   dscc: "DSCC"
   dscc_number: "DSCC number"
-  duty: 'Duty'
   edit: Edit
   edit_defence_request: "Edit Defence Request"
   email: Email
@@ -101,7 +100,6 @@ en:
   no_results_found: 'No results found - Contact DSCC'
   not_authorized: "You are not authorised to perform this action"
   offences: "Offences"
-  own: 'Own'
   pending: pending
   phone_number: "Phone number"
   postcode: Postcode
@@ -109,7 +107,6 @@ en:
   reason_aborted: Reason aborted
   resend_details: "Resend details"
   scheme: "Scheme"
-  search: "Search"
   send_for_processing: "Send for Processing"
   show: "Show"
   sign_out: "Sign out"
@@ -119,9 +116,7 @@ en:
   solicitor_email: "Solicitor Email"
   solicitor_firm: "Solicitor Firm"
   solicitor_name: "Solicitor Name"
-  solicitor_search: "You can search for a solicitor or firm using the search box below,<br> or enter manually."
   solicitor_time_of_arrival: Arriving at
-  solicitor_type: "Solicitor Type"
   state: "State"
   telephone_number: "Telephone number"
   terms: "Terms"

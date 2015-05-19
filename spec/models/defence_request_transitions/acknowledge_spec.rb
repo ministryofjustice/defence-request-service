@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe DefenceRequestTransitions::Acknowledge, "#complete", :mock_auth_api do
-  let(:defence_request) { create(:defence_request, :duty_solicitor, :queued, dscc_number: nil ) }
+  let(:defence_request) { create(:defence_request, :queued, dscc_number: nil ) }
   let(:user) { create(:user) }
 
   let(:auth_token) { "TOKEN" }

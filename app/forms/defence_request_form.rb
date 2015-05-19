@@ -4,7 +4,7 @@ class DefenceRequestForm
 
   attr_reader :defence_request, :fields
 
-  DELEGATED_ATTRIBUTES =  :solicitor_type, :detainee_name, :gender,
+  DELEGATED_ATTRIBUTES =  :detainee_name, :gender,
                           :detainee_age, :offences, :comments, :appropriate_adult,
                           :appropriate_adult_reason, :house_name, :address_1, :address_2, :city, :county, :postcode,
                           :circumstances_of_arrest, :investigating_officer_name,

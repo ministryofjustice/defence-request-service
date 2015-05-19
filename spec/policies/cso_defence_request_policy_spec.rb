@@ -12,8 +12,7 @@ RSpec.describe CsoDefenceRequestPolicy do
     let(:user)          { FactoryGirl.create(:cso_user) }
     let(:group_actions) { [
       :new,
-      :create,
-      :solicitors_search
+      :create
     ] }
 
     context "with a new DR" do
@@ -22,8 +21,7 @@ RSpec.describe CsoDefenceRequestPolicy do
         :edit,
         :update,
         :queue,
-        :add_case_time_of_arrival,
-        :edit_solicitor_details
+        :add_case_time_of_arrival
       ] }
       let (:defreq) { FactoryGirl.build(:defence_request) }
       specify{ expect(subject).to permit_actions_and_forbid_all_others actions }
@@ -35,8 +33,7 @@ RSpec.describe CsoDefenceRequestPolicy do
         :edit,
         :update,
         :queue,
-        :interview_start_time_edit,
-        :edit_solicitor_details
+        :interview_start_time_edit
       ] }
       let (:defreq) { FactoryGirl.create(:defence_request, :draft) }
       specify{ expect(subject).to permit_actions_and_forbid_all_others actions }
