@@ -5,8 +5,7 @@ RSpec.describe DefenceRequestForm do
   let (:defence_request) { FactoryGirl.create(:defence_request) }
   subject { DefenceRequestForm.new FactoryGirl.create(:defence_request) }
 
-  let (:params_for_dr)   { {  solicitor_type: defence_request.solicitor_type,
-                              detainee_name: defence_request.detainee_name,
+  let (:params_for_dr)   { {  detainee_name: defence_request.detainee_name,
                               gender: defence_request.gender,
                               detainee_age: defence_request.detainee_age,
                               offences: defence_request.offences,

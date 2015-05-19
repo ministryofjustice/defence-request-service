@@ -39,10 +39,6 @@ class CsoDefenceRequestPolicy < ApplicationPolicy
     edit?
   end
 
-  def edit_solicitor_details?
-    policy_record.own_solicitor? && edit?
-  end
-
   def solicitor_time_of_arrival?
     policy_record.accepted?
   end

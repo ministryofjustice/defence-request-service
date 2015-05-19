@@ -60,7 +60,6 @@ class DefenceRequestsController < BaseController
 
   def defence_request_params
     params.require(:defence_request).permit(
-      :solicitor_type,
       :solicitor_name,
       :solicitor_firm,
       :solicitor_email,
