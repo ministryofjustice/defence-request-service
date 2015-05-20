@@ -24,14 +24,14 @@ RSpec.describe DefenceRequestsHelper, type: :helper do
       it "returns 'Not given'" do
         request = create(:defence_request)
         request.update(date_of_birth: nil)
-        expect(helper.date_of_birth_not_given_formatter(request)).to eq("Not Given")
+        expect(helper.date_not_given_formatter(request, :date_of_birth)).to eq("Not Given")
       end
     end
 
     context "when address present" do
       it "returns date as correctly formatted" do
         request = create(:defence_request)
-        expect(helper.date_of_birth_not_given_formatter(request)).to eq("20 May 1994")
+        expect(helper.date_not_given_formatter(request, :date_of_birth)).to eq("20 May 1994")
       end
     end
   end

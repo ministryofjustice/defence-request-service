@@ -8,8 +8,8 @@ module DefenceRequestsHelper
     defence_request.send(field).blank? ? I18n.t("not_given") : defence_request.send(field)
   end
 
-  def date_of_birth_not_given_formatter(defence_request)
-    defence_request.date_of_birth.blank? ? I18n.t("not_given") : date_formatter(defence_request.date_of_birth)
+  def date_not_given_formatter(defence_request, field)
+    defence_request.send(field).blank? ? I18n.t("not_given") : date_formatter(defence_request.send(field))
   end
 
   def interview_at(defence_request)

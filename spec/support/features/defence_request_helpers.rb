@@ -23,6 +23,9 @@ module DefenceRequestHelpers
         fill_in "defence_request_interview_start_time_hour", with: "01"
         fill_in "defence_request_interview_start_time_min", with: "01"
       end
+      within ".detainee" do
+        fill_in "Full Name", with: "Mannie Badder"
+      end
     else
       within ".case-details" do
         fill_in "defence_request_investigating_officer_name", with: "Dave Mc.Copper"
@@ -53,6 +56,9 @@ module DefenceRequestHelpers
         choose "Male"
         choose "defence_request_appropriate_adult_false"
         choose "defence_request_interpreter_required_false"
+        check "defence_request_detainee_name_not_given"
+        check "defence_request_detainee_address_not_given"
+        check "defence_request_date_of_birth_not_given"
       end
     else
       within ".detainee" do
