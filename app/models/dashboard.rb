@@ -1,6 +1,7 @@
 class Dashboard
-  def initialize(user, defence_requests_scoped_by_policy)
+  def initialize(user, defence_requests_scoped_by_policy, client)
     @user = user
+    @client = client
     @defence_requests_scoped_by_policy = defence_requests_scoped_by_policy
   end
 
@@ -40,7 +41,20 @@ class Dashboard
   attr_reader :user, :defence_requests_scoped_by_policy
 
   def ordered_defence_requests
-    defence_requests_scoped_by_policy.ordered_by_created_at
+    defence_requests_scoped_by_policy.ordered_by_created_at.map { |d| new_dash_dr[d] }
+  end
+
+  def new_dash_dr
+    @_new_dash_dr ||= DefenceRequest.method(:new).curry(2)[@client]
+  end
+
+  class DefenceRequest < SimpleDelegator
+    delegate :name, :tel, to: :@organisation, allow_nil: true, prefix: :firm
+
+    def initialize client, dr
+      super dr
+      @organisation = client.organisation(dr.organisation_uid) if dr.organisation_uid
+    end
   end
 
 end

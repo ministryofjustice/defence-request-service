@@ -166,4 +166,5 @@ RSpec.describe DefenceRequest, type: :model do
       end
     end
   end
+
 end

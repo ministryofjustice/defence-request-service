@@ -16,7 +16,8 @@ class DashboardsController < BaseController
   def dashboard
     Dashboard.new(
       current_user,
-      defence_requests_scoped_by_policy
+      defence_requests_scoped_by_policy,
+      client
     )
   end
 
@@ -34,5 +35,9 @@ class DashboardsController < BaseController
 
   def policy_context
     @_policy_context ||= PolicyContext.new(DefenceRequest, current_user)
+  end
+
+  def client
+    @_client ||= ServiceRegistry.service(:auth_api_client).new(session[:user_token])
   end
 end
