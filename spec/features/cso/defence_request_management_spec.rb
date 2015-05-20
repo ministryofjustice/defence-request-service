@@ -2,6 +2,33 @@ require "rails_helper"
 
 RSpec.feature "Custody Suite Officers managing defence requests" do
   context "creating a new request" do
+
+    specify "can select \"not given\" for name, dob and address" do
+      cso_user = create :cso_user
+
+      login_with cso_user
+      click_link "New Defence Request"
+
+      fill_in_defence_request_form not_given: true
+      check "defence_request_detainee_name_not_given"
+      check "defence_request_detainee_address_not_given"
+
+      within ".detainee" do
+        choose "Male"
+        fill_in "Age", with: "39"
+        fill_in "defence_request_date_of_birth_year", with: "1976"
+        fill_in "defence_request_date_of_birth_month", with: "01"
+        fill_in "defence_request_date_of_birth_day", with: "01"
+        choose "defence_request_appropriate_adult_false"
+        choose "defence_request_interpreter_required_false"
+      end
+
+      click_button "Create Defence Request"
+
+      expect(page).to have_css("h1.detainee", text: "Name Not Given")
+      expect(page).to have_css("dl.labels dd", text: "Address Not Given")
+    end
+
     specify "can not see a DSCC field on the defence request form" do
       cso_user = create :cso_user
 

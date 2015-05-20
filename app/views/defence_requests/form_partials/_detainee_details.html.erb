@@ -1,7 +1,12 @@
 <div class="form-group">
   <%= f.label :detainee_name, t('full_name') %>
-  <%= f.text_field :detainee_name, class: 'text-field text-field-wide' %>
+  <%= f.text_field :detainee_name, class: 'text-field text-field-wide not-given-check' %>
+  <label class="form-checkbox" for="detainee-name-not-given">
+    <%= f.check_box :detainee_name_not_given %>
+    Not Given
+  </label>
 </div>
+
 <div class="form-group">
   <fieldset class="inline">
     <%= f.label :gender, t('gender') %>
@@ -71,5 +76,9 @@
 
 <div class="form-group">
   <%= f.label :detainee_address, t('detainee_address') %>
-  <%= f.text_field :detainee_address, class: 'text-field text-field-wide' %>
+  <%= f.text_field :detainee_address, class: 'text-field text-field-wide not-given-check' %>
+  <label class="form-checkbox" for="detainee_address-not-given">
+    <%= f.check_box :detainee_address_not_given %>
+    Not Given
+  </label>
 </div>

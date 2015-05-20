@@ -1,0 +1,45 @@
+<script>
+  //  detainee_address
+  var detainee_name_not_given_true = function () {
+    $('#defence_request_detainee_name').val("");
+    $('#defence_request_detainee_name').removeAttr("disabled");
+  }
+
+  var detainee_name_not_given_false = function () {
+    $('#defence_request_detainee_name').attr("disabled", "disabled");
+  }
+
+  var adjust_form_for_detainee_name_not_given = function () {
+    var detainee_name_not_given_checked = ($("input[type='checkbox']#defence_request_detainee_name_not_given:checked").length > 0);
+    if (detainee_name_not_given_checked) {
+      detainee_name_not_given_false()
+    } else {
+      detainee_name_not_given_true()
+    }
+  }
+
+  //  detainee_address
+  var detainee_address_not_given_true = function () {
+    $('#defence_request_detainee_address').val("");
+    $('#defence_request_detainee_address').removeAttr("disabled");
+  }
+
+  var detainee_address_not_given_false = function () {
+    $('#defence_request_detainee_address').attr("disabled", "disabled");
+  }
+
+  var adjust_form_for_detainee_address_not_given = function () {
+    var detainee_address_not_given_checked = ($("input[type='checkbox']#defence_request_detainee_address_not_given:checked").length > 0);
+    if (detainee_address_not_given_checked) {
+      detainee_address_not_given_false()
+    } else {
+      detainee_address_not_given_true()
+    }
+  }
+
+  $("#defence_request_detainee_address_not_given").change(adjust_form_for_detainee_address_not_given)
+  adjust_form_for_detainee_address_not_given()
+
+  $("#defence_request_detainee_address_not_given").change(adjust_form_for_detainee_address_not_given)
+  adjust_form_for_detainee_address_not_given()
+</script>

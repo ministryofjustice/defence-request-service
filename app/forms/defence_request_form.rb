@@ -11,8 +11,14 @@ class DefenceRequestForm
                           :investigating_officer_shoulder_number, :investigating_officer_contact_number,
                           :fit_for_interview, :unfit_for_interview_reason, :interpreter_required, :interpreter_type
 
+  VIRTUAL_ATTRIBUTES =  :detainee_name_not_given, :detainee_address_not_given
+
   DELEGATED_ATTRIBUTES.each do |attr_name|
     def_delegator :@defence_request, "#{attr_name}_before_type_cast", attr_name
+  end
+
+  VIRTUAL_ATTRIBUTES.each do |attr_name|
+    def_delegator :@defence_request, attr_name, attr_name
   end
 
   def self.model_name

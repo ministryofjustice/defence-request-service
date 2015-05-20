@@ -4,6 +4,10 @@ module DefenceRequestsHelper
     "solicitor-#{solicitor_hash['id']}"
   end
 
+  def detainee_name(defence_request)
+    defence_request.detainee_name.blank? ? I18n.t("name_not_given") : defence_request.detainee_name
+  end
+
   def detainee_address(defence_request)
     defence_request.detainee_address.blank? ? I18n.t("address_not_given") : defence_request.detainee_address
   end

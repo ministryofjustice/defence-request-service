@@ -92,7 +92,9 @@ class DefenceRequestsController < BaseController
       { time_of_detention_authorised: %i[day month year hour min sec] },
       :dscc_number,
       :reason_aborted,
-      { solicitor_time_of_arrival: %i[day month year hour min sec] })
+      { solicitor_time_of_arrival: %i[day month year hour min sec] },
+      :detainee_name_not_given,
+      :detainee_address_not_given)
   end
 
   def accept_and_save_defence_request

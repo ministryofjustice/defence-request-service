@@ -48,18 +48,25 @@ module DefenceRequestHelpers
         fill_in "defence_request_time_of_detention_authorised_min", with: "03"
       end
     end
-
-    within ".detainee" do
-      fill_in "Full Name", with: "Mannie Badder"
-      choose "Male"
-      fill_in "Age", with: "39"
-      fill_in "defence_request_date_of_birth_year", with: "1976"
-      fill_in "defence_request_date_of_birth_month", with: "01"
-      fill_in "defence_request_date_of_birth_day", with: "01"
-      fill_in "defence_request_detainee_address",
-              with: "House of the rising sun, Letsby Avenue, Right up my street, London, Greater London, XX1 1XX"
-      choose "defence_request_appropriate_adult_false"
-      choose "defence_request_interpreter_required_false"
+    if options.fetch(:not_given) { false }
+      within ".detainee" do
+        choose "Male"
+        choose "defence_request_appropriate_adult_false"
+        choose "defence_request_interpreter_required_false"
+      end
+    else
+      within ".detainee" do
+        fill_in "Full Name", with: "Mannie Badder"
+        choose "Male"
+        fill_in "Age", with: "39"
+        fill_in "defence_request_date_of_birth_year", with: "1976"
+        fill_in "defence_request_date_of_birth_month", with: "01"
+        fill_in "defence_request_date_of_birth_day", with: "01"
+        fill_in "defence_request_detainee_address",
+                with: "House of the rising sun, Letsby Avenue, Right up my street, London, Greater London, XX1 1XX"
+        choose "defence_request_appropriate_adult_false"
+        choose "defence_request_interpreter_required_false"
+      end
     end
     fill_in "Comments", with: "This is a very bad man. Send him down..."
   end
