@@ -3,6 +3,7 @@ FactoryGirl.define do
     skip_create
 
     uid { SecureRandom.uuid }
+    tel { Faker::PhoneNumber.phone_number}
     name { "Some organisation" }
     type { %w(law_firm call_centre call_centre).sample }
 
