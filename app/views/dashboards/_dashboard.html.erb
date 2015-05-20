@@ -16,6 +16,8 @@
 
 <% if @dashboard.user_role == "solicitor" %>
   <%= render "defence_requests/solicitor", requests: @dashboard.visible_requests %>
+<% elsif @dashboard.user_role == "cso" %>
+  <%= render "defence_requests/cso", requests: @dashboard.visible_requests %>
 <% else %>
   <table class="dashboard">
     <%= render "defence_requests/defence_requests_table_head" %>

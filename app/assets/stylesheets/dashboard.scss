@@ -32,6 +32,130 @@ table.dashboard {
   padding-top: 14px;
 }
 
+.cso-defence-requests {
+  width: 100%;
+
+  table {
+    height: 100%
+  }
+
+  .cso-dashboard-dr {
+    width: 100%;
+    border: 1px solid #dee0e2;
+
+    .detainee {
+      padding-top: 0;
+      width: 35%;
+      vertical-align: top;
+      height: 100%;
+      .name {
+        font-weight: bolder;
+        font-size: 2em;
+        margin-bottom: 0.2em;
+      }
+      padding-bottom: 1em;
+    }
+
+    .firm {
+      padding-top: 0;
+      vertical-align: top;
+      width: 30%;
+      .name {
+        font-size: 2em;
+        margin-bottom: 0.2em
+      }
+      .tel {
+        margin-top: 0.2em;
+      }
+      .pending {
+        font-size: 2em;
+        color: $grey-1
+      }
+
+      .arrival {
+        width: 60%;
+        border:  1px solid #000;
+        padding-left: 10px;
+        .arriving-text {
+          font-size: 2em;
+          color: $grey-1;
+          margin: 0;
+        }
+        .time {
+          margin: 0;
+          font-size: 2em;
+        }
+        .date {
+          margin: 0;
+          font-size: 2em;
+        }
+      }
+    }
+
+    .status {
+      vertical-align: top;
+      width: 20%;
+      .state{
+        font-size: 2em;
+        margin-bottom: 0.2em;
+      }
+      .dscc-number {
+        margin-top: 0.2em;
+      }
+      padding-top: 0;
+    }
+
+    .requested {
+      vertical-align: top;
+    }
+
+    .detainee-container {
+      height: 100%;
+      margin-left: 1em;
+      border-left: 6px solid #990099;
+      padding-right: 0;
+      padding: 0px 0 10px 15px;
+    }
+
+    .actions {
+      a {
+        padding: 0 0 0 0 0;
+        font-size: 4em;
+        color: #0099FF;
+        text-decoration: none;
+      }
+      width: 1%;
+    }
+
+    .interview {
+      border:  1px solid #000;
+      padding-left: 10px;
+      .interview-text {
+        font-size: 2em;
+        color: $grey-1;
+        margin: 0;
+      }
+      .time {
+        margin: 0;
+        font-size: 2em;
+      }
+      .date {
+        margin: 0;
+        font-size: 2em;
+      }
+    }
+  }
+
+  .grey {
+    background: $grey-4
+  }
+
+  .seperator {
+    height: 1em;
+  }
+}
+
+
 .defence-requests {
   ul {
     list-style: none;
@@ -53,6 +177,13 @@ table.dashboard {
       background: $grey-3;
       padding: $gutter-half;
       position: relative;
+    }
+
+    .defence-request-box-cso {
+      list-style: none;
+
+      dt { float: left }
+      dd { float: left }
     }
 
     .detail-link {
