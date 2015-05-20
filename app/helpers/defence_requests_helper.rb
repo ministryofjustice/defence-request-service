@@ -4,12 +4,12 @@ module DefenceRequestsHelper
     "solicitor-#{solicitor_hash['id']}"
   end
 
-  def detainee_name(defence_request)
-    defence_request.detainee_name.blank? ? I18n.t("name_not_given") : defence_request.detainee_name
+  def not_given_formatter(defence_request, field)
+    defence_request.send(field).blank? ? I18n.t("not_given") : defence_request.send(field)
   end
 
-  def detainee_address(defence_request)
-    defence_request.detainee_address.blank? ? I18n.t("address_not_given") : defence_request.detainee_address
+  def date_of_birth_not_given_formatter(defence_request)
+    defence_request.date_of_birth.blank? ? I18n.t("not_given") : date_formatter(defence_request.date_of_birth)
   end
 
   def interview_at(defence_request)

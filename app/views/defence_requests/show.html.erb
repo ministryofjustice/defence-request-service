@@ -2,7 +2,7 @@
 
 <%= link_to t("back_to_requests"), dashboard_path %>
 
-<h1 class="detainee"><%= detainee_name(@defence_request) %></h1>
+<h1 class="detainee"><%= not_given_formatter(@defence_request, :detainee_name) %></h1>
 <h2 class="dscc"><%= t("dscc") %>: <%= @defence_request.dscc_number %></h2>
 
 <% if @defence_request.aborted? %>
@@ -13,9 +13,9 @@
 
 <dl class="labels">
   <%= display_value "gender", @defence_request.gender %>
-  <%= display_value "date_of_birth", date_formatter(@defence_request.date_of_birth) %>
+  <%= display_value "date_of_birth", date_of_birth_not_given_formatter(@defence_request) %>
   <%= display_value "age", @defence_request.detainee_age %>
-  <%= display_value "address", detainee_address(@defence_request) %>
+  <%= display_value "detainee_address", not_given_formatter(@defence_request, :detainee_address) %>
 </dl>
 
 <%= content_tag("div", class: "js-tabs", id: "edit-tabs", data: { activatefirst: "true" }) do %>

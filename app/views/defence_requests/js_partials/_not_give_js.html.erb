@@ -1,5 +1,5 @@
 <script>
-  //  detainee_address
+  //  detainee_name
   var detainee_name_not_given_true = function () {
     $('#defence_request_detainee_name').val("");
     $('#defence_request_detainee_name').removeAttr("disabled");
@@ -17,6 +17,9 @@
       detainee_name_not_given_true()
     }
   }
+
+  $("#defence_request_detainee_name_not_given").change(adjust_form_for_detainee_name_not_given)
+  adjust_form_for_detainee_name_not_given()
 
   //  detainee_address
   var detainee_address_not_given_true = function () {
@@ -40,6 +43,34 @@
   $("#defence_request_detainee_address_not_given").change(adjust_form_for_detainee_address_not_given)
   adjust_form_for_detainee_address_not_given()
 
-  $("#defence_request_detainee_address_not_given").change(adjust_form_for_detainee_address_not_given)
-  adjust_form_for_detainee_address_not_given()
+  //  date_of_birth
+  var date_of_birth_not_given_true = function () {
+    $('#defence_request_date_of_birth_day').val("");
+    $('#defence_request_date_of_birth_day').removeAttr("disabled");
+    $('#defence_request_date_of_birth_month').val("");
+    $('#defence_request_date_of_birth_month').removeAttr("disabled");
+    $('#defence_request_date_of_birth_year').val("");
+    $('#defence_request_date_of_birth_year').removeAttr("disabled");
+  }
+
+  var date_of_birth_not_given_false = function () {
+    $('#defence_request_date_of_birth_day').val("");
+    $('#defence_request_date_of_birth_day').attr("disabled", "disabled");
+    $('#defence_request_date_of_birth_month').val("");
+    $('#defence_request_date_of_birth_month').attr("disabled", "disabled");
+    $('#defence_request_date_of_birth_year').val("");
+    $('#defence_request_date_of_birth_year').attr("disabled", "disabled");
+  }
+
+  var adjust_form_for_date_of_birth_not_given = function () {
+    var date_of_birth_not_given_checked = ($("input[type='checkbox']#defence_request_date_of_birth_not_given:checked").length > 0); //true when checked
+    if (date_of_birth_not_given_checked) {
+      date_of_birth_not_given_false()
+    } else {
+      date_of_birth_not_given_true()
+    }
+  }
+
+  $("#defence_request_date_of_birth_not_given").change(adjust_form_for_date_of_birth_not_given)
+  adjust_form_for_date_of_birth_not_given()
 </script>

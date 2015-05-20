@@ -12,21 +12,19 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
       fill_in_defence_request_form not_given: true
       check "defence_request_detainee_name_not_given"
       check "defence_request_detainee_address_not_given"
+      check "defence_request_date_of_birth_not_given"
 
       within ".detainee" do
         choose "Male"
         fill_in "Age", with: "39"
-        fill_in "defence_request_date_of_birth_year", with: "1976"
-        fill_in "defence_request_date_of_birth_month", with: "01"
-        fill_in "defence_request_date_of_birth_day", with: "01"
         choose "defence_request_appropriate_adult_false"
         choose "defence_request_interpreter_required_false"
       end
 
       click_button "Create Defence Request"
 
-      expect(page).to have_css("h1.detainee", text: "Name Not Given")
-      expect(page).to have_css("dl.labels dd", text: "Address Not Given")
+      expect(page).to have_css("h1.detainee", text: "Not Given")
+      expect(page).to have_css("dl.labels dd", text: "Not Given", count: 2)
     end
 
     specify "can not see a DSCC field on the defence request form" do

@@ -1,9 +1,9 @@
 <div class="form-group">
   <%= f.label :detainee_name, t('full_name') %>
   <%= f.text_field :detainee_name, class: 'text-field text-field-wide not-given-check' %>
-  <label class="form-checkbox" for="detainee-name-not-given">
+  <label class="form-checkbox" for="detainee_name_not_given">
     <%= f.check_box :detainee_name_not_given %>
-    Not Given
+    <%= t("not_given") -%>
   </label>
 </div>
 
@@ -77,8 +77,8 @@
 <div class="form-group">
   <%= f.label :detainee_address, t('detainee_address') %>
   <%= f.text_field :detainee_address, class: 'text-field text-field-wide not-given-check' %>
-  <label class="form-checkbox" for="detainee_address-not-given">
+  <label class="form-checkbox" for="detainee_address_not_given">
     <%= f.check_box :detainee_address_not_given %>
-    Not Given
+    <%= t("not_given") -%>
   </label>
 </div>
