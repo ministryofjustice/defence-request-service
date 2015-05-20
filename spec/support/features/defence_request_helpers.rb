@@ -58,7 +58,6 @@ module DefenceRequestHelpers
       within ".detainee" do
         fill_in "Full Name", with: "Mannie Badder"
         choose "Male"
-        fill_in "Age", with: "39"
         fill_in "defence_request_date_of_birth_year", with: "1976"
         fill_in "defence_request_date_of_birth_month", with: "01"
         fill_in "defence_request_date_of_birth_day", with: "01"

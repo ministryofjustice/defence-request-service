@@ -1,11 +1,14 @@
 <script>
   //  detainee_name
+  var detainee_name_value = ($('#defence_request_detainee_name').val())
+
   var detainee_name_not_given_true = function () {
-    $('#defence_request_detainee_name').val("");
+    $('#defence_request_detainee_name').val(detainee_name_value);
     $('#defence_request_detainee_name').removeAttr("disabled");
   }
 
   var detainee_name_not_given_false = function () {
+    $('#defence_request_detainee_name').val("");
     $('#defence_request_detainee_name').attr("disabled", "disabled");
   }
 
@@ -22,12 +25,15 @@
   adjust_form_for_detainee_name_not_given()
 
   //  detainee_address
+  var detainee_address_value = ($('#defence_request_detainee_address').val())
+
   var detainee_address_not_given_true = function () {
-    $('#defence_request_detainee_address').val("");
+    $('#defence_request_detainee_address').val(detainee_address_value);
     $('#defence_request_detainee_address').removeAttr("disabled");
   }
 
   var detainee_address_not_given_false = function () {
+    $('#defence_request_detainee_address').val("");
     $('#defence_request_detainee_address').attr("disabled", "disabled");
   }
 
@@ -44,12 +50,16 @@
   adjust_form_for_detainee_address_not_given()
 
   //  date_of_birth
+  var date_of_birth_day = ($('#defence_request_date_of_birth_day').val())
+  var date_of_birth_month = ($('#defence_request_date_of_birth_month').val())
+  var date_of_birth_year = ($('#defence_request_date_of_birth_year').val())
+
   var date_of_birth_not_given_true = function () {
-    $('#defence_request_date_of_birth_day').val("");
+    $('#defence_request_date_of_birth_day').val(date_of_birth_day);
     $('#defence_request_date_of_birth_day').removeAttr("disabled");
-    $('#defence_request_date_of_birth_month').val("");
+    $('#defence_request_date_of_birth_month').val(date_of_birth_month);
     $('#defence_request_date_of_birth_month').removeAttr("disabled");
-    $('#defence_request_date_of_birth_year').val("");
+    $('#defence_request_date_of_birth_year').val(date_of_birth_year);
     $('#defence_request_date_of_birth_year').removeAttr("disabled");
   }
 

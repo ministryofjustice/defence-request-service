@@ -2,12 +2,11 @@ require "rails_helper"
 
 RSpec.describe DefenceRequest, type: :model do
   describe "validations" do
+    before { allow(subject).to receive(:detainee_name_not_given?).and_return(false) }
 
     it { expect(subject).to validate_presence_of :gender }
-    it { expect(subject).to validate_presence_of :detainee_age }
     it { expect(subject).to validate_presence_of :detainee_name }
     it { expect(subject).to validate_presence_of :offences }
-    it { expect(subject).to validate_numericality_of :detainee_age }
 
     context "appropriate_adult_reason required" do
       before do

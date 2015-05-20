@@ -16,7 +16,6 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
 
       within ".detainee" do
         choose "Male"
-        fill_in "Age", with: "39"
         choose "defence_request_appropriate_adult_false"
         choose "defence_request_interpreter_required_false"
       end
@@ -95,12 +94,12 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
         login_with cso_user
         click_link "Edit"
         within ".detainee" do
-          fill_in "Age", with: "MOOOSE ON THE LOOOSE!?!"
+          fill_in "defence_request_date_of_birth_day", with: "MOOOSE ON THE LOOOSE!?!"
         end
         click_button "Update Defence Request"
 
         expect(page).to have_content "You need to fix the errors on this page before continuing"
-        expect(page).to have_content "Detainee age: is not a number"
+        expect(page).to have_content "Date of Birth: Invalid Date, Day is not a number"
       end
     end
 

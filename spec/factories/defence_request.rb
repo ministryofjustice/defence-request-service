@@ -16,13 +16,13 @@ FactoryGirl.define do
     sequence(:detainee_name) { |n| "detainee_name-#{n}" }
     gender "male"
     date_of_birth twenty_one_years_ago
-    detainee_age 21
     offences "Theft"
     time_of_arrival now
     sequence(:comments) { |n| "commenty-comments-are here: #{n}" }
     adult [nil, true, false].sample
     appropriate_adult false
     fit_for_interview true
+    detainee_address_not_given "1"
   end
 
   trait :draft do
@@ -76,6 +76,7 @@ FactoryGirl.define do
   end
 
   trait :with_detainee_address do
+    detainee_address_not_given "0"
     detainee_address "House on the Hill, Letsby Avenue, Right up my street, London, Greater London, XX1 1XX"
   end
 

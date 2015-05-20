@@ -67,7 +67,6 @@ class DefenceRequestsController < BaseController
       :scheme,
       :phone_number,
       :detainee_name,
-      :detainee_age,
       :gender,
       :adult,
       { date_of_birth: %i[day month year] },

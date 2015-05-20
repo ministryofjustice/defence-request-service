@@ -9,12 +9,9 @@ en:
   acknowledged_defence_request: "Acknowledged Defence Requests"
   actions: "Actions"
   active: "Active (%{count})"
-  age: "Age"
   add_expected_time_of_arrival: Estimate time of arrival
   add_interview_start_time: "Add Interview Start Time"
-  detainee_address: "Address"
   adult: "Adult?"
-  age: "Age"
   appropriate_adult: Appropriate adult
   appropriate_adult_reason: "Reason for appropriate adult"
   appropriate_adult_required: Appropriate adult required
@@ -51,7 +48,7 @@ en:
   delete: "Delete"
   details: "Details"
   detainee: "Detainee"
-  detainee_age: "Detainee age"
+  detainee_address: "Address"
   detainee_details: "Detainee details"
   detainee_dob: "Detainee date of birth (optional)"
   detainee_name: "Detainee name"

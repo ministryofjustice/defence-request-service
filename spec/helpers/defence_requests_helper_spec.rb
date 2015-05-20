@@ -2,11 +2,11 @@ require "rails_helper"
 
 RSpec.describe DefenceRequestsHelper, type: :helper do
 
-  describe "formatting detainee address" do
-    context "when address blank" do
+  describe "formatting not given field" do
+    context "when address is not given" do
       it "returns 'Not given'" do
         request = create(:defence_request)
-        expect(helper.detainee_address(request)).to eq("Not given")
+        expect(helper.not_given_formatter(request, :detainee_address)).to eq("Not Given")
       end
     end
 
@@ -14,7 +14,24 @@ RSpec.describe DefenceRequestsHelper, type: :helper do
       it "returns address as single line" do
         request = create(:defence_request, :with_detainee_address)
         expected = "House on the Hill, Letsby Avenue, Right up my street, London, Greater London, XX1 1XX"
-        expect(helper.detainee_address(request)).to eq(expected)
+        expect(helper.not_given_formatter(request, :detainee_address)).to eq(expected)
+      end
+    end
+  end
+
+  describe "formatting not given date" do
+    context "when date is not given" do
+      it "returns 'Not given'" do
+        request = create(:defence_request)
+        request.update(date_of_birth: nil)
+        expect(helper.date_of_birth_not_given_formatter(request)).to eq("Not Given")
+      end
+    end
+
+    context "when address present" do
+      it "returns date as correctly formatted" do
+        request = create(:defence_request)
+        expect(helper.date_of_birth_not_given_formatter(request)).to eq("20 May 1994")
       end
     end
   end
