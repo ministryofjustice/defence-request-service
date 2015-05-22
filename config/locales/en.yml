@@ -32,6 +32,7 @@ en:
   closed: "Closed (%{count})"
   comments: "Comments"
   complete: Complete
+  completed: Completed
   confirm: "Confirm"
   contact_us: "contact us"
   continue: "Continue"
@@ -87,13 +88,15 @@ en:
   month: "Month"
   name_not_given: "Name not given"
   name_of_firm: "Name of firm"
-  new_defence_request: "New Defence Request"
   new_defence_requests: "New Defence Requests"
+  new_request: "New request"
   no_results_found: 'No results found - Contact DSCC'
   not_authorized: "You are not authorised to perform this action"
   not_given: "not given"
   offences: "Offences"
   pending: pending
+  opened: "Opened"
+  own: 'Own'
   phone_number: "Phone number"
   prohibit_save: Please review the following %{count}
   reason_aborted: Reason aborted
