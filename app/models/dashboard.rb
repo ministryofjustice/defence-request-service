@@ -51,7 +51,7 @@ class Dashboard
   class DefenceRequest < SimpleDelegator
     delegate :name, :tel, to: :@organisation, allow_nil: true, prefix: :firm
 
-    def initialize client, dr
+    def initialize(client, dr)
       super dr
       @organisation = client.organisation(dr.organisation_uid) if dr.organisation_uid
     end

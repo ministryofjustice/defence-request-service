@@ -25,12 +25,12 @@ RSpec.feature "Solicitors viewing aborted requests" do
   }
 
   specify "can see 'aborted' defence requests", :mock_auth_api do
-      login_with solicitor_user
-      click_link "Closed"
-      click_link "Case Details for #{aborted_defence_request.dscc_number}"
+    login_with solicitor_user
+    click_link "Closed"
+    click_link "Case Details for #{aborted_defence_request.dscc_number}"
 
-      expect(page).
-        to have_content "This case has been aborted for the following reason"
-      expect(page).to have_content aborted_defence_request.reason_aborted
+    expect(page).
+      to have_content "This case has been aborted for the following reason"
+    expect(page).to have_content aborted_defence_request.reason_aborted
   end
 end

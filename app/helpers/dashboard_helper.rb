@@ -37,12 +37,12 @@ module DashboardHelper
 
   def state_text(dr)
     case dr.state
-    when "draft"
-      "Draft"
-    when "queued", "acknowledged"
-      "Submitted"
-    else
-      dr.state.capitalize
+      when "draft"
+        "Draft"
+      when "queued", "acknowledged"
+        "Submitted"
+      else
+        dr.state.capitalize
     end
   end
 end
