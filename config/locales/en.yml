@@ -32,7 +32,7 @@ en:
   closed: "Closed (%{count})"
   comments: "Comments"
   complete: Complete
-  completed: Completed
+  completed: "Completed (%{count})"
   confirm: "Confirm"
   contact_us: "contact us"
   continue: "Continue"
@@ -95,7 +95,7 @@ en:
   not_given: "not given"
   offences: "Offences"
   pending: pending
-  opened: "Opened"
+  opened: "Opened (%{count})"
   own: 'Own'
   phone_number: "Phone number"
   prohibit_save: Please review the following %{count}

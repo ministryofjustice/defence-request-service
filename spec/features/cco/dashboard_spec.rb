@@ -59,7 +59,7 @@ RSpec.feature "Custody Center Operatives viewing their dashboard" do
         queued_defence_request = create :defence_request, :queued, offences: "Illegal bivalve mollusc dredge "
 
         login_with cco_user
-        click_link "Active (2)"
+        click_link "Opened (2)"
 
         expect(page).to have_content acknowledged_defence_request.offences
         expect(page).to have_content queued_defence_request.offences
@@ -75,7 +75,7 @@ RSpec.feature "Custody Center Operatives viewing their dashboard" do
         queued_defence_request = create :defence_request, :queued, offences: "Illegal or unmarked set and drift nets"
 
         login_with cco_user
-        click_link "Closed (1)"
+        click_link "Completed (1)"
 
         expect(page).to have_content aborted_defence_request.offences
         expect(page).to_not have_content acknowledged_defence_request.offences
