@@ -3,7 +3,26 @@ require "rails_helper"
 RSpec.feature "Solicitors viewing their dashboard" do
   include DashboardHelper
 
+  let!(:law_firm) { create :organisation, :law_firm }
+
+  let!(:solicitor_user) {
+    create :solicitor_user, organisation_uids: [law_firm.uid]
+  }
+
+
+  let(:auth_api_mock_setup) {
+    {
+      organisation: {
+        law_firm.uid => law_firm
+      }
+    }
+  }
+
   context "tabs" do
+
+    let!(:completed_not_accepted_defence_request) {
+      create :defence_request, :completed, offences: "Genocide"
+    }
 
     let!(:active_accepted_defence_request) { create(
       :defence_request,
@@ -27,21 +46,13 @@ RSpec.feature "Solicitors viewing their dashboard" do
       )
     }
 
-    let!(:completed_not_accepted_defence_request) {
-      create :defence_request, :completed, offences: "Genocide"
-    }
-
-    let!(:solicitor_user) {
-      create :solicitor_user
-    }
-
-    specify "can see active and closed tabs" do
+    specify "can see active and closed tabs", :mock_auth_api do
       login_with solicitor_user
       expect(page).to have_link("Active (1)")
       expect(page).to have_link("Closed (1)")
     end
 
-    context "active" do
+    context "active", :mock_auth_api do
       before :each do
         login_with solicitor_user
         click_link("Active (1)")
@@ -55,7 +66,7 @@ RSpec.feature "Solicitors viewing their dashboard" do
       end
     end
 
-    context "closed" do
+    context "closed", :mock_auth_api do
       before :each do
         login_with solicitor_user
         click_link("Closed (1)")
@@ -70,9 +81,8 @@ RSpec.feature "Solicitors viewing their dashboard" do
     end
   end
 
-  context "when the dashboard refreshes to update defence request information" do
+  context "when the dashboard refreshes to update defence request information", :mock_auth_api do
     specify "they can still only see requests the they have accepted", js: true, short_dashboard_refresh: true do
-      solicitor_user = create :solicitor_user
       accepted_defence_request = create(
         :defence_request,
         :accepted,

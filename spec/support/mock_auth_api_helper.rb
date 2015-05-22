@@ -20,7 +20,7 @@ module MockAuthApiHelper
     def initialize(token)
     end
 
-    [:organisations, :profiles].each do |resource|
+    [:organisations, :profiles, :organisation].each do |resource|
       define_method(resource) do |params|
         calls = self.class.calls
 

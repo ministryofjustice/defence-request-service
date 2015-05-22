@@ -4,8 +4,12 @@ FactoryGirl.define do
 
     uid { SecureRandom.uuid }
     tel { Faker::PhoneNumber.phone_number}
-    name { "Some organisation" }
-    type { %w(law_firm call_centre call_centre).sample }
+    name { Faker::Company.name }
+    type { %w(law_firm call_centre).sample }
+
+    trait :law_firm do
+      type "law_firm"
+    end
 
     initialize_with do
       new({uid: uid, name: name, type: type})
