@@ -30,7 +30,7 @@ RSpec.describe DefenceRequestsHelper, type: :helper do
 
     context "when address present" do
       it "returns date as correctly formatted" do
-        request = create(:defence_request)
+        request = create(:defence_request, date_of_birth: Date.parse("1994-05-20"))
         expect(helper.date_not_given_formatter(request, :date_of_birth)).to eq("20 May 1994")
       end
     end
