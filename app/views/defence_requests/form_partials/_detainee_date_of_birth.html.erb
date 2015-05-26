@@ -19,8 +19,8 @@
       </div>
     <% end %>
   </fieldset>
-  <label class="form-checkbox" for="date_of_birth_not_given">
+  <%= f.label :date_of_birth_not_given, class: 'form-checkbox' do %>
     <%= f.check_box :date_of_birth_not_given %>
     <%= t("not_given") -%>
-  </label>
+  <% end %>
 </div>
