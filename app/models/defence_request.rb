@@ -1,7 +1,7 @@
 class DefenceRequest < ActiveRecord::Base
   include ActiveModel::Transitions
 
-  attr_accessor :cco, :solicitor, :detainee_name_not_given, :detainee_address_not_given, :date_of_birth_not_given
+  attr_accessor :cco, :solicitor
 
   after_update :notify_interview_start_change, if: :interview_start_time_changed?
 
@@ -98,18 +98,6 @@ class DefenceRequest < ActiveRecord::Base
   end
 
   private
-
-  def detainee_name_not_given?
-    detainee_name_not_given.blank? || detainee_name_not_given == "1"
-  end
-
-  def detainee_address_not_given?
-    detainee_address_not_given.blank? || detainee_address_not_given == "1"
-  end
-
-  def date_of_birth_not_given?
-    date_of_birth_not_given.blank? || date_of_birth_not_given == "1"
-  end
 
   def notify_interview_start_change
     Mailer.notify_interview_start_change(self, solicitor).deliver_later if solicitor

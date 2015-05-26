@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150520103714) do
+ActiveRecord::Schema.define(version: 20150526144259) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,6 +71,9 @@ ActiveRecord::Schema.define(version: 20150520103714) do
     t.text     "interpreter_type"
     t.uuid     "organisation_uid"
     t.string   "detainee_address"
+    t.boolean  "detainee_name_not_given",               default: false
+    t.boolean  "detainee_address_not_given",            default: false
+    t.boolean  "date_of_birth_not_given",               default: false
   end
 
   add_index "defence_requests", ["cco_uid"], name: "index_defence_requests_on_cco_uid", using: :btree
