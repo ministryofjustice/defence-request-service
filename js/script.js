@@ -7,6 +7,5 @@ jQuery(function($) {
         body = $('#email_body').val();
       
       window.location.href = form_action + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-      console.log(url);
     });
 });
