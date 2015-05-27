@@ -4,9 +4,18 @@ RSpec.describe DefenceRequestsHelper, type: :helper do
 
   describe "formatting not given field" do
     context "when address is not given" do
-      it "returns 'not given'" do
-        request = create(:defence_request)
-        expect(helper.not_given_formatter(request, :detainee_address)).to eq("not given")
+      context "i18n translation for not given is specified" do
+        it "returns the specified translation" do
+          request = create(:defence_request)
+          expect(helper.not_given_formatter(request, :detainee_address, "name_not_given")).to eq("Name not given")
+        end
+      end
+
+      context "i18n translation is not specified" do
+        it "returns 'not given'" do
+          request = create(:defence_request)
+          expect(helper.not_given_formatter(request, :detainee_address)).to eq("not given")
+        end
       end
     end
 

@@ -2,7 +2,7 @@
 
 <%= link_to t("back_to_requests"), dashboard_path %>
 
-<h1 class="detainee"><%= not_given_formatter(@defence_request, :detainee_name) %></h1>
+<h1 class="detainee"><%= not_given_formatter(@defence_request, :detainee_name, "name_not_given") %></h1>
 <h2 class="dscc"><%= t("dscc") %>: <%= @defence_request.dscc_number %></h2>
 
 <% if @defence_request.aborted? %>

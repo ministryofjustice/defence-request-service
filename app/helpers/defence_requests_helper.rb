@@ -4,8 +4,8 @@ module DefenceRequestsHelper
     "solicitor-#{solicitor_hash['id']}"
   end
 
-  def not_given_formatter(defence_request, field)
-    defence_request.send(field).blank? ? I18n.t("not_given") : defence_request.send(field)
+  def not_given_formatter(defence_request, field, translation = "not_given")
+    defence_request.send(field).blank? ? I18n.t(translation) : defence_request.send(field)
   end
 
   def date_not_given_formatter(defence_request, field)

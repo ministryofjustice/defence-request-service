@@ -85,6 +85,7 @@ en:
   male: "Male"
   min: "Min"
   month: "Month"
+  name_not_given: "Name not given"
   name_of_firm: "Name of firm"
   new_defence_request: "New Defence Request"
   new_defence_requests: "New Defence Requests"
