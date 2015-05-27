@@ -4,9 +4,9 @@ RSpec.describe DefenceRequestsHelper, type: :helper do
 
   describe "formatting not given field" do
     context "when address is not given" do
-      it "returns 'Not given'" do
+      it "returns 'not given'" do
         request = create(:defence_request)
-        expect(helper.not_given_formatter(request, :detainee_address)).to eq("Not Given")
+        expect(helper.not_given_formatter(request, :detainee_address)).to eq("not given")
       end
     end
 
@@ -21,10 +21,10 @@ RSpec.describe DefenceRequestsHelper, type: :helper do
 
   describe "formatting not given date" do
     context "when date is not given" do
-      it "returns 'Not given'" do
+      it "returns 'not given'" do
         request = create(:defence_request)
         request.update(date_of_birth: nil)
-        expect(helper.date_not_given_formatter(request, :date_of_birth)).to eq("Not Given")
+        expect(helper.date_not_given_formatter(request, :date_of_birth)).to eq("not given")
       end
     end
 

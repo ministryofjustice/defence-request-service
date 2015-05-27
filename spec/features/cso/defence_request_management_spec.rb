@@ -13,8 +13,8 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
 
       click_button "Create Defence Request"
 
-      expect(page).to have_css("h1.detainee", text: "Not Given")
-      expect(page).to have_css("dl.labels dd", text: "Not Given", count: 2)
+      expect(page).to have_css("h1.detainee", text: "not given")
+      expect(page).to have_css("dl.labels dd", text: "not given", count: 2)
     end
 
     specify "can not see a DSCC field on the defence request form" do
