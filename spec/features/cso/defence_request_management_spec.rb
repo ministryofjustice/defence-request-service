@@ -68,20 +68,18 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
     context "and requests not yet queued" do
       specify "can select \"not given\" for name, dob and address", js: true do
         cso_user = create :cso_user
-        create :defence_request
+        create :defence_request, detainee_name: "Mannie Badder", detainee_address: "Some address"
 
         login_with cso_user
         click_link "Edit"
-        fill_in_defence_request_form edit: true
+
+        check "defence_request_detainee_name_not_given"
+        check "defence_request_detainee_address_not_given"
         click_button "Update Defence Request"
 
         expect(page).to have_content "Defence Request successfully updated"
-        expect(page).to have_content "Mannie Badder"
-        click_link "Edit"
-        check "defence_request_detainee_name_not_given"
-        click_button "Update Defence Request"
-        expect(page).to have_content "Defence Request successfully updated"
-        expect(page).to_not have_content "Mannie Badder"
+        expect(page).to have_no_content "Mannie Badder"
+        expect(page).to have_no_content "Some address"
       end
 
       specify "can edit all relevant details of the request", js: true do
