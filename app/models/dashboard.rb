@@ -29,11 +29,11 @@ class Dashboard
   end
 
   def active_defence_requests
-    @_active_defence_requests ||= defence_requests.select(&:active?)
+    @active_defence_requests ||= defence_requests.select(&:active?)
   end
 
   def closed_defence_requests
-    @_closed_defence_requests ||= defence_requests.select(&:closed?)
+    @closed_defence_requests ||= defence_requests.select(&:closed?)
   end
 
   private
@@ -45,7 +45,7 @@ class Dashboard
   end
 
   def new_dash_dr
-    @_new_dash_dr ||= DefenceRequest.method(:new).curry(2)[@client]
+    @new_dash_dr ||= DefenceRequest.method(:new).curry(2)[@client]
   end
 
   class DefenceRequest < SimpleDelegator
