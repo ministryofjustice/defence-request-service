@@ -23,14 +23,14 @@ module DashboardHelper
   def arriving_text(dr)
     if dr.created_at < Time.zone.now.beginning_of_day
       # before today
-      "Arriving"
+      t("arriving")
     else
       if dr.created_at < Time.zone.now.end_of_day
         # today
-        "Arriving at"
+        t("arriving_at")
       else
         # after today
-        "Arrived at"
+        t("arrived_at")
       end
     end
   end
