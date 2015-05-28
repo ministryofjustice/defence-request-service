@@ -16,11 +16,11 @@ class DateChooser
 
   bindOnClickEvents: (today, tomorrow) =>
     today.on "click", (event) =>
-      @toggleDate( today, tomorrow )
+      @toggleDate(today, tomorrow)
       event.preventDefault()
 
     tomorrow.on "click", (event) =>
-      @toggleDate( tomorrow, today )
+      @toggleDate(tomorrow, today)
       event.preventDefault()
 
   initializeLinks: (initialDate, today, tomorrow) =>
@@ -34,10 +34,10 @@ class DateChooser
         @enableLink tomorrow
 
   enableLink: (selector) =>
-    selector.html( "<a href>" + selector.text() + "</a>" )
+    selector.html("<a href>" + selector.text() + "</a>")
 
   toggleDate: (selector, otherSelector) =>
-    selector.html( selector.text() )
+    selector.html(selector.text())
     @setDate selector
     @enableLink otherSelector
     @dayInput.focus()
