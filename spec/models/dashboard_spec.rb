@@ -1,5 +1,4 @@
 require "rails_helper"
-require_relative "../../app/models/dashboard"
 
 RSpec.describe Dashboard, "#defence_requests" do
   it "returns the passed in defence requests ordered by created at" do
