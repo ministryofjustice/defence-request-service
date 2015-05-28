@@ -18,6 +18,8 @@ en:
   arrival_time: "Arrival time"
   arrival_time_cancel: "Cancel"
   arrival_time_save: "Save"
+  arrived_at: "Arrived at"
+  arriving: "Arriving"
   arriving_at: "Arriving at"
   back_to_requests: "< Back to requests"
   call_call_center: "Please call the Call Centre on 0999 999 9999"
@@ -32,6 +34,7 @@ en:
   closed: "Closed (%{count})"
   comments: "Comments"
   complete: Complete
+  completed: "Completed (%{count})"
   confirm: "Confirm"
   contact_us: "contact us"
   continue: "Continue"
@@ -87,13 +90,16 @@ en:
   month: "Month"
   name_not_given: "Name not given"
   name_of_firm: "Name of firm"
-  new_defence_request: "New Defence Request"
   new_defence_requests: "New Defence Requests"
+  new_defence_request: "New Defence Request"
+  new_request: "New request"
   no_results_found: 'No results found - Contact DSCC'
   not_authorized: "You are not authorised to perform this action"
   not_given: "not given"
   offences: "Offences"
   pending: pending
+  opened: "Opened (%{count})"
+  own: 'Own'
   phone_number: "Phone number"
   prohibit_save: Please review the following %{count}
   reason_aborted: Reason aborted

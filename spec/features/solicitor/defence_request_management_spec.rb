@@ -13,29 +13,42 @@ RSpec.feature "Solicitors managing defence requests" do
       end
     end
 
-    def login_as_solicitor_with_accepted_defence_request
-      solicitor_user = create :solicitor_user
-      @accepted_defence_request = create(
+    let(:law_firm) {
+      create :organisation, :law_firm
+    }
+
+    let(:solicitor_user) {
+      create :solicitor_user, organisation_uids: [law_firm.uid]
+    }
+
+    let!(:accepted_defence_request) {
+      create(
         :defence_request,
         :accepted,
         solicitor_uid: solicitor_user.uid,
         organisation_uid: solicitor_user.organisation_uids.first
       )
+    }
 
+    let(:auth_api_mock_setup) {
+      {
+        organisation: {
+          law_firm.uid => law_firm
+        }
+      }
+    }
+
+    specify "can see the show page of the request", :mock_auth_api do
       login_with solicitor_user
+      click_link "Case Details for #{accepted_defence_request.dscc_number}"
+
+      expect(page).to have_content accepted_defence_request.dscc_number
+      expect(page).to have_content accepted_defence_request.detainee_name
     end
 
-    specify "can see the show page of the request" do
-      login_as_solicitor_with_accepted_defence_request
-      click_link "Case Details for #{@accepted_defence_request.dscc_number}"
-
-      expect(page).to have_content @accepted_defence_request.dscc_number
-      expect(page).to have_content @accepted_defence_request.detainee_name
-    end
-
-    specify "can edit the expected arrival time from the show page of the request" do
-      login_as_solicitor_with_accepted_defence_request
-      click_link "Case Details for #{@accepted_defence_request.dscc_number}"
+    specify "can edit the expected arrival time from the show page of the request", :mock_auth_api do
+      login_with solicitor_user
+      click_link "Case Details for #{accepted_defence_request.dscc_number}"
       click_link "Estimate time of arrival"
 
       expect(page).to have_css ".date-chooser-select.js-only"
@@ -54,11 +67,12 @@ RSpec.feature "Solicitors managing defence requests" do
       click_link "Cancel"
 
       expect( find("#solicitor_time_of_arrival") ).to have_content "01:13"
+      expect(page).to have_content accepted_defence_request.detainee_name
     end
 
-    specify "can edit the expected arrival time from the show page of the request with JS enabled", js: true do
-      login_as_solicitor_with_accepted_defence_request
-      click_link "Case Details for #{@accepted_defence_request.dscc_number}"
+    specify "can edit the expected arrival time from the show page of the request with JS enabled", :mock_auth_api, js: true do
+      login_with solicitor_user
+      click_link "Case Details for #{accepted_defence_request.dscc_number}"
       click_link "Estimate time of arrival"
       enter_time hour: "23", min: "02"
       click_button "Save"
@@ -94,9 +108,9 @@ RSpec.feature "Solicitors managing defence requests" do
       expect( find("#solicitor_time_of_arrival") ).to have_content "01:12"
     end
 
-    specify "are shown a message if the time of arrival cannot be updated due to errors" do
-      login_as_solicitor_with_accepted_defence_request
-      click_link "Case Details for #{@accepted_defence_request.dscc_number}"
+    specify "are shown a message if the time of arrival cannot be updated due to errors", :mock_auth_api do
+      login_with solicitor_user
+      click_link "Case Details for #{accepted_defence_request.dscc_number}"
       click_link "Estimate time of arrival"
       enter_time day: "i", month: "n", year: "v", hour: "a", min: "lid"
       click_button "Save"

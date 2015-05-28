@@ -12,15 +12,11 @@ module MockAuthApiHelper
     ServiceRegistry.register(:auth_api_client, @old_service)
   end
 
-  def mock_auth_api_organisations(organisations)
-    MockClient.mock_organisations(organisations)
-  end
-
   class MockClient
     def initialize(token)
     end
 
-    [:organisations, :profiles].each do |resource|
+    [:organisations, :profiles, :organisation].each do |resource|
       define_method(resource) do |params|
         calls = self.class.calls
 

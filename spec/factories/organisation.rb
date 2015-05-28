@@ -3,8 +3,13 @@ FactoryGirl.define do
     skip_create
 
     uid { SecureRandom.uuid }
-    name { "Some organisation" }
-    type { %w(law_firm call_centre call_centre).sample }
+    tel { Faker::PhoneNumber.phone_number}
+    name { Faker::Company.name }
+    type { %w(law_firm call_centre).sample }
+
+    trait :law_firm do
+      type "law_firm"
+    end
 
     initialize_with do
       new({uid: uid, name: name, type: type})

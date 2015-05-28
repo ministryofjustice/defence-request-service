@@ -8,7 +8,7 @@
 
 <% if check_policy_clause(@policy, :create?) %>
   <div class="new_defence_request">
-    <%= link_to t("new_defence_request"), new_defence_request_path, role: "button", class: "button" %>
+    <%= link_to t("new_request"), new_defence_request_path, role: "button", class: "button" %>
   </div>
 <% end %>
 
@@ -16,6 +16,8 @@
 
 <% if @dashboard.user_role == "solicitor" %>
   <%= render "defence_requests/solicitor", requests: @dashboard.visible_requests %>
+<% elsif @dashboard.user_role == "cso" %>
+  <%= render "defence_requests/cso", requests: @dashboard.visible_requests %>
 <% else %>
   <table class="dashboard">
     <%= render "defence_requests/defence_requests_table_head" %>

@@ -32,6 +32,10 @@ module ApplicationHelper
     params[:controller] + "/js_partials/" + params[:controller] + "_" + params[:action] + "_js.html.erb"
   end
 
+  def short_date_formatter(date)
+    date ? date.strftime("%-d %B") : ""
+  end
+
   def date_formatter(date)
     date ? date.strftime("%-d %B %Y") : ""
   end

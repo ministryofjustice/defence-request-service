@@ -45,6 +45,7 @@ FactoryGirl.define do
 
   factory :solicitor_user, class: Omniauth::Dsds::User do
     to_create { |instance| instance }
+    organisation_uids { [FactoryGirl.create(:organisation, :law_firm).uid] }
 
     initialize_with {
       new(
@@ -52,7 +53,7 @@ FactoryGirl.define do
         name: "Example Solicitor User",
         email: "solicitor_user@example.com",
         roles: ["solicitor"],
-        organisation_uids: [SecureRandom.uuid]
+        organisation_uids: organisation_uids
       )
     }
   end
