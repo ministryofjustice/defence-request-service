@@ -13,6 +13,7 @@
 //= require jquery_ujs
 //= require dsds
 //= require date_chooser
+//= require show_hide
 //= require govuk/selection-buttons.js
 //= require prevent_moj_console_spam
 //= require modules/moj.tabs
