@@ -3,19 +3,23 @@ root = exports ? this
 # Enables input with given ID when checked input is checked
 class ShowHide
 
-  constructor: (inputToShow) ->
-    @inputToShow = inputToShow
-    checkInputId = inputToShow.data("show-when")
+  constructor: (elementToShow) ->
+    @elementToShow = elementToShow
+    checkInputId = elementToShow.data("show-when")
+
     @showCheckInput = $( "#" + checkInputId ).eq(0)
+    fieldset = @showCheckInput.closest("fieldset")
 
-    @showCheckInput.change (event) =>
-      @toggleShowHide(event.target)
-    @toggleShowHide(@showCheckInput)
+    inputs = fieldset.find('input[type="radio"]')
+    inputs.change (event) =>
+      @toggleShowHide()
 
-  toggleShowHide: (showCheckInput) =>
-    if $(showCheckInput).is(":checked")
-      @inputToShow.show()
+    @toggleShowHide()
+
+  toggleShowHide: =>
+    if @showCheckInput.is(":checked")
+      @elementToShow.show()
     else
-      @inputToShow.hide()
+      @elementToShow.hide()
 
 root.ShowHide = ShowHide
