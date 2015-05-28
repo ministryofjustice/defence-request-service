@@ -59,10 +59,6 @@ span.hint {
   margin-top: 0px;
 }
 
-label[for] {
-  @extend .form-label;
-}
-
 label + input {
   @extend .form-control;
 }
@@ -231,7 +227,7 @@ fieldset.time-select select {
 .text-field {
   text-transform: none;
   border: 1px solid #bbbbbb;
-  margin: 0 0 1em;
+  margin: 0;
   padding: 0.5em;
 }
 
@@ -259,10 +255,6 @@ fieldset.time-select select {
 
 .hidden {
   display: none;
-}
-
-.form-group {
-  margin-bottom: 1px;
 }
 
 dl {

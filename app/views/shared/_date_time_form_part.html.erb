@@ -8,11 +8,11 @@
     <% end %>
     <%= f.fields_for attribute, @defence_request_form.fields[attribute] do |t| %>
       <div class="date-field-wrapper">
-        <%= t.label :hour, t('hour') %>
+        <%= t.label :hour, t('hour'), class: "form-label" %>
         <%= t.text_field :hour, size: 2, placeholder: 'HH', class: 'hour text-field' %>
       </div>
       <div class="date-field-wrapper">
-        <%= t.label :min, t('min') %>
+        <%= t.label :min, t('min'), class: "form-label" %>
         <%= t.text_field :min, size: 2, placeholder: 'MM', class: 'minute text-field' %>
       </div>
       <div class="date-field-wrapper">-</div>
@@ -22,15 +22,15 @@
           <span class="tomorrow" data-date-display="<%= tomorrow.to_s(:full) %>" data-day="<%= tomorrow.day %>" data-month="<%= tomorrow.month %>" data-year="<%= tomorrow.year %>"><%= t('tomorrow') %></span>
         </label>
         <div class="date-field-wrapper">
-          <%= t.label :day, t('day') %>
+          <%= t.label :day, t('day'), class: "form-label" %>
           <%= t.text_field :day, size: 2, placeholder: 'DD', class: 'day text-field', value: initial_date.try(:day).to_s %>
         </div>
         <div class="date-field-wrapper">
-          <%= t.label :month, t('month') %>
+          <%= t.label :month, t('month'), class: "form-label" %>
           <%= t.text_field :month, size: 2, placeholder: 'MM', class: 'month text-field', value: initial_date.try(:month).to_s %>
         </div>
         <div class="date-field-wrapper">
-          <%= t.label :year, t('year') %>
+          <%= t.label :year, t('year'), class: "form-label" %>
           <%= t.text_field :year, size: 4, placeholder: 'YYYY', class: 'year text-field', value: initial_date.try(:year).to_s %>
         </div>
       </div>
