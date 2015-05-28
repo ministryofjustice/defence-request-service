@@ -67,7 +67,6 @@ class DefenceRequestsController < BaseController
       :scheme,
       :phone_number,
       :detainee_name,
-      :detainee_age,
       :gender,
       :adult,
       { date_of_birth: %i[day month year] },
@@ -75,12 +74,7 @@ class DefenceRequestsController < BaseController
       :appropriate_adult_reason,
       :interpreter_required,
       :interpreter_type,
-      :house_name,
-      :address_1,
-      :address_2,
-      :city,
-      :county,
-      :postcode,
+      :detainee_address,
       :custody_number,
       :offences,
       :circumstances_of_arrest,
@@ -97,7 +91,10 @@ class DefenceRequestsController < BaseController
       { time_of_detention_authorised: %i[day month year hour min sec] },
       :dscc_number,
       :reason_aborted,
-      { solicitor_time_of_arrival: %i[day month year hour min sec] })
+      { solicitor_time_of_arrival: %i[day month year hour min sec] },
+      :detainee_name_not_given,
+      :detainee_address_not_given,
+      :date_of_birth_not_given)
   end
 
   def accept_and_save_defence_request

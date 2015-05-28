@@ -48,12 +48,15 @@ class DefenceRequest < ActiveRecord::Base
 
   validates :reason_aborted, presence: true, if: :aborted?
 
-  validates :detainee_name,
-            :offences,
+  validates :detainee_name, presence: true, unless: :detainee_name_not_given?
+  validates :detainee_address, presence: true, unless: :detainee_address_not_given?
+  validates :date_of_birth, presence: true, unless: :date_of_birth_not_given?
+
+  validates :offences,
             :gender,
             :time_of_arrival, presence: true
 
-  validates :detainee_age, numericality: true, presence: true
+
 
   validates :appropriate_adult_reason, presence: true, if: :appropriate_adult?
 

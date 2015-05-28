@@ -14,7 +14,6 @@ RSpec.feature "Custody Suite Officers viewing their dashboard" do
     )
 
     login_with cso_user
-
     expect(
       element_order_correct?(
         "defence_request_#{first_acknowledged_defence_request.id}",

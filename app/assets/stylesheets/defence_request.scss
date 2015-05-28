@@ -36,10 +36,6 @@
   width: 4.25em;
 }
 
-.age {
-  width: 4.25em;
-}
-
 .custody-number {
   width: 40%;
 }
@@ -70,4 +66,8 @@ dl.time-at {
     @include bold-24();
     display: inline-block;
   }
+}
+
+.not-given-check {
+  margin-bottom: 0px;
 }

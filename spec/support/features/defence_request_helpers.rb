@@ -23,6 +23,9 @@ module DefenceRequestHelpers
         fill_in "defence_request_interview_start_time_hour", with: "01"
         fill_in "defence_request_interview_start_time_min", with: "01"
       end
+      within ".detainee" do
+        fill_in "Full Name", with: "Mannie Badder"
+      end
     else
       within ".case-details" do
         fill_in "defence_request_investigating_officer_name", with: "Dave Mc.Copper"
@@ -48,22 +51,27 @@ module DefenceRequestHelpers
         fill_in "defence_request_time_of_detention_authorised_min", with: "03"
       end
     end
-
-    within ".detainee" do
-      fill_in "Full Name", with: "Mannie Badder"
-      choose "Male"
-      fill_in "Age", with: "39"
-      fill_in "defence_request_date_of_birth_year", with: "1976"
-      fill_in "defence_request_date_of_birth_month", with: "01"
-      fill_in "defence_request_date_of_birth_day", with: "01"
-      fill_in "defence_request_house_name", with: "House of the rising sun"
-      fill_in "defence_request_address_1", with: "Letsby Avenue"
-      fill_in "defence_request_address_2", with: "Right up my street"
-      fill_in "defence_request_city", with: "London"
-      fill_in "defence_request_county", with: "Greater London"
-      fill_in "defence_request_postcode", with: "XX1 1XX"
-      choose "defence_request_appropriate_adult_false"
-      choose "defence_request_interpreter_required_false"
+    if options.fetch(:not_given) { false }
+      within ".detainee" do
+        choose "Male"
+        choose "defence_request_appropriate_adult_false"
+        choose "defence_request_interpreter_required_false"
+        check "defence_request_detainee_name_not_given"
+        check "defence_request_detainee_address_not_given"
+        check "defence_request_date_of_birth_not_given"
+      end
+    else
+      within ".detainee" do
+        fill_in "Full Name", with: "Mannie Badder"
+        choose "Male"
+        fill_in "defence_request_date_of_birth_year", with: "1976"
+        fill_in "defence_request_date_of_birth_month", with: "01"
+        fill_in "defence_request_date_of_birth_day", with: "01"
+        fill_in "defence_request_detainee_address",
+                with: "House of the rising sun, Letsby Avenue, Right up my street, London, Greater London, XX1 1XX"
+        choose "defence_request_appropriate_adult_false"
+        choose "defence_request_interpreter_required_false"
+      end
     end
     fill_in "Comments", with: "This is a very bad man. Send him down..."
   end

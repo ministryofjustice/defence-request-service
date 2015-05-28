@@ -2,19 +2,45 @@ require "rails_helper"
 
 RSpec.describe DefenceRequestsHelper, type: :helper do
 
-  describe "formatting detainee address" do
-    context "when address blank" do
-      it "returns 'Not given'" do
-        request = create(:defence_request)
-        expect(helper.detainee_address(request)).to eq("Not given")
+  describe "formatting not given field" do
+    context "when address is not given" do
+      context "i18n translation for not given is specified" do
+        it "returns the specified translation" do
+          request = create(:defence_request)
+          expect(helper.not_given_formatter(request, :detainee_address, "name_not_given")).to eq("Name not given")
+        end
+      end
+
+      context "i18n translation is not specified" do
+        it "returns 'not given'" do
+          request = create(:defence_request)
+          expect(helper.not_given_formatter(request, :detainee_address)).to eq("not given")
+        end
       end
     end
 
     context "when address present" do
       it "returns address as single line" do
-        request = create(:defence_request, :with_address)
+        request = create(:defence_request, :with_detainee_address)
         expected = "House on the Hill, Letsby Avenue, Right up my street, London, Greater London, XX1 1XX"
-        expect(helper.detainee_address(request)).to eq(expected)
+        expect(helper.not_given_formatter(request, :detainee_address)).to eq(expected)
+      end
+    end
+  end
+
+  describe "formatting not given date" do
+    context "when date is not given" do
+      it "returns 'not given'" do
+        request = create(:defence_request)
+        request.update(date_of_birth: nil)
+        expect(helper.date_not_given_formatter(request, :date_of_birth)).to eq("not given")
+      end
+    end
+
+    context "when address present" do
+      it "returns date as correctly formatted" do
+        request = create(:defence_request, date_of_birth: Date.parse("1994-05-20"))
+        expect(helper.date_not_given_formatter(request, :date_of_birth)).to eq("20 May 1994")
       end
     end
   end

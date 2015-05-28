@@ -7,7 +7,6 @@ RSpec.describe DefenceRequestForm do
 
   let (:params_for_dr)   { {  detainee_name: defence_request.detainee_name,
                               gender: defence_request.gender,
-                              detainee_age: defence_request.detainee_age,
                               offences: defence_request.offences,
                               time_of_arrival: datetime_to_params(defence_request.time_of_arrival),
                               comments: defence_request.comments } }
@@ -23,12 +22,12 @@ RSpec.describe DefenceRequestForm do
 
     context "with invalid params" do
       context "invalid attribute on the dr" do
-        let(:invalid_params) { params_for_dr.merge({ detainee_name: "" }) }
+        let(:invalid_params) { params_for_dr.merge({ gender: "" }) }
 
         it "adds any errors from the dr, to itself" do
           expect(subject.submit invalid_params).to eql false
           expect(subject.errors.count).to eql 1
-          expect(subject.errors[:detainee_name]).to eql ["can't be blank"]
+          expect(subject.errors[:gender]).to eql ["can't be blank"]
         end
       end
 

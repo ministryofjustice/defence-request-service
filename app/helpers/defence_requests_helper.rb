@@ -4,15 +4,12 @@ module DefenceRequestsHelper
     "solicitor-#{solicitor_hash['id']}"
   end
 
-  def detainee_address(defence_request)
-    attributes = %i[house_name address_1 address_2 city county postcode]
-    fields = attributes.map { |f| defence_request.send(f) }.compact
+  def not_given_formatter(defence_request, field, translation = "not_given")
+    defence_request.send(field).blank? ? I18n.t(translation) : defence_request.send(field)
+  end
 
-    if fields.blank?
-      I18n.t("address_not_given")
-    else
-      fields.join(", ")
-    end
+  def date_not_given_formatter(defence_request, field)
+    defence_request.send(field).blank? ? I18n.t("not_given") : date_formatter(defence_request.send(field))
   end
 
   def interview_at(defence_request)

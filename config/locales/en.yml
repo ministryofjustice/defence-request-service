@@ -9,15 +9,9 @@ en:
   acknowledged_defence_request: "Acknowledged Defence Requests"
   actions: "Actions"
   active: "Active (%{count})"
-  age: "Age"
   add_expected_time_of_arrival: Estimate time of arrival
   add_interview_start_time: "Add Interview Start Time"
-  address: "Address"
-  address_1: "Address 1"
-  address_2: "Address 2"
-  address_not_given: "Not given"
   adult: "Adult?"
-  age: "Age"
   appropriate_adult: Appropriate adult
   appropriate_adult_reason: "Reason for appropriate adult"
   appropriate_adult_required: Appropriate adult required
@@ -35,7 +29,6 @@ en:
   cco: "Call Center Operative"
   change_password: "Change Password"
   circumstances_of_arrest: Circumstances of arrest
-  city: City
   closed: "Closed (%{count})"
   comments: "Comments"
   complete: Complete
@@ -43,7 +36,6 @@ en:
   contact_us: "contact us"
   continue: "Continue"
   cookies: "Cookies"
-  county: County
   cso: "Custody Suite Officer"
   custody_address: Custody Address
   custody_number: "Custody number"
@@ -56,7 +48,7 @@ en:
   delete: "Delete"
   details: "Details"
   detainee: "Detainee"
-  detainee_age: "Detainee age"
+  detainee_address: "Address"
   detainee_details: "Detainee details"
   detainee_dob: "Detainee date of birth (optional)"
   detainee_name: "Detainee name"
@@ -77,7 +69,6 @@ en:
   help: "Help"
   home: "Home"
   hour: "Hour"
-  house_name: House name or number
   interpreter_required: Interpreter required
   interpreter_type: Interpreter type
   interview: "Interview"
@@ -94,15 +85,16 @@ en:
   male: "Male"
   min: "Min"
   month: "Month"
+  name_not_given: "Name not given"
   name_of_firm: "Name of firm"
   new_defence_request: "New Defence Request"
   new_defence_requests: "New Defence Requests"
   no_results_found: 'No results found - Contact DSCC'
   not_authorized: "You are not authorised to perform this action"
+  not_given: "not given"
   offences: "Offences"
   pending: pending
   phone_number: "Phone number"
-  postcode: Postcode
   prohibit_save: Please review the following %{count}
   reason_aborted: Reason aborted
   resend_details: "Resend details"

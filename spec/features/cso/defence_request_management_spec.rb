@@ -2,6 +2,21 @@ require "rails_helper"
 
 RSpec.feature "Custody Suite Officers managing defence requests" do
   context "creating a new request" do
+
+    specify "can select \"not given\" for name, dob and address" do
+      cso_user = create :cso_user
+
+      login_with cso_user
+      click_link "New Defence Request"
+
+      fill_in_defence_request_form not_given: true
+
+      click_button "Create Defence Request"
+
+      expect(page).to have_css("h1.detainee", text: "not given")
+      expect(page).to have_css("dl.labels dd", text: "not given", count: 2)
+    end
+
     specify "can not see a DSCC field on the defence request form" do
       cso_user = create :cso_user
 
@@ -51,6 +66,22 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
 
   context "with requests they are assigned to" do
     context "and requests not yet queued" do
+      specify "can select \"not given\" for name, dob and address", js: true do
+        cso_user = create :cso_user
+        create :defence_request, detainee_name: "Mannie Badder", detainee_address: "Some address"
+
+        login_with cso_user
+        click_link "Edit"
+
+        check "defence_request_detainee_name_not_given"
+        check "defence_request_detainee_address_not_given"
+        click_button "Update Defence Request"
+
+        expect(page).to have_content "Defence Request successfully updated"
+        expect(page).to have_no_content "Mannie Badder"
+        expect(page).to have_no_content "Some address"
+      end
+
       specify "can edit all relevant details of the request", js: true do
         cso_user = create :cso_user
         create :defence_request
@@ -70,12 +101,12 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
         login_with cso_user
         click_link "Edit"
         within ".detainee" do
-          fill_in "Age", with: "MOOOSE ON THE LOOOSE!?!"
+          fill_in "defence_request_date_of_birth_day", with: "MOOOSE ON THE LOOOSE!?!"
         end
         click_button "Update Defence Request"
 
         expect(page).to have_content "You need to fix the errors on this page before continuing"
-        expect(page).to have_content "Detainee age: is not a number"
+        expect(page).to have_content "Date of Birth: Invalid Date, Day is not a number"
       end
     end
 
@@ -136,7 +167,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
         :interview_start_time,
         :solicitor_time_of_arrival,
         :unfit_for_interview,
-        :with_address,
+        :with_detainee_address,
         :with_circumstance_of_arrest,
         :with_dscc_number,
         :with_interpreter_required,
