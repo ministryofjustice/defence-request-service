@@ -25,10 +25,17 @@ RSpec.feature "Call Center Operatives managing defence requests" do
 
   context "with requests they are assigned to" do
     context "that have not yet been acknowledged" do
+      let(:law_firm) {
+        create(:organisation)
+      }
+
       let(:auth_api_mock_setup) do
         {
           organisations: {
-            { types: [:law_firm] } => [create(:organisation)]
+            { types: [:law_firm] } => [law_firm]
+          },
+          organisation: {
+            law_firm.uid => law_firm
           }
         }
       end
