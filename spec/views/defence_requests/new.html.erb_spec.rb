@@ -7,9 +7,12 @@ RSpec.describe "defence_requests/new.html.erb" do
     expect(rendered).to have_css("//input[@id='#{ check_id }']")
   end
 
-  def assert_show_hide_set(element_type, check_id)
+  def assert_show_hide_set(element_type, check_id, other_check_id)
     expect(rendered).to have_css("//#{ element_type }[@data-show-when='#{ check_id }']")
-    expect(rendered).to have_css("//input[@id='#{ check_id }']")
+    within("fieldset") do
+      expect(rendered).to have_css("input[@id='#{ check_id }'][type='radio']")
+      expect(rendered).to have_css("input[@id='#{ other_check_id }'][type='radio']")
+    end
   end
 
   before do
@@ -37,8 +40,8 @@ RSpec.describe "defence_requests/new.html.erb" do
   end
 
   it "sets show-when correctly" do
-    assert_show_hide_set "div", "defence_request_appropriate_adult_true"
-    assert_show_hide_set "div", "defence_request_interpreter_required_true"
-    assert_show_hide_set "div", "defence_request_fit_for_interview_false"
+    assert_show_hide_set "div", "defence_request_appropriate_adult_true", "defence_request_appropriate_adult_false"
+    assert_show_hide_set "div", "defence_request_interpreter_required_true", "defence_request_appropriate_adult_false"
+    assert_show_hide_set "div", "defence_request_fit_for_interview_false", "defence_request_appropriate_adult_true"
   end
 end
