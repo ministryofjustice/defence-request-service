@@ -53,7 +53,7 @@ module DefenceRequestHelpers
     end
     if options.fetch(:not_given) { false }
       within ".detainee" do
-        choose "Male"
+        choose options.fetch(:gender) { "Male" }
         choose "defence_request_appropriate_adult_false"
         choose "defence_request_interpreter_required_false"
         check "defence_request_detainee_name_not_given"
@@ -63,7 +63,7 @@ module DefenceRequestHelpers
     else
       within ".detainee" do
         fill_in "Full Name", with: "Mannie Badder"
-        choose "Male"
+        choose options.fetch(:gender) { "Male" }
         fill_in "defence_request_date_of_birth_year", with: "1976"
         fill_in "defence_request_date_of_birth_month", with: "01"
         fill_in "defence_request_date_of_birth_day", with: "01"

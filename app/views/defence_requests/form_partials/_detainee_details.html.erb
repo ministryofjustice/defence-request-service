@@ -19,6 +19,10 @@
       <%= f.radio_button :gender, :female, name: 'defence_request[gender]' %>
       <%= t('female') %>
     </label>
+    <label class="block-label form-label" for="defence_request_gender_not_specified">
+      <%= f.radio_button :gender, :not_specified, name: 'defence_request[gender]' %>
+      <%= t('not_specified') %>
+    </label>
   </fieldset>
 </div>
 

@@ -96,6 +96,7 @@ en:
   no_results_found: 'No results found - Contact DSCC'
   not_authorized: "You are not authorised to perform this action"
   not_given: "not given"
+  not_specified: "Not specified"
   offences: "Offences"
   pending: pending
   opened: "Opened (%{count})"
