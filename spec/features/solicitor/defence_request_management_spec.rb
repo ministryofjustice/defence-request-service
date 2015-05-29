@@ -3,11 +3,9 @@ require "rails_helper"
 RSpec.feature "Solicitors managing defence requests" do
   context "with cases they are assigned to" do
 
-    def enter_time(hour:, min:, day: nil, month: nil, year: nil)
+    def enter_time(date: nil, hour: nil, min: nil)
       within ".time-of-arrival" do
-        fill_in "defence_request[solicitor_time_of_arrival][day]", with: day if day
-        fill_in "defence_request[solicitor_time_of_arrival][month]", with: month if month
-        fill_in "defence_request[solicitor_time_of_arrival][year]", with: year if year
+        fill_in "defence_request[solicitor_time_of_arrival][date]", with: date if date
         fill_in "defence_request[solicitor_time_of_arrival][hour]", with: hour
         fill_in "defence_request[solicitor_time_of_arrival][min]", with: min
       end
@@ -54,16 +52,15 @@ RSpec.feature "Solicitors managing defence requests" do
       expect(page).to have_css ".date-chooser-select.js-only"
       enter_time hour: "01", min: "12"
       click_button "Save"
-      today = Date.today.to_s(:full)
       expect(find("#solicitor_time_of_arrival")).to have_content "01:12"
 
       click_link "Update time of arrival"
-      enter_time day: "21", month: "11", year: "2002", hour: "01", min: "13"
+      enter_time date: "21 Nov 2002", hour: "01", min: "13"
       click_button "Save"
       expect(find("#solicitor_time_of_arrival")).to have_content "01:13"
 
       click_link "Update time of arrival"
-      enter_time day: "02", month: "02", year: "2002", hour: "02", min: "02"
+      enter_time date: "02 Feb 2002", hour: "02", min: "02"
       click_link "Cancel"
 
       expect(find("#solicitor_time_of_arrival")).to have_content "01:13"
@@ -77,7 +74,6 @@ RSpec.feature "Solicitors managing defence requests" do
       enter_time hour: "23", min: "02"
       click_button "Save"
 
-      today = Date.today.to_s(:full)
       expect(find("#solicitor_time_of_arrival")).to have_content "23:02"
 
       click_link "Update time of arrival"
@@ -98,12 +94,12 @@ RSpec.feature "Solicitors managing defence requests" do
       expect(find("#solicitor_time_of_arrival")).to have_content "23:59"
 
       click_link "Update time of arrival"
-      enter_time day: "21", month: "11", year: "2002", hour: "01", min: "12"
+      enter_time date: "21 Nov 2002", hour: "01", min: "12"
       click_button "Save"
       expect(find("#solicitor_time_of_arrival")).to have_content "01:12"
 
       click_link "Update time of arrival"
-      enter_time day: "02", month: "02", year: "2002", hour: "02", min: "02"
+      enter_time date: "02 Feb 2002", hour: "02", min: "02"
       click_link "Cancel"
       expect(find("#solicitor_time_of_arrival")).to have_content "01:12"
     end
@@ -112,17 +108,15 @@ RSpec.feature "Solicitors managing defence requests" do
       login_with solicitor_user
       click_link "Case Details for #{accepted_defence_request.dscc_number}"
       click_link "Estimate time of arrival"
-      enter_time day: "i", month: "n", year: "v", hour: "a", min: "lid"
+      enter_time date: "inv", hour: "a", min: "lid"
       click_button "Save"
 
       expect(page).to have_content(
         [
           "Invalid Date or Time",
-          "Day is not a number",
-          "Month is not a number",
-          "Year is not a number",
           "Hour is not a number",
-          "Min is not a number"
+          "Min is not a number",
+          "Date is not a date"
         ].join(", ")
       )
     end

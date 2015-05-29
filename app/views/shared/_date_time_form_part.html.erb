@@ -18,20 +18,11 @@
       <div class="date-field-wrapper">-</div>
       <div class="date-chooser-values">
         <label class="date-chooser-select form-label js-only" data-initial-date="<%= initial_date_type %>">
-          <span class="today" data-date-display="<%= today.to_s(:full) %>" data-day="<%= today.day %>" data-month="<%= today.month %>" data-year="<%= today.year %>"><%= t('today') %></span>
-          <span class="tomorrow" data-date-display="<%= tomorrow.to_s(:full) %>" data-day="<%= tomorrow.day %>" data-month="<%= tomorrow.month %>" data-year="<%= tomorrow.year %>"><%= t('tomorrow') %></span>
+          <span class="today" data-date-display="<%= today.to_s :full %>" data-day="<%= today.day %>" data-month="<%= today.month %>" data-year="<%= today.year %>"><%= t('today') %></span>
+          <span class="tomorrow" data-date-display="<%= tomorrow.to_s :full %>" data-day="<%= tomorrow.day %>" data-month="<%= tomorrow.month %>" data-year="<%= tomorrow.year %>"><%= t('tomorrow') %></span>
         </label>
         <div class="date-field-wrapper">
-          <%= t.label :day, t('day'), class: "form-label" %>
-          <%= t.text_field :day, size: 2, placeholder: 'DD', class: 'day text-field', value: initial_date.try(:day).to_s %>
-        </div>
-        <div class="date-field-wrapper">
-          <%= t.label :month, t('month'), class: "form-label" %>
-          <%= t.text_field :month, size: 2, placeholder: 'MM', class: 'month text-field', value: initial_date.try(:month).to_s %>
-        </div>
-        <div class="date-field-wrapper">
-          <%= t.label :year, t('year'), class: "form-label" %>
-          <%= t.text_field :year, size: 4, placeholder: 'YYYY', class: 'year text-field', value: initial_date.try(:year).to_s %>
+          <%= t.text_field :date, class: "text-field date", value: date_formatter(initial_date) %>
         </div>
       </div>
     <% end %>

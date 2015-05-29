@@ -17,9 +17,7 @@ module DefenceRequestHelpers
     if options.fetch(:edit) { false }
       within ".case-details" do
         fill_in "Offences", with: "BadMurder"
-        fill_in "defence_request_interview_start_time_day", with: "01"
-        fill_in "defence_request_interview_start_time_month", with: "01"
-        fill_in "defence_request_interview_start_time_year", with: "2001"
+        fill_in "defence_request_interview_start_time_date", with: "01 Jan 2001"
         fill_in "defence_request_interview_start_time_hour", with: "01"
         fill_in "defence_request_interview_start_time_min", with: "01"
       end
@@ -34,19 +32,13 @@ module DefenceRequestHelpers
         fill_in "Offences", with: "BadMurder"
         fill_in "defence_request_circumstances_of_arrest", with: "He looked a bit shady"
         choose "defence_request_fit_for_interview_true"
-        fill_in "defence_request_time_of_arrest_day", with: "02"
-        fill_in "defence_request_time_of_arrest_month", with: "02"
-        fill_in "defence_request_time_of_arrest_year", with: "2002"
+        fill_in "defence_request_time_of_arrest_date", with: "02 Feb 2002"
         fill_in "defence_request_time_of_arrest_hour", with: "02"
         fill_in "defence_request_time_of_arrest_min", with: "02"
-        fill_in "defence_request_time_of_arrival_day", with: "01"
-        fill_in "defence_request_time_of_arrival_month", with: "01"
-        fill_in "defence_request_time_of_arrival_year", with: "2001"
+        fill_in "defence_request_time_of_arrival_date", with: "01 Jan 2001"
         fill_in "defence_request_time_of_arrival_hour", with: "01"
         fill_in "defence_request_time_of_arrival_min", with: "01"
-        fill_in "defence_request_time_of_detention_authorised_day", with: "03"
-        fill_in "defence_request_time_of_detention_authorised_month", with: "03"
-        fill_in "defence_request_time_of_detention_authorised_year", with: "2003"
+        fill_in "defence_request_time_of_detention_authorised_date", with: "03 Mar 2003"
         fill_in "defence_request_time_of_detention_authorised_hour", with: "03"
         fill_in "defence_request_time_of_detention_authorised_min", with: "03"
       end

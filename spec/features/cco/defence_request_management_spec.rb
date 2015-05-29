@@ -172,9 +172,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
 
       login_with cco_user
       click_link "Edit"
-      fill_in "defence_request_solicitor_time_of_arrival_day", with: "01"
-      fill_in "defence_request_solicitor_time_of_arrival_month", with: "01"
-      fill_in "defence_request_solicitor_time_of_arrival_year", with: "2001"
+      fill_in "defence_request_solicitor_time_of_arrival_date", with: "01 Jan 2001"
       fill_in "defence_request_solicitor_time_of_arrival_hour", with: "01"
       fill_in "defence_request_solicitor_time_of_arrival_min", with: "01"
       click_button "Update Defence Request"
