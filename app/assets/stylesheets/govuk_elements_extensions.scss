@@ -13,6 +13,8 @@ $path: "";
 @import "elements/lists";
 @import "elements/panels";
 
+$disable-background: #eee;
+
 h1 {
   @extend .heading-xlarge;
   margin-right: 6%;
@@ -180,7 +182,7 @@ textarea[disabled],
 textarea[disabled="disabled"],
 textarea[readonly="readonly"] {
   opacity: 1;
-  background-color: #eee;
+  background-color: $disable-background;
   color: $grey-1;
   &:focus {
     outline: none;
