@@ -59,13 +59,10 @@ span.hint {
   margin-top: 0px;
 }
 
-label + input {
+label + input, label + textarea {
   @extend .form-control;
 }
 
-label + textarea {
-  @extend .form-control;
-}
 
 fieldset, .sub-panel {
   @extend .form-group;
@@ -176,13 +173,14 @@ section {
   border: 1px solid $grey-2;
 }
 
+input[disabled],
 input[disabled="disabled"],
 input[readonly="readonly"],
 textarea[disabled],
 textarea[disabled="disabled"],
 textarea[readonly="readonly"] {
   opacity: 1;
-  background-color: $grey-4;
+  background-color: #eee;
   color: $grey-1;
   &:focus {
     outline: none;
