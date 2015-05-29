@@ -99,7 +99,6 @@ enablesTomorrowLink = (element, context) ->
 
 describe "DateChooser", ->
   element = null
-  track = null
 
   afterEach ->
     element.remove()

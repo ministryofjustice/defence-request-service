@@ -1,6 +1,7 @@
 <div class="form-group">
   <%= f.label :detainee_name, t('full_name'), class: "form-label-bold" %>
-  <%= f.text_field :detainee_name, class: 'text-field text-field-wide not-given-check' %>
+  <%= f.text_field :detainee_name, class: 'text-field text-field-wide not-given-check',
+                    data: { "disable-when" => "defence_request_detainee_name_not_given" } %>
   <%= f.label :detainee_name_not_given, class: 'form-checkbox' do %>
     <%= f.check_box :detainee_name_not_given %>
     <%= t("not_given") -%>
@@ -41,10 +42,9 @@
   </fieldset>
 </div>
 
-<div class="form-group">
+<div class="form-group" data-show-when="defence_request_appropriate_adult_true">
   <%= f.label :appropriate_adult_reason, t('appropriate_adult_reason'), class: "form-label-bold" %>
-  <%= f.text_area :appropriate_adult_reason, disabled: true, label: t('appropriate_adult_reason'),
-                  rows: '5', class: 'text-field text-field-wide' %>
+  <%= f.text_area :appropriate_adult_reason, label: t('appropriate_adult_reason'), rows: '5', class: 'text-field text-field-wide' %>
 </div>
 
 <div class="form-group">
@@ -64,14 +64,15 @@
     </label>
   </fieldset>
 </div>
-<div class="form-group">
+<div class="form-group" data-show-when="defence_request_interpreter_required_true">
   <%= f.label :interpreter_type, t('interpreter_type'), class: "form-label-bold" %>
-  <%= f.text_field :interpreter_type, disabled: true, class: 'text-field text-field-wide' %>
+  <%= f.text_field :interpreter_type, class: 'text-field text-field-wide' %>
 </div>
 
 <div class="form-group">
   <%= f.label :detainee_address, t('detainee_address'), class: "form-label-bold" %>
-  <%= f.text_field :detainee_address, class: 'text-field text-field-wide not-given-check' %>
+  <%= f.text_field :detainee_address, class: 'text-field text-field-wide not-given-check',
+                    data: { "disable-when" => "defence_request_detainee_address_not_given" } %>
   <%= f.label :detainee_address_not_given, class: 'form-checkbox' do %>
     <%= f.check_box :detainee_address_not_given %>
     <%= t("not_given") -%>
