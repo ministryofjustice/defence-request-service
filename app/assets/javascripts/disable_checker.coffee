@@ -2,17 +2,18 @@ root = exports ? this
 
 class DisableChecker
 
-  constructor: (checkInput) ->
-    inputId = checkInput.data("disable-when-checked")
-    @inputToDisable = $( "#" + inputId ).eq(0)
+  constructor: (inputToDisable) ->
+    @inputToDisable = inputToDisable
+    checkInputId = @inputToDisable.data("disable-when")
+    @checkInput = $( "#" + checkInputId ).eq(0)
 
-    checkInput.change (event) =>
-      @toggleDisable(event.target)
+    @checkInput.change (event) =>
+      @toggleDisable()
 
-    @toggleDisable(checkInput)
+    @toggleDisable()
 
-  toggleDisable: (checkInput) =>
-    if $(checkInput).is(":checked")
+  toggleDisable: =>
+    if @checkInput.is(":checked")
       @inputToDisable.prop('disabled', true)
     else
       @inputToDisable.prop('disabled', false)
