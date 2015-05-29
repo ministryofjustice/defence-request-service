@@ -33,8 +33,8 @@ fixtureHtml = (inputId, disabledRadioChecked, enabledRadioChecked) ->
 fixtureSetup = (element, inputId, context) ->
   $(document.body).append(element)
 
-  context.otherRadio = $("#defence_request_appropriate_adult_false").eq(0)
-  context.showRadio = $("#defence_request_appropriate_adult_true").eq(0)
+  context.otherRadio = $("#defence_request_appropriate_adult_false")
+  context.showRadio = $("#defence_request_appropriate_adult_true")
   context.elementToShow = $("[data-show-when]" ).eq(0)
   context.disableChecker = new window.ShowHide(context.elementToShow )
 

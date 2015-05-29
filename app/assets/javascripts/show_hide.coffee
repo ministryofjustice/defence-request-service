@@ -8,7 +8,7 @@ class ShowHide
     @elementToShow = elementToShow
     checkInputId = elementToShow.data("show-when")
 
-    @checkInput = $( "#" + checkInputId ).eq(0)
+    @checkInput = $( "#" + checkInputId )
     fieldset = @checkInput.closest("fieldset")
 
     inputs = fieldset.find('input[type="radio"]')

@@ -27,7 +27,7 @@ fixtureHtml = (inputId, isChecked) ->
 fixtureSetup = (element, inputId, context) ->
   $(document.body).append(element)
 
-  context.disableCheckbox = $("#defence_request_detainee_name_not_given").eq(0)
+  context.disableCheckbox = $("#defence_request_detainee_name_not_given")
   context.inputToDisable = $("[data-disable-when]").eq(0)
   context.disableChecker = new window.DisableChecker(context.inputToDisable)
 

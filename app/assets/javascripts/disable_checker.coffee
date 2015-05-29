@@ -6,7 +6,7 @@ class DisableChecker
   constructor: (inputToDisable) ->
     @inputToDisable = inputToDisable
     checkInputId = @inputToDisable.data("disable-when")
-    @checkInput = $( "#" + checkInputId ).eq(0)
+    @checkInput = $( "#" + checkInputId )
 
     @checkInput.change =>
       @toggleDisable()
