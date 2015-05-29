@@ -1,14 +1,15 @@
 root = exports ? this
 
-# Enables input with given ID when checked input is checked
+# Shows supplied element when radio with ID equal to 'data-show-when' value is checked.
+# Hides supplied element when any other radio in fieldset is checked.
 class ShowHide
 
   constructor: (elementToShow) ->
     @elementToShow = elementToShow
     checkInputId = elementToShow.data("show-when")
 
-    @showCheckInput = $( "#" + checkInputId ).eq(0)
-    fieldset = @showCheckInput.closest("fieldset")
+    @checkInput = $( "#" + checkInputId ).eq(0)
+    fieldset = @checkInput.closest("fieldset")
 
     inputs = fieldset.find('input[type="radio"]')
     inputs.change (event) =>
@@ -17,7 +18,7 @@ class ShowHide
     @toggleShowHide()
 
   toggleShowHide: =>
-    if @showCheckInput.is(":checked")
+    if @checkInput.is(":checked")
       @elementToShow.show()
     else
       @elementToShow.hide()

@@ -1,5 +1,6 @@
 root = exports ? this
 
+# Disables supplied input when input with ID equal to 'data-disable-when' value is checked.
 class DisableChecker
 
   constructor: (inputToDisable) ->
@@ -7,7 +8,7 @@ class DisableChecker
     checkInputId = @inputToDisable.data("disable-when")
     @checkInput = $( "#" + checkInputId ).eq(0)
 
-    @checkInput.change (event) =>
+    @checkInput.change =>
       @toggleDisable()
 
     @toggleDisable()
