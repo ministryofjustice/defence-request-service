@@ -15,8 +15,9 @@ class DisableChecker
 
   toggleDisable: =>
     if @checkInput.is(":checked")
-      @inputToDisable.prop('disabled', true)
+      @inputToDisable.val("")
+      @inputToDisable.prop("disabled", true)
     else
-      @inputToDisable.prop('disabled', false)
+      @inputToDisable.prop("disabled", false)
 
 root.DisableChecker = DisableChecker

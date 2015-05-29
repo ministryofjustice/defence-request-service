@@ -21,6 +21,8 @@ class ShowHide
     if @checkInput.is(":checked")
       @elementToShow.show()
     else
+      @elementToShow.find("textarea").val("")
+      @elementToShow.find("input[type='text']").val("")
       @elementToShow.hide()
 
 root.ShowHide = ShowHide

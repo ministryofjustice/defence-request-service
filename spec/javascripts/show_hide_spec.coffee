@@ -25,6 +25,7 @@ fixtureHtml = (inputId, disabledRadioChecked, enabledRadioChecked) ->
   <div data-show-when="defence_request_appropriate_adult_true">
     <label for="defence_request_appropriate_adult_reason">Reason for appropriate adult</label>
     <textarea name="defence_request[appropriate_adult_reason]" id="#{ inputId }"></textarea>
+    <input name="defence_request[appropriate_adult_reason_etc]" id="#{ inputId }_etc" type="text"></input>
   </div>
   </body>
   """)
@@ -34,8 +35,8 @@ fixtureSetup = (element, inputId, context) ->
 
   context.otherRadio = $("#defence_request_appropriate_adult_false").eq(0)
   context.showRadio = $("#defence_request_appropriate_adult_true").eq(0)
-  context.elementToShow = $( "[data-show-when]" ).eq(0)
-  context.disableChecker = new window.ShowHide( context.elementToShow )
+  context.elementToShow = $("[data-show-when]" ).eq(0)
+  context.disableChecker = new window.ShowHide(context.elementToShow )
 
 describe "ShowHide", ->
   element = null
@@ -52,29 +53,44 @@ describe "ShowHide", ->
 
     describe "after initialization", ->
       it "hides input", ->
-        expect( @elementToShow ).toBeHidden()
+        expect(@elementToShow).toBeHidden()
 
     describe "show radio is checked", ->
       it "shows input", ->
         @showRadio.trigger("click")
-        expect( @elementToShow ).not.toBeHidden()
+        expect(@elementToShow).not.toBeHidden()
 
     describe "other radio is checked", ->
       it "leaves input hidden", ->
         @otherRadio.trigger("click")
-        expect( @elementToShow ).toBeHidden()
+        expect(@elementToShow).toBeHidden()
 
     describe "other radio is checked then show radio is checked", ->
       it "shows input", ->
         @otherRadio.trigger("click")
         @showRadio.trigger("click")
-        expect( @elementToShow ).not.toBeHidden()
+        expect(@elementToShow).not.toBeHidden()
 
     describe "show radio is checked then other radio is checked", ->
       it "hides input", ->
         @showRadio.trigger("click")
         @otherRadio.trigger("click")
-        expect( @elementToShow ).toBeHidden()
+        expect(@elementToShow).toBeHidden()
+
+      it "removes text from input", ->
+        @showRadio.trigger("click")
+
+        textArea = @elementToShow.find('textarea')
+        textArea.val("some text")
+        expect(textArea.val()).toEqual "some text"
+
+        input = @elementToShow.find('input')
+        input.val("etc text")
+        expect(input.val()).toEqual "etc text"
+
+        @otherRadio.trigger("click")
+        expect(textArea.val()).toEqual ""
+        expect(input.val()).toEqual ""
 
   describe "when other radio checked on load", ->
     beforeEach ->
@@ -84,7 +100,7 @@ describe "ShowHide", ->
 
     describe "after initialization", ->
       it "hides input", ->
-        expect( @elementToShow ).toBeHidden()
+        expect(@elementToShow).toBeHidden()
 
   describe "when show radio checked on load", ->
     beforeEach ->
@@ -94,4 +110,4 @@ describe "ShowHide", ->
 
     describe "after initialization", ->
       it "leaves input shown", ->
-        expect( @elementToShow ).not.toBeHidden()
+        expect(@elementToShow).not.toBeHidden()
