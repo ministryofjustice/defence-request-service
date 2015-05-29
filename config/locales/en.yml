@@ -53,7 +53,7 @@ en:
   detainee: "Detainee"
   detainee_address: "Address"
   detainee_details: "Detainee details"
-  detainee_dob: "Detainee date of birth (optional)"
+  detainee_dob: "Detainee date of birth"
   detainee_name: "Detainee name"
   detention_details: "Detention details"
   dscc: "DSCC"
