@@ -8,6 +8,11 @@
 
   <%= render('shared/date_time_form_part', attribute: :time_of_detention_authorised, show_label: true, set_default_date: false, f: f) %>
 
+  <div class="form-group">
+    <%= f.label :custody_number, t('custody_number'), class: "form-label-bold" %>
+    <%= f.text_field :custody_number, label: t('custody_number'), class: 'text-field' %>
+  </div>
+
   <% if @policy.interview_start_time_edit? %>
     <%= render('shared/date_time_form_part', attribute: :interview_start_time, show_label: true, set_default_date: false, f: f) %>
   <% end %>

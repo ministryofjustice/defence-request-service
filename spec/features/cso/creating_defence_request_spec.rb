@@ -1,6 +1,22 @@
 require "rails_helper"
 
 RSpec.feature "Custody Suite Officers creating defence requests" do
+  specify "creating a blank defence request displays all required validation errors" do
+    cso_user = create :cso_user
+
+    login_with cso_user
+    click_link "New request"
+
+    click_button "Create Defence Request"
+
+    expect(current_path).to eq("/defence_requests")
+    expect(page).to have_content "You need to fix the errors on this page before continuing"
+
+    ["Detainee name", "Address", "Date of Birth", "Offences", "Custody number", "Gender", "Arrival time"].each do |field_name|
+      expect(page).to have_css(".error-summary li", text: "#{field_name}: can't be blank")
+    end
+  end
+
   specify "can select \"not specified\" for gender" do
     cso_user = create :cso_user
 
@@ -44,21 +60,6 @@ RSpec.feature "Custody Suite Officers creating defence requests" do
     click_link "New request"
 
     expect(page).not_to have_field "Expected Solicitor Time of Arrival"
-  end
-
-  specify "are shown some errors if the request cannot be created due to invalid fields" do
-    cso_user = create :cso_user
-    login_with cso_user
-    click_link "New request"
-
-    within ".detainee" do
-      fill_in "Full Name", with: ""
-    end
-    click_button "Create Defence Request"
-
-    expect(page).
-      to have_content "You need to fix the errors on this page before continuing"
-    expect(page).to have_content "Detainee name: can't be blank"
   end
 
   specify "appropriate_adult toggles appropriate_adult_reason", js: true do

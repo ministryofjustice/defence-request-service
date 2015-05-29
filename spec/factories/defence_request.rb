@@ -16,6 +16,7 @@ FactoryGirl.define do
     sequence(:detainee_name) { |n| "detainee_name-#{n}" }
     gender "male"
     date_of_birth twenty_one_years_ago
+    custody_number "AN14574637587"
     offences "Theft"
     time_of_arrival now
     sequence(:comments) { |n| "commenty-comments-are here: #{n}" }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150526144259) do
+ActiveRecord::Schema.define(version: 20150529150418) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,9 +74,11 @@ ActiveRecord::Schema.define(version: 20150526144259) do
     t.boolean  "detainee_name_not_given",               default: false
     t.boolean  "detainee_address_not_given",            default: false
     t.boolean  "date_of_birth_not_given",               default: false
+    t.string   "custody_number"
   end
 
   add_index "defence_requests", ["cco_uid"], name: "index_defence_requests_on_cco_uid", using: :btree
+  add_index "defence_requests", ["custody_number"], name: "index_defence_requests_on_custody_number", using: :btree
   add_index "defence_requests", ["dscc_number"], name: "index_defence_requests_on_dscc_number", unique: true, using: :btree
   add_index "defence_requests", ["organisation_uid"], name: "index_defence_requests_on_organisation_uid", using: :btree
   add_index "defence_requests", ["solicitor_uid"], name: "index_defence_requests_on_solicitor_uid", using: :btree
