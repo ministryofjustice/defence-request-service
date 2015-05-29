@@ -2,7 +2,7 @@
 //= require jasmine-jquery
 //= require disable_checker
 
-fixtureHtml = (inputId, isChecked) ->
+fixtureHtml = (isChecked) ->
   if isChecked
     checked = 'checked="checked"'
   else
@@ -24,7 +24,7 @@ fixtureHtml = (inputId, isChecked) ->
   </body>
   """)
 
-fixtureSetup = (element, inputId, context) ->
+fixtureSetup = (element, context) ->
   $(document.body).append(element)
 
   context.disableCheckbox = $("#defence_request_detainee_name_not_given")
@@ -40,9 +40,8 @@ describe "DisableChecker", ->
 
   describe "when checkbox not checked", ->
     beforeEach ->
-      inputId = "defence_request_appropriate_adult_reason"
-      element = fixtureHtml(inputId, false)
-      fixtureSetup(element, inputId, this)
+      element = fixtureHtml(false)
+      fixtureSetup(element, this)
 
     describe "after initialization", ->
       it "leaves input enabled", ->
@@ -69,7 +68,6 @@ describe "DisableChecker", ->
   describe "when radio checked", ->
     describe "after initialization", ->
       it "disables input", ->
-        inputId = "defence_request_appropriate_adult_reason"
-        element = fixtureHtml(inputId, true)
-        fixtureSetup(element, inputId, this)
+        element = fixtureHtml(true)
+        fixtureSetup(element, this)
         expect(@inputToDisable).toBeDisabled()
