@@ -47,7 +47,7 @@ describe "DisableChecker", ->
       it "leaves input enabled", ->
         expect(@inputToDisable).not.toBeDisabled()
 
-    describe "radio is checked", ->
+    describe "checkbox is checked", ->
       it "disables input", ->
         @disableCheckbox.trigger("click")
         expect(@inputToDisable).toBeDisabled()
@@ -59,13 +59,13 @@ describe "DisableChecker", ->
         @disableCheckbox.trigger("click")
         expect(@inputToDisable.val()).toEqual ""
 
-    describe "radio is checked then unchecked", ->
+    describe "checkbox is checked then unchecked", ->
       it "enables input", ->
         @disableCheckbox.trigger("click")
         @disableCheckbox.trigger("click")
         expect(@inputToDisable).not.toBeDisabled()
 
-  describe "when radio checked", ->
+  describe "when checkbox checked", ->
     describe "after initialization", ->
       it "disables input", ->
         element = fixtureHtml(true)
