@@ -2,7 +2,7 @@
 //= require jasmine-jquery
 //= require show_hide
 
-fixtureHtml = (inputId, disabledRadioChecked, enabledRadioChecked) ->
+fixtureHtml = (disabledRadioChecked, enabledRadioChecked) ->
   disabledChecked = if disabledRadioChecked then 'checked="checked"' else ""
   enabledChecked = if enabledRadioChecked then 'checked="checked"' else ""
 
@@ -24,13 +24,13 @@ fixtureHtml = (inputId, disabledRadioChecked, enabledRadioChecked) ->
 
   <div data-show-when="defence_request_appropriate_adult_true">
     <label for="defence_request_appropriate_adult_reason">Reason for appropriate adult</label>
-    <textarea name="defence_request[appropriate_adult_reason]" id="#{ inputId }"></textarea>
-    <input name="defence_request[appropriate_adult_reason_etc]" id="#{ inputId }_etc" type="text"></input>
+    <textarea name="defence_request[appropriate_adult_reason]" id="defence_request_appropriate_adult_reason"></textarea>
+    <input name="defence_request[appropriate_adult_reason_etc]" id="defence_request_appropriate_adult_reason_etc" type="text"></input>
   </div>
   </body>
   """)
 
-fixtureSetup = (element, inputId, context) ->
+fixtureSetup = (element, context) ->
   $(document.body).append(element)
 
   context.otherRadio = $("#defence_request_appropriate_adult_false")
@@ -47,9 +47,8 @@ describe "ShowHide", ->
 
   describe "when no radio checked", ->
     beforeEach ->
-      inputId = "defence_request_appropriate_adult_reason"
-      element = fixtureHtml(inputId, false, false)
-      fixtureSetup(element, inputId, this)
+      element = fixtureHtml(false, false)
+      fixtureSetup(element, this)
 
     describe "after initialization", ->
       it "hides input", ->
@@ -94,9 +93,8 @@ describe "ShowHide", ->
 
   describe "when other radio checked on load", ->
     beforeEach ->
-      inputId = "defence_request_appropriate_adult_reason"
-      element = fixtureHtml(inputId, true, false)
-      fixtureSetup(element, inputId, this)
+      element = fixtureHtml(true, false)
+      fixtureSetup(element, this)
 
     describe "after initialization", ->
       it "hides input", ->
@@ -104,9 +102,8 @@ describe "ShowHide", ->
 
   describe "when show radio checked on load", ->
     beforeEach ->
-      inputId = "defence_request_appropriate_adult_reason"
-      element = fixtureHtml(inputId, false, true)
-      fixtureSetup(element, inputId, this)
+      element = fixtureHtml(false, true)
+      fixtureSetup(element, this)
 
     describe "after initialization", ->
       it "leaves input shown", ->
