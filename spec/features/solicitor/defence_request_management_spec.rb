@@ -55,18 +55,18 @@ RSpec.feature "Solicitors managing defence requests" do
       enter_time hour: "01", min: "12"
       click_button "Save"
       today = Date.today.to_s(:full)
-      expect( find("#solicitor_time_of_arrival") ).to have_content "01:12"
+      expect(find("#solicitor_time_of_arrival")).to have_content "01:12"
 
       click_link "Update time of arrival"
       enter_time day: "21", month: "11", year: "2002", hour: "01", min: "13"
       click_button "Save"
-      expect( find("#solicitor_time_of_arrival") ).to have_content "01:13"
+      expect(find("#solicitor_time_of_arrival")).to have_content "01:13"
 
       click_link "Update time of arrival"
       enter_time day: "02", month: "02", year: "2002", hour: "02", min: "02"
       click_link "Cancel"
 
-      expect( find("#solicitor_time_of_arrival") ).to have_content "01:13"
+      expect(find("#solicitor_time_of_arrival")).to have_content "01:13"
       expect(page).to have_content accepted_defence_request.detainee_name
     end
 
@@ -78,34 +78,34 @@ RSpec.feature "Solicitors managing defence requests" do
       click_button "Save"
 
       today = Date.today.to_s(:full)
-      expect( find("#solicitor_time_of_arrival") ).to have_content "23:02"
+      expect(find("#solicitor_time_of_arrival")).to have_content "23:02"
 
       click_link "Update time of arrival"
       click_link "Tomorrow"
       enter_time hour: "00", min: "03"
       click_button "Save"
       tomorrow = (Date.today + 1).to_s(:full)
-      expect( find("#solicitor_time_of_arrival") ).to have_content "00:03"
+      expect(find("#solicitor_time_of_arrival")).to have_content "00:03"
 
       click_link "Update time of arrival"
       click_button "Save"
-      expect( find("#solicitor_time_of_arrival") ).to have_content "00:03"
+      expect(find("#solicitor_time_of_arrival")).to have_content "00:03"
 
       click_link "Update time of arrival"
       click_link "Today"
       enter_time hour: "23", min: "59"
       click_button "Save"
-      expect( find("#solicitor_time_of_arrival") ).to have_content "23:59"
+      expect(find("#solicitor_time_of_arrival")).to have_content "23:59"
 
       click_link "Update time of arrival"
       enter_time day: "21", month: "11", year: "2002", hour: "01", min: "12"
       click_button "Save"
-      expect( find("#solicitor_time_of_arrival") ).to have_content "01:12"
+      expect(find("#solicitor_time_of_arrival")).to have_content "01:12"
 
       click_link "Update time of arrival"
       enter_time day: "02", month: "02", year: "2002", hour: "02", min: "02"
       click_link "Cancel"
-      expect( find("#solicitor_time_of_arrival") ).to have_content "01:12"
+      expect(find("#solicitor_time_of_arrival")).to have_content "01:12"
     end
 
     specify "are shown a message if the time of arrival cannot be updated due to errors", :mock_auth_api do

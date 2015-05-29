@@ -60,11 +60,11 @@ RSpec.describe DefenceRequest, type: :model do
 
     shared_examples "transition possible" do |event|
       specify { expect{ subject.send(event) }.to_not raise_error }
-      specify { expect( subject.send("can_execute_#{event}?".to_sym) ).to eq true }
+      specify { expect(subject.send("can_execute_#{event}?".to_sym)).to eq true }
     end
 
     shared_examples "transition impossible" do |event|
-      specify { expect( subject.send("can_execute_#{event}?".to_sym) ).to eq false }
+      specify { expect(subject.send("can_execute_#{event}?".to_sym)).to eq false }
     end
 
     shared_examples "allowed transitions" do |allowed_events|
@@ -156,13 +156,13 @@ RSpec.describe DefenceRequest, type: :model do
       it "returns requests" do
         firm_uid = solicitor.organisation_uids.first
         @defence_request = create(:defence_request, organisation_uid: firm_uid)
-        expect(defence_requests).to eq( [@defence_request] )
+        expect(defence_requests).to eq([@defence_request])
       end
     end
 
     context "when no associated requests" do
       it "returns empty array" do
-        expect(defence_requests).to eq( [] )
+        expect(defence_requests).to eq([])
       end
     end
   end
