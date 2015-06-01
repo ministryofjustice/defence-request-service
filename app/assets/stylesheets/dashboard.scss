@@ -112,9 +112,24 @@ table.dashboard {
     .detainee-container {
       height: 100%;
       margin-left: 1em;
-      border-left: 6px solid #990099;
       padding-right: 0;
       padding: 0px 0 10px 15px;
+    }
+
+    .draft {
+      border-left: 6px solid #999999;
+    }
+
+    .submitted {
+      border-left: 6px solid #FFBF47;
+    }
+
+    .accepted {
+      border-left: 6px solid #912B88;
+    }
+
+    .completed {
+      border-left: 6px solid #28A197;
     }
 
     .actions {

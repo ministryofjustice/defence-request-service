@@ -55,5 +55,20 @@ class Dashboard
       super dr
       @organisation = client.organisation(dr.organisation_uid) if dr.organisation_uid
     end
+
+    def state_text
+      state_class.capitalize
+    end
+
+    def state_class
+      case state
+      when "draft"
+        "draft"
+      when "queued", "acknowledged"
+        "submitted"
+      else
+        state
+      end
+    end
   end
 end
