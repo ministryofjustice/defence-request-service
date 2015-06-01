@@ -87,7 +87,6 @@ FactoryGirl.define do
 
   trait :with_investigating_officer do
     investigating_officer_name "Dave Mc.Copper"
-    investigating_officer_shoulder_number "987654"
     investigating_officer_contact_number "0207 111 0000"
   end
 

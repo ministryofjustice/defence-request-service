@@ -29,7 +29,6 @@ module DefenceRequestHelpers
     else
       within ".case-details" do
         fill_in "defence_request_investigating_officer_name", with: "Dave Mc.Copper"
-        fill_in "defence_request_investigating_officer_shoulder_number", with: "987654"
         fill_in "defence_request_investigating_officer_contact_number", with: "0207 111 0000"
         fill_in "Custody number", with: "AN14574637587"
         fill_in "Offences", with: "BadMurder"
