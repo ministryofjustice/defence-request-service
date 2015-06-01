@@ -45,10 +45,10 @@ class Dashboard
   end
 
   def new_dash_dr
-    @new_dash_dr ||= DefenceRequestDecorator.method(:new).curry(2)[@client]
+    @new_dash_dr ||= DefenceRequestPresenter.method(:new).curry(2)[@client]
   end
 
-  class DefenceRequestDecorator < SimpleDelegator
+  class DefenceRequestPresenter < SimpleDelegator
     delegate :name, :tel, to: :@organisation, allow_nil: true, prefix: :firm
 
     def initialize(client, dr)
