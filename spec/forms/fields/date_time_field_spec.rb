@@ -74,6 +74,16 @@ RSpec.describe DateTimeField do
           expect(subject.value).to be_nil
         end
       end
+
+      context "built with ambiguous date" do
+        subject { DateTimeField.new date: "4/5/1992", hour: "9", min: "50" }
+
+        it "uses little endian parsing (British format)" do
+          expect(subject).to be_valid
+          expect(subject.value.day).to eql 4
+          expect(subject.value.month).to eql 5
+        end
+      end
     end
 
     context "present?" do
