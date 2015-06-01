@@ -8,6 +8,11 @@ class DefenceRequestsController < BaseController
   before_action ->(c) { authorize_defence_request_access(c.action_name) }
 
   def show
+    if @defence_request.draft?
+      render :show_draft
+    else
+      render :show
+    end
   end
 
   def new

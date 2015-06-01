@@ -65,4 +65,9 @@ module ApplicationHelper
     value = value.blank? ? "-" : value
     content_tag(:dt, label) + " " + content_tag(:dd, value, id: options[:id])
   end
+
+  def boolean_with_explanation(val, explanation_when, explanation)
+    reason = (" #{explanation}" if val == explanation_when) || ""
+    boolean_formatter(val) + reason
+  end
 end

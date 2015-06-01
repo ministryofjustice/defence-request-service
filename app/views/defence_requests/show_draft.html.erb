@@ -1,0 +1,29 @@
+<h1>Check the request</h1>
+
+<p>Check the details below to make sure they are correct. Update any incorrect details, then submit the request.</p>
+
+<h2><%= not_given_formatter(@defence_request, :detainee_name, "name_not_given") %></h2>
+
+<%= render("defence_requests/show_partials/detainee_details") %>
+
+<%= link_to("Change this", edit_defence_request_path(@defence_request), class: "edit-link") %>
+
+
+<h2 class="line-above">Detention Details</h2>
+
+<%= render("defence_requests/show_partials/detention_details") %>
+
+<%= link_to("Change this", edit_defence_request_path(@defence_request), class: "edit-link") %>
+
+
+<div class="draft-actions">
+    <%= form_tag(transition_defence_request_path(), method: :post) do %>
+      <%= hidden_field_tag(:defence_request_id, @defence_request.id) %>
+      <%= hidden_field_tag(:transition_to, :queue) %>
+      <%= submit_tag(t("submit_request"), class: "button") %>
+    <% end %>
+
+    <div class="form-links">
+      <%= link_to t('cancel_and_delete_all_details'), dashboard_path %>
+    </div>
+</div>

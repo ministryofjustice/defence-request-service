@@ -71,3 +71,17 @@ dl.time-at {
 .not-given-check {
   margin-bottom: 0px;
 }
+
+.draft-actions {
+  margin-top: $gutter;
+}
+
+.edit-link {
+  display: inline-block;
+  margin-top: $gutter-half;
+}
+
+h2.line-above {
+  padding-top: $gutter-half;
+  border-top: 1px solid $grey-2;
+}
