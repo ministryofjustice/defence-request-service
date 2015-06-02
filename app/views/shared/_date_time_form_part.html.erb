@@ -1,11 +1,11 @@
 <% today, tomorrow, initial_date, initial_date_type = data_chooser_setup(@defence_request.send(attribute), set_default_date) %>
 <div class="form-group">
   <fieldset class="inline time-select date-chooser">
-    <% if show_label %>
+    <%- if defined?(show_label) && show_label %>
       <label for>
-        <%= f.label attribute, t(attribute.to_s), class: 'form-label-bold' %>
+        <%= f.label attribute, label_text_for_form(attribute_name: attribute, optional: (defined?(optional) ? optional : false)), class: 'form-label-bold' %>
       </label>
-    <% end %>
+    <%- end %>
     <%= f.fields_for attribute, @defence_request_form.fields[attribute] do |t| %>
       <div class="date-field-wrapper">
         <%= t.label :hour, t('hour'), class: "form-label" %>

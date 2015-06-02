@@ -98,6 +98,7 @@ en:
   not_given: "not given"
   not_specified: "Not specified"
   offences: "Offences"
+  optional: "optional"
   pending: pending
   opened: "Opened (%{count})"
   own: 'Own'
