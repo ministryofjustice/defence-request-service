@@ -37,7 +37,7 @@ module ApplicationHelper
   end
 
   def date_and_time_formatter(date)
-    date ? date.strftime("%-d %B %Y - %R") : ""
+    date ? date.strftime("%R %-d %B %Y") : ""
   end
 
   def boolean_formatter(val)
@@ -64,5 +64,10 @@ module ApplicationHelper
     label = I18n.t(label_key)
     value = value.blank? ? "-" : value
     content_tag(:dt, label) + " " + content_tag(:dd, value, id: options[:id])
+  end
+
+  def boolean_with_explanation(val, explanation_when, explanation)
+    reason = (" #{explanation}" if val == explanation_when) || ""
+    boolean_formatter(val) + reason
   end
 end

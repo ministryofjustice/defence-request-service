@@ -13,11 +13,7 @@
   <p><%= t("call_call_center") if user_has_role?("solicitor") %></p>
 <% end %>
 
-<dl class="labels">
-  <%= display_value "gender", t(@defence_request.gender, default: t(:not_given)) %>
-  <%= display_value "date_of_birth", date_not_given_formatter(@defence_request, :date_of_birth) %>
-  <%= display_value "detainee_address", not_given_formatter(@defence_request, :detainee_address) %>
-</dl>
+<%= render("defence_requests/show_partials/detainee_details") %>
 
 <%= content_tag("div", class: "js-tabs", id: "edit-tabs", data: { activatefirst: "true" }) do %>
   <ul class="cf tabs js-tabs-nav js-only">
@@ -35,7 +31,8 @@
       <%= render "defence_requests/show_partials/interview_tab" %>
     </div>
     <div id="case-details">
-      <%= render "defence_requests/show_partials/case_details_tab" %>
+      <h3 class="nonjs"><%= t("detention_details")%></h3>
+      <%= render "defence_requests/show_partials/detention_details" %>
     </div>
   </div>
 <% end %>

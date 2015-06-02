@@ -257,17 +257,18 @@ fieldset.time-select select {
   display: none;
 }
 
-dl {
-  &.labels {
-    dt {
-      float: left;
-      margin-right: 0.5em;
-      line-height: 2em;
+dl.labels {
+  dt {
+    float: left;
+    margin-right: 0.5em;
+    line-height: 2em;
+    &:after {
+      content: ":";
     }
-    dd {
-      font-weight: bold;
-      line-height: 2em;
-    }
+  }
+  dd {
+    font-weight: bold;
+    line-height: 2em;
   }
 }
 

@@ -8,6 +8,11 @@ class DefenceRequestsController < BaseController
   before_action ->(c) { authorize_defence_request_access(c.action_name) }
 
   def show
+    if @defence_request.draft?
+      render :show_draft
+    else
+      render :show
+    end
   end
 
   def new
@@ -22,6 +27,12 @@ class DefenceRequestsController < BaseController
   end
 
   def edit
+    if @defence_request.draft?
+      @part = params[:part]
+      render :edit_draft
+    else
+      render :edit
+    end
   end
 
   def update
@@ -33,7 +44,7 @@ class DefenceRequestsController < BaseController
       end
     else
       if @defence_request_form.submit(defence_request_params)
-        redirect_to(dashboard_path, notice: flash_message(:update, DefenceRequest))
+        redirect_to(defence_request_path, notice: flash_message(:update, DefenceRequest))
       else
         render :edit
       end
