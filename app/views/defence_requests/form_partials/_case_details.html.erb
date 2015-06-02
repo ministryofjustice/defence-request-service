@@ -39,6 +39,6 @@
 
 <div class="form-group">
   <%= f.label :comments, label_text_for_form(attribute_name: "comments", optional: true), class: "form-label-bold" %>
-  <aside>E.g samples required, Section 18 House Search or full medical examination</aside>
+  <aside><%= t("comments_field_aside_text") %></aside>
   <%= f.text_area :comments, label: t('comments'), rows: '5', class: 'text-field text-field-wide' %>
 </div>
