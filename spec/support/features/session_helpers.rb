@@ -38,4 +38,9 @@ module SessionHelpers
   def sign_out
     click_link("Sign out")
   end
+
+  def login_as_cso
+    cso_user = create :cso_user
+    login_with cso_user
+  end
 end

@@ -2,10 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Custody Suite Officers creating defence requests" do
   specify "creating a blank defence request displays all required validation errors" do
-    cso_user = create :cso_user
-
-    login_with cso_user
-    click_link "New request"
+    login_and_open_new_defence_request_page
 
     click_button "Create Defence Request"
 
@@ -18,10 +15,7 @@ RSpec.feature "Custody Suite Officers creating defence requests" do
   end
 
   specify "can select \"not specified\" for gender" do
-    cso_user = create :cso_user
-
-    login_with cso_user
-    click_link "New request"
+    login_and_open_new_defence_request_page
 
     fill_in_defence_request_form gender: "Not specified"
 
@@ -31,10 +25,7 @@ RSpec.feature "Custody Suite Officers creating defence requests" do
   end
 
   specify "can select \"transgender\" for gender" do
-    cso_user = create :cso_user
-
-    login_with cso_user
-    click_link "New request"
+    login_and_open_new_defence_request_page
 
     fill_in_defence_request_form gender: "Transgender"
 
@@ -44,10 +35,7 @@ RSpec.feature "Custody Suite Officers creating defence requests" do
   end
 
   specify "can select \"not given\" for name, dob and address" do
-    cso_user = create :cso_user
-
-    login_with cso_user
-    click_link "New request"
+    login_and_open_new_defence_request_page
 
     fill_in_defence_request_form not_given: true
 
@@ -57,33 +45,42 @@ RSpec.feature "Custody Suite Officers creating defence requests" do
     expect(page).to have_css("dl.labels dd", text: "not given", count: 2)
   end
 
+  #Fixme this test doesn't do what it says
   specify "can not see a DSCC field on the defence request form" do
-    cso_user = create :cso_user
+    login_and_open_new_defence_request_page
 
-    login_with cso_user
-    click_link "New request"
     fill_in_defence_request_form
     click_button "Create Defence Request"
   end
 
   specify "can not see the solicitor time of arrival field on the defence request form" do
-    cso_user = create :cso_user
-
-    login_with cso_user
-    click_link "New request"
+    login_as_cso
 
     expect(page).not_to have_field "Expected Solicitor Time of Arrival"
   end
 
   specify "appropriate_adult toggles appropriate_adult_reason", js: true do
-    cso_user = create :cso_user
-    login_with cso_user
-    click_link "New request"
+    login_and_open_new_defence_request_page
+
     within ".detainee" do
       choose "defence_request_appropriate_adult_true"
     end
 
     expect(page).
       to_not have_css "#defence_request_appropriate_adult_reason[disabled]"
+  end
+
+  specify "is prompted to check the request after successfully filling in the form" do
+    login_and_open_new_defence_request_page
+
+    fill_in_defence_request_form
+    click_button "Create Defence Request"
+
+    expect(page).to have_css("h1", "Check the request")
+  end
+
+  def login_and_open_new_defence_request_page
+    login_as_cso
+    click_link "New request"
   end
 end

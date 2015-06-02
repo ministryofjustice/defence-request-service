@@ -169,6 +169,9 @@ en:
       close: "Close %{model}"
       create: "Create %{model}"
       update: "Update %{model}"
+      defence_request:
+        update: "Save changes"
+
 
   activerecord:
     models:
