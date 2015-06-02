@@ -53,6 +53,7 @@ class DefenceRequest < ActiveRecord::Base
   validates :date_of_birth, presence: true, unless: :date_of_birth_not_given?
 
   validates :offences,
+            :custody_number,
             :gender,
             :time_of_arrival, presence: true
 

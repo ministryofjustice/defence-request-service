@@ -1,16 +1,16 @@
 <div class="form-group">
-  <%= f.label :offences, t('offences'), class: "form-label-bold" %>
+  <%= f.label :offences, label_text_for_form(attribute_name: 'offences'), class: "form-label-bold" %>
   <%= f.text_field :offences, class: 'text-field text-field-wide' %>
 </div>
 
 <div class="form-group">
-  <%= f.label :circumstances_of_arrest, t('circumstances_of_arrest'), class: "form-label-bold" %>
+  <%= f.label :circumstances_of_arrest, label_text_for_form(attribute_name: 'circumstances_of_arrest'), class: "form-label-bold" %>
   <%= f.text_area :circumstances_of_arrest, label: t('circumstances_of_arrest'), rows: '5', class: 'text-field text-field-wide' %>
 </div>
 
 <div class="form-group">
   <fieldset class="inline">
-    <%= f.label :fit_for_interview, t('fit_for_interview'), class: "form-label-bold" %>
+    <%= f.label :fit_for_interview, label_text_for_form(attribute_name: 'fit_for_interview'), class: "form-label-bold" %>
     <label class="block-label form-label" for="defence_request_fit_for_interview_true">
       <%= f.radio_button :fit_for_interview, true, name: 'defence_request[fit_for_interview]', checked: @defence_request.fit_for_interview.present?, class: 'fit_for_interview_radio' %>
       <%= t('yes') %>
@@ -23,26 +23,21 @@
 </div>
 
 <div class="form-group" data-show-when="defence_request_fit_for_interview_false">
-  <%= f.label :unfit_for_interview_reason, t('unfit_for_interview_reason'), class: "form-label-bold" %>
+  <%= f.label :unfit_for_interview_reason, label_text_for_form(attribute_name: 'unfit_for_interview_reason'), class: "form-label-bold" %>
   <%= f.text_area :unfit_for_interview_reason, label: t('unfit_for_interview_reason'), rows: '5', class: 'text-field text-field-wide' %>
 </div>
 
 <div class="form-group">
-  <%= f.label :investigating_officer_name, t('investigating_officer_name'), class: "form-label-bold" %>
+  <%= f.label :investigating_officer_name, label_text_for_form(attribute_name: 'investigating_officer_name'), class: "form-label-bold" %>
   <%= f.text_field :investigating_officer_name, label: t('investigating_officer_name'), class: 'text-field custody-number' %>
 </div>
 
 <div class="form-group">
-  <%= f.label :investigating_officer_shoulder_number, t('investigating_officer_shoulder_number'), class: "form-label-bold" %>
-  <%= f.text_field :investigating_officer_shoulder_number, label: t('investigating_officer_shoulder_number'), class: 'text-field custody-number' %>
-</div>
-
-<div class="form-group">
-  <%= f.label :investigating_officer_contact_number, t('investigating_officer_contact_number'), class: "form-label-bold" %>
+  <%= f.label :investigating_officer_contact_number, label_text_for_form(attribute_name: 'investigating_officer_contact_number'), class: "form-label-bold" %>
   <%= f.text_field :investigating_officer_contact_number, label: t('investigating_officer_contact_number'), class: 'text-field custody-number' %>
 </div>
 
 <div class="form-group">
-  <%= f.label :comments, t('comments'), class: "form-label-bold" %>
+  <%= f.label :comments, label_text_for_form(attribute_name: "comments", optional: true), class: "form-label-bold" %>
   <%= f.text_area :comments, label: t('comments'), rows: '5', class: 'text-field text-field-wide' %>
 </div>

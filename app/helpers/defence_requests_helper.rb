@@ -47,6 +47,14 @@ module DefenceRequestsHelper
     [today, tomorrow, initial_date, initial_date_type]
   end
 
+  def label_text_for_form(attribute_name:, optional: false)
+    if optional
+      "#{t(attribute_name.to_s)} (#{t("optional")})"
+    else
+      t(attribute_name.to_s)
+    end
+  end
+
   private
 
   #

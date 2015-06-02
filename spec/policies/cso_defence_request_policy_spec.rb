@@ -21,7 +21,8 @@ RSpec.describe CsoDefenceRequestPolicy do
         :edit,
         :update,
         :queue,
-        :add_case_time_of_arrival
+        :add_case_time_of_arrival,
+        :interview_start_time_edit
       ] }
       let (:defreq) { FactoryGirl.build(:defence_request) }
       specify{ expect(subject).to permit_actions_and_forbid_all_others actions }
@@ -43,7 +44,8 @@ RSpec.describe CsoDefenceRequestPolicy do
       let (:allowed_actions) { [
         :show,
         :abort,
-        :complete
+        :complete,
+        :interview_start_time_edit
       ] }
       let (:defreq) { FactoryGirl.create(:defence_request, :acknowledged) }
       specify { expect(subject).to permit_actions_and_forbid_all_others actions }
@@ -55,6 +57,7 @@ RSpec.describe CsoDefenceRequestPolicy do
         :abort,
         :complete,
         :resend_details,
+        :interview_start_time_edit,
         :solicitor_time_of_arrival
       ] }
       let (:defreq) { FactoryGirl.create(:defence_request, :accepted) }

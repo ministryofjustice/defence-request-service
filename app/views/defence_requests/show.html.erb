@@ -14,7 +14,7 @@
 <% end %>
 
 <dl class="labels">
-  <%= display_value "gender", @defence_request.gender %>
+  <%= display_value "gender", t(@defence_request.gender, default: t(:not_given)) %>
   <%= display_value "date_of_birth", date_not_given_formatter(@defence_request, :date_of_birth) %>
   <%= display_value "detainee_address", not_given_formatter(@defence_request, :detainee_address) %>
 </dl>

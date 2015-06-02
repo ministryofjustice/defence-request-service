@@ -27,8 +27,8 @@ module DefenceRequestHelpers
     else
       within ".case-details" do
         fill_in "defence_request_investigating_officer_name", with: "Dave Mc.Copper"
-        fill_in "defence_request_investigating_officer_shoulder_number", with: "987654"
         fill_in "defence_request_investigating_officer_contact_number", with: "0207 111 0000"
+        fill_in "Custody number", with: "AN14574637587"
         fill_in "Offences", with: "BadMurder"
         fill_in "defence_request_circumstances_of_arrest", with: "He looked a bit shady"
         choose "defence_request_fit_for_interview_true"
@@ -45,7 +45,7 @@ module DefenceRequestHelpers
     end
     if options.fetch(:not_given) { false }
       within ".detainee" do
-        choose "Male"
+        choose options.fetch(:gender) { "Male" }
         choose "defence_request_appropriate_adult_false"
         choose "defence_request_interpreter_required_false"
         check "defence_request_detainee_name_not_given"
@@ -55,7 +55,7 @@ module DefenceRequestHelpers
     else
       within ".detainee" do
         fill_in "Full Name", with: "Mannie Badder"
-        choose "Male"
+        choose options.fetch(:gender) { "Male" }
         fill_in "defence_request_date_of_birth_year", with: "1976"
         fill_in "defence_request_date_of_birth_month", with: "01"
         fill_in "defence_request_date_of_birth_day", with: "01"

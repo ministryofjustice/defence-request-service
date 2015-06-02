@@ -48,7 +48,7 @@ class CsoDefenceRequestPolicy < ApplicationPolicy
   end
 
   def interview_start_time_edit?
-    !policy_record.new_record? && policy_record.draft?
+    !policy_record.aborted?
   end
 
   def solicitor_time_of_arrival_from_show?
