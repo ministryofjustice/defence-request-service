@@ -144,7 +144,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
 
         specify "can follow a link back to the dashboard" do
           cso_user = create :cso_user
-          create :defence_request
+          create :defence_request, :queued
 
           login_with cso_user
           click_link "❭"
