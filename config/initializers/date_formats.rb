@@ -1,1 +1,1 @@
-Date::DATE_FORMATS[:full] = "%e %B %Y"
+Date::DATE_FORMATS[:full] = "%-d %B %Y"

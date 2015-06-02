@@ -2,12 +2,10 @@
 //= require jasmine-jquery
 //= require date_chooser
 
-expectDateValuesToEqual = (day, month, year, chooserDiv) ->
-  expect(chooserDiv.find('.day').eq(0).val()).toEqual day
-  expect(chooserDiv.find('.month').eq(0).val()).toEqual month
-  expect(chooserDiv.find('.year').eq(0).val()).toEqual year
+expectDateValueToEqual = (date, chooserDiv) ->
+  expect(chooserDiv.find('.date').val()).toEqual date
 
-dateChooserHtml = (initialDate, dayValue, monthValue, yearValue) ->
+dateChooserHtml = (initialDate, dateValue) ->
   $("""
   <body>
   <fieldset class="inline time-select date-chooser">
@@ -23,19 +21,11 @@ dateChooserHtml = (initialDate, dayValue, monthValue, yearValue) ->
     <div class="date-chooser-values">
       <label class="date-chooser-select form-label js-only" data-initial-date="#{ initialDate }">
         <span class="today" data-date-display="30 April 2015" data-day="30" data-month="4" data-year="2015">Today</span>
-        <span class="tomorrow" data-date-display="01 May 2015"data-day="1" data-month="5" data-year="2015">Tomorrow</span>
+        <span class="tomorrow" data-date-display="1 May 2015"data-day="1" data-month="5" data-year="2015">Tomorrow</span>
       </label>
       <div class="date-field-wrapper">
-        <label for="defence_request_solicitor_time_of_arrival_Day">Day</label>
-        <input size="2" placeholder="DD" class="day text-field" value="#{ dayValue }" type="text" name="defence_request[solicitor_time_of_arrival][day]" id="defence_request_solicitor_time_of_arrival_day" />
-      </div>
-      <div class="date-field-wrapper">
-        <label for="defence_request_solicitor_time_of_arrival_Month">Month</label>
-        <input size="2" placeholder="MM" class="month text-field" value="#{ monthValue }" type="text" name="defence_request[solicitor_time_of_arrival][month]" id="defence_request_solicitor_time_of_arrival_month" />
-      </div>
-      <div class="date-field-wrapper">
-        <label for="defence_request_solicitor_time_of_arrival_Year">Year</label>
-        <input size="4" placeholder="YYYY" class="year text-field" value="#{ yearValue }" type="text" name="defence_request[solicitor_time_of_arrival][year]" id="defence_request_solicitor_time_of_arrival_year" />
+        <label for="defence_request_solicitor_time_of_arrival_Date">Date</label>
+        <input size="2" placeholder="DD" class="date text-field" value="#{ dateValue }" type="text" name="defence_request[solicitor_time_of_arrival][date]" id="defence_request_solicitor_time_of_arrival_date" />
       </div>
     </div>
   </fieldset>
@@ -59,16 +49,13 @@ sharedBehaviourForClickingTomorrow = (element, context) ->
       context.tomorrow.find('a').click()
 
     it "changes date values to tomorrow's date", ->
-      expectDateValuesToEqual("1", "5", "2015", context.chooserDiv)
+      expectDateValueToEqual("1 May 2015", context.chooserDiv)
 
     it "makes Today a link", ->
       expect(context.today.find('a').size()).toEqual 1
 
     it "removes link from Tomorrow", ->
       expect(context.tomorrow.find('a').size()).toEqual 0
-
-    it "sets focus on day input field", ->
-      expect(context.day).toBeFocused()
 
 sharedBehaviourForClickingTomorrowThenToday = (element, context) ->
   describe "click 'Tomorrow' and then click 'Today'", ->
@@ -78,7 +65,7 @@ sharedBehaviourForClickingTomorrowThenToday = (element, context) ->
       @today.find('a').click()
 
     it "changes date values to today's date", ->
-      expectDateValuesToEqual("30", "4", "2015", @chooserDiv)
+      expectDateValueToEqual("30 April 2015", @chooserDiv)
 
     it "makes Tomorrow a link", ->
       expect(@tomorrow.find('a').size()).toEqual 1
@@ -106,7 +93,7 @@ describe "DateChooser", ->
 
   describe "when initial date blank", ->
     beforeEach ->
-      element = dateChooserHtml("any_other_value", "", "", "")
+      element = dateChooserHtml("any_other_value", "")
       dateChooserSetup(element, this)
 
     describe "after initialization", ->
@@ -114,7 +101,7 @@ describe "DateChooser", ->
       enablesTomorrowLink(element, this)
 
       it "leaves date values unchanged", ->
-        expectDateValuesToEqual("", "", "", @chooserDiv)
+        expectDateValueToEqual("", @chooserDiv)
 
     sharedBehaviourForClickingTomorrow(element, this)
 
@@ -122,7 +109,7 @@ describe "DateChooser", ->
 
   describe "when initial date not 'today' or 'tomorrow'", ->
     beforeEach ->
-      element = dateChooserHtml("any_other_value", "1", "1", "2014")
+      element = dateChooserHtml("any_other_value", "1 Jan 2014")
       dateChooserSetup(element, this)
 
     describe "after initialization", ->
@@ -130,7 +117,7 @@ describe "DateChooser", ->
       enablesTomorrowLink(element, this)
 
       it "leaves date values unchanged", ->
-        expectDateValuesToEqual("1", "1", "2014", @chooserDiv)
+        expectDateValueToEqual("1 Jan 2014", @chooserDiv)
 
     sharedBehaviourForClickingTomorrow(element, this)
 
@@ -138,7 +125,7 @@ describe "DateChooser", ->
 
   describe "when initial date 'tomorrow'", ->
     beforeEach ->
-      element = dateChooserHtml("tomorrow", "1", "5", "2015")
+      element = dateChooserHtml("tomorrow", "1 May 2015")
       dateChooserSetup(element, this)
 
     describe "after initialization", ->
@@ -148,11 +135,11 @@ describe "DateChooser", ->
         expect(@tomorrow.find('a').size()).toEqual 0
 
       it "leaves date values unchanged", ->
-        expectDateValuesToEqual("1", "5", "2015", @chooserDiv)
+        expectDateValueToEqual("1 May 2015", @chooserDiv)
 
   describe "when initial date 'today'", ->
     beforeEach ->
-      element = dateChooserHtml("today", "31", "4", "2015")
+      element = dateChooserHtml("today", "31 April 2015")
       dateChooserSetup(element, this)
 
     describe "after initialization", ->
@@ -162,7 +149,7 @@ describe "DateChooser", ->
         expect(@today.find('a').size()).toEqual 0
 
       it "leaves date values unchanged", ->
-        expectDateValuesToEqual("31", "4", "2015", @chooserDiv)
+        expectDateValueToEqual("31 April 2015", @chooserDiv)
 
     sharedBehaviourForClickingTomorrow(element, this)
 

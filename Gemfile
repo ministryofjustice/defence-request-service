@@ -6,6 +6,7 @@ gem "dotenv-rails", "~> 2.0.0", require: "dotenv/rails-now"
 
 gem "audited-activerecord", "~> 4.0.0"
 gem "coffee-rails", "~> 4.1.0"
+gem "chronic"
 gem "drs-auth_client", github: "ministryofjustice/defence-request-service-auth", tag: "v0.2.1"
 gem "faker", "~> 1.4.3"
 gem "httparty", "~> 0.13.3"

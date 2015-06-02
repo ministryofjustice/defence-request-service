@@ -3,9 +3,7 @@ root = exports ? this
 class DateChooser
 
   constructor: (chooser) ->
-    @dateDisplay = chooser.find(".date-chooser-display")
-    @values = chooser.find(".date-chooser-values")
-    @dayInput = chooser.find(".day")
+    @dateInput = chooser.find(".date-chooser-values").find(".date")
 
     selectors = chooser.find(".date-chooser-select") # Today/Tomorrow selection
     today = selectors.find(".today")
@@ -39,17 +37,11 @@ class DateChooser
   toggleDate: (selector, otherSelector) =>
     selector.html(selector.text())
     @setDate selector
+    @dateInput.focus()
     @enableLink otherSelector
-    @dayInput.focus()
 
   setDate: (selector) =>
-    day = selector.data("day")
-    month = selector.data("month")
-    year = selector.data("year")
-    display = selector.data("date-display")
-    @values.find(".day").eq(0).val(day)
-    @values.find(".month").eq(0).val(month)
-    @values.find(".year").eq(0).val(year)
-    @dateDisplay.text(display)
+    date = selector.data("date-display")
+    @dateInput.val(date)
 
 root.DateChooser = DateChooser

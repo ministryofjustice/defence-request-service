@@ -35,9 +35,7 @@ RSpec.describe DefenceRequestForm do
         context "that is has presence validated on the dr" do
           let(:invalid_params) { params_for_dr.merge({ time_of_arrival: invalid_time_of_arrival }) }
           context "blank" do
-            let(:invalid_time_of_arrival) { { year: "",
-                                              month: "",
-                                              day: "",
+            let(:invalid_time_of_arrival) { { date: "",
                                               hour: "",
                                               min: "" } }
 
@@ -50,20 +48,16 @@ RSpec.describe DefenceRequestForm do
           end
 
           context "not blank" do
-            let(:invalid_time_of_arrival) { { year: "I",
-                                              month: "AM",
-                                              day: "TOTALLY",
+            let(:invalid_time_of_arrival) { { date: "I",
                                               hour: "BROKEN",
                                               min: "!" } }
             it "adds errors from the field object to itself" do
               expect(subject.submit invalid_params).to eql false
               expect(subject.errors.count).to eql 1
               expect(subject.errors[:time_of_arrival]).to eql [["Invalid Date or Time",
-                                                                "Day is not a number",
-                                                                "Month is not a number",
-                                                                "Year is not a number",
                                                                 "Hour is not a number",
-                                                                "Min is not a number"].join(", ")]
+                                                                "Min is not a number",
+                                                                "Date is not a date"].join(", ")]
             end
           end
         end
@@ -72,9 +66,7 @@ RSpec.describe DefenceRequestForm do
           let(:invalid_params) { params_for_dr.merge({ interview_start_time: invalid_interview_start_time }) }
 
           context "blank" do
-            let(:invalid_interview_start_time) { { year: "",
-                                                   month: "",
-                                                   day: "",
+            let(:invalid_interview_start_time) { { date: "",
                                                    hour: "",
                                                    min: "" } }
 
@@ -86,9 +78,7 @@ RSpec.describe DefenceRequestForm do
           end
 
           context "not blank" do
-            let(:invalid_interview_start_time) { { year: "I",
-                                                   month: "AM",
-                                                   day: "REAAAALLY",
+            let(:invalid_interview_start_time) { { date: "I",
                                                    hour: "BROKEN",
                                                    min: "!" } }
 
@@ -96,11 +86,9 @@ RSpec.describe DefenceRequestForm do
               expect(subject.submit invalid_params).to eql false
               expect(subject.errors.count).to eql 1
               expect(subject.errors[:interview_start_time]).to eql [["Invalid Date or Time",
-                                                                     "Day is not a number",
-                                                                     "Month is not a number",
-                                                                     "Year is not a number",
                                                                      "Hour is not a number",
-                                                                     "Min is not a number"].join(", ")]
+                                                                     "Min is not a number",
+                                                                     "Date is not a date"].join(", ")]
             end
           end
         end
@@ -111,9 +99,7 @@ RSpec.describe DefenceRequestForm do
 end
 
 def datetime_to_params(datetime)
-  { year: datetime.year.to_s,
-    month: datetime.month.to_s,
-    day: datetime.day.to_s,
+  { date: datetime.to_date.to_s(:full),
     hour: datetime.hour.to_s,
     min: datetime.min.to_s }
 end

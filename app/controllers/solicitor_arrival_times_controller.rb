@@ -31,7 +31,7 @@ class SolicitorArrivalTimesController < BaseController
 
   def defence_request_params
     params.require(:defence_request).permit(
-      { solicitor_time_of_arrival: %i[day month year hour min sec] }
+      { solicitor_time_of_arrival: %i[date hour min sec] }
     )
   end
 end
