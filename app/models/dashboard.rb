@@ -62,8 +62,6 @@ class Dashboard
 
     def state_class
       case state
-        when "draft"
-          "draft"
         when "queued", "acknowledged"
           "submitted"
         else
