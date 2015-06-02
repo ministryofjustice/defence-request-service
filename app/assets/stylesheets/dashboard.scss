@@ -1,4 +1,4 @@
-@import "colours";
+@import "colours_extensions";
 @import "elements/elements-typography";
 @import "grid_layout";
 
@@ -117,15 +117,15 @@ table.dashboard {
     }
 
     .submitted {
-      border-left: 6px solid #FFBF47;
+      border-left: 6px solid $submitted-defence-request;
     }
 
     .accepted {
-      border-left: 6px solid #912B88;
+      border-left: 6px solid $accepted-defence-request;
     }
 
     .completed {
-      border-left: 6px solid #28A197;
+      border-left: 6px solid $completed-defence-request;
     }
 
     .actions {
