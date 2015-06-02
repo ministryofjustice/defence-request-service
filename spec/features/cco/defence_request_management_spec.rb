@@ -177,7 +177,7 @@ RSpec.feature "Call Center Operatives managing defence requests" do
       fill_in "defence_request_solicitor_time_of_arrival_min", with: "01"
       click_button "Save changes"
 
-      expect(page).to have_content "1 January 2001 - 01:01"
+      expect(page).to have_content "01:01 1 January 2001"
     end
   end
 end
