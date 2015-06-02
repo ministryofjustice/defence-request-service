@@ -22,7 +22,7 @@ class DefenceRequest < ActiveRecord::Base
     state :aborted
     state :completed
 
-    ACTIVE_STATES = :draft, :queued, :acknowledged, :accepted
+    ACTIVE_STATES = :queued, :acknowledged, :accepted
     CLOSED_STATES = :aborted, :completed
 
     event :queue do

@@ -100,7 +100,7 @@ RSpec.feature "Custody Suite Officers viewing their dashboard" do
     ) }
 
     let!(:other_active_defence_request) {
-      create :defence_request, offences: "Use of edible crab as bait"
+      create :defence_request, :queued, offences: "Use of edible crab as bait"
     }
 
     let!(:completed_defence_request) {
