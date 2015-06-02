@@ -20,7 +20,7 @@
 </section>
 
 <div class="draft-actions">
-    <%= form_tag(transition_defence_request_path(), method: :post) do %>
+    <%= form_tag(transition_defence_request_path, method: :post) do %>
       <%= hidden_field_tag(:defence_request_id, @defence_request.id) %>
       <%= hidden_field_tag(:transition_to, :queue) %>
       <%= submit_tag(t("submit_request"), class: "button") %>
