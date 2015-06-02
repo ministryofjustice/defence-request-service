@@ -6,14 +6,14 @@
 
 <%= render("defence_requests/show_partials/detainee_details") %>
 
-<%= link_to("Change this", edit_defence_request_path(@defence_request), class: "edit-link") %>
+<%= link_to("Change this", edit_defence_request_path(@defence_request, part: "detainee_details"), class: "edit-link") %>
 
 
 <h2 class="line-above">Detention Details</h2>
 
 <%= render("defence_requests/show_partials/detention_details") %>
 
-<%= link_to("Change this", edit_defence_request_path(@defence_request), class: "edit-link") %>
+<%= link_to("Change this", edit_defence_request_path(@defence_request, part: "detention_details"), class: "edit-link") %>
 
 
 <div class="draft-actions">

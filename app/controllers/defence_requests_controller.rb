@@ -27,6 +27,12 @@ class DefenceRequestsController < BaseController
   end
 
   def edit
+    if @defence_request.draft?
+      @part = params[:part]
+      render :edit_draft
+    else
+      render :edit
+    end
   end
 
   def update
@@ -38,7 +44,7 @@ class DefenceRequestsController < BaseController
       end
     else
       if @defence_request_form.submit(defence_request_params)
-        redirect_to(dashboard_path, notice: flash_message(:update, DefenceRequest))
+        redirect_to(defence_request_path, notice: flash_message(:update, DefenceRequest))
       else
         render :edit
       end
