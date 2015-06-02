@@ -1,9 +1,9 @@
 <% today, tomorrow, initial_date, initial_date_type = data_chooser_setup(@defence_request.send(attribute), set_default_date) %>
 <div class="form-group">
   <fieldset class="inline time-select date-chooser">
-    <%- if defined?(show_label) && show_label %>
+    <%- if local_assigns.fetch(:show_label, false) %>
       <label for>
-        <%= f.label attribute, label_text_for_form(attribute_name: attribute, optional: (defined?(optional) ? optional : false)), class: 'form-label-bold' %>
+        <%= f.label attribute, label_text_for_form(attribute_name: attribute, optional: local_assigns.fetch(:optional, false)), class: 'form-label-bold' %>
       </label>
     <%- end %>
     <%= f.fields_for attribute, @defence_request_form.fields[attribute] do |t| %>
