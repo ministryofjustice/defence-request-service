@@ -21,4 +21,12 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
     end
   end
+
+  describe "date_and_time_formatter" do
+    let(:date) { Time.parse("2015-05-28 15:50:21") }
+
+    it "renders time and date in the correct format" do
+      expect(helper.date_and_time_formatter(date)).to eql("15:50 28 May 2015")
+    end
+  end
 end

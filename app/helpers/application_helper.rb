@@ -37,7 +37,7 @@ module ApplicationHelper
   end
 
   def date_and_time_formatter(date)
-    date ? date.strftime("%-d %B %Y - %R") : ""
+    date ? date.strftime("%R %-d %B %Y") : ""
   end
 
   def boolean_formatter(val)
