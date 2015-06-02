@@ -1,4 +1,4 @@
-@import "colours";
+@import "colours_extensions";
 @import "elements/elements-typography";
 @import "grid_layout";
 
@@ -112,9 +112,20 @@ table.dashboard {
     .detainee-container {
       height: 100%;
       margin-left: 1em;
-      border-left: 6px solid #990099;
       padding-right: 0;
       padding: 0px 0 10px 15px;
+    }
+
+    .submitted {
+      border-left: 6px solid $submitted-defence-request;
+    }
+
+    .accepted {
+      border-left: 6px solid $accepted-defence-request;
+    }
+
+    .completed {
+      border-left: 6px solid $completed-defence-request;
     }
 
     .actions {

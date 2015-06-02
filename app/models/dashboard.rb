@@ -45,15 +45,28 @@ class Dashboard
   end
 
   def new_dash_dr
-    @new_dash_dr ||= DefenceRequestDecorator.method(:new).curry(2)[@client]
+    @new_dash_dr ||= DefenceRequestPresenter.method(:new).curry(2)[@client]
   end
 
-  class DefenceRequestDecorator < SimpleDelegator
+  class DefenceRequestPresenter < SimpleDelegator
     delegate :name, :tel, to: :@organisation, allow_nil: true, prefix: :firm
 
     def initialize(client, dr)
       super dr
       @organisation = client.organisation(dr.organisation_uid) if dr.organisation_uid
+    end
+
+    def state_text
+      state_class.capitalize
+    end
+
+    def state_class
+      case state
+        when "queued", "acknowledged"
+          "submitted"
+        else
+          state
+      end
     end
   end
 end
