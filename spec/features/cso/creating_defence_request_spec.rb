@@ -30,6 +30,19 @@ RSpec.feature "Custody Suite Officers creating defence requests" do
     expect(page).to have_css("dl.labels dd", text: "Not specified")
   end
 
+  specify "can select \"transgender\" for gender" do
+    cso_user = create :cso_user
+
+    login_with cso_user
+    click_link "New request"
+
+    fill_in_defence_request_form gender: "Transgender"
+
+    click_button "Create Defence Request"
+
+    expect(page).to have_css("dl.labels dd", text: "Transgender")
+  end
+
   specify "can select \"not given\" for name, dob and address" do
     cso_user = create :cso_user
 
