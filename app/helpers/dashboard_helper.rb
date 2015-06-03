@@ -27,4 +27,8 @@ module DashboardHelper
       end
     end
   end
+
+  def render_custody_number(custody_number)
+    "#{t("custody_number_prefix")}&nbsp;#{custody_number}".html_safe
+  end
 end

@@ -43,6 +43,7 @@ en:
   cso: "Custody Suite Officer"
   custody_address: Custody Address
   custody_number: "Custody number"
+  custody_number_prefix: "CN:"
   custody_phone_number: "Custody Phone Number"
   dashboard: 'Dashboard'
   date_hint: "eg. 28 04 1996"
