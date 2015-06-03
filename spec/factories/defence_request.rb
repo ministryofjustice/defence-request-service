@@ -23,6 +23,7 @@ FactoryGirl.define do
     adult [nil, true, false].sample
     appropriate_adult false
     fit_for_interview true
+    interpreter_required false
     detainee_address_not_given "1"
   end
 

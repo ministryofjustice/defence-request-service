@@ -59,10 +59,13 @@ class DefenceRequest < ActiveRecord::Base
 
 
 
+  validates :appropriate_adult, inclusion: { in: [true, false], message: :blank }
   validates :appropriate_adult_reason, presence: true, if: :appropriate_adult?
 
-  validates :unfit_for_interview_reason, presence: true, unless: :fit_for_interview?
+  validates :fit_for_interview, inclusion: { in: [true, false], message: :blank }
+  validates :unfit_for_interview_reason, presence: true, if: -> (dr) { !dr.fit_for_interview.nil? && !dr.fit_for_interview? }
 
+  validates :interpreter_required, inclusion: { in: [true, false], message: :blank }
   validates :interpreter_type, presence: true, if: :interpreter_required
 
   validates :dscc_number, uniqueness: true, allow_nil: true

@@ -8,6 +8,10 @@ RSpec.describe DefenceRequest, type: :model do
     it { expect(subject).to validate_presence_of :detainee_name }
     it { expect(subject).to validate_presence_of :offences }
 
+    it { is_expected.to validate_presence_of(:appropriate_adult)}
+    it { is_expected.to validate_presence_of(:fit_for_interview)}
+    it { is_expected.to validate_presence_of(:interpreter_required)}
+
     context "appropriate_adult_reason required" do
       before do
         subject.appropriate_adult = true

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150529154920) do
+ActiveRecord::Schema.define(version: 20150602155851) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 20150529154920) do
     t.datetime "time_of_arrival"
     t.text     "comments"
     t.boolean  "adult"
-    t.boolean  "appropriate_adult",                    default: false, null: false
+    t.boolean  "appropriate_adult",                                    null: false
     t.string   "state"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -64,9 +64,9 @@ ActiveRecord::Schema.define(version: 20150529154920) do
     t.uuid     "cco_uid"
     t.datetime "time_of_arrest"
     t.datetime "time_of_detention_authorised"
-    t.boolean  "fit_for_interview",                    default: true,  null: false
+    t.boolean  "fit_for_interview",                                    null: false
     t.text     "unfit_for_interview_reason"
-    t.boolean  "interpreter_required",                 default: false, null: false
+    t.boolean  "interpreter_required",                                 null: false
     t.text     "interpreter_type"
     t.uuid     "organisation_uid"
     t.string   "detainee_address"
