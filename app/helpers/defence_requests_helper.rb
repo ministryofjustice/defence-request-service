@@ -40,11 +40,11 @@ module DefenceRequestsHelper
 
   def data_chooser_setup(time_to_edit, set_default_date)
     today = Date.today
-    tomorrow = today + 1
+    yesterday = today - 1
     initial_date = initial_date(time_to_edit, set_default_date)
-    initial_date_type = initial_date_type(initial_date, today, tomorrow)
+    initial_date_type = initial_date_type(initial_date, today, yesterday)
 
-    [today, tomorrow, initial_date, initial_date_type]
+    [today, yesterday, initial_date, initial_date_type]
   end
 
   def label_text_for_form(attribute_name:, optional: false)
@@ -73,17 +73,13 @@ module DefenceRequestsHelper
     end
   end
 
-  def initial_date_type(initial_date, today, tomorrow)
+  def initial_date_type(initial_date, today, yesterday)
     if initial_date.nil?
       "blank"
     elsif initial_date == today
       "today"
-    elsif initial_date == tomorrow
-      "tomorrow"
-    elsif initial_date < today
-      "in_past"
-    else
-      "after_tomorrow"
+    elsif initial_date == yesterday
+      "yesterday"
     end
   end
 

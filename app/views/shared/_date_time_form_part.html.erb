@@ -1,4 +1,4 @@
-<% today, tomorrow, initial_date, initial_date_type = data_chooser_setup(@defence_request.send(attribute), set_default_date) %>
+<% today, yesterday, initial_date, initial_date_type = data_chooser_setup(@defence_request.send(attribute), set_default_date) %>
 <div class="form-group">
   <fieldset class="inline time-select date-chooser">
     <%- if local_assigns.fetch(:show_label, false) %>
@@ -18,8 +18,8 @@
       <div class="date-field-wrapper">-</div>
       <div class="date-chooser-values">
         <label class="date-chooser-select form-label js-only" data-initial-date="<%= initial_date_type %>">
+          <span class="yesterday" data-date-display="<%= yesterday.to_s :full %>"><%= t('yesterday') %></span>
           <span class="today" data-date-display="<%= today.to_s :full %>"><%= t('today') %></span>
-          <span class="tomorrow" data-date-display="<%= tomorrow.to_s :full %>"><%= t('tomorrow') %></span>
         </label>
         <div class="date-field-wrapper">
           <%= t.text_field :date, class: "text-field date", value: date_formatter(initial_date) %>
