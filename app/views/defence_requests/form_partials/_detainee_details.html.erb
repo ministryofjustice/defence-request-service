@@ -49,8 +49,17 @@
 </div>
 
 <div class="form-group" data-show-when="defence_request_appropriate_adult_true">
-  <%= f.label :appropriate_adult_reason, label_text_for_form(attribute_name: 'appropriate_adult_reason'), class: "form-label-bold" %>
-  <%= f.text_area :appropriate_adult_reason, label: t('appropriate_adult_reason'), rows: '5', class: 'text-field text-field-wide' %>
+  <fieldset class="inline">
+    <%= f.label :appropriate_adult_reason, label_text_for_form(attribute_name: 'appropriate_adult_reason'), class: "form-label-bold" %>
+    <label class="block-label form-label" for="defence_request_appropriate_adult_reason_detainee_juvenile">
+      <%= f.radio_button :appropriate_adult_reason, :detainee_juvenile, name: 'defence_request[appropriate_adult_reason]' %>
+      <%= t('detainee_juvenile') %>
+    </label>
+    <label class="block-label form-label" for="defence_request_appropriate_adult_reason_detainee_with_mental_issue">
+      <%= f.radio_button :appropriate_adult_reason, :detainee_with_mental_issue, name: 'defence_request[appropriate_adult_reason]' %>
+      <%= t('detainee_with_mental_issue') %>
+    </label>
+  </fieldset>
 </div>
 
 <div class="form-group">

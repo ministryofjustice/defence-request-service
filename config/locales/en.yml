@@ -12,8 +12,8 @@ en:
   add_expected_time_of_arrival: Estimate time of arrival
   add_interview_start_time: "Add Interview Start Time"
   adult: "Adult?"
-  appropriate_adult: Appropriate adult
-  appropriate_adult_reason: "Reason for appropriate adult"
+  appropriate_adult: Is an appropriate adult needed?
+  appropriate_adult_reason: "Because the detainee is"
   appropriate_adult_required: Appropriate adult required
   arrival_time: "Arrival time"
   arrival_time_cancel: "Cancel"

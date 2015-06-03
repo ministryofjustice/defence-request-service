@@ -66,7 +66,7 @@ FactoryGirl.define do
 
   trait :appropriate_adult do
     appropriate_adult true
-    appropriate_adult_reason "They look underage"
+    appropriate_adult_reason "detainee_juvenile"
   end
 
   trait :interview_start_time do
