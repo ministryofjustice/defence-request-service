@@ -12,11 +12,11 @@
   <fieldset class="inline">
     <%= f.label :fit_for_interview, label_text_for_form(attribute_name: 'fit_for_interview'), class: "form-label-bold" %>
     <label class="block-label form-label" for="defence_request_fit_for_interview_true">
-      <%= f.radio_button :fit_for_interview, true, name: 'defence_request[fit_for_interview]', checked: @defence_request.fit_for_interview.present?, class: 'fit_for_interview_radio' %>
+      <%= f.radio_button :fit_for_interview, true, name: 'defence_request[fit_for_interview]', class: 'fit_for_interview_radio' %>
       <%= t('yes') %>
     </label>
     <label class="block-label form-label" for="defence_request_fit_for_interview_false">
-      <%= f.radio_button :fit_for_interview, false, name: 'defence_request[fit_for_interview]', checked: @defence_request.fit_for_interview.blank?, class: 'fit_for_interview_radio' %>
+      <%= f.radio_button :fit_for_interview, false, name: 'defence_request[fit_for_interview]', class: 'fit_for_interview_radio' %>
       <%= t('no') %>
     </label>
   </fieldset>
