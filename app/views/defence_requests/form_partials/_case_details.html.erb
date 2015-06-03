@@ -10,7 +10,7 @@
 
 <div class="form-group">
   <fieldset class="inline">
-    <%= f.label :fit_for_interview, label_text_for_form(attribute_name: 'fit_for_interview'), class: "form-label-bold" %>
+    <%= f.label :fit_for_interview, label_text_for_form(attribute_name: 'fit_for_interview') + "?", class: "form-label-bold" %>
     <label class="block-label form-label" for="defence_request_fit_for_interview_true">
       <%= f.radio_button :fit_for_interview, true, name: 'defence_request[fit_for_interview]', class: 'fit_for_interview_radio' %>
       <%= t('yes') %>
