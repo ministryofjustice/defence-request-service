@@ -12,8 +12,8 @@ en:
   add_expected_time_of_arrival: Estimate time of arrival
   add_interview_start_time: "Add Interview Start Time"
   adult: "Adult?"
-  appropriate_adult: Appropriate adult
-  appropriate_adult_reason: "Reason for appropriate adult"
+  appropriate_adult: Is an appropriate adult needed?
+  appropriate_adult_reason: "Because the detainee is"
   appropriate_adult_required: Appropriate adult required
   arrival_time: "Arrival time"
   arrival_time_cancel: "Cancel"
@@ -56,8 +56,10 @@ en:
   detainee_address: "Address"
   detainee_details: "Detainee details"
   detainee_dob: "Detainee date of birth"
+  detainee_juvenile: A juvenile
   detainee_name: "Detainee name"
   detention_details: "Detention details"
+  detainee_with_mental_issue: Mentally disturbed or mentally vunerable
   dscc: "DSCC"
   dscc_number: "DSCC number"
   edit: Edit
@@ -132,7 +134,7 @@ en:
   transgender: Transgender
   transition_info: Reason aborted
   unavailable: "Unavailable"
-  unfit_for_interview_reason: Reason unfit for interview
+  unfit_for_interview_reason: Reason
   update: "Update"
   update_and_accept: "Update and Accept"
   update_from: "Update from"

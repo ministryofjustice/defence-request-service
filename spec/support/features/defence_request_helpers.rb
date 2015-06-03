@@ -22,7 +22,7 @@ module DefenceRequestHelpers
         fill_in "defence_request_interview_start_time_min", with: "01"
       end
       within ".detainee" do
-        fill_in "Full Name", with: "Mannie Badder"
+        fill_in "defence_request_detainee_name", with: "Mannie Badder"
       end
     else
       within ".case-details" do

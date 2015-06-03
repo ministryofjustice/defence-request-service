@@ -17,6 +17,10 @@ RSpec.describe DefenceRequest, type: :model do
         subject.appropriate_adult = true
       end
       it { expect(subject).to validate_presence_of :appropriate_adult_reason }
+      it do
+        valid_values = %w(detainee_juvenile detainee_with_mental_issue)
+        expect(subject).to validate_inclusion_of(:appropriate_adult_reason).in_array(valid_values)
+      end
     end
 
     context "appropriate_adult_reason not required" do
