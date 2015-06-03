@@ -6,9 +6,11 @@ class DateChooser
     @dateInput = chooser.find(".date-chooser-values").find(".date")
 
     selectors = chooser.find(".date-chooser-select") # Today/Tomorrow selection
+
     today = selectors.find(".today")
     tomorrow = selectors.find(".tomorrow")
     initialDate = selectors.data("initial-date")
+
     @bindOnClickEvents(today, tomorrow)
     @initializeLinks(initialDate, today, tomorrow)
 
