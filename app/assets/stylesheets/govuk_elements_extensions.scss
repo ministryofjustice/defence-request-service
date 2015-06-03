@@ -56,13 +56,13 @@ select {
   @extend .form-label;
 }
 
-aside, .aside {
-  color: $grey-2;
-}
-
-span.hint {
+span.hint, aside, .aside {
   @extend .form-hint;
   margin-top: 0px;
+}
+
+label .aside {
+  display: inline;
 }
 
 label + input, label + textarea {
