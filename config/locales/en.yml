@@ -33,6 +33,7 @@ en:
   circumstances_of_arrest: Circumstances of arrest
   closed: "Closed (%{count})"
   comments: "Comments"
+  comments_field_aside_text: "E.g samples required, Section 18 House Search or full medical examination"
   complete: Complete
   completed: "Completed (%{count})"
   confirm: "Confirm"

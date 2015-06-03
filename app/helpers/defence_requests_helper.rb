@@ -49,7 +49,7 @@ module DefenceRequestsHelper
 
   def label_text_for_form(attribute_name:, optional: false)
     if optional
-      "#{t(attribute_name.to_s)} (#{t("optional")})"
+      "#{t(attribute_name.to_s)} <span class=\"aside\">(#{t("optional")})</span>".html_safe
     else
       t(attribute_name.to_s)
     end

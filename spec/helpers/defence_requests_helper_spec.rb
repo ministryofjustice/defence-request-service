@@ -96,4 +96,19 @@ RSpec.describe DefenceRequestsHelper, type: :helper do
     end
   end
 
+  describe "label_text_for_form" do
+    context "when the label is optional" do
+      it "renders the translation of the attribute name" do
+        output = helper.label_text_for_form(attribute_name: "detainee_name", optional: true)
+        expect(output).to eq("Detainee name <span class=\"aside\">(optional)</span>")
+      end
+    end
+
+    context "when the label is required" do
+      it "renders the translation of the attribute name" do
+        output = helper.label_text_for_form(attribute_name: "detainee_name")
+        expect(output).to eq("Detainee name")
+      end
+    end
+  end
 end

@@ -56,6 +56,10 @@ select {
   @extend .form-label;
 }
 
+aside, .aside {
+  color: $grey-2;
+}
+
 span.hint {
   @extend .form-hint;
   margin-top: 0px;
@@ -64,7 +68,6 @@ span.hint {
 label + input, label + textarea {
   @extend .form-control;
 }
-
 
 fieldset, .sub-panel {
   @extend .form-group;
