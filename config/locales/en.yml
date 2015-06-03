@@ -129,7 +129,6 @@ en:
   time_of_arrival: Arrival time
   time_of_detention_authorised: Detention authorised time
   today: Today
-  tomorrow: Tomorrow
   transgender: Transgender
   transition_info: Reason aborted
   unavailable: "Unavailable"
@@ -141,6 +140,7 @@ en:
   view_the_case_details: "View the case details"
   what_type_is_being_requested: "What type of solicitor is being requested?"
   year: "Year"
+  yesterday: Yesterday
 
   models:
     abort: "%{model} successfully aborted"

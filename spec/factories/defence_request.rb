@@ -48,6 +48,14 @@ FactoryGirl.define do
     dscc_number &generate_dscc_number
   end
 
+  trait :with_arrest_time do
+    time_of_arrest DateTime.current
+  end
+
+  trait :with_detention_authorised_time do
+    time_of_detention_authorised DateTime.current
+  end
+
   trait :accepted do
     state "accepted"
     dscc_number &generate_dscc_number

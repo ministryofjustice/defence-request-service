@@ -14,4 +14,7 @@ jQuery ->
     $(this).on "click", ->
       window.location = $(this).data("link")
 
+  $(".time-select").each ->
+    new window.TimeTabber($(this))
+
   return

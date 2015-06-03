@@ -77,10 +77,8 @@ RSpec.feature "Solicitors managing defence requests" do
       expect(find("#solicitor_time_of_arrival")).to have_content "23:02"
 
       click_link "Update time of arrival"
-      click_link "Tomorrow"
       enter_time hour: "00", min: "03"
       click_button "Save"
-      tomorrow = (Date.today + 1).to_s(:full)
       expect(find("#solicitor_time_of_arrival")).to have_content "00:03"
 
       click_link "Update time of arrival"
@@ -88,7 +86,7 @@ RSpec.feature "Solicitors managing defence requests" do
       expect(find("#solicitor_time_of_arrival")).to have_content "00:03"
 
       click_link "Update time of arrival"
-      click_link "Today"
+      click_link "Yesterday"
       enter_time hour: "23", min: "59"
       click_button "Save"
       expect(find("#solicitor_time_of_arrival")).to have_content "23:59"

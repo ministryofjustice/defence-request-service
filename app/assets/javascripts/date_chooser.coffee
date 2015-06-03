@@ -5,31 +5,33 @@ class DateChooser
   constructor: (chooser) ->
     @dateInput = chooser.find(".date-chooser-values").find(".date")
 
-    selectors = chooser.find(".date-chooser-select") # Today/Tomorrow selection
+    selectors = chooser.find(".date-chooser-select") # Today/Yesterday selection
+
     today = selectors.find(".today")
-    tomorrow = selectors.find(".tomorrow")
+    yesterday = selectors.find(".yesterday")
     initialDate = selectors.data("initial-date")
-    @bindOnClickEvents(today, tomorrow)
-    @initializeLinks(initialDate, today, tomorrow)
 
-  bindOnClickEvents: (today, tomorrow) =>
+    @bindOnClickEvents(today, yesterday)
+    @initializeLinks(initialDate, today, yesterday)
+
+  bindOnClickEvents: (today, yesterday) =>
     today.on "click", (event) =>
-      @toggleDate(today, tomorrow)
+      @toggleDate(today, yesterday)
       event.preventDefault()
 
-    tomorrow.on "click", (event) =>
-      @toggleDate(tomorrow, today)
+    yesterday.on "click", (event) =>
+      @toggleDate(yesterday, today)
       event.preventDefault()
 
-  initializeLinks: (initialDate, today, tomorrow) =>
+  initializeLinks: (initialDate, today, yesterday) =>
     switch initialDate
       when "today"
-        @enableLink tomorrow
-      when "tomorrow"
+        @enableLink yesterday
+      when "yesterday"
         @enableLink today
       else
         @enableLink today
-        @enableLink tomorrow
+        @enableLink yesterday
 
   enableLink: (selector) =>
     selector.html("<a href>" + selector.text() + "</a>")

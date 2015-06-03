@@ -14,6 +14,7 @@
 //= require dsds
 //= require date_chooser
 //= require show_hide
+//= require time_tabber
 //= require disable_checker
 //= require govuk/selection-buttons.js
 //= require prevent_moj_console_spam
