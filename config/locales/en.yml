@@ -56,8 +56,10 @@ en:
   detainee_address: "Address"
   detainee_details: "Detainee details"
   detainee_dob: "Detainee date of birth"
+  detainee_juvenile: A juvenile
   detainee_name: "Detainee name"
   detention_details: "Detention details"
+  detainee_with_mental_issue: Mentally disturbed or mentally vunerable
   dscc: "DSCC"
   dscc_number: "DSCC number"
   edit: Edit
