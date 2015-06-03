@@ -94,6 +94,8 @@ RSpec.feature "Call Center Operatives managing defence requests" do
           :defence_request,
           :acknowledged,
           :with_dscc_number,
+          :with_arrest_time,
+          :with_detention_authorised_time,
           cco_uid: cco_user.uid
         )
 
@@ -167,6 +169,8 @@ RSpec.feature "Call Center Operatives managing defence requests" do
       create(
         :defence_request,
         :accepted,
+        :with_arrest_time,
+        :with_detention_authorised_time,
         cco_uid: cco_user.uid
       )
 
