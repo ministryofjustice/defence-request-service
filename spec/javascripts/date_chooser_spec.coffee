@@ -12,11 +12,11 @@ dateChooserHtml = (initialDate, dateValue) ->
     <h1>Arrival time</h1>
     <div class="date-field-wrapper">
       <label for="defence_request_solicitor_time_of_arrival_Hour">Hour</label>
-      <input size="2" maxlength="2" placeholder="HH" class="hour text-field" type="text" name="defence_request[solicitor_time_of_arrival][hour]" id="defence_request_solicitor_time_of_arrival_hour" />
+      <input size="2" maxlength="2" class="hour text-field" type="text" name="defence_request[solicitor_time_of_arrival][hour]" id="defence_request_solicitor_time_of_arrival_hour" />
     </div>
     <div class="date-field-wrapper">
       <label for="defence_request_solicitor_time_of_arrival_Min">Min</label>
-      <input size="2" maxlength="2" placeholder="MM" class="minute text-field" type="text" name="defence_request[solicitor_time_of_arrival][min]" id="defence_request_solicitor_time_of_arrival_min" />
+      <input size="2" maxlength="2" class="minute text-field" type="text" name="defence_request[solicitor_time_of_arrival][min]" id="defence_request_solicitor_time_of_arrival_min" />
     </div>
     <div class="date-chooser-values">
       <label class="date-chooser-select form-label js-only" data-initial-date="#{ initialDate }">

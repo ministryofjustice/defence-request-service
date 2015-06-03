@@ -9,11 +9,11 @@
     <%= f.fields_for attribute, @defence_request_form.fields[attribute] do |t| %>
       <div class="date-field-wrapper">
         <%= t.label :hour, t('hour'), class: "form-label" %>
-        <%= t.text_field :hour, size: 2, maxlength: 2, placeholder: 'HH', class: 'hour text-field' %>
+        <%= t.text_field :hour, size: 2, maxlength: 2, class: 'hour text-field' %>
       </div>
       <div class="date-field-wrapper">
         <%= t.label :min, t('min'), class: "form-label" %>
-        <%= t.text_field :min, size: 2, maxlength: 2, placeholder: 'MM', class: 'minute text-field' %>
+        <%= t.text_field :min, size: 2, maxlength: 2, class: 'minute text-field' %>
       </div>
       <div class="date-field-wrapper">-</div>
       <div class="date-chooser-values">
