@@ -8,9 +8,16 @@ class PingResponse
     build_tag: "unknown"
   }
 
-  def self.data
-    YAML.load_file(VERSION_FILE)
-  rescue
-    UNKNOWN_VERSION_DATA_RESPONSE
+  attr_reader :ok, :data
+  alias :ok? :ok
+
+  def initialize
+    begin
+      @data = YAML.load_file(VERSION_FILE)
+      @ok = true
+    rescue
+      @data = UNKNOWN_VERSION_DATA_RESPONSE
+      @ok = false
+    end
   end
 end

@@ -12,10 +12,15 @@ class StatusController < ApplicationController
   end
 
   def ping
+    # If there's a problem, we need to return an error 500
+    ping_response = PingResponse.new
+
+    status = ping_response.ok? ? :ok : :error
+
     respond_to do |format|
       # When debugging problems at 3am, support staff might not specify the JSON
-      # content type. We return JSON in all cases
-      format.all { render json: PingResponse.data }
+      # content type. We return JSON in all cases.
+      format.all { render json: ping_response.data, status: status }
     end
   end
 end
