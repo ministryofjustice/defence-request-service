@@ -23,6 +23,8 @@ Rails.application.routes.draw do
   get "/auth/failure", to: "sessions#failure"
 
   get "/status" => "status#index"
+  get "/ping" => "status#ping"
+
   get "/help", controller: :static, action: :help, as: :help
   get "/maintenance", controller: :static, action: :maintenance, as: :maintenance
   get "/cookies", controller: :static, action: :cookies, as: :cookies
