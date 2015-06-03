@@ -67,7 +67,7 @@ RSpec.feature "Custody Suite Officers creating defence requests" do
       choose "defence_request_appropriate_adult_reason_detainee_juvenile"
     end
     click_button "Create Defence Request"
-    save_and_open_page
+
     expect(page).to have_content "Check the request"
     expect(page).to have_content "Yes – because the detainee is a juvenile"
   end
