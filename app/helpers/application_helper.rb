@@ -63,7 +63,7 @@ module ApplicationHelper
   def display_value(label_key, value, options={})
     label = I18n.t(label_key)
     value = value.blank? ? "-" : value
-    content_tag(:dt, label) + " " + content_tag(:dd, value, id: options[:id])
+    content_tag(:dt, label) + " " + content_tag(:dd, value, id: options[:id], class: options[:class])
   end
 
   def boolean_with_explanation(val, explanation_when, explanation)
