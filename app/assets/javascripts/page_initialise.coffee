@@ -9,4 +9,9 @@ jQuery ->
   $("form [data-disable-when]").each ->
     new window.DisableChecker($(this))
 
+  $("table tr.clickable-row").each ->
+    $(this).addClass("clickable-row-active")
+    $(this).on "click", ->
+      window.location = $(this).data("link")
+
   return
