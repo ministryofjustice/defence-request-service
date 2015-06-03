@@ -156,6 +156,10 @@ table.dashboard {
       }
     }
   }
+  
+  .clickable-row-active {
+    cursor: pointer;
+  }
 
   .grey {
     background: $grey-4
