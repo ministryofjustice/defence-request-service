@@ -36,4 +36,27 @@ RSpec.describe StatusController, type: :controller do
       end
     end
   end
+
+  describe "GET ping" do
+    it "returns 200 status code" do
+      get :ping, format: "json"
+      expect(response).to have_http_status(:ok)
+    end
+
+    it "returns 200 status code for non-json requests" do
+      get :ping, format: "html"
+      expect(response).to have_http_status(:ok)
+    end
+
+    context "JSON request" do
+      let(:fake_response) { { irrelevant_data: "irrelevant_response" }.with_indifferent_access }
+
+      it 'returns a JSON status "OK"' do
+        expect(PingResponse).to receive(:data).and_return(fake_response)
+
+        get :ping, format: "json"
+        expect(JSON.parse response.body.strip).to eq(fake_response)
+      end
+    end
+  end
 end
