@@ -66,6 +66,8 @@ ul.tabs {
   width: 100%;
   list-style: none;
   margin-left: 0;
+  padding: 0;
+
   li {
     @include media(mobile) {
       @include grid-column(1 / 2, $full_width: mobile);
