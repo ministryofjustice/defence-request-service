@@ -27,7 +27,16 @@
 <% content_for :content_override do %>
   <main id="page-container" role="main">
     <%= render 'shared/banner' %>
-    <%= yield %>
+    <div class="grid-row">
+      <div class="<% if content_for?(:sidebar) %>column-three-quarters<% else %>column-full-width<% end %>">
+        <%= yield %>
+      </div>
+      <% if content_for?(:sidebar) %>
+        <div class="sidebar column-quarter">
+          <%= yield(:sidebar) %>
+        </div>
+      <% end %>
+    </div>
   </main>
 <% end %>
 <% content_for :proposition_links do %>
