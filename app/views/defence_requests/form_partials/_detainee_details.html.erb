@@ -11,22 +11,22 @@
 <div class="form-group">
   <fieldset class="inline">
     <%= f.label :gender, label_text_for_form(attribute_name: 'gender'), class: "form-label-bold" %>
-    <label class="block-label form-label" for="defence_request_gender_male">
+    <%= f.label :gender_male, class: "block-label form-label" do %>
       <%= f.radio_button :gender, :male, name: 'defence_request[gender]' %>
       <%= t('male') %>
-    </label>
-    <label class="block-label form-label" for="defence_request_gender_female">
+    <%- end %>
+    <%= f.label :gender_female, class: "block-label form-label" do %>
       <%= f.radio_button :gender, :female, name: 'defence_request[gender]' %>
       <%= t('female') %>
-    </label>
-    <label class="block-label form-label" for="defence_request_gender_transgender">
+    <%- end %>
+    <%= f.label :gender_transgender, class: "block-label form-label" do %>
       <%= f.radio_button :gender, :transgender, name: 'defence_request[gender]' %>
       <%= t('transgender') %>
-    </label>
-    <label class="block-label form-label" for="defence_request_gender_not_specified">
+    <%- end %>
+    <%= f.label :gender_unspecified, class: "block-label form-label" do %>
       <%= f.radio_button :gender, :unspecified, name: 'defence_request[gender]' %>
       <%= t('unspecified') %>
-    </label>
+    <%- end %>
   </fieldset>
 </div>
 
