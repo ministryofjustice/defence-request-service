@@ -23,7 +23,7 @@ class InterviewStartTimesController < BaseController
 
   def defence_request_params
     params.require(:defence_request).permit(
-      { interview_start_time: %i[day month year hour min sec] }
+      { interview_start_time: %i[date hour min] }
     )
   end
 end
