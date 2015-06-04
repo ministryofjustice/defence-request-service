@@ -77,7 +77,8 @@ dl.time-at {
 }
 
 .edit-link {
-  display: inline-block;
+  clear: both;
+  display: block;
   margin-top: $gutter-half;
 }
 
