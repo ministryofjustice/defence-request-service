@@ -30,8 +30,17 @@
       }
     }
 
+    &.status-submitted {
+      background-color: $submitted-defence-request-tint;
+
+      h2 {
+        border-left: 6px solid $submitted-defence-request;
+      }
+    }
+
     &.status-accepted {
       background-color: $accepted-defence-request-tint;
+
       h2 {
         border-left: 6px solid $accepted-defence-request;
       }
