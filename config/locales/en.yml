@@ -10,7 +10,7 @@ en:
   actions: "Actions"
   active: "Active (%{count})"
   add_expected_time_of_arrival: Estimate time of arrival
-  add_interview_start_time: "Add Interview Start Time"
+  add_interview_start_time: "Save interview time"
   adult: "Adult?"
   appropriate_adult: Is an appropriate adult needed?
   appropriate_adult_reason: "Because the detainee is"
@@ -26,14 +26,14 @@ en:
   cancel: "Cancel"
   cancel_and_delete_all_details: "Cancel and delete all details"
   case_aborted: "This case has been aborted for the following reason"
-  case_details: "Case Details"
-  case_details_for: "Case Details for %{dscc}"
+  case_details: "Case details"
+  case_details_for: "Case details for %{dscc}"
   cco: "Call Center Operative"
   change_password: "Change Password"
   circumstances_of_arrest: Circumstances of arrest
   closed: "Closed (%{count})"
   comments: "Comments"
-  comments_field_aside_text: "E.g samples required, Section 18 House Search or full medical examination"
+  comments_field_aside_text: "eg samples required, Section 18 House Search or full medical examination"
   complete: Complete
   completed: "Completed (%{count})"
   confirm: "Confirm"
@@ -41,13 +41,14 @@ en:
   continue: "Continue"
   cookies: "Cookies"
   cso: "Custody Suite Officer"
+  create_request: "Create request"
   custody_address: Custody Address
   custody_number: "Custody number"
   custody_number_prefix: "CN:"
   custody_phone_number: "Custody Phone Number"
-  dashboard: 'Dashboard'
-  date_hint: "eg. 28 04 1996"
-  date_of_birth: "Date of Birth"
+  dashboard: 'dashboard'
+  date_hint: "eg 28 04 1996"
+  date_of_birth: "Date of birth"
   date_time_hint: "eg. 28 04 1996 - 11 30"
   day: "Day"
   delete: "Delete"
@@ -70,13 +71,15 @@ en:
   expected_time_of_arrival: "Solicitor Time of Arrival"
   expired: "Session expired"
   female: "Female"
-  fit_for_interview: Is detainee fit for interview
+  fit_for_interview: Fit for interview
+  fit_for_interview_question: Is the detainee fit for interview?
   full_name: "Full Name"
   gender: "Gender"
   help: "Help"
   home: "Home"
   hour: "Hour"
   interpreter_required: Interpreter required
+  interpreter_required_question: Is an interpreter required?
   interpreter_type: Interpreter type
   interview: "Interview"
   interview_at: "Interview at"
@@ -92,15 +95,15 @@ en:
   male: "Male"
   min: "Min"
   month: "Month"
+  name: "Name"
   name_not_given: "Name not given"
   name_of_firm: "Name of firm"
-  new_defence_requests: "New Defence Requests"
-  new_defence_request: "New Defence Request"
+  new_defence_requests: "New defence requests"
+  new_defence_request: "New defence request"
   new_request: "New request"
   no_results_found: 'No results found - Contact DSCC'
   not_authorized: "You are not authorised to perform this action"
-  not_given: "not given"
-  not_specified: "Not specified"
+  not_given: "Not given"
   offences: "Offences"
   optional: "optional"
   pending: pending
@@ -115,6 +118,7 @@ en:
   show: "Show"
   sign_out: "Sign out"
   solicitor: "Solicitor"
+  solicitor_attendance: "Solicitor attendance"
   solicitor_details: "Solicitor details"
   solicitor_email: "Solicitor Email"
   solicitor_email: "Solicitor Email"
@@ -126,19 +130,20 @@ en:
   telephone_number: "Telephone number"
   terms: "Terms"
   terms_and_conditions: "Terms and conditions and privacy policy"
-  time_hint: "eg. 23 10"
-  time_of_arrest: Arrest time
+  time_hint: "eg 23 10"
+  time_of_arrest: "Arrest time "
   time_of_arrival: Arrival time
   time_of_detention_authorised: Detention authorised time
   today: Today
   transgender: Transgender
   transition_info: Reason aborted
   unavailable: "Unavailable"
-  unfit_for_interview_reason: Reason
+  unfit_for_interview_reasons: Reasons
   update: "Update"
   update_and_accept: "Update and Accept"
   update_from: "Update from"
   update_time_of_arrival: "Update time of arrival"
+  unspecified: "Unspecified"
   view_the_case_details: "View the case details"
   what_type_is_being_requested: "What type of solicitor is being requested?"
   year: "Year"

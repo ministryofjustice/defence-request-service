@@ -1,7 +1,7 @@
 <h1>Check the request</h1>
 
-<p>Check the details below to make sure they are correct. Update any incorrect details, then submit the request.</p>
-
+<p>Check the details below to make sure they're correct. You can change any incorrect details and save changes. Then submit the request.</p>
+<p>You can edit the request later if there's updates for further information to add.</p>
 <section class="detainee-details">
   <h2><%= not_given_formatter(@defence_request, :detainee_name, "name_not_given") %></h2>
 
@@ -12,7 +12,7 @@
 
 
 <section class="detention-details">
-  <h2 class="line-above">Detention Details</h2>
+  <h2 class="line-above"><%= t("case_details") %></h2>
 
   <%= render("defence_requests/show_partials/detention_details") %>
 

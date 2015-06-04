@@ -4,12 +4,12 @@ RSpec.feature "Custody Suite Officers creating defence requests" do
   specify "creating a blank defence request displays all required validation errors" do
     login_and_open_new_defence_request_page
 
-    click_button "Create Defence Request"
+    click_button "Create request"
 
     expect(current_path).to eq("/defence_requests")
     expect(page).to have_content "You need to fix the errors on this page before continuing"
 
-    ["Detainee name", "Address", "Date of Birth", "Offences", "Custody number", "Gender"].each do |field_name|
+    ["Detainee name", "Address", "Date of birth", "Offences", "Custody number", "Gender"].each do |field_name|
       expect(page).to have_css(".error-summary li", text: "#{field_name}: can't be blank")
     end
   end
@@ -17,11 +17,11 @@ RSpec.feature "Custody Suite Officers creating defence requests" do
   specify "can select \"not specified\" for gender" do
     login_and_open_new_defence_request_page
 
-    fill_in_defence_request_form gender: "Not specified"
+    fill_in_defence_request_form gender: "Unspecified"
 
-    click_button "Create Defence Request"
+    click_button "Create request"
 
-    expect(page).to have_css("dl.labels dd", text: "Not specified")
+    expect(page).to have_css("dl.labels dd", text: "Unspecified")
   end
 
   specify "can select \"transgender\" for gender" do
@@ -29,7 +29,7 @@ RSpec.feature "Custody Suite Officers creating defence requests" do
 
     fill_in_defence_request_form gender: "Transgender"
 
-    click_button "Create Defence Request"
+    click_button "Create request"
 
     expect(page).to have_css("dl.labels dd", text: "Transgender")
   end
@@ -39,10 +39,10 @@ RSpec.feature "Custody Suite Officers creating defence requests" do
 
     fill_in_defence_request_form not_given: true
 
-    click_button "Create Defence Request"
+    click_button "Create request"
 
     expect(page).to have_css("h2", text: "Name not given")
-    expect(page).to have_css("dl.labels dd", text: "not given", count: 2)
+    expect(page).to have_css("dl.labels dd", text: "Not given", count: 2)
   end
 
   #Fixme this test doesn't do what it says
@@ -50,7 +50,7 @@ RSpec.feature "Custody Suite Officers creating defence requests" do
     login_and_open_new_defence_request_page
 
     fill_in_defence_request_form
-    click_button "Create Defence Request"
+    click_button "Create request"
   end
 
   specify "can not see the solicitor time of arrival field on the defence request form" do
@@ -66,7 +66,7 @@ RSpec.feature "Custody Suite Officers creating defence requests" do
       choose "defence_request_appropriate_adult_true"
       choose "defence_request_appropriate_adult_reason_detainee_juvenile"
     end
-    click_button "Create Defence Request"
+    click_button "Create request"
 
     expect(page).to have_content "Check the request"
     expect(page).to have_content "Yes – because the detainee is a juvenile"
@@ -76,7 +76,7 @@ RSpec.feature "Custody Suite Officers creating defence requests" do
     login_and_open_new_defence_request_page
 
     fill_in_defence_request_form
-    click_button "Create Defence Request"
+    click_button "Create request"
 
     expect(page).to have_css("h1", "Check the request")
   end

@@ -54,7 +54,7 @@ module DefenceRequestHelpers
       end
     else
       within ".detainee" do
-        fill_in "Full Name", with: "Mannie Badder"
+        fill_in "Name", with: "Mannie Badder"
         choose options.fetch(:gender) { "Male" }
         fill_in "defence_request_date_of_birth_year", with: "1976"
         fill_in "defence_request_date_of_birth_month", with: "01"

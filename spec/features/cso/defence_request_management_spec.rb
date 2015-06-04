@@ -150,7 +150,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
           click_link "❭"
 
           click_link "< Back to requests"
-          expect(page).to have_content "Custody Suite Officer Dashboard"
+          expect(current_path).to eq("/dashboard")
         end
       end
     end

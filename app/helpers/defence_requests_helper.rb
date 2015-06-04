@@ -86,7 +86,7 @@ module DefenceRequestsHelper
   def appropriate_adult_reason(defence_request)
     if defence_request.appropriate_adult?
       reason = t(defence_request.appropriate_adult_reason).downcase
-      ["–", t("appropriate_adult_reason").downcase, reason].join(" ")
+      [t("appropriate_adult_reason").downcase, reason].join(" ")
     else
       ""
     end

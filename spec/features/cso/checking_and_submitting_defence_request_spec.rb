@@ -50,6 +50,6 @@ RSpec.feature "Custody Suite Officers checking and submitting defence requests" 
 
     click_link "New request"
     fill_in_defence_request_form
-    click_button "Create Defence Request"
+    click_button "Create request"
   end
 end

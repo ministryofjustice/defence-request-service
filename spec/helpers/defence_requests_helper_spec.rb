@@ -2,9 +2,9 @@ require "rails_helper"
 
 RSpec.describe DefenceRequestsHelper, type: :helper do
 
-  describe "formatting not given field" do
-    context "when address is not given" do
-      context "i18n translation for not given is specified" do
+  describe "formatting Not given field" do
+    context "when address is Not given" do
+      context "i18n translation for Not given is specified" do
         it "returns the specified translation" do
           request = create(:defence_request)
           expect(helper.not_given_formatter(request, :detainee_address, "name_not_given")).to eq("Name not given")
@@ -12,9 +12,9 @@ RSpec.describe DefenceRequestsHelper, type: :helper do
       end
 
       context "i18n translation is not specified" do
-        it "returns 'not given'" do
+        it "returns 'Not given'" do
           request = create(:defence_request)
-          expect(helper.not_given_formatter(request, :detainee_address)).to eq("not given")
+          expect(helper.not_given_formatter(request, :detainee_address)).to eq("Not given")
         end
       end
     end
@@ -28,12 +28,12 @@ RSpec.describe DefenceRequestsHelper, type: :helper do
     end
   end
 
-  describe "formatting not given date" do
-    context "when date is not given" do
-      it "returns 'not given'" do
+  describe "formatting Not given date" do
+    context "when date is Not given" do
+      it "returns 'Not given'" do
         request = create(:defence_request)
         request.update(date_of_birth: nil)
-        expect(helper.date_not_given_formatter(request, :date_of_birth)).to eq("not given")
+        expect(helper.date_not_given_formatter(request, :date_of_birth)).to eq("Not given")
       end
     end
 
