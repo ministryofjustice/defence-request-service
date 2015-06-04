@@ -14,7 +14,7 @@
   <%= render('shared/date_time_form_part', attribute: :time_of_detention_authorised, show_label: true, set_default_date: true, f: f) %>
 
   <% if @policy.interview_start_time_edit? %>
-    <%= render('shared/date_time_form_part', attribute: :interview_start_time, show_label: true, optional: true, set_default_date: false, f: f) %>
+    <%= render('shared/date_time_form_part', attribute: :interview_start_time, show_label: true, optional: true, hint_label: :interview_start_time_hint , set_default_date: false, f: f) %>
   <% end %>
 
   <%= render('defence_requests/form_partials/case_details', f: f) if @policy.create? %>

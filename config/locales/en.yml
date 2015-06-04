@@ -88,6 +88,7 @@ en:
   interview_start_time: Interview start time
   interview_start_time_change: "Interview start time change"
   interview_time: Interview time
+  interview_start_time_hint: "Add the interview time now, if you know it, or update the request later when you have this information"
   investigating_officer_contact_number: Investigating officer contact number
   investigating_officer_name: Investigating officer name
   investigating_officer_shoulder_number: Investigating officer shoulder number

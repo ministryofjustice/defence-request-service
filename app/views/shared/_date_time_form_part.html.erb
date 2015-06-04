@@ -4,6 +4,10 @@
     <%- if local_assigns.fetch(:show_label, false) %>
       <label for>
         <%= f.label attribute, label_text_for_form(attribute_name: attribute, optional: local_assigns.fetch(:optional, false)), class: 'form-label-bold' %>
+
+        <%- if local_assigns.fetch(:hint_label, false) %>
+          <span class='hint block'><%= t(hint_label) %></span>
+        <%- end %>
         <span class='hint block'><%= t('time_hint') %></span>
       </label>
     <%- end %>
