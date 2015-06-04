@@ -30,7 +30,7 @@ gem "unicorn", "~> 4.8.3"
 # MOJ styles
 gem "moj_template", "~> 0.23.0"
 gem "govuk_frontend_toolkit", "~> 3.4.2"
-gem "govuk_elements_rails", "~> 0.1.1"
+gem "govuk_elements_rails", "~> 0.3.0"
 
 group :development do
   gem "guard-rspec", require: false
