@@ -15,7 +15,7 @@ module ApplicationHelper
   end
 
   def object_error_messages(active_model_messages)
-    content_tag(:ul) do
+    content_tag(:ul, class: "error-summary-list") do
       active_model_messages.each do |field_name, field_messages|
         concat errors_for_field(field_name, field_messages)
       end
@@ -24,7 +24,9 @@ module ApplicationHelper
 
   def errors_for_field(field_name, field_messages)
     content_tag :li do
-      "#{t(field_name)}: #{field_messages.join(', ')}".html_safe
+      content_tag :a do
+        "#{t(field_name)}: #{field_messages.join(', ')}".html_safe
+      end
     end
   end
 

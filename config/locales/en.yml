@@ -69,6 +69,7 @@ en:
   email: Email
   enter_solicitor_firm_name: "Enter solicitor/firm name..."
   error: error
+  error_summary_heading: You need to fix the errors on this page before continuing.
   expected_time_of_arrival: "Solicitor Time of Arrival"
   expired: "Session expired"
   female: "Female"
