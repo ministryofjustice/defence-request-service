@@ -2,6 +2,10 @@
 @import "elements/elements-typography";
 @import "grid_layout";
 
+.new_defence_request {
+  margin-top: 3em;
+}
+
 table.dashboard {
   width: 100%;
   th { font-size: 15px; }
@@ -156,7 +160,7 @@ table.dashboard {
       }
     }
   }
-  
+
   .clickable-row-active {
     cursor: pointer;
   }
