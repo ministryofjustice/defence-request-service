@@ -4,8 +4,6 @@
 
 <%= flash_messages %>
 
-<h1><%= "#{t(@dashboard.user_role)}  #{t('dashboard')}" %></h1>
-
 <% if check_policy_clause(@policy, :create?) %>
   <div class="new_defence_request">
     <%= link_to t("new_request"), new_defence_request_path, role: "button", class: "button" %>

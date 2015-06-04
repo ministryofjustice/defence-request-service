@@ -67,7 +67,7 @@ module ApplicationHelper
   end
 
   def boolean_with_explanation(val, explanation_when, explanation)
-    reason = (" #{explanation}" if val == explanation_when) || ""
+    reason = (" – #{explanation}" if val == explanation_when) || ""
     boolean_formatter(val) + reason
   end
 end

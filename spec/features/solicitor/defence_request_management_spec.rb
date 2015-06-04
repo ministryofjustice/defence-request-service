@@ -38,7 +38,7 @@ RSpec.feature "Solicitors managing defence requests" do
 
     specify "can see the show page of the request", :mock_auth_api do
       login_with solicitor_user
-      click_link "Case Details for #{accepted_defence_request.dscc_number}"
+      click_link "Case details for #{accepted_defence_request.dscc_number}"
 
       expect(page).to have_content accepted_defence_request.dscc_number
       expect(page).to have_content accepted_defence_request.detainee_name
@@ -46,7 +46,7 @@ RSpec.feature "Solicitors managing defence requests" do
 
     specify "can edit the expected arrival time from the show page of the request", :mock_auth_api do
       login_with solicitor_user
-      click_link "Case Details for #{accepted_defence_request.dscc_number}"
+      click_link "Case details for #{accepted_defence_request.dscc_number}"
       click_link "Estimate time of arrival"
 
       expect(page).to have_css ".date-chooser-select.js-only"
@@ -69,7 +69,7 @@ RSpec.feature "Solicitors managing defence requests" do
 
     specify "can edit the expected arrival time from the show page of the request with JS enabled", :mock_auth_api, js: true do
       login_with solicitor_user
-      click_link "Case Details for #{accepted_defence_request.dscc_number}"
+      click_link "Case details for #{accepted_defence_request.dscc_number}"
       click_link "Estimate time of arrival"
       enter_time hour: "23", min: "02"
       click_button "Save"
@@ -104,7 +104,7 @@ RSpec.feature "Solicitors managing defence requests" do
 
     specify "are shown a message if the time of arrival cannot be updated due to errors", :mock_auth_api do
       login_with solicitor_user
-      click_link "Case Details for #{accepted_defence_request.dscc_number}"
+      click_link "Case details for #{accepted_defence_request.dscc_number}"
       click_link "Estimate time of arrival"
       enter_time date: "inv", hour: "a", min: "lid"
       click_button "Save"

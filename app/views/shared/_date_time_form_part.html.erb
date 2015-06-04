@@ -2,9 +2,12 @@
 <div class="form-group">
   <fieldset class="inline time-select date-chooser">
     <%- if local_assigns.fetch(:show_label, false) %>
-      <label for>
         <%= f.label attribute, label_text_for_form(attribute_name: attribute, optional: local_assigns.fetch(:optional, false)), class: 'form-label-bold' %>
-      </label>
+
+        <%- if local_assigns.fetch(:hint_label, false) %>
+          <span class='hint block'><%= t(hint_label) %></span>
+        <%- end %>
+        <span class='hint block'><%= t('time_hint') %></span>
     <%- end %>
     <%= f.fields_for attribute, @defence_request_form.fields[attribute] do |t| %>
       <div class="date-field-wrapper">

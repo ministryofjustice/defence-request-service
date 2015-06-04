@@ -1,5 +1,5 @@
 <div class="form-group">
-  <%= f.label :detainee_name, label_text_for_form(attribute_name: 'full_name'), class: "form-label-bold" %>
+  <%= f.label :detainee_name, label_text_for_form(attribute_name: 'name'), class: "form-label-bold" %>
   <%= f.text_field :detainee_name, class: 'text-field text-field-wide not-given-check',
                     data: { "disable-when" => "defence_request_detainee_name_not_given" } %>
   <%= f.label :detainee_name_not_given, class: 'form-checkbox' do %>
@@ -11,26 +11,36 @@
 <div class="form-group">
   <fieldset class="inline">
     <%= f.label :gender, label_text_for_form(attribute_name: 'gender'), class: "form-label-bold" %>
-    <label class="block-label form-label" for="defence_request_gender_male">
+    <%= f.label :gender_male, class: "block-label form-label" do %>
       <%= f.radio_button :gender, :male, name: 'defence_request[gender]' %>
       <%= t('male') %>
-    </label>
-    <label class="block-label form-label" for="defence_request_gender_female">
+    <%- end %>
+    <%= f.label :gender_female, class: "block-label form-label" do %>
       <%= f.radio_button :gender, :female, name: 'defence_request[gender]' %>
       <%= t('female') %>
-    </label>
-    <label class="block-label form-label" for="defence_request_gender_transgender">
+    <%- end %>
+    <%= f.label :gender_transgender, class: "block-label form-label" do %>
       <%= f.radio_button :gender, :transgender, name: 'defence_request[gender]' %>
       <%= t('transgender') %>
-    </label>
-    <label class="block-label form-label" for="defence_request_gender_not_specified">
-      <%= f.radio_button :gender, :not_specified, name: 'defence_request[gender]' %>
-      <%= t('not_specified') %>
-    </label>
+    <%- end %>
+    <%= f.label :gender_unspecified, class: "block-label form-label" do %>
+      <%= f.radio_button :gender, :unspecified, name: 'defence_request[gender]' %>
+      <%= t('unspecified') %>
+    <%- end %>
   </fieldset>
 </div>
 
 <%= render('defence_requests/form_partials/detainee_date_of_birth', f: f) %>
+
+<div class="form-group">
+  <%= f.label :detainee_address, label_text_for_form(attribute_name: 'detainee_address'), class: "form-label-bold" %>
+  <%= f.text_field :detainee_address, class: 'text-field text-field-wide not-given-check',
+                    data: { "disable-when" => "defence_request_detainee_address_not_given" } %>
+  <%= f.label :detainee_address_not_given, class: 'form-checkbox' do %>
+    <%= f.check_box :detainee_address_not_given %>
+    <%= t("not_given") -%>
+  <% end %>
+</div>
 
 <div class="form-group">
   <fieldset class="inline">
@@ -64,7 +74,7 @@
 
 <div class="form-group">
   <fieldset class="inline">
-    <%= f.label :interpreter_required, label_text_for_form(attribute_name: 'interpreter_required'), class: "form-label-bold" %>
+    <%= f.label :interpreter_required, label_text_for_form(attribute_name: 'interpreter_required_question'), class: "form-label-bold" %>
     <label class="block-label form-label" for="defence_request_interpreter_required_true">
       <%= f.radio_button :interpreter_required, true, name: 'defence_request[interpreter_required]',
                          class: 'interpreter_required_radio' %>
@@ -80,14 +90,4 @@
 <div class="form-group panel-indent" data-show-when="defence_request_interpreter_required_true">
   <%= f.label :interpreter_type, label_text_for_form(attribute_name: 'interpreter_type'), class: "form-label-bold" %>
   <%= f.text_field :interpreter_type, class: 'text-field text-field-wide' %>
-</div>
-
-<div class="form-group">
-  <%= f.label :detainee_address, label_text_for_form(attribute_name: 'detainee_address'), class: "form-label-bold" %>
-  <%= f.text_field :detainee_address, class: 'text-field text-field-wide not-given-check',
-                    data: { "disable-when" => "defence_request_detainee_address_not_given" } %>
-  <%= f.label :detainee_address_not_given, class: 'form-checkbox' do %>
-    <%= f.check_box :detainee_address_not_given %>
-    <%= t("not_given") -%>
-  <% end %>
 </div>

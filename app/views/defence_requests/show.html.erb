@@ -18,10 +18,10 @@
 <%= content_tag("div", class: "js-tabs", id: "edit-tabs", data: { activatefirst: "true" }) do %>
   <ul class="cf tabs js-tabs-nav js-only">
     <li>
-      <a href="#interview">Interview</a>
+      <a href="#interview"><%= t("solicitor_attendance") %></a>
     </li>
     <li>
-      <a href="#case-details"><%= t("detention_details") %></a>
+      <a href="#case-details"><%= t("case_details") %></a>
     </li>
     <li class="filler">
     </li>
@@ -31,7 +31,7 @@
       <%= render "defence_requests/show_partials/interview_tab" %>
     </div>
     <div id="case-details">
-      <h3 class="nonjs"><%= t("detention_details")%></h3>
+      <h3 class="nonjs"><%= t("case_details")%></h3>
       <%= render "defence_requests/show_partials/detention_details" %>
     </div>
   </div>

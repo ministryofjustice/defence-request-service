@@ -1,7 +1,7 @@
 <div class="form-group">
   <fieldset class="inline time-select">
     <label for>
-      <%= f.label :date_of_birth, label_text_for_form(attribute_name: 'detainee_dob'), class: 'form-label-bold' %>
+      <%= f.label :date_of_birth, label_text_for_form(attribute_name: 'date_of_birth'), class: 'form-label-bold' %>
       <span class='hint block'><%= t('date_hint') %></span>
     </label>
     <%= f.fields_for :date_of_birth, @defence_request_form.fields[:date_of_birth] do |t| %>
