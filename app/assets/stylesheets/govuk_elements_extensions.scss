@@ -15,6 +15,10 @@ $path: "";
 
 $disable-background: #eee;
 
+#page-container {
+  @extend %site-width-container;
+}
+
 h1 {
   @extend .heading-xlarge;
   margin-right: 6%;
@@ -81,7 +85,7 @@ fieldset, .sub-panel {
 }
 
 .alert-summary {
-  @extend .validation-summary;
+  @extend .error-summary;
   border: 3px solid $red;
   h3 {
     margin-top: 10px;
@@ -89,7 +93,7 @@ fieldset, .sub-panel {
 }
 
 .notice-summary {
-  @extend .validation-summary;
+  @extend .error-summary;
   border: 3px solid $green;
   h3 {
     margin-top: 10px;
@@ -97,7 +101,7 @@ fieldset, .sub-panel {
 }
 
 .success-summary {
-  @extend .validation-summary;
+  @extend .error-summary;
   border: 3px solid $green;
   h3 {
     margin-top: 10px;
@@ -105,7 +109,7 @@ fieldset, .sub-panel {
 }
 
 span.error {
-  @extend .validation-message;
+  @extend .error-message;
 }
 
 .js-enabled {
