@@ -24,6 +24,18 @@ $disable-background: #eee;
   @extend %site-width-container;
 }
 
+.column-full-width {
+  @include grid-column( 1 );
+}
+
+.column-three-quarters {
+  @include grid-column( 3/4 );
+}
+
+.phase-banner {
+  margin-bottom: 20px;
+}
+
 h1 {
   @extend .heading-xlarge;
   margin-right: 6%;

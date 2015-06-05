@@ -10,4 +10,8 @@ class BaseController < ApplicationController
   def user_not_authorized
     render file: "public/403.html", :status => :not_found, :layout => false
   end
+
+  def client
+    @client ||= ServiceRegistry.service(:auth_api_client).new(session[:user_token])
+  end
 end

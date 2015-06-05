@@ -1,0 +1,86 @@
+@import "colours_extensions";
+@import "conditionals";
+@import "elements/elements-typography";
+
+.grid-row {
+  overflow: hidden;
+  margin-right: 0;
+}
+
+.sidebar {
+  // trick for making the sidebar background colour full height
+  margin-bottom: -101%;
+  padding-bottom: 101%;
+  background-color: $sidebar-background;
+
+  .status {
+    margin: 0 -15px;
+    padding: 20px;
+    border-bottom: 1px solid $grey-3;
+
+    h2 {
+      margin: 0;
+      padding: 10px 15px 5px;
+      @include core-36;
+
+      .time {
+        display: block;
+        font-size: 28px;
+        padding: 15px 0;
+      }
+    }
+
+    &.status-submitted {
+      background-color: $submitted-defence-request-tint;
+
+      h2 {
+        border-left: 6px solid $submitted-defence-request;
+      }
+    }
+
+    &.status-accepted {
+      background-color: $accepted-defence-request-tint;
+
+      h2 {
+        border-left: 6px solid $accepted-defence-request;
+      }
+    }
+
+    &.status-completed {
+      background-color: $completed-defence-request-tint;
+
+      h2 {
+        border-left: 6px solid $completed-defence-request;
+      }
+    }
+
+    // temporary CSS clock icon, may not use, placeholder for now
+    .clock {
+      width: 1em;
+      height: 1em;
+      display: inline-block;
+      position: relative;
+      border: 0.09em solid #0b0c0c;
+      border-radius: 1em;
+      margin-right: 5px;
+      margin-bottom: -9px;
+      font-size: 30px;
+
+      .lte-ie8 & {
+        display: none;
+      }
+    }
+
+    .clock:after {
+      content: '';
+      position: absolute;
+      display: block;
+      width: 0.3em;
+      height: 0.4em;
+      left: 0.45em;
+      top: 0.075em;
+      border-left: 0.09em solid #0b0c0c;
+      border-bottom: 0.09em solid #0b0c0c;
+    }
+  }
+}

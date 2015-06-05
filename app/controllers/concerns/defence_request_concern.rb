@@ -3,7 +3,7 @@ module DefenceRequestConcern
   private
 
   def find_defence_request
-    @defence_request = DefenceRequest.find(params[defence_request_id])
+    @defence_request = DefenceRequestPresenter.new client, DefenceRequest.find(params[defence_request_id])
   end
 
   def defence_request

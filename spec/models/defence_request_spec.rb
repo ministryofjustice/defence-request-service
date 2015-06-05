@@ -1,6 +1,24 @@
 require "rails_helper"
 
 RSpec.describe DefenceRequest, type: :model do
+  describe "state_updated_at" do
+    subject { FactoryGirl.create :defence_request }
+
+    it "is set equal created_at when creating" do
+      expect(subject.state_updated_at).to be_within(1.second).of(subject.created_at)
+    end
+
+    it "does not change when saving changed attributes" do
+      subject.detainee_name = "Mr Villian"
+      expect { subject.save }.not_to change { subject.state_updated_at }
+    end
+
+    it "does update when the state attribute changes" do
+      subject.queue
+      expect { subject.save }.to change { subject.state_updated_at }
+    end
+  end
+
   describe "validations" do
     before { allow(subject).to receive(:detainee_name_not_given?).and_return(false) }
 
