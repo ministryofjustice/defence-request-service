@@ -1,20 +1,42 @@
 <h2><%= t('case_details') %></h2>
 <div class="case-details">
+
   <div class="form-group">
     <%= f.label :custody_number, label_text_for_form(attribute_name: 'custody_number'), class: "form-label-bold" %>
     <%= f.text_field :custody_number, label: t('custody_number'), class: 'text-field' %>
   </div>
 
-  <%= render('shared/date_time_form_part', attribute: :time_of_arrest, show_label: true, set_default_date: true, f: f) %>
+  <%= render('shared/date_time_form_part',
+             attribute: :time_of_arrest,
+             show_label: true,
+             dates: [Day::YESTERDAY, Day::TODAY],
+             initial_date_index: 1,
+             f: f) %>
 
   <% if @policy.add_case_time_of_arrival? %>
-    <%= render('shared/date_time_form_part', attribute: :time_of_arrival, show_label: true, set_default_date: true, f: f) %>
+    <%= render('shared/date_time_form_part',
+               attribute: :time_of_arrival,
+               show_label: true,
+               dates: [Day::YESTERDAY, Day::TODAY],
+               initial_date_index: 1,
+               f: f) %>
   <% end %>
 
-  <%= render('shared/date_time_form_part', attribute: :time_of_detention_authorised, show_label: true, set_default_date: true, f: f) %>
+  <%= render('shared/date_time_form_part',
+             attribute: :time_of_detention_authorised,
+             show_label: true,
+             dates: [Day::YESTERDAY, Day::TODAY],
+             initial_date_index: 1,
+             f: f) %>
 
   <% if @policy.interview_start_time_edit? %>
-    <%= render('shared/date_time_form_part', attribute: :interview_start_time, show_label: true, optional: true, hint_label: :interview_start_time_hint , set_default_date: false, f: f) %>
+    <%= render('shared/date_time_form_part',
+               attribute: :interview_start_time,
+               show_label: true,
+               hint_label: :interview_start_time_hint,
+               optional: true,
+               dates: [Day::TODAY, Day::TOMORROW],
+               f: f) %>
   <% end %>
 
   <%= render('defence_requests/form_partials/case_details', f: f) if @policy.create? %>
