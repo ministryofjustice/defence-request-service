@@ -101,14 +101,6 @@ FactoryGirl.define do
     investigating_officer_contact_number "0207 111 0000"
   end
 
-  trait :with_time_of_arrest do
-    time_of_arrest now
-  end
-
-  trait :with_time_of_detention_authorised do
-    time_of_detention_authorised now
-  end
-
   trait :unfit_for_interview do
     fit_for_interview false
     unfit_for_interview_reason "Drunk as a skunk"

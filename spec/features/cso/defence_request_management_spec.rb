@@ -130,9 +130,7 @@ RSpec.feature "Custody Suite Officers managing defence requests" do
               :with_circumstance_of_arrest,
               :with_dscc_number,
               :with_interpreter_required,
-              :with_investigating_officer,
-              :with_time_of_arrest,
-              :with_time_of_detention_authorised,
+              :with_investigating_officer
             )
 
             login_with cso_user
