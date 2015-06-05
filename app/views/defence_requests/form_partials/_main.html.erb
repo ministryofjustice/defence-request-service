@@ -1,9 +1,13 @@
 <div id='main-form-body'>
   <%= render('defence_requests/form_partials/solicitor', f: f) %>
 
-  <%= render('defence_requests/form_partials/detainee', f: f) %>
+  <% if @part.nil? || @part == "detainee_details" %>
+      <%= render('defence_requests/form_partials/detainee', f: f) %>
+  <% end %>
 
-  <%= render('defence_requests/form_partials/case', f: f) %>
+  <% if @part.nil? || @part == "detention_details" %>
+      <%= render('defence_requests/form_partials/case', f: f) %>
+  <% end %>
 
   <%= render('defence_requests/form_partials/form_actions', f: f) %>
 </div>

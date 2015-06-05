@@ -27,8 +27,8 @@ class DefenceRequestsController < BaseController
   end
 
   def edit
+    @part = params[:part]
     if @defence_request.draft?
-      @part = params[:part]
       render :edit_draft
     else
       render :edit

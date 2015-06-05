@@ -25,6 +25,8 @@ FactoryGirl.define do
     fit_for_interview true
     interpreter_required false
     detainee_address_not_given "1"
+    time_of_arrest now
+    time_of_detention_authorised now
   end
 
   trait :draft do
