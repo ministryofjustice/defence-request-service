@@ -77,6 +77,21 @@ class DefenceRequest < ActiveRecord::Base
               "Brighton Scheme 2",
               "Brighton Scheme 3"]
 
+  # We want to have state_updated_at initialized when the first state is entered when DefenceRequest is created
+  def timestamp_attributes_for_create
+    super + [:state_updated_at]
+  end
+
+  # We want to record when the most recent state transition took place so we touch the state_updated_at
+  # timestamp when saving a new state
+  def timestamp_attributes_for_update
+    if state_changed?
+      super + [:state_updated_at]
+    else
+      super
+    end
+  end
+
   def resend_details
     send_solicitor_case_details
   end
