@@ -4,6 +4,17 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   include ActionView::Helpers::TagHelper
   include ActionView::Context
 
+  def form_group(attribute, options={}, &block)
+    classes = ["form-group"]
+    classes << options[:class] if options[:class].present?
+    classes << "error" if error_for?(attribute)
+
+    content_tag(:div, class: classes.join(" "), id: id_for(attribute)) do
+      label = label(attribute, label_content_for(attribute, nil))
+      label + capture(&block)
+    end
+  end
+
   def text_field_input(attribute, options={}, &block)
     text_input attribute, :text_field, options, &block
   end
@@ -147,13 +158,11 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def text_input(attribute, input, options, &block)
-    id = id_for(attribute).blank? ? "" : id_for(attribute)
-
     classes = ["form-group"]
     classes << options[:class] if options[:class].present?
     classes << "error" if error_for?(attribute)
 
-    content_tag(:div, class: classes.join(" "), id: id) do
+    content_tag(:div, class: classes.join(" "), id: id_for(attribute)) do
       input_options = options.merge(class: options[:input_class], data: options[:input_data])
       input_options.delete(:label)
       input_options.delete(:input_class)

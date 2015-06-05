@@ -97,4 +97,18 @@ RSpec::describe "LabellingFormBuilder", type: :helper do
     end
   end
 
+  describe "#form_group" do
+    let(:row) { form.form_group(:date_of_birth) {} }
+
+    it "outputs the correct form element" do
+      expect(row).to contain_css_selectors([".form-group", ".form-group label"])
+    end
+
+    it "shows errors inside the label" do
+      messages = double("error_messages", messages: { date_of_birth: ["date cannot be blank"] })
+      expect(defence_request).to receive(:errors).at_least(:once).and_return(messages)
+      expect(row).to only_show_errors_inside(:label, error_css: "label span.error-message")
+    end
+  end
+
 end
