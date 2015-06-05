@@ -38,10 +38,10 @@
 <% end %>
 
 <% content_for :sidebar do %>
-  <div class="status status-submitted">
+  <div class="<%= "status status-#{@defence_request.state_class}" %>">
     <h2>
-      Accepted
-      <span class="time"><i class="clock"></i> 18:23:16</span class="time">
+      <%= @defence_request.state_text %>
+      <span class="time"><i class="clock"></i><%= @defence_request.last_action_time %></span>
     </h2>
   </div>
 <% end %>

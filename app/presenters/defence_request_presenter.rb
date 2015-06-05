@@ -25,6 +25,19 @@ class DefenceRequestPresenter < SimpleDelegator
     end
   end
 
+  def queued_at_time
+    created_at.strftime("%H:%M:%S")
+  end
+  alias :submitted_time :queued_at_time
+  alias :accepted_time :queued_at_time
+  alias :completed_time :queued_at_time
+  alias :closed_time :completed_time
+  alias :aborted_time :completed_time
+
+  def last_action_time
+    send "#{state_class}_time"
+  end
+
   private
 
   attr_reader :client
