@@ -32,7 +32,7 @@ class DefenceRequestPresenter < SimpleDelegator
 
   private
 
-  attr_reader :client, :defence_request
+  attr_reader :client
 
   def defence_request
     __getobj__
