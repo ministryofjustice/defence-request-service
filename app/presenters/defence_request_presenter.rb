@@ -25,24 +25,24 @@ class DefenceRequestPresenter < SimpleDelegator
     end
   end
 
-  def queued_at_time
-    created_at.strftime("%H:%M:%S")
+  def state_updated_time
+    state_updated_at.strftime("%H:%M:%S")
   end
-  alias :submitted_time :queued_at_time
-  alias :accepted_time :queued_at_time
-  alias :completed_time :queued_at_time
-  alias :closed_time :completed_time
-  alias :aborted_time :completed_time
-
-  def last_action_time
-    send "#{state_class}_time"
-  end
+  alias :last_action_time :state_updated_time
 
   private
 
-  attr_reader :client
+  attr_reader :client, :defence_request
+
+  def defence_request
+    __getobj__
+  end
 
   def organisation
     @organisation ||= client.organisation(organisation_uid) if organisation_uid
+  end
+
+  def state_updated_at
+    defence_request.state_updated_at || defence_request.updated_at
   end
 end

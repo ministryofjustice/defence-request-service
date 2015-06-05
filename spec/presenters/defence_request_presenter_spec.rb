@@ -9,6 +9,15 @@ RSpec.describe DefenceRequestPresenter do
     DefenceRequest.available_states.map(&:to_s) - ["queued", "acknowledged"]
   end
 
+  describe "state_updated_time" do
+    let(:timestamp) { Time.parse("2015/01/01 14:51:31") }
+    let(:defence_request) { FactoryGirl.build :defence_request, state_updated_at: timestamp }
+
+    it "formats the state_updated_at timestamp" do
+      expect(subject.state_updated_time).to eq("14:51:31")
+    end
+  end
+
   describe "state_text" do
     it "returns the state_class capitalized" do
       expect(subject).to receive(:state_class).and_return "foo"
