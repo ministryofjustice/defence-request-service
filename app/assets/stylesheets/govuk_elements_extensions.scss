@@ -15,6 +15,11 @@ $path: "";
 
 $disable-background: #eee;
 
+@mixin ie-address {
+  float: none;
+  display: inline-block;
+}
+
 #page-container {
   @extend %site-width-container;
 }
@@ -265,17 +270,34 @@ fieldset.time-select select {
 }
 
 dl.labels {
+  margin-bottom: 1em;
+  float: left;
+  clear: both;
   dt {
     float: left;
+    clear: both;
     margin-right: 0.5em;
-    line-height: 2em;
+    margin-bottom: 0.75em;
     &:after {
       content: ":";
     }
   }
   dd {
+    float: left;
     font-weight: bold;
-    line-height: 2em;
+    margin-bottom: 0.75em;
+
+    * html & { //IE6 hack
+      @include ie-address;
+    }
+    *:first-child+html & { //IE7 hack
+      @include ie-address;
+    }
+
+    &.multi-line {
+      white-space: pre-line;
+      line-height: 1.4em;
+    }
   }
 }
 
