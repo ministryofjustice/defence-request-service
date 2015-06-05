@@ -46,6 +46,14 @@
       }
     }
 
+    &.status-completed {
+      background-color: $completed-defence-request-tint;
+
+      h2 {
+        border-left: 6px solid $completed-defence-request;
+      }
+    }
+
     // temporary CSS clock icon, may not use, placeholder for now
     .clock {
       width: 1em;
