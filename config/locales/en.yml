@@ -10,7 +10,13 @@ en:
     detainee_address:
       label: Address
     appropriate_adult_reason:
-      label: "Because the detainee is"
+      label: Because the detainee is
+    unfit_for_interview_reason:
+      label: Reasons
+    time_of_arrest:
+      label: Arrest time
+    time_of_arrival:
+      label: Arrival time
 
   "no": "No"
   "yes": "Yes"
@@ -154,7 +160,6 @@ en:
   transgender: Transgender
   transition_info: Reason aborted
   unavailable: "Unavailable"
-  unfit_for_interview_reasons: Reasons
   update: "Update"
   update_and_accept: "Update and Accept"
   update_from: "Update from"

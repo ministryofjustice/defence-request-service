@@ -2,28 +2,37 @@
 <div class="case-details">
   <%= f.text_field_input(:custody_number) %>
 
-  <%= render('shared/date_time_form_part',
-             attribute: :time_of_arrest,
-             show_label: true,
-             dates: [Day::YESTERDAY, Day::TODAY],
-             initial_date_index: 1,
-             f: f) %>
-
-  <% if @policy.add_case_time_of_arrival? %>
+  <%= f.form_group(:time_of_arrest) do %>
+    <%# TODO: inner %>
     <%= render('shared/date_time_form_part',
-               attribute: :time_of_arrival,
+               attribute: :time_of_arrest,
                show_label: true,
                dates: [Day::YESTERDAY, Day::TODAY],
                initial_date_index: 1,
                f: f) %>
   <% end %>
 
-  <%= render('shared/date_time_form_part',
-             attribute: :time_of_detention_authorised,
-             show_label: true,
-             dates: [Day::YESTERDAY, Day::TODAY],
-             initial_date_index: 1,
-             f: f) %>
+  <% if @policy.add_case_time_of_arrival? %>
+    <%= f.form_group(:time_of_arrival) do %>
+      <%# TODO: inner %>
+      <%= render('shared/date_time_form_part',
+                 attribute: :time_of_arrival,
+                 show_label: true,
+                 dates: [Day::YESTERDAY, Day::TODAY],
+                 initial_date_index: 1,
+                 f: f) %>
+    <% end %>
+  <% end %>
+
+  <%= f.form_group(:time_of_detention_authorised) do %>
+    <%# TODO: inner %>
+    <%= render('shared/date_time_form_part',
+               attribute: :time_of_detention_authorised,
+               show_label: true,
+               dates: [Day::YESTERDAY, Day::TODAY],
+               initial_date_index: 1,
+               f: f) %>
+  <% end %>
 
   <% if @policy.interview_start_time_edit? %>
     <%= render('shared/date_time_form_part',

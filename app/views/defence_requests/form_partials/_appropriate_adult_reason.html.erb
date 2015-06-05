@@ -1,0 +1,10 @@
+<fieldset class="inline">
+  <label class="block-label form-label" for="defence_request_appropriate_adult_reason_detainee_juvenile">
+    <%= f.radio_button :appropriate_adult_reason, :detainee_juvenile, name: 'defence_request[appropriate_adult_reason]' %>
+    <%= t('detainee_juvenile') %>
+  </label>
+  <label class="block-label form-label" for="defence_request_appropriate_adult_reason_detainee_with_mental_issue">
+    <%= f.radio_button :appropriate_adult_reason, :detainee_with_mental_issue, name: 'defence_request[appropriate_adult_reason]' %>
+    <%= t('detainee_with_mental_issue') %>
+  </label>
+</fieldset>

@@ -1,0 +1,24 @@
+<% today, yesterday, initial_date, initial_date_type = data_chooser_setup(@defence_request.send(attribute), set_default_date) %>
+<fieldset class="inline time-select date-chooser">
+  <span class='hint block'><%= t('time_hint') %></span>
+  <%= f.fields_for attribute, @defence_request_form.fields[attribute] do |t| %>
+    <div class="date-field-wrapper">
+      <%= t.label :hour, t('hour'), class: "form-label" %>
+      <%= t.text_field :hour, size: 2, maxlength: 2, class: 'hour text-field' %>
+    </div>
+    <div class="date-field-wrapper">
+      <%= t.label :min, t('min'), class: "form-label" %>
+      <%= t.text_field :min, size: 2, maxlength: 2, class: 'minute text-field' %>
+    </div>
+    <div class="date-field-wrapper">-</div>
+    <div class="date-chooser-values">
+      <label class="date-chooser-select form-label js-only" data-initial-date="<%= initial_date_type %>">
+        <span class="yesterday" data-date-display="<%= yesterday.to_s :full %>"><%= t('yesterday') %></span>
+        <span class="today" data-date-display="<%= today.to_s :full %>"><%= t('today') %></span>
+      </label>
+      <div class="date-field-wrapper">
+        <%= t.text_field :date, class: "text-field date", value: date_formatter(initial_date) %>
+      </div>
+    </div>
+  <% end %>
+</fieldset>

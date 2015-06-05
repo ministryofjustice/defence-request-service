@@ -1,9 +1,8 @@
 <%= f.text_field_input(:offences) %>
 
-<div class="form-group">
-  <%= f.label :circumstances_of_arrest, label_text_for_form(attribute_name: 'circumstances_of_arrest'), class: "form-label-bold" %>
-  <%= f.text_area :circumstances_of_arrest, label: t('circumstances_of_arrest'), rows: '5', class: 'text-field text-field-wide' %>
-</div>
+<%= f.form_group(:circumstances_of_arrest) do %>
+  <% f.text_area :circumstances_of_arrest, label: t('circumstances_of_arrest'), rows: '5', class: 'text-field text-field-wide' %>
+<% end %>
 
 <%= f.radio_button_fieldset :fit_for_interview,
       label_text_for_form(attribute_name: "fit_for_interview_question"),
@@ -11,10 +10,9 @@
       choice: [ "true", "false" ]
 %>
 
-<div class="form-group panel-indent" data-show-when="defence_request_fit_for_interview_false">
-  <%= f.label :unfit_for_interview_reason, label_text_for_form(attribute_name: 'unfit_for_interview_reasons'), class: "form-label-bold" %>
-  <%= f.text_area :unfit_for_interview_reason, rows: '5', class: 'text-field text-field-wide' %>
-</div>
+<%= f.form_group(:unfit_for_interview_reason, class: "panel-indent", data: { "show-when" => "defence_request_fit_for_interview_false" } ) do %>
+  <% f.text_area :unfit_for_interview_reason, rows: '5', class: 'text-field text-field-wide' %>
+<% end %>
 
 <div class="form-group">
   <%= f.label :investigating_officer_name, label_text_for_form(attribute_name: 'investigating_officer_name', optional: true), class: "form-label-bold" %>
