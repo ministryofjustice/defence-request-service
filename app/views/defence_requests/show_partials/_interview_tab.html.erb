@@ -3,7 +3,11 @@
   <span class="hint"><%= t("interview_planning_help") %></span>
   <span class='hint block'><%= t('time_hint') %></span>
   <%= form_for(@defence_request, url: defence_request_interview_start_time_path(defence_request_id: @defence_request.id), method: :patch) do |f| %>
-    <%= render("shared/date_time_form_part", attribute: :interview_start_time, show_label: false, set_default_date: false, f: f) %>
+    <%= render("shared/date_time_form_part",
+               attribute: :interview_start_time,
+               show_label: false,
+               dates: [Day::TODAY, Day::TOMORROW, Day::DAY_AFTER_TOMORROW],
+               f: f) %>
     <%= f.submit(t("add_interview_start_time"), class: "button") %>
   <% end %>
 <% else %>

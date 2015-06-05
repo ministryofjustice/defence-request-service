@@ -5,7 +5,7 @@
 expectDateValueToEqual = (date, chooserDiv) ->
   expect(chooserDiv.find('.date').val()).toEqual date
 
-dateChooserHtml = (initialDate, dateValue) ->
+dateChooserHtml = (initialDateIndex, dateValue) ->
   $("""
   <body>
   <fieldset class="inline time-select date-chooser">
@@ -19,9 +19,10 @@ dateChooserHtml = (initialDate, dateValue) ->
       <input size="2" maxlength="2" class="minute text-field" type="text" name="defence_request[solicitor_time_of_arrival][min]" id="defence_request_solicitor_time_of_arrival_min" />
     </div>
     <div class="date-chooser-values">
-      <label class="date-chooser-select form-label js-only" data-initial-date="#{ initialDate }">
-        <span class="yesterday" data-date-display="30 April 2015"data-day="1" data-month="5" data-year="2015">Yesterday</span>
-        <span class="today" data-date-display="1 May 2015" data-day="30" data-month="4" data-year="2015">Today</span>
+      <label class="date-chooser-select form-label js-only" data-initial-date-index="#{ initialDateIndex }">
+        <span id="yesterday" class="date-chooser-link" data-date-display="30 April 2015">Yesterday</span>
+        <span id="today" class="date-chooser-link" data-date-display="1 May 2015">Today</span>
+        <span id="tomorrow" class="date-chooser-link" data-date-display="2 May 2015">Tomorrow</span>
       </label>
       <div class="date-field-wrapper">
         <label for="defence_request_solicitor_time_of_arrival_Date">Date</label>
@@ -38,9 +39,9 @@ dateChooserSetup = (element, context) ->
   chooserDivs = $(".date-chooser")
   context.chooserDiv = chooserDivs.eq(0)
   context.chooser = new window.DateChooser(context.chooserDiv)
-  context.today = context.chooserDiv.find('.today')
-  context.yesterday = context.chooserDiv.find('.yesterday')
-  context.day = context.chooserDiv.find('.day')
+  context.today = context.chooserDiv.find('#today')
+  context.yesterday = context.chooserDiv.find('#yesterday')
+  context.tomorrow = context.chooserDiv.find('#tomorrow')
 
 sharedBehaviourForClickingYesterday = (element, context) ->
   describe "clicking 'Yesterday'", ->
@@ -93,7 +94,7 @@ describe "DateChooser", ->
 
   describe "when initial date blank", ->
     beforeEach ->
-      element = dateChooserHtml("any_other_value", "")
+      element = dateChooserHtml("", "")
       dateChooserSetup(element, this)
 
     describe "after initialization", ->
@@ -109,7 +110,7 @@ describe "DateChooser", ->
 
   describe "when initial date not 'today' or 'yesterday'", ->
     beforeEach ->
-      element = dateChooserHtml("any_other_value", "1 Jan 2014")
+      element = dateChooserHtml("", "1 Jan 2014")
       dateChooserSetup(element, this)
 
     describe "after initialization", ->
@@ -125,7 +126,7 @@ describe "DateChooser", ->
 
   describe "when initial date 'yesterday'", ->
     beforeEach ->
-      element = dateChooserHtml("yesterday", "1 May 2015")
+      element = dateChooserHtml("yesterday", "30 April 2015")
       dateChooserSetup(element, this)
 
     describe "after initialization", ->
@@ -135,11 +136,11 @@ describe "DateChooser", ->
         expect(@yesterday.find('a').size()).toEqual 0
 
       it "leaves date values unchanged", ->
-        expectDateValueToEqual("1 May 2015", @chooserDiv)
+        expectDateValueToEqual("30 April 2015", @chooserDiv)
 
   describe "when initial date 'today'", ->
     beforeEach ->
-      element = dateChooserHtml("today", "31 April 2015")
+      element = dateChooserHtml("today", "1 May 2015")
       dateChooserSetup(element, this)
 
     describe "after initialization", ->
@@ -149,7 +150,7 @@ describe "DateChooser", ->
         expect(@today.find('a').size()).toEqual 0
 
       it "leaves date values unchanged", ->
-        expectDateValueToEqual("31 April 2015", @chooserDiv)
+        expectDateValueToEqual("1 May 2015", @chooserDiv)
 
     sharedBehaviourForClickingYesterday(element, this)
 

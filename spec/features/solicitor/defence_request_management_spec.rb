@@ -44,13 +44,13 @@ RSpec.feature "Solicitors managing defence requests" do
       expect(page).to have_content accepted_defence_request.detainee_name
     end
 
-    specify "can edit the expected arrival time from the show page of the request", :mock_auth_api do
+    specify "can edit the expected arrival time from the show page of the request", :mock_auth_api  do
       login_with solicitor_user
       click_link "Case details for #{accepted_defence_request.dscc_number}"
       click_link "Estimate time of arrival"
 
       expect(page).to have_css ".date-chooser-select.js-only"
-      enter_time hour: "01", min: "12"
+      enter_time date: "1 Apr 2002", hour: "01", min: "12"
       click_button "Save"
       expect(find("#solicitor_time_of_arrival")).to have_content "01:12"
 
@@ -71,7 +71,7 @@ RSpec.feature "Solicitors managing defence requests" do
       login_with solicitor_user
       click_link "Case details for #{accepted_defence_request.dscc_number}"
       click_link "Estimate time of arrival"
-      enter_time hour: "23", min: "02"
+      enter_time date: "1 Apr 2001", hour: "23", min: "02"
       click_button "Save"
 
       expect(find("#solicitor_time_of_arrival")).to have_content "23:02"
@@ -86,7 +86,7 @@ RSpec.feature "Solicitors managing defence requests" do
       expect(find("#solicitor_time_of_arrival")).to have_content "00:03"
 
       click_link "Update time of arrival"
-      click_link "Yesterday"
+      click_link "Tomorrow"
       enter_time hour: "23", min: "59"
       click_button "Save"
       expect(find("#solicitor_time_of_arrival")).to have_content "23:59"
