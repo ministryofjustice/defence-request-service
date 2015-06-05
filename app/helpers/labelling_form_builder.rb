@@ -7,9 +7,12 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   def form_group(attribute, options={}, &block)
     classes = ["form-group"]
     classes << options[:class] if options[:class].present?
-    classes << "error" if error_for?(attribute)
+    if error_for?(attribute)
+      classes.delete("panel-indent")
+      classes << "error"
+    end
 
-    content_tag(:div, class: classes.join(" "), id: id_for(attribute)) do
+    content_tag(:div, class: classes.join(" "), id: id_for(attribute), data: options[:data]) do
       label = label(attribute, label_content_for(attribute, nil))
       label + capture(&block)
     end
@@ -24,7 +27,6 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     translation_key = translation_key(attribute)
     raise "TBD: #{translation_key} #{options[:choice]}" if options[:choice].is_a?(Hash)
 
-    virtual_pageview = options[:data] ? options[:data].delete("virtual-pageview") : nil
     input_class = options.delete(:input_class)
 
     options[:id] = id_for(attribute) unless id_for(attribute).blank?
@@ -33,15 +35,13 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
     options_class = options[:class][/inline/] ? "inline" : "options"
 
-    data_reverse = options.delete(:toggle_fieldset) ? " data-reverse=\"true\"" : ""
-
     classes = ["form-group"]
     classes << "error" if error_for?(attribute)
     content_tag(:div, class: classes) do
       fieldset_tag attribute, legend, options do
         content_tag(:div, class: options_class) do
           radios = options[:choice].map do |choice|
-            radio_button_row(attribute, choice, virtual_pageview, input_class)
+            radio_button_row(attribute, choice, input_class)
           end
           radios.join("\n").html_safe
         end
@@ -129,7 +129,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     options[:hint] ? "<span class='hint block'>#{options[:hint]}</span>".html_safe : nil
   end
 
-  def radio_button_row(attribute, choice, virtual_pageview, input_class)
+  def radio_button_row(attribute, choice, input_class)
     translation_key = translation_key(attribute, suffix: choice)
 
     translation = I18n.t(translation_key)

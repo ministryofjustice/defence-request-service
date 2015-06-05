@@ -31,19 +31,9 @@
       choice: [ "true", "false" ]
 %>
 
-<div class="form-group panel-indent" data-show-when="defence_request_appropriate_adult_true">
-  <fieldset class="inline">
-    <%= f.label :appropriate_adult_reason, label_text_for_form(attribute_name: 'appropriate_adult_reason') + ":", class: "form-label-bold" %>
-    <label class="block-label form-label" for="defence_request_appropriate_adult_reason_detainee_juvenile">
-      <%= f.radio_button :appropriate_adult_reason, :detainee_juvenile, name: 'defence_request[appropriate_adult_reason]' %>
-      <%= t('detainee_juvenile') %>
-    </label>
-    <label class="block-label form-label" for="defence_request_appropriate_adult_reason_detainee_with_mental_issue">
-      <%= f.radio_button :appropriate_adult_reason, :detainee_with_mental_issue, name: 'defence_request[appropriate_adult_reason]' %>
-      <%= t('detainee_with_mental_issue') %>
-    </label>
-  </fieldset>
-</div>
+<%= f.form_group(:appropriate_adult_reason, class: "panel-indent", data: { "show-when" => "defence_request_appropriate_adult_true" } ) do %>
+  <% render('defence_requests/form_partials/appropriate_adult_reason', f: f) %>
+<% end %>
 
 <%= f.radio_button_fieldset :interpreter_required,
       label_text_for_form(attribute_name: "interpreter_required_question"),
@@ -51,7 +41,6 @@
       choice: [ "true", "false" ]
 %>
 
-<div class="form-group panel-indent" data-show-when="defence_request_interpreter_required_true">
-  <%= f.label :interpreter_type, label_text_for_form(attribute_name: 'interpreter_type'), class: "form-label-bold" %>
-  <%= f.text_field :interpreter_type, class: 'text-field text-field-wide' %>
-</div>
+<%= f.form_group(:interpreter_type, class: "panel-indent", data: { "show-when" => "defence_request_interpreter_required_true" } ) do %>
+  <% f.text_field :interpreter_type, class: 'text-field text-field-wide' %>
+<% end %>

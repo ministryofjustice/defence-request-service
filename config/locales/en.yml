@@ -9,6 +9,9 @@ en:
       label: Name
     detainee_address:
       label: Address
+    appropriate_adult_reason:
+      label: "Because the detainee is"
+
   "no": "No"
   "yes": "Yes"
   "false": "No"
