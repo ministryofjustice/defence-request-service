@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe DefenceRequestPresenter do
   subject { DefenceRequestPresenter.new client, defence_request }
