@@ -27,21 +27,11 @@
   <% end %>
 </div>
 
-<div class="form-group">
-  <fieldset class="inline">
-    <%= f.label :appropriate_adult, label_text_for_form(attribute_name: 'appropriate_adult'), class: "form-label-bold" %>
-    <label class="block-label form-label" for="defence_request_appropriate_adult_true">
-      <%= f.radio_button :appropriate_adult, true, name: 'defence_request[appropriate_adult]',
-                         class: 'appropriate_adult_radio' %>
-      <%= t('yes') %>
-    </label>
-    <label class="block-label form-label" for="defence_request_appropriate_adult_false">
-      <%= f.radio_button :appropriate_adult, false, name: 'defence_request[appropriate_adult]',
-                         class: 'appropriate_adult_radio' %>
-      <%= t('no') %>
-    </label>
-  </fieldset>
-</div>
+<%= f.radio_button_fieldset :appropriate_adult,
+      label_text_for_form(attribute_name: "appropriate_adult"),
+      class: "radio inline",
+      choice: [ "true", "false" ]
+%>
 
 <div class="form-group panel-indent" data-show-when="defence_request_appropriate_adult_true">
   <fieldset class="inline">
@@ -57,21 +47,12 @@
   </fieldset>
 </div>
 
-<div class="form-group">
-  <fieldset class="inline">
-    <%= f.label :interpreter_required, label_text_for_form(attribute_name: 'interpreter_required_question'), class: "form-label-bold" %>
-    <label class="block-label form-label" for="defence_request_interpreter_required_true">
-      <%= f.radio_button :interpreter_required, true, name: 'defence_request[interpreter_required]',
-                         class: 'interpreter_required_radio' %>
-      <%= t('yes') %>
-    </label>
-    <label class="block-label form-label" for="defence_request_interpreter_required_false">
-      <%= f.radio_button :interpreter_required, false, name: 'defence_request[interpreter_required]',
-                         class: 'interpreter_required_radio' %>
-      <%= t('no') %>
-    </label>
-  </fieldset>
-</div>
+<%= f.radio_button_fieldset :interpreter_required,
+      label_text_for_form(attribute_name: "interpreter_required_question"),
+      class: "radio inline",
+      choice: [ "true", "false" ]
+%>
+
 <div class="form-group panel-indent" data-show-when="defence_request_interpreter_required_true">
   <%= f.label :interpreter_type, label_text_for_form(attribute_name: 'interpreter_type'), class: "form-label-bold" %>
   <%= f.text_field :interpreter_type, class: 'text-field text-field-wide' %>

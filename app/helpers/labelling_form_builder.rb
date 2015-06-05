@@ -121,6 +121,8 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     translation_key = translation_key(attribute, choice: choice)
 
     translation = I18n.t(translation_key)
+    translation = I18n.t(choice.downcase) if translation[/translation missing/]
+
     raise "translation missing: #{translation_key}" if translation[/translation missing/]
 
     translation = translation_key if translation[/translation missing/]
