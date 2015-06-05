@@ -17,9 +17,9 @@ module ApplicationHelper
   def object_error_messages(object)
     active_model_messages = object.errors.messages
     content_tag(:ul, class: "error-summary-list") do
-      active_model_messages.each do |field_name, field_messages|
+      active_model_messages.each do |attribute, field_messages|
         parent_id = prefix_for(object)
-        concat errors_for_field(parent_id, field_name, field_messages)
+        concat errors_for_field(parent_id, attribute, field_messages)
       end
     end
   end
@@ -72,12 +72,12 @@ module ApplicationHelper
   end
 
   # Creates key for lookup of translation text.
-  # E.g. translation_key(gender, parent_key: 'defence_request', choice: 'male')
+  # E.g. translation_key(gender, parent_key: "defence_request", choice: "male")
   #      returns "defence_request.gender.male"
   def translation_key(attribute, options={})
     prefix = options[:parent_key]
     key = "#{prefix}.#{attribute}".squeeze(".")
-    key += ".#{options[:choice].downcase}" if options[:choice].present?
+    key += ".#{options[:suffix].downcase}" if options[:suffix].present?
     key.gsub!(/\.\d+\./, ".")
     key
   end
@@ -86,6 +86,10 @@ module ApplicationHelper
     suffix = [attribute, object.send(attribute)].join(".")
     key = translation_key(suffix, parent_key: prefix_for(object))
     t(key)
+  end
+
+  def parent_key(parent_id)
+    parent_id.gsub("_",".").sub("defence.request", "defence_request")
   end
 
   private
@@ -99,10 +103,14 @@ module ApplicationHelper
     "#{field_id}_error"
   end
 
-  def errors_for_field(parent_id, field_name, field_messages)
+  def errors_for_field(parent_id, attribute, field_messages)
     content_tag :li do
-      content_tag :a, href: "#" + error_id_for(parent_id, field_name) do
-        "#{t(field_name)}: #{field_messages.join(", ")}".html_safe
+      content_tag :a, href: "#" + error_id_for(parent_id, attribute) do
+        key = translation_key(attribute, parent_key: parent_key(parent_id), suffix: "label")
+        label = t(key) rescue nil
+
+        label = t(attribute) if label.nil? || label[/translation missing/]
+        "#{label}: #{field_messages.join(", ")}".html_safe
       end
     end
   end

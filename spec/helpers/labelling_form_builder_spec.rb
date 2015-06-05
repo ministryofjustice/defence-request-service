@@ -9,11 +9,15 @@ class MockTemplate
   def translation_key(attribute, options={})
     "defence_request.gender"
   end
+
+  def parent_key(parent_id)
+    "defence_request"
+  end
 end
 
 RSpec::Matchers.define :only_show_errors_inside do |expected, opts|
   opts = opts || {}
-  opts = { error_css: "span.error" }.merge(opts)
+  opts = { error_css: "span.error-message" }.merge(opts)
   match do |actual|
     doc                             = Nokogiri::HTML(actual)
     @count_of_all_error_messages    = doc.css(opts[:error_css]).count
@@ -78,4 +82,19 @@ RSpec::describe "LabellingFormBuilder", type: :helper do
       expect(fieldset).to only_show_errors_inside(:legend, error_css: "legend span.error-message")
     end
   end
+
+  describe "#text_field_input" do
+    let(:row) { form.text_field_input(:detainee_name) }
+
+    it "outputs the correct form element" do
+      expect(row).to contain_css_selectors([".form-group input[type=text]", ".form-group label"])
+    end
+
+    it "shows errors inside the label" do
+      messages = double("error_messages", messages: { detainee_name: ["date cannot be blank"] })
+      expect(defence_request).to receive(:errors).at_least(:once).and_return(messages)
+      expect(row).to only_show_errors_inside(:label, error_css: "label span.error-message")
+    end
+  end
+
 end

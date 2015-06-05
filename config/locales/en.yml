@@ -5,6 +5,10 @@ en:
       female: Female
       transgender: Transgender
       unspecified: Unspecified
+    detainee_name:
+      label: Name
+    detainee_address:
+      label: Address
   "no": "No"
   "yes": "Yes"
   "false": "No"
@@ -63,7 +67,6 @@ en:
   delete: "Delete"
   details: "Details"
   detainee: "Detainee"
-  detainee_address: "Address"
   detainee_details: "Detainee details"
   detainee_dob: "Detainee date of birth"
   detainee_juvenile: A juvenile

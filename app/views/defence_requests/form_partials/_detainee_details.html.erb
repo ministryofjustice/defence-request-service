@@ -1,13 +1,11 @@
 
-<div class="form-group">
-  <%= f.label :detainee_name, label_text_for_form(attribute_name: 'name'), class: "form-label-bold" %>
-  <%= f.text_field :detainee_name, class: 'text-field text-field-wide not-given-check',
-                    data: { "disable-when" => "defence_request_detainee_name_not_given" } %>
-  <%= f.label :detainee_name_not_given, class: 'form-checkbox' do %>
+<%= f.text_field_input(:detainee_name,
+    input_data: { "disable-when" => "defence_request_detainee_name_not_given"}) do %>
+  <% f.label :detainee_name_not_given, class: 'form-checkbox' do %>
     <%= f.check_box :detainee_name_not_given %>
     <%= t("not_given") -%>
   <% end %>
-</div>
+<% end %>
 
 <%= f.radio_button_fieldset :gender,
       label_text_for_form(attribute_name: "gender"),
@@ -18,8 +16,8 @@
 <%= render('defence_requests/form_partials/detainee_date_of_birth', f: f) %>
 
 <div class="form-group">
-  <%= f.label :detainee_address, label_text_for_form(attribute_name: 'detainee_address'), class: "form-label-bold" %>
-  <%= f.text_area :detainee_address, rows: '5', class: 'text-field text-field-wide not-given-check',
+  <%= f.label :detainee_address, label_text_for_form(attribute_name: 'defence_request.detainee_address.label'), class: "form-label-bold" %>
+  <%= f.text_field :detainee_address, class: 'text-field text-field-wide not-given-check',
                     data: { "disable-when" => "defence_request_detainee_address_not_given" } %>
   <%= f.label :detainee_address_not_given, class: 'form-checkbox' do %>
     <%= f.check_box :detainee_address_not_given %>
