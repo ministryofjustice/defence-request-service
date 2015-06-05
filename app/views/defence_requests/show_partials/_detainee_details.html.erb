@@ -1,5 +1,5 @@
 <dl class="labels">
-  <%= display_value "gender", t(@defence_request.gender) %>
+  <%= display_value "gender", t_for(@defence_request, :gender) %>
   <%= display_value "date_of_birth", date_not_given_formatter(@defence_request, :date_of_birth) %>
 
   <%= display_value "detainee_address", not_given_formatter(@defence_request, :detainee_address), class: "multi-line" %>

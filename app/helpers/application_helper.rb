@@ -14,18 +14,12 @@ module ApplicationHelper
     end
   end
 
-  def object_error_messages(active_model_messages)
+  def object_error_messages(object)
+    active_model_messages = object.errors.messages
     content_tag(:ul, class: "error-summary-list") do
       active_model_messages.each do |field_name, field_messages|
-        concat errors_for_field(field_name, field_messages)
-      end
-    end
-  end
-
-  def errors_for_field(field_name, field_messages)
-    content_tag :li do
-      content_tag :a do
-        "#{t(field_name)}: #{field_messages.join(', ')}".html_safe
+        parent_id = prefix_for(object)
+        concat errors_for_field(parent_id, field_name, field_messages)
       end
     end
   end
@@ -75,5 +69,41 @@ module ApplicationHelper
 
   def tab_active_class(condition)
     "is-active" if condition
+  end
+
+  # Creates key for lookup of translation text.
+  # E.g. translation_key(gender, parent_key: 'defence_request', choice: 'male')
+  #      returns "defence_request.gender.male"
+  def translation_key(attribute, options={})
+    prefix = options[:parent_key]
+    key = "#{prefix}.#{attribute}".squeeze(".")
+    key += ".#{options[:choice].downcase}" if options[:choice].present?
+    key.gsub!(/\.\d+\./, ".")
+    key
+  end
+
+  def t_for(object, attribute)
+    suffix = [attribute, object.send(attribute)].join(".")
+    key = translation_key(suffix, parent_key: prefix_for(object))
+    t(key)
+  end
+
+  private
+
+  def prefix_for(object)
+    object.class.name.tableize.singularize.chomp("_form")
+  end
+
+  def error_id_for(parent_id, attribute)
+    field_id = "#{parent_id}_#{attribute}".squeeze("_")
+    "#{field_id}_error"
+  end
+
+  def errors_for_field(parent_id, field_name, field_messages)
+    content_tag :li do
+      content_tag :a, href: "#" + error_id_for(parent_id, field_name) do
+        "#{t(field_name)}: #{field_messages.join(", ")}".html_safe
+      end
+    end
   end
 end

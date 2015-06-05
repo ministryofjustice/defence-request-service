@@ -1,4 +1,10 @@
 en:
+  defence_request:
+    gender:
+      male: Male
+      female: Female
+      transgender: Transgender
+      unspecified: Unspecified
   "no": "No"
   "yes": "Yes"
   abort: "Abort"
@@ -72,7 +78,6 @@ en:
   error_summary_heading: You need to fix the errors on this page before continuing.
   expected_time_of_arrival: "Solicitor Time of Arrival"
   expired: "Session expired"
-  female: "Female"
   fit_for_interview: Fit for interview
   fit_for_interview_question: Is the detainee fit for interview?
   full_name: "Full Name"
@@ -95,7 +100,6 @@ en:
   investigating_officer_name: Investigating officer name
   investigating_officer_shoulder_number: Investigating officer shoulder number
   legal_advice_request: "Legal advice request"
-  male: "Male"
   min: "Min"
   month: "Month"
   name: "Name"
@@ -147,7 +151,6 @@ en:
   update_and_accept: "Update and Accept"
   update_from: "Update from"
   update_time_of_arrival: "Update time of arrival"
-  unspecified: "Unspecified"
   view_the_case_details: "View the case details"
   what_type_is_being_requested: "What type of solicitor is being requested?"
   year: "Year"

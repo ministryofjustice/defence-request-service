@@ -1,3 +1,4 @@
+
 <div class="form-group">
   <%= f.label :detainee_name, label_text_for_form(attribute_name: 'name'), class: "form-label-bold" %>
   <%= f.text_field :detainee_name, class: 'text-field text-field-wide not-given-check',
@@ -8,27 +9,11 @@
   <% end %>
 </div>
 
-<div class="form-group">
-  <fieldset class="inline">
-    <%= f.label :gender, label_text_for_form(attribute_name: 'gender'), class: "form-label-bold" %>
-    <%= f.label :gender_male, class: "block-label form-label" do %>
-      <%= f.radio_button :gender, :male, name: 'defence_request[gender]' %>
-      <%= t('male') %>
-    <%- end %>
-    <%= f.label :gender_female, class: "block-label form-label" do %>
-      <%= f.radio_button :gender, :female, name: 'defence_request[gender]' %>
-      <%= t('female') %>
-    <%- end %>
-    <%= f.label :gender_transgender, class: "block-label form-label" do %>
-      <%= f.radio_button :gender, :transgender, name: 'defence_request[gender]' %>
-      <%= t('transgender') %>
-    <%- end %>
-    <%= f.label :gender_unspecified, class: "block-label form-label" do %>
-      <%= f.radio_button :gender, :unspecified, name: 'defence_request[gender]' %>
-      <%= t('unspecified') %>
-    <%- end %>
-  </fieldset>
-</div>
+<%= f.radio_button_fieldset :gender,
+      label_text_for_form(attribute_name: "gender"),
+      class: "radio inline",
+      choice: [ "male", "female", "transgender", "unspecified" ]
+%>
 
 <%= render('defence_requests/form_partials/detainee_date_of_birth', f: f) %>
 
