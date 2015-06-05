@@ -7,7 +7,7 @@
       <%= render("shared/date_time_form_part",
                  attribute: :solicitor_time_of_arrival,
                  show_label: false,
-                 dates: [Day::TODAY, Day::TOMORROW],
+                 dates: [Day::TODAY, Day::TOMORROW, Day::DAY_AFTER_TOMORROW],
                  f: f) %>
       <%= link_to(t('arrival_time_cancel'), defence_request_path(@defence_request), class: 'button') %>
       <%= f.submit(t('arrival_time_save'), class: 'button') %>

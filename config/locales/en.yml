@@ -51,6 +51,7 @@ en:
   date_of_birth: "Date of birth"
   date_time_hint: "eg. 28 04 1996 - 11 30"
   day: "Day"
+  day_after_tomorrow: "Day after tomorrow"
   delete: "Delete"
   details: "Details"
   detainee: "Detainee"

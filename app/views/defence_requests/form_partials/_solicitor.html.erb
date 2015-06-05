@@ -5,7 +5,7 @@
       <%= render('shared/date_time_form_part',
                  attribute: :solicitor_time_of_arrival,
                  show_label: true,
-                 dates: [Day::TODAY, Day::TOMORROW],
+                 dates: [Day::TODAY, Day::TOMORROW, Day::DAY_AFTER_TOMORROW],
                  f: f) %>
     </div>
   </div>
