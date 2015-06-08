@@ -14,10 +14,10 @@ RSpec.feature "Custody Suite Officers checking and submitting defence requests" 
     expect(page).to have_content("Changed address")
   end
 
-  specify "can edit detention details" do
+  specify "can edit case details" do
     login_and_create_defence_request
 
-    within ".detention-details" do
+    within ".case-details" do
       click_link "Change this"
     end
 

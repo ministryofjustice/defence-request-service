@@ -19,7 +19,7 @@ RSpec.feature "Custody Suite Officers editing defence requests" do
     login_and_view_defence_request
 
     click_link "Case details"
-    within ".detention-details" do
+    within ".case-details" do
       click_link "Change this"
     end
 
