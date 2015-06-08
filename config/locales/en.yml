@@ -1,22 +1,9 @@
 en:
   defence_request:
-    gender:
-      male: Male
-      female: Female
-      transgender: Transgender
-      unspecified: Unspecified
-    detainee_name:
-      label: Name
-    detainee_address:
-      label: Address
     appropriate_adult_reason:
       label: Because the detainee is
     unfit_for_interview_reason:
       label: Reasons
-    time_of_arrest:
-      label: Arrest time
-    time_of_arrival:
-      label: Arrival time
 
   "no": "No"
   "yes": "Yes"
@@ -92,6 +79,7 @@ en:
   error_summary_heading: You need to fix the errors on this page before continuing.
   expected_time_of_arrival: "Solicitor Time of Arrival"
   expired: "Session expired"
+  female: Female
   fit_for_interview: Fit for interview
   fit_for_interview_question: Is the detainee fit for interview?
   full_name: "Full Name"
@@ -114,6 +102,7 @@ en:
   investigating_officer_name: Investigating officer name
   investigating_officer_shoulder_number: Investigating officer shoulder number
   legal_advice_request: "Legal advice request"
+  male: Male
   min: "Min"
   month: "Month"
   name: "Name"
@@ -160,6 +149,7 @@ en:
   transgender: Transgender
   transition_info: Reason aborted
   unavailable: "Unavailable"
+  unspecified: Unspecified
   update: "Update"
   update_and_accept: "Update and Accept"
   update_from: "Update from"
@@ -232,6 +222,17 @@ en:
               invalid_day: "Day is invalid"
               invalid_hour: "Hour is invalid"
               invalid_min: "Minute is invalid"
+    attributes:
+      defence_request:
+        detainee_name: Name
+        detainee_address: Address
+        time_of_arrest: Arrest time
+        time_of_arrival: Arrival time
+
+        #TODO: The 2 below are a problem for errors
+        appropriate_adult_reason: Because the detainee is
+        unfit_for_interview_reason: Reasons
+
   activemodel:
     models:
       abort_defence_request_form: "Abort Defence Request"

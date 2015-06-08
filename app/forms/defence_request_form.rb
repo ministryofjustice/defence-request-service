@@ -14,10 +14,14 @@ class DefenceRequestForm
     def_delegator :@defence_request, "#{attr_name}_before_type_cast", attr_name
   end
 
-  def_delegators :@defence_request, :persisted?, :id
+  def_delegators :@defence_request, :persisted?, :id, :human_attribute
 
   def self.model_name
     ActiveModel::Name.new(self, nil, "DefenceRequest")
+  end
+
+  def self.human_attribute_name(*args)
+    DefenceRequest.human_attribute_name *args
   end
 
   def initialize(defence_request)

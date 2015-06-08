@@ -13,7 +13,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     end
 
     content_tag(:div, class: classes.join(" "), id: id_for(attribute), data: options[:data]) do
-      label = label(attribute, label_content_for(attribute, nil))
+      label = label(attribute, label_content_for(attribute))
       label + capture(&block)
     end
   end
@@ -24,11 +24,6 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
   # Defaults to "Yes" "No" labels on radio inputs
   def radio_button_fieldset(attribute, legend, options={})
-    translation_key = translation_key(attribute)
-    raise "TBD: #{translation_key} #{options[:choice]}" if options[:choice].is_a?(Hash)
-
-    input_class = options.delete(:input_class)
-
     options[:id] = id_for(attribute) unless id_for(attribute).blank?
 
     options[:choice] ||= [ "Yes", "No" ]
@@ -41,7 +36,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
       fieldset_tag attribute, legend, options do
         content_tag(:div, class: options_class) do
           radios = options[:choice].map do |choice|
-            radio_button_row(attribute, choice, input_class)
+            radio_button_row(attribute, choice)
           end
           radios.join("\n").html_safe
         end
@@ -50,13 +45,15 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def error_for?(attribute)
-    attribute_errors = error_message_for(attribute)
-    attribute_errors && !attribute_errors.empty?
+    !error_message_for(attribute).blank?
   end
 
   def error_span(attribute, options={})
-    content_tag(:span, class: "error-message", id: options[:id]) do
-      error_message_for(attribute)[0]
+    error_message = error_message_for attribute
+    unless error_message.blank?
+      content_tag(:span, class: "error-message", id: options[:id]) do
+        error_message_for(attribute)
+      end
     end
   end
 
@@ -80,20 +77,12 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     @object_name.to_s.tr("[]","_").squeeze("_")
   end
 
-  def parent_key
-    @template.parent_key(parent_id)
-  end
-
-  def translation_key(attribute, options={})
-    @template.translation_key attribute, options.merge(parent_key: parent_key)
-  end
-
   def id_for(attribute, default=nil)
     error_for?(attribute) ? error_id_for(attribute) : (default || "")
   end
 
-  def error_message_for(symbol)
-    @object.errors.messages[symbol]
+  def error_message_for(attribute)
+    @object.errors.messages.fetch attribute, ""
   end
 
   def options_for_fieldset(options)
@@ -105,46 +94,26 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def legend_for(attribute, legend_text, options)
-    label = label_content_for(attribute, legend_text, hint: options[:hint])
+    label = label_content_for(attribute, hint: options[:hint])
     content_tag(:legend, label)
   end
 
-  def label_content_for(attribute, label, options={})
-    translation_key = translation_key(attribute, suffix: "label")
-    translation = I18n.t(translation_key)
-    if translation[/translation missing/]
-      label ||= attribute.to_s.humanize
-    else
-      label = translation
-    end
-    label = ["<span class=\"form-label-bold\">#{label}</span>"]
-    hint = hint_span(options)
-    label << hint if hint
+  def label_content_for(attribute, options={})
+    label_text = @object.class.human_attribute_name attribute
+    label = ["<span class=\"form-label-bold\">#{label_text}</span>"]
+    label << hint_span(options.fetch(:hint, nil))
     label << error_span(attribute, options) if error_for?(attribute)
 
     label.join(" ").html_safe
   end
 
-  def hint_span(options)
-    options[:hint] ? "<span class='hint block'>#{options[:hint]}</span>".html_safe : nil
+  def hint_span(hint_text)
+    (hint_text.blank? ? "" : "<span class='hint block'>#{options[:hint]}</span>").html_safe
   end
 
-  def radio_button_row(attribute, choice, input_class)
-    translation_key = translation_key(attribute, suffix: choice)
-
-    translation = I18n.t(translation_key)
-    translation = I18n.t(choice.downcase) if translation[/translation missing/]
-
-    raise "translation missing: #{translation_key}" if translation[/translation missing/]
-
-    translation = translation_key if translation[/translation missing/]
-    label = translation unless translation[/translation missing/]
-
-    options = {}
-    options.merge!(class: input_class) if input_class
-
-    input = radio_button(attribute, choice, options)
-
+  def radio_button_row(attribute, choice)
+    label = I18n.t(choice)
+    input = radio_button(attribute, choice)
     id = input[/id="([^"]+)"/,1]
 
     content_tag(:div, class: "option") do
@@ -175,7 +144,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def labelled_input(attribute, input, input_options, label=nil)
-    label = label(attribute, label_content_for(attribute, label))
+    label = label(attribute, label_content_for(attribute))
 
     if max_length = max_length(attribute)
       input_options.merge!(maxlength: max_length)
