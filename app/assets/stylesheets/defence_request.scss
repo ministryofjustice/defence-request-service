@@ -50,13 +50,12 @@
 
 dl.time-at {
   background: $white;
-  padding: $gutter-one-quarter;
+  padding: $gutter-half;
   border: 1px solid $grey-1;
   margin: $gutter-one-quarter 0px;
-  max-width: 350px;
 
   dt {
-    @include bold-24();
+    @include core-24();
     display: inline-block;
     padding-top: 0.5em;
     padding-bottom: 0.3em;
