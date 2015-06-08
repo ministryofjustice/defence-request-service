@@ -17,13 +17,13 @@
   <%= render("defence_requests/show_partials/detainee_details") %>
 </section>
 
-<%= content_tag("div", class: "js-tabs cf", id: "edit-tabs", data: { activatefirst: "true" }) do %>
+<%= content_tag("div", class: "js-tabs cf", id: "edit-tabs", data: { activatefirst: @tab.blank? ? "true" : "false" }) do %>
   <div class="tabs-nav">
     <ul class="cf tabs js-tabs-nav js-only">
       <li>
         <a href="#interview"><%= t("solicitor_attendance") %></a>
       </li>
-      <li>
+      <li class="<%= tab_active_class(@tab == "case-details") %>">
         <a href="#case-details"><%= t("case_details") %></a>
       </li>
     </ul>

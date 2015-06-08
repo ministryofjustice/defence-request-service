@@ -55,6 +55,14 @@ module DefenceRequestsHelper
     end
   end
 
+  def defence_request_path_with_tab(tab)
+    if tab.present?
+      defence_request_path(tab: tab)
+    else
+      defence_request_path
+    end
+  end
+
   private
 
   #

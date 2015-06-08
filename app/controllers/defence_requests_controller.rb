@@ -1,6 +1,7 @@
 class DefenceRequestsController < BaseController
 
   include DefenceRequestConcern
+  include DefenceRequestsHelper
 
   before_action :find_defence_request, except: [:new, :create]
   before_action :new_defence_request_form, only: [:show, :new, :create, :edit, :update]
@@ -8,6 +9,7 @@ class DefenceRequestsController < BaseController
   before_action ->(c) { authorize_defence_request_access(c.action_name) }
 
   def show
+    @tab = params[:tab]
     if @defence_request.draft?
       render :show_draft
     else
@@ -39,8 +41,9 @@ class DefenceRequestsController < BaseController
         redirect_to(edit_defence_request_path, alert: flash_message(:failed_to_update_not_accepted, DefenceRequest))
       end
     else
+      @part = params[:part]
       if @defence_request_form.submit(defence_request_params)
-        redirect_to(defence_request_path, notice: flash_message(:update, DefenceRequest))
+        redirect_to(defence_request_path_with_tab(@part), notice: flash_message(:update, DefenceRequest))
       else
         render edit_template
       end

@@ -15,7 +15,7 @@ RSpec.feature "Custody Suite Officers editing defence requests" do
     expect(page).to have_content("Changed address")
   end
 
-  specify "can edit detention details" do
+  specify "can edit case details" do
     login_and_view_defence_request
 
     click_link "Case details"
@@ -26,7 +26,6 @@ RSpec.feature "Custody Suite Officers editing defence requests" do
     fill_in "defence_request_custody_number", with: "New number"
     click_button "Save changes"
 
-    click_link "Case details"
     expect(page).to have_content("New number")
   end
 
