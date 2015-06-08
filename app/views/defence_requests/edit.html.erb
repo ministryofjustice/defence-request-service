@@ -2,6 +2,6 @@
 
 <h1><%= t('edit_defence_request') %></h1>
 
-<%= form_for @defence_request, builder: LabellingFormBuilder do |f| %>
+<%= form_for @defence_request_form, builder: LabellingFormBuilder do |f| %>
   <%= render('defence_requests/form_partials/main', f: f) %>
 <% end if @policy.edit? %>

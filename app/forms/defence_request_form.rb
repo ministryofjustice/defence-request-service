@@ -14,6 +14,8 @@ class DefenceRequestForm
     def_delegator :@defence_request, "#{attr_name}_before_type_cast", attr_name
   end
 
+  def_delegators :@defence_request, :persisted?, :id
+
   def self.model_name
     ActiveModel::Name.new(self, nil, "DefenceRequest")
   end

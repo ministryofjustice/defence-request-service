@@ -95,7 +95,7 @@ module ApplicationHelper
   private
 
   def prefix_for(object)
-    object.class.name.tableize.singularize.chomp("_form")
+    object.model_name.i18n_key.to_s
   end
 
   def error_id_for(parent_id, attribute)
