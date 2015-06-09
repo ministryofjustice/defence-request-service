@@ -32,6 +32,9 @@ gem "moj_template", "~> 0.23.0"
 gem "govuk_frontend_toolkit", "~> 3.4.2"
 gem "govuk_elements_rails", "~> 0.3.0"
 
+# Font Awesome 3.x to support IE7
+gem "font-awesome-rails", "3.2.1.3"
+
 group :development do
   gem "guard-rspec", require: false
   gem "web-console", "~> 2.0"
