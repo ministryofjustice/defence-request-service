@@ -5,164 +5,341 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   include ActionView::Context
 
   def form_group(attribute, options={}, &block)
-    classes = ["form-group"]
-    classes << options[:class] if options[:class].present?
-    if error_for?(attribute)
-      classes.delete("panel-indent")
-      classes << "error"
-    end
-
-    content_tag(:div, class: classes.join(" "), id: id_for(attribute), data: options[:data]) do
-      label = label(attribute, label_content_for(attribute))
-      label + capture(&block)
-    end
+    FormGroup.new(@object, @object_name, attribute, options).content capture(&block)
   end
 
   def text_field_input(attribute, options={}, &block)
-    text_input attribute, :text_field, options, &block
+    content = block_given? ? capture(&block) : ""
+    value_proc = self.method(:text_field)
+    TextField.new(@object, @object_name, attribute, options, value_proc).content content
   end
 
   # Defaults to "Yes" "No" labels on radio inputs
   def radio_button_fieldset(attribute, legend, options={})
-    options[:id] = id_for(attribute) unless id_for(attribute).blank?
+    value_proc = self.method(:radio_button)
+    RadioButtonFieldset.new(@object, @object_name, attribute, legend, options, value_proc).content
+  end
 
-    options[:choice] ||= [ "Yes", "No" ]
+  class RadioButtonFieldset
+    include ActionView::Helpers::CaptureHelper
+    include ActionView::Helpers::TagHelper
+    include ActionView::Helpers::FormTagHelper
 
-    options_class = options[:class][/inline/] ? "inline" : "options"
+    attr_accessor :output_buffer
 
-    classes = ["form-group"]
-    classes << "error" if error_for?(attribute)
-    content_tag(:div, class: classes) do
-      fieldset_tag attribute, legend, options do
-        content_tag(:div, class: options_class) do
-          radios = options[:choice].map do |choice|
-            radio_button_row(attribute, choice)
+    def initialize(object, object_name, attribute, legend, options, radio_button_proc)
+      @object_name = object_name
+      @object = object
+      @attribute = attribute
+      @legend = legend
+      @class = options.fetch :class, nil
+      @options_class = (@class || "")[/inline/] ? "inline" : "options"
+      @choice = options.fetch :choice, ["Yes", "No"]
+      @radio_button_proc = radio_button_proc
+      build_classes!
+    end
+
+    def content
+      content_tag :div, div_options do
+        fieldset_tag fieldset_options do
+          content_tag :div, inner_div_options do
+            radios = @choice.map do |choice|
+              radio_button_row choice
+            end
+            radios.join("\n").html_safe
           end
-          radios.join("\n").html_safe
         end
       end
     end
-  end
 
-  def error_for?(attribute)
-    !error_message_for(attribute).blank?
-  end
+    private
 
-  def error_span(attribute, options={})
-    error_message = error_message_for attribute
-    unless error_message.blank?
-      content_tag(:span, class: "error-message", id: options[:id]) do
-        error_message_for(attribute)
+    def radio_button_row(choice)
+      label = I18n.t choice
+      id = value(choice)[/id="([^"]+)"/,1]
+
+      content_tag(:div, class: "option") do
+        content_tag(:label, for: id) do
+          [value(choice),  label].compact.join("\n").html_safe
+        end
       end
     end
-  end
 
-  def error_id_for(attribute)
-    field_id = "#{parent_id}_#{attribute}".squeeze("_")
-    "#{field_id}_error"
-  end
+    def value(choice)
+      @radio_button_proc.call @attribute, choice
+    end
 
-  def fieldset_tag(attribute, legend_text, options = {}, &block)
-    fieldset = tag(:fieldset, options_for_fieldset(options), true)
+    def div_options
+      @div_options ||= {}.tap { |opts|
+        opts[:class] = classes
+      }.compact
+    end
 
-    fieldset.safe_concat legend_for(attribute, legend_text, options) unless legend_text.blank?
+    def fieldset_options
+      @fieldset_options ||= {}.tap { |opts|
+        opts[:class] = classes
+      }.compact
+    end
 
-    fieldset.concat(capture(&block)) if block_given?
-    fieldset.safe_concat("</fieldset>")
-  end
+    def inner_div_options
+      @inner_div_options ||= {}.tap { |opts|
+        opts[:class] ||= @options_class
+      }.compact
+    end
 
-  private
+    def classes
+      @classes.join(" ")
+    end
 
-  def parent_id
-    @object_name.to_s.tr("[]","_").squeeze("_")
-  end
+    def build_classes!
+      @classes = ["form-group", @class].compact
+      @classes << "error" if error?
+    end
 
-  def id_for(attribute, default=nil)
-    error_for?(attribute) ? error_id_for(attribute) : (default || "")
-  end
-
-  def error_message_for(attribute)
-    @object.errors.messages.fetch attribute, ""
-  end
-
-  def options_for_fieldset(options)
-    options.delete(:class) if options[:class].blank?
-    options = {}.merge(options)
-    options.delete(:hint)
-    options.delete(:choice)
-    options
-  end
-
-  def legend_for(attribute, legend_text, options)
-    label = label_content_for(attribute, hint: options[:hint])
-    content_tag(:legend, label)
-  end
-
-  def label_content_for(attribute, options={})
-    label_text = @object.class.human_attribute_name attribute
-    label = ["<span class=\"form-label-bold\">#{label_text}</span>"]
-    label << hint_span(options.fetch(:hint, nil))
-    label << error_span(attribute, options) if error_for?(attribute)
-
-    label.join(" ").html_safe
-  end
-
-  def hint_span(hint_text)
-    (hint_text.blank? ? "" : "<span class='hint block'>#{options[:hint]}</span>").html_safe
-  end
-
-  def radio_button_row(attribute, choice)
-    label = I18n.t(choice)
-    input = radio_button(attribute, choice)
-    id = input[/id="([^"]+)"/,1]
-
-    content_tag(:div, class: "option") do
-      content_tag(:label, for: id) do
-        [
-          input,
-          label
-        ].compact.join("\n").html_safe
+    def error_span
+      unless error_message.blank?
+        content_tag(:span, class: "error-message") do
+          error_message
+        end
       end
     end
-  end
 
-  def text_input(attribute, input, options, &block)
-    classes = ["form-group"]
-    classes << options[:class] if options[:class].present?
-    classes << "error" if error_for?(attribute)
+    def fieldset_tag(options={}, &block)
+      (tag(:fieldset, options, true) +
+       content_tag(:legend, label_content) +
+       (block_given? ? capture(&block) : "") +
+       "</fieldset>").html_safe
+    end
 
-    content_tag(:div, class: classes.join(" "), id: id_for(attribute)) do
-      input_options = options.merge(class: options[:input_class], data: options[:input_data])
-      input_options.delete(:label)
-      input_options.delete(:input_class)
-      input_options.delete(:input_data)
+    def label
+      label_tag id, label_content
+    end
 
-      contents = labelled_input(attribute, input, input_options, options[:label])
-      contents += capture(&block) if block_given?
-      contents
+    def id
+      field_id = "#{parent_id}_#{@attribute}".squeeze("_")
+      if error?
+        "#{field_id}_error"
+      else
+        field_id
+      end
+    end
+
+    def parent_id
+      @object_name.to_s.tr("[]","_").squeeze("_")
+    end
+
+    def label_content
+      label_text = @object.class.human_attribute_name @attribute
+      label = ["<span class=\"form-label-bold\">#{label_text.html_safe}</span>"]
+      label << error_span if error?
+
+      label.join(" ").html_safe
+    end
+
+    def error?
+      !error_message.blank?
+    end
+
+    def error_message
+      @error_message ||= @object.errors.messages.fetch @attribute, ""
     end
   end
 
-  def labelled_input(attribute, input, input_options, label=nil)
-    label = label(attribute, label_content_for(attribute))
+  class TextField
+    include ActionView::Helpers::CaptureHelper
+    include ActionView::Helpers::TagHelper
+    include ActionView::Helpers::FormTagHelper
 
-    if max_length = max_length(attribute)
-      input_options.merge!(maxlength: max_length)
+    attr_accessor :output_buffer
+
+    def initialize(object, object_name, attribute, options, value_proc)
+      @object_name = object_name
+      @object = object
+      @attribute = attribute
+      @class =  options.fetch :class, nil
+      @input_data = options.fetch :input_data, nil
+      @input_class = options.fetch :input_class, nil
+      @value_proc = value_proc
+      build_classes!
     end
 
-    value = send(input, attribute, input_options)
+    def content(content)
+      content_tag :div, div_options do
+        labelled_text_field + content
+      end
+    end
 
-    [ label, value ].join("\n").html_safe
+    private
+
+    def div_options
+      @div_options ||= {}.tap { |opts|
+        opts[:class] = classes
+        opts[:id] = id
+      }.compact
+    end
+
+    def input_options
+      @input_options ||= {}.tap { |opts|
+        opts[:class] = @input_class
+        opts[:data] = @input_data
+        opts[:maxlength] = max_length
+      }.compact
+    end
+
+    def classes
+      @classes.join(" ")
+    end
+
+    def build_classes!
+      @classes = ["form-group", @class].compact
+      @classes << "error" if error?
+    end
+
+    def label
+      label_tag id, label_content
+    end
+
+    def label_content
+      label_text = @object.class.human_attribute_name @attribute
+      label = ["<span class=\"form-label-bold\">#{label_text.html_safe}</span>"]
+      label << error_span if error?
+
+      label.join(" ").html_safe
+    end
+
+    def labelled_text_field
+      [label, value].join("\n").html_safe
+    end
+
+    def value
+      @value_proc.call @attribute, input_options
+    end
+
+    def max_length
+      if validator = validators.detect{ |x| x.is_a?(ActiveModel::Validations::LengthValidator) }
+        validator.options[:maximum]
+      end
+    end
+
+    def validators
+      @object.class.validators_on @attribute
+    end
+
+    def id
+      field_id = "#{parent_id}_#{@attribute}".squeeze("_")
+      if error?
+        "#{field_id}_error"
+      else
+        field_id
+      end
+    end
+
+    def parent_id
+      @object_name.to_s.tr("[]","_").squeeze("_")
+    end
+
+    def error?
+      !error_message.blank?
+    end
+
+    def error_message
+      @error_message ||= @object.errors.messages.fetch @attribute, ""
+    end
+
+    def error_span
+      unless error_message.blank?
+        content_tag(:span, class: "error-message") do
+          error_message
+        end
+      end
+    end
+
   end
 
-  def max_length(attribute)
-    if validator = validators(attribute).detect{|x| x.is_a?(ActiveModel::Validations::LengthValidator)}
-      validator.options[:maximum]
+
+  class FormGroup
+    include ActionView::Helpers::CaptureHelper
+    include ActionView::Helpers::TagHelper
+    include ActionView::Helpers::FormTagHelper
+
+    attr_accessor :output_buffer
+
+    def initialize(object, object_name, attribute, options)
+      @object_name = object_name
+      @object = object
+      @attribute = attribute
+      @class = options.fetch :class, nil
+      @data = options.fetch :data, nil
+      build_classes!
+    end
+
+    def content(content)
+      content_tag :div, div_options do
+        label + content
+      end
+    end
+
+    private
+
+    def label
+      label_tag @attribute, label_content
+    end
+
+    def div_options
+      @div_options ||= {}.tap { |opts|
+        opts[:class] = classes
+        opts[:id] = id
+        opts[:data] = @data
+      }.compact
+    end
+
+    def classes
+      @classes.join(" ")
+    end
+
+    def build_classes!
+      @classes = ["form-group", @class].compact
+      if error?
+        @classes.delete("panel-indent")
+        @classes << "error"
+      end
+    end
+
+    def error?
+      !error_message.blank?
+    end
+
+    def error_message
+      @error_message ||= @object.errors.messages.fetch @attribute, ""
+    end
+
+    def label_content
+      label_text = @object.class.human_attribute_name @attribute
+      label = ["<span class=\"form-label-bold\">#{label_text.html_safe}</span>"]
+      label << error_span if error?
+
+      label.join(" ").html_safe
+    end
+
+    def error_span
+      unless error_message.blank?
+        content_tag(:span, class: "error-message") do
+          error_message
+        end
+      end
+    end
+
+    def id
+      field_id = "#{parent_id}_#{@attribute}".squeeze("_")
+      if error?
+        "#{field_id}_error"
+      else
+        field_id
+      end
+    end
+
+    def parent_id
+      @object_name.to_s.tr("[]","_").squeeze("_")
     end
   end
-
-  def validators(attribute)
-    @object.class.validators_on(attribute)
-  end
-
 end
