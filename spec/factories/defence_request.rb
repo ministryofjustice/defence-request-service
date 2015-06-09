@@ -25,6 +25,8 @@ FactoryGirl.define do
     fit_for_interview true
     interpreter_required false
     detainee_address_not_given "1"
+    time_of_arrest now
+    time_of_detention_authorised now
   end
 
   trait :draft do
@@ -97,14 +99,6 @@ FactoryGirl.define do
   trait :with_investigating_officer do
     investigating_officer_name "Dave Mc.Copper"
     investigating_officer_contact_number "0207 111 0000"
-  end
-
-  trait :with_time_of_arrest do
-    time_of_arrest now
-  end
-
-  trait :with_time_of_detention_authorised do
-    time_of_detention_authorised now
   end
 
   trait :unfit_for_interview do

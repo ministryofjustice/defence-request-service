@@ -6,17 +6,13 @@
   <h2><%= not_given_formatter(@defence_request, :detainee_name, "name_not_given") %></h2>
 
   <%= render("defence_requests/show_partials/detainee_details") %>
-
-  <%= link_to("Change this", edit_defence_request_path(@defence_request, part: "detainee_details"), class: "edit-link") %>
 </section>
 
 
-<section class="detention-details cf">
+<section class="case-details cf">
   <h2 class="line-above"><%= t("case_details") %></h2>
 
   <%= render("defence_requests/show_partials/detention_details") %>
-
-  <%= link_to("Change this", edit_defence_request_path(@defence_request, part: "detention_details"), class: "edit-link") %>
 </section>
 
 <div class="draft-actions">

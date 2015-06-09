@@ -40,9 +40,23 @@ RSpec.describe CsoDefenceRequestPolicy do
       specify{ expect(subject).to permit_actions_and_forbid_all_others actions }
     end
 
+    context "with a queued DR" do
+      let (:allowed_actions) { [
+        :show,
+        :edit,
+        :update,
+        :abort,
+        :interview_start_time_edit
+      ] }
+      let (:defreq) { FactoryGirl.create(:defence_request, :queued) }
+      specify { expect(subject).to permit_actions_and_forbid_all_others actions }
+    end
+
     context "with an acknowledged DR" do
       let (:allowed_actions) { [
         :show,
+        :edit,
+        :update,
         :abort,
         :complete,
         :interview_start_time_edit

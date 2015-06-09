@@ -7,7 +7,10 @@ class DefenceRequestsController < BaseController
 
   before_action ->(c) { authorize_defence_request_access(c.action_name) }
 
+  helper_method :defence_request_path_with_tab
+
   def show
+    @tab = params[:tab]
     if @defence_request.draft?
       render :show_draft
     else
@@ -27,12 +30,8 @@ class DefenceRequestsController < BaseController
   end
 
   def edit
-    if @defence_request.draft?
-      @part = params[:part]
-      render :edit_draft
-    else
-      render :edit
-    end
+    @part = params[:part]
+    render edit_template
   end
 
   def update
@@ -43,10 +42,11 @@ class DefenceRequestsController < BaseController
         redirect_to(edit_defence_request_path, alert: flash_message(:failed_to_update_not_accepted, DefenceRequest))
       end
     else
+      @part = params[:part]
       if @defence_request_form.submit(defence_request_params)
-        redirect_to(defence_request_path, notice: flash_message(:update, DefenceRequest))
+        redirect_to(defence_request_path_with_tab(@part), notice: flash_message(:update, DefenceRequest))
       else
-        render :edit
+        render edit_template
       end
     end
   end
@@ -110,5 +110,21 @@ class DefenceRequestsController < BaseController
 
   def accept_and_save_defence_request
     @defence_request.accept && @defence_request.save
+  end
+
+  def edit_template
+    if @defence_request.draft?
+      :edit_draft
+    else
+      :edit
+    end
+  end
+
+  def defence_request_path_with_tab(tab)
+    if tab.present?
+      defence_request_path(tab: tab)
+    else
+      defence_request_path
+    end
   end
 end

@@ -1,3 +1,7 @@
+<% unless @part.blank? %>
+  <input type="hidden" name="part" value="<%= @part %>" />
+<% end %>
+
 <% if @defence_request_form.defence_request.new_record? %>
   <%= f.submit t("create_request"), class: 'button' %>
   <div class="form-links">
@@ -7,7 +11,7 @@
   <%= f.submit class: 'button' %>
   <%= f.submit(t('update_and_accept'), class: 'button warning') if @policy.dscc_number_edit? %>
   <div class="form-links">
-    <%= link_to t('cancel'), defence_request_path %>
+    <%= link_to t('cancel'), defence_request_path_with_tab(@part) %>
     <%= link_to t('abort'), abort_defence_request_path(@defence_request_form.defence_request) if @policy.abort? %>
   </div>
 <% end %>

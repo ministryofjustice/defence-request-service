@@ -70,4 +70,8 @@ module ApplicationHelper
     reason = (" – #{explanation}" if val == explanation_when) || ""
     boolean_formatter(val) + reason
   end
+
+  def tab_active_class(condition)
+    "is-active" if condition
+  end
 end

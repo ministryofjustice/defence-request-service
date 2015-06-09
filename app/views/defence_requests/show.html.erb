@@ -13,15 +13,17 @@
   <p><%= t("call_call_center") if user_has_role?("solicitor") %></p>
 <% end %>
 
-<%= render("defence_requests/show_partials/detainee_details") %>
+<section class="detainee-details">
+  <%= render("defence_requests/show_partials/detainee_details") %>
+</section>
 
-<%= content_tag("div", class: "js-tabs cf", id: "edit-tabs", data: { activatefirst: "true" }) do %>
+<%= content_tag("div", class: "js-tabs cf", id: "edit-tabs", data: { activatefirst: @tab.blank? ? "true" : "false" }) do %>
   <div class="tabs-nav">
     <ul class="cf tabs js-tabs-nav js-only">
       <li>
         <a href="#interview"><%= t("solicitor_attendance") %></a>
       </li>
-      <li>
+      <li class="<%= tab_active_class(@tab == "case-details") %>">
         <a href="#case-details"><%= t("case_details") %></a>
       </li>
     </ul>
@@ -31,8 +33,10 @@
       <%= render "defence_requests/show_partials/interview_tab" %>
     </div>
     <div id="case-details">
-      <h3 class="nonjs"><%= t("case_details")%></h3>
-      <%= render "defence_requests/show_partials/detention_details" %>
+      <section class="case-details">
+        <h3 class="nonjs"><%= t("case_details")%></h3>
+        <%= render "defence_requests/show_partials/detention_details" %>
+      </section>
     </div>
   </div>
 <% end %>

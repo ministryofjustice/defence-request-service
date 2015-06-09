@@ -2,16 +2,8 @@
 
 <p>Check the details below to make sure they are correct. Update any incorrect details, then submit the request.</p>
 
+<%= render 'shared/error_messages', object: @defence_request %>
 
 <%= form_for @defence_request do |f| %>
-
-  <% if @part.nil? || @part == "detainee_details" %>
-    <%= render('defence_requests/form_partials/detainee', f: f) %>
-  <% end %>
-
-  <% if @part.nil? || @part == "detention_details" %>
-    <%= render('defence_requests/form_partials/case', f: f) %>
-  <% end %>
-
-  <%= render('defence_requests/form_partials/form_actions', f: f) %>
+    <%= render('defence_requests/form_partials/main', f: f) %>
 <% end if @policy.edit? %>

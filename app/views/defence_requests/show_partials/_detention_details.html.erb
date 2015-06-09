@@ -11,3 +11,7 @@
   %>
   <%= display_value "comments", @defence_request.comments, class: "multi-line" %>
 </dl>
+
+<% if @policy.edit? %>
+    <%= link_to("Change this", edit_defence_request_path(@defence_request, part: "case-details"), class: "edit-link") %>
+<% end %>
