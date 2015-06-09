@@ -5,44 +5,36 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
   include ActionView::Context
 
   def form_group(attribute, options={}, &block)
-    FormGroup.new(@object, @object_name, attribute, options).content capture(&block)
+    FormGroup.new(self, attribute, options).content capture(&block)
   end
 
   def text_field_input(attribute, options={}, &block)
     content = block_given? ? capture(&block) : ""
-    value_proc = self.method(:text_field)
-    TextField.new(@object, @object_name, attribute, options, value_proc).content content
+    TextField.new(self, attribute, options).content content
   end
 
   # Defaults to "Yes" "No" labels on radio inputs
+  #TODO: make legend do something
   def radio_button_fieldset(attribute, legend, options={})
-    value_proc = self.method(:radio_button)
-    RadioButtonFieldset.new(@object, @object_name, attribute, legend, options, value_proc).content
+    RadioButtonFieldset.new(self, attribute, options).content
   end
 
   class RadioButtonFieldset
-    include ActionView::Helpers::CaptureHelper
-    include ActionView::Helpers::TagHelper
-    include ActionView::Helpers::FormTagHelper
+    attr_reader :f
 
-    attr_accessor :output_buffer
-
-    def initialize(object, object_name, attribute, legend, options, radio_button_proc)
-      @object_name = object_name
-      @object = object
+    def initialize(form, attribute, options)
+      @f = form
       @attribute = attribute
-      @legend = legend
       @class = options.fetch :class, nil
       @options_class = (@class || "")[/inline/] ? "inline" : "options"
       @choice = options.fetch :choice, ["Yes", "No"]
-      @radio_button_proc = radio_button_proc
       build_classes!
     end
 
     def content
-      content_tag :div, div_options do
+      f.content_tag :div, div_options do
         fieldset_tag fieldset_options do
-          content_tag :div, inner_div_options do
+          f.content_tag :div, inner_div_options do
             radios = @choice.map do |choice|
               radio_button_row choice
             end
@@ -58,15 +50,15 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
       label = I18n.t choice
       id = value(choice)[/id="([^"]+)"/,1]
 
-      content_tag(:div, class: "option") do
-        content_tag(:label, for: id) do
-          [value(choice),  label].compact.join("\n").html_safe
+      f.content_tag(:div, class: "option") do
+        f.content_tag(:label, for: id) do
+          [value(choice), label].compact.join("\n").html_safe
         end
       end
     end
 
     def value(choice)
-      @radio_button_proc.call @attribute, choice
+      f.radio_button @attribute, choice
     end
 
     def div_options
@@ -98,21 +90,21 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
     def error_span
       unless error_message.blank?
-        content_tag(:span, class: "error-message") do
+        f.content_tag(:span, class: "error-message") do
           error_message
         end
       end
     end
 
     def fieldset_tag(options={}, &block)
-      (tag(:fieldset, options, true) +
-       content_tag(:legend, label_content) +
-       (block_given? ? capture(&block) : "") +
+      (f.tag(:fieldset, options, true) +
+       f.content_tag(:legend, label_content) +
+       (block_given? ? f.capture(&block) : "") +
        "</fieldset>").html_safe
     end
 
     def label
-      label_tag id, label_content
+      label_tag @attribute, label_content
     end
 
     def id
@@ -125,11 +117,11 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     end
 
     def parent_id
-      @object_name.to_s.tr("[]","_").squeeze("_")
+      f.object_name.to_s.tr("[]","_").squeeze("_")
     end
 
     def label_content
-      label_text = @object.class.human_attribute_name @attribute
+      label_text = f.object.class.human_attribute_name @attribute
       label = ["<span class=\"form-label-bold\">#{label_text.html_safe}</span>"]
       label << error_span if error?
 
@@ -141,30 +133,24 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     end
 
     def error_message
-      @error_message ||= @object.errors.messages.fetch @attribute, ""
+      @error_message ||= f.object.errors.messages.fetch @attribute, ""
     end
   end
 
   class TextField
-    include ActionView::Helpers::CaptureHelper
-    include ActionView::Helpers::TagHelper
-    include ActionView::Helpers::FormTagHelper
+    attr_reader :f
 
-    attr_accessor :output_buffer
-
-    def initialize(object, object_name, attribute, options, value_proc)
-      @object_name = object_name
-      @object = object
+    def initialize(form, attribute, options)
+      @f = form
       @attribute = attribute
       @class =  options.fetch :class, nil
       @input_data = options.fetch :input_data, nil
       @input_class = options.fetch :input_class, nil
-      @value_proc = value_proc
       build_classes!
     end
 
     def content(content)
-      content_tag :div, div_options do
+      f.content_tag :div, div_options do
         labelled_text_field + content
       end
     end
@@ -196,11 +182,11 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     end
 
     def label
-      label_tag id, label_content
+      f.label @attribute, label_content
     end
 
     def label_content
-      label_text = @object.class.human_attribute_name @attribute
+      label_text = f.object.class.human_attribute_name @attribute
       label = ["<span class=\"form-label-bold\">#{label_text.html_safe}</span>"]
       label << error_span if error?
 
@@ -212,7 +198,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     end
 
     def value
-      @value_proc.call @attribute, input_options
+      f.text_field @attribute, input_options
     end
 
     def max_length
@@ -222,7 +208,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     end
 
     def validators
-      @object.class.validators_on @attribute
+      f.object.class.validators_on @attribute
     end
 
     def id
@@ -235,7 +221,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     end
 
     def parent_id
-      @object_name.to_s.tr("[]","_").squeeze("_")
+      f.object_name.to_s.tr("[]","_").squeeze("_")
     end
 
     def error?
@@ -243,12 +229,12 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     end
 
     def error_message
-      @error_message ||= @object.errors.messages.fetch @attribute, ""
+      @error_message ||= f.object.errors.messages.fetch @attribute, ""
     end
 
     def error_span
       unless error_message.blank?
-        content_tag(:span, class: "error-message") do
+        f.content_tag(:span, class: "error-message") do
           error_message
         end
       end
@@ -258,15 +244,10 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
 
   class FormGroup
-    include ActionView::Helpers::CaptureHelper
-    include ActionView::Helpers::TagHelper
-    include ActionView::Helpers::FormTagHelper
+    attr_reader :f
 
-    attr_accessor :output_buffer
-
-    def initialize(object, object_name, attribute, options)
-      @object_name = object_name
-      @object = object
+    def initialize(form, attribute, options)
+      @f = form
       @attribute = attribute
       @class = options.fetch :class, nil
       @data = options.fetch :data, nil
@@ -274,7 +255,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     end
 
     def content(content)
-      content_tag :div, div_options do
+      f.content_tag :div, div_options do
         label + content
       end
     end
@@ -282,7 +263,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     private
 
     def label
-      label_tag @attribute, label_content
+      f.label @attribute, label_content
     end
 
     def div_options
@@ -310,11 +291,11 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     end
 
     def error_message
-      @error_message ||= @object.errors.messages.fetch @attribute, ""
+      @error_message ||= f.object.errors.messages.fetch @attribute, ""
     end
 
     def label_content
-      label_text = @object.class.human_attribute_name @attribute
+      label_text = f.object.class.human_attribute_name @attribute
       label = ["<span class=\"form-label-bold\">#{label_text.html_safe}</span>"]
       label << error_span if error?
 
@@ -323,7 +304,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 
     def error_span
       unless error_message.blank?
-        content_tag(:span, class: "error-message") do
+        f.content_tag(:span, class: "error-message") do
           error_message
         end
       end
@@ -339,7 +320,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     end
 
     def parent_id
-      @object_name.to_s.tr("[]","_").squeeze("_")
+      f.object_name.to_s.tr("[]","_").squeeze("_")
     end
   end
 end
