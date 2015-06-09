@@ -1,5 +1,5 @@
 class PingResponse
-  VERSION_FILE = "/.version"
+  VERSION_FILE = "/.version.yml"
 
   UNKNOWN_VERSION_DATA_RESPONSE = {
     version_number: "unknown",
