@@ -1,12 +1,13 @@
 class DefenceRequestsController < BaseController
 
   include DefenceRequestConcern
-  include DefenceRequestsHelper
 
   before_action :find_defence_request, except: [:new, :create]
   before_action :new_defence_request_form, only: [:show, :new, :create, :edit, :update]
 
   before_action ->(c) { authorize_defence_request_access(c.action_name) }
+
+  helper_method :defence_request_path_with_tab
 
   def show
     @tab = params[:tab]
@@ -116,6 +117,14 @@ class DefenceRequestsController < BaseController
       :edit_draft
     else
       :edit
+    end
+  end
+
+  def defence_request_path_with_tab(tab)
+    if tab.present?
+      defence_request_path(tab: tab)
+    else
+      defence_request_path
     end
   end
 end
