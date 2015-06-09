@@ -18,17 +18,21 @@ RSpec.feature "Custody Suite Officers viewing defence request" do
     )
 
     login_with cso_user
-    click_link "❭"
+    within "tr#defence_request_#{defence_request.id} td.actions" do
+      find("a").click
+    end
 
     expect(page).to have_content defence_request.dscc_number
   end
 
   specify "can follow a link back to the dashboard" do
     cso_user = create :cso_user
-    create :defence_request, :queued
+    defence_request = create :defence_request, :queued
 
     login_with cso_user
-    click_link "❭"
+    within "tr#defence_request_#{defence_request.id} td.actions" do
+      find("a").click
+    end
 
     click_link "< Back to requests"
     expect(current_path).to eq("/dashboard")
