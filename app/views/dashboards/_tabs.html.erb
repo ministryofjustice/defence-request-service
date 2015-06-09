@@ -1,12 +1,12 @@
-<ul class="tabs">
-  <li class="tab <%= tab_class(type: :active) %>">
-    <% active_tab_text = @dashboard.user_role == "solicitor" ? "active" : "opened" %>
-    <%= link_to t(active_tab_text, count: @dashboard.active_defence_requests.count), active_dashboard_path %>
-  </li>
-  <li class="tab <%= tab_class(type: :closed) %>">
-    <% closed_tab_text = @dashboard.user_role == "solicitor" ? "closed" : "completed" %>
-    <%= link_to t(closed_tab_text, count: @dashboard.closed_defence_requests.count), closed_dashboard_path %>
-  </li>
-  <li class="filler">
-  </li>
-</ul>
+<div class="tabs-nav cf">
+  <ul class="tabs">
+    <li class="tab <%= tab_class(type: :active) %>">
+      <% active_tab_text = @dashboard.user_role == "solicitor" ? "active" : "opened" %>
+      <%= link_to t(active_tab_text, count: @dashboard.active_defence_requests.count), active_dashboard_path %>
+    </li>
+    <li class="tab <%= tab_class(type: :closed) %>">
+      <% closed_tab_text = @dashboard.user_role == "solicitor" ? "closed" : "completed" %>
+      <%= link_to t(closed_tab_text, count: @dashboard.closed_defence_requests.count), closed_dashboard_path %>
+    </li>
+  </ul>
+</div>

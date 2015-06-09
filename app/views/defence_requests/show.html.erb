@@ -16,16 +16,16 @@
 <%= render("defence_requests/show_partials/detainee_details") %>
 
 <%= content_tag("div", class: "js-tabs cf", id: "edit-tabs", data: { activatefirst: "true" }) do %>
-  <ul class="cf tabs js-tabs-nav js-only">
-    <li>
-      <a href="#interview"><%= t("solicitor_attendance") %></a>
-    </li>
-    <li>
-      <a href="#case-details"><%= t("case_details") %></a>
-    </li>
-    <li class="filler">
-    </li>
-  </ul>
+  <div class="tabs-nav">
+    <ul class="cf tabs js-tabs-nav js-only">
+      <li>
+        <a href="#interview"><%= t("solicitor_attendance") %></a>
+      </li>
+      <li>
+        <a href="#case-details"><%= t("case_details") %></a>
+      </li>
+    </ul>
+  </div>
   <div class="js-tabs-content">
     <div id="interview">
       <%= render "defence_requests/show_partials/interview_tab" %>
