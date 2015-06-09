@@ -30,10 +30,12 @@ RSpec.feature "Custody Suite Officers editing defence requests" do
   end
 
   def login_and_view_defence_request
-    create :defence_request, :queued
+    defence_request = create :defence_request, :queued
 
     login_as_cso
 
-    click_link "❭"
+    within "tr#defence_request_#{defence_request.id} td.actions" do
+      find("a").click
+    end
   end
 end
