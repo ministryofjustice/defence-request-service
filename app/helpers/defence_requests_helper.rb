@@ -15,7 +15,7 @@ module DefenceRequestsHelper
   def interview_at(defence_request)
     if defence_request.interview_start_time?
 
-      time = format_date_and_time defence_request.interview_start_time
+      time = date_and_time_formatter(defence_request.interview_start_time)
 
       content_tag :dl, class: "time-at" do
         display_value "interview_at", time
