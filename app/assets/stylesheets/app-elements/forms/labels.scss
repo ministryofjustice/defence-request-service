@@ -1,3 +1,5 @@
+@import "colours_extensions";
+
 fieldset.radio {
   label {
     @extend .block-label;
@@ -11,4 +13,8 @@ legend {
 
 label .aside {
   display: inline;
+}
+
+.error .form-control, .error label + input, .error label + textarea {
+  border: 1px solid $grey-2
 }
