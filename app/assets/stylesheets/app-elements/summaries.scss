@@ -1,0 +1,48 @@
+.alert-summary {
+  @extend .error-summary;
+  border: 3px solid $red;
+  h3 {
+    margin-top: 10px;
+  }
+}
+
+.notice-summary {
+  @extend .error-summary;
+  border: 3px solid $green;
+  h3 {
+    margin-top: 10px;
+  }
+}
+
+.success-summary {
+  @extend .error-summary;
+  border: 3px solid $green;
+  h3 {
+    margin-top: 10px;
+  }
+}
+
+.summary-header {
+  margin-top: 100px;
+  .section-header {
+    margin-top: 0px;
+    border: none;
+    @include media(mobile) {
+      margin-bottom: 10px;
+    }
+  }
+  .edit-link {
+    float: right;
+    margin-right: 15px;
+    @include media(mobile) {
+      float: left;
+      margin-left: 15px;
+      margin-bottom: 15px;
+    }
+  }
+}
+
+.summary-label {
+  color: $secondary-text-colour;
+  width: 30%;
+}

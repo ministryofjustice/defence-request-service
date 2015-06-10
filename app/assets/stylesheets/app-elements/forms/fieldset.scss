@@ -1,0 +1,9 @@
+@import "elements/forms";
+
+.form-group {
+  float: none;
+}
+
+fieldset, .sub-panel {
+  @extend .form-group;
+}

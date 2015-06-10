@@ -1,0 +1,16 @@
+@import "elements/forms";
+
+fieldset.radio {
+  label {
+    @extend .block-label;
+  }
+}
+
+legend {
+  @extend .form-label;
+  color: black;
+}
+
+label .aside {
+  display: inline;
+}
