@@ -6,9 +6,6 @@
   position: relative;
   width: 100%;
   border-bottom: 1px solid black;
-  * html & {
-    border-bottom: none;
-  }
   height: 3em;
 
   ul {
@@ -29,9 +26,6 @@
         text-align: center;
         font-size: 17px;
         border-bottom: none;
-        * html & {
-          border-bottom: 1px solid black;
-        }
       }
 
       &.active_tab a, &.is-active a {

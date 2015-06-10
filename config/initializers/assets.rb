@@ -9,9 +9,12 @@ Rails.application.config.assets.version = "1.0"
 # Precompile additional assets.
 # application.js, application.scss, and all non-JS/CSS in app/assets folder are already added.
 Rails.application.config.assets.precompile += %w(
+      govuk_elements_extensions.css
       govuk_elements_extensions_ie6.css
       govuk_elements_extensions_ie7.css
       govuk_elements_extensions_ie8.css
+      ie6_overrides.css
+      ie7_overrides.css
       font-awesome-ie7.min.css
       dashboard_poller.js
     )

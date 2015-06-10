@@ -1,0 +1,43 @@
+dl.labels {
+  dd {
+    float: none;
+    display: inline-block;
+  }
+}
+
+.tabs-nav {
+  border-bottom: none;
+
+  ul {
+    li {
+      a, span {
+        border-bottom: 1px solid black;
+      }
+      &.active_tab {
+        a, span {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+}
+
+.grid-row {
+  margin-left: 0;
+  width: 960px;
+}
+
+.column-three-quarters {
+  padding-left: 0;
+  width: 701px;
+}
+
+.column-quarter {
+  width: 213px;
+}
+
+.column-full-width {
+  padding-left: 0;
+  padding-right: 0;
+  width: 960px;
+}

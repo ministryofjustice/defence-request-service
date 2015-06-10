@@ -2,16 +2,32 @@
   <%= Settings.dsds.app_title %>
 <% end %>
 <% content_for :stylesheets do %>
-  <%= stylesheet_link_tag('application', media: 'all') %>
+  <%# regular compiled elements extensions stylesheet for decent browsers %>
+  <!--[if gt IE 8]><!-->
+  <%= stylesheet_link_tag('govuk_elements_extensions', media: 'all') %>
+  <!--<![endif]-->
+
+  <%# if IE<=8, use compiled version for that browser instead %>
   <!--[if IE 6]>
   <%= stylesheet_link_tag "govuk_elements_extensions_ie6", media: "all" %>
   <![endif]-->
   <!--[if IE 7]>
-  <%= stylesheet_link_tag "font-awesome-ie7.min", media: "all" %>
   <%= stylesheet_link_tag "govuk_elements_extensions_ie7", media: "all" %>
   <![endif]-->
   <!--[if IE 8]>
   <%= stylesheet_link_tag "govuk_elements_extensions_ie8", media: "all" %>
+  <![endif]-->
+
+  <%# main app styles %>
+  <%= stylesheet_link_tag('application', media: 'all') %>
+
+  <%# overrides/hacks for lower IEs plus FA for IE7 %>
+  <!--[if IE 6]>
+  <%= stylesheet_link_tag "ie6_overrides", media: "all" %>
+  <![endif]-->
+  <!--[if IE 7]>
+  <%= stylesheet_link_tag "font-awesome-ie7.min", media: "all" %>
+  <%= stylesheet_link_tag "ie7_overrides", media: "all" %>
   <![endif]-->
 <% end %>
 <% content_for :javascripts do %>
@@ -28,7 +44,7 @@
 <% content_for :content_override do %>
   <main id="page-container" role="main">
     <%= render 'shared/banner' %>
-    <div class="grid-row">
+    <div class="grid-row cf">
       <div class="<% if content_for?(:sidebar) %>column-three-quarters<% else %>column-full-width<% end %>">
         <%= yield %>
       </div>

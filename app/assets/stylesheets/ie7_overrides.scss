@@ -1,0 +1,26 @@
+dl.labels {
+  dd {
+    float: none;
+    display: inline-block;
+  }
+}
+
+.grid-row {
+  margin-left: 0;
+  width: 960px;
+}
+
+.column-three-quarters {
+  padding-left: 0;
+  width: 701px;
+}
+
+.column-quarter {
+  width: 213px;
+}
+
+.column-full-width {
+  padding-left: 0;
+  padding-right: 0;
+  width: 960px;
+}
