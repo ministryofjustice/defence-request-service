@@ -55,7 +55,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     end
 
     def error_message
-      @error_message ||= f.object.errors.messages.fetch @attribute, ""
+      @error_message ||= (f.object.errors.messages.fetch @attribute, []).join ", "
     end
 
     private
