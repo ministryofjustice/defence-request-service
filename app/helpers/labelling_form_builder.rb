@@ -96,7 +96,7 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
       (f.tag(:fieldset, options, true) +
        f.content_tag(:legend, label_content) +
        (block_given? ? f.capture(&block) : "") +
-       "</fieldset>").html_safe
+       "</fieldset>".html_safe).html_safe
     end
   end
 
