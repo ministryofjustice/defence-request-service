@@ -59,5 +59,8 @@ module DefenceSolicitor
 
     config.action_controller.action_on_unpermitted_parameters = :raise
     config.active_record.raise_in_transactional_callbacks = true
+
+     # disable default <div class="field_with_errors"> wrapping idiocy
+    config.action_view.field_error_proc = Proc.new { |html_tag| html_tag }
   end
 end
