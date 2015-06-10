@@ -68,12 +68,13 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
     def div_options
       @div_options ||= {}.tap { |opts|
         opts[:class] = classes
+        opts[:id] = id
       }.compact
     end
 
     def fieldset_options
       @fieldset_options ||= {}.tap { |opts|
-        opts[:class] = classes
+        opts[:class] = classes.gsub "error", ""
       }.compact
     end
 
