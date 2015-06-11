@@ -4,11 +4,7 @@
   <% f.text_area :circumstances_of_arrest, label: t('circumstances_of_arrest'), rows: '5', class: 'text-field text-field-wide' %>
 <% end %>
 
-<%= f.radio_button_fieldset :fit_for_interview,
-      label_text_for_form(attribute_name: "fit_for_interview_question"),
-      class: "radio inline",
-      choice: [ "true", "false" ]
-%>
+<%= f.radio_button_fieldset :fit_for_interview %>
 
 <%= f.form_group(:unfit_for_interview_reason, class: "panel-indent", data: { "show-when" => "defence_request_fit_for_interview_false" } ) do %>
   <% f.text_area :unfit_for_interview_reason, rows: '5', class: 'text-field text-field-wide' %>

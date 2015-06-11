@@ -7,11 +7,7 @@
   <% end %>
 <% end %>
 
-<%= f.radio_button_fieldset :gender,
-      label_text_for_form(attribute_name: "gender"),
-      class: "radio inline",
-      choice: [ "male", "female", "transgender", "unspecified" ]
-%>
+<%= f.radio_button_fieldset :gender, choice: [ "male", "female", "transgender", "unspecified" ] %>
 
 <%= f.form_group(:date_of_birth) do %>
   <% render('defence_requests/form_partials/detainee_date_of_birth', f: f) %>
@@ -25,21 +21,13 @@
   <% end %>
 <% end %>
 
-<%= f.radio_button_fieldset :appropriate_adult,
-      label_text_for_form(attribute_name: "appropriate_adult"),
-      class: "radio inline",
-      choice: [ "true", "false" ]
-%>
+<%= f.radio_button_fieldset :appropriate_adult %>
 
 <%= f.form_group(:appropriate_adult_reason, class: "panel-indent", data: { "show-when" => "defence_request_appropriate_adult_true" } ) do %>
   <% render('defence_requests/form_partials/appropriate_adult_reason', f: f) %>
 <% end %>
 
-<%= f.radio_button_fieldset :interpreter_required,
-      label_text_for_form(attribute_name: "interpreter_required_question"),
-      class: "radio inline",
-      choice: [ "true", "false" ]
-%>
+<%= f.radio_button_fieldset :interpreter_required %>
 
 <%= f.form_group(:interpreter_type, class: "panel-indent", data: { "show-when" => "defence_request_interpreter_required_true" } ) do %>
   <% f.text_field :interpreter_type, class: 'text-field text-field-wide' %>

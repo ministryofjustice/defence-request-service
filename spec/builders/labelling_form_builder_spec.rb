@@ -57,7 +57,6 @@ RSpec::describe "LabellingFormBuilder", type: :helper do
   describe "#radio_button_field_set" do
     let(:fieldset) {
       form.radio_button_fieldset :gender,
-      "Gender",
       class: "radio",
       choice: [ "male", "female", "transgender", "unspecified" ]
     }

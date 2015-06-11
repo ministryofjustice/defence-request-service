@@ -29,6 +29,11 @@ class RadioButtonFieldset < FormGroup
     end
   end
 
+  def build_classes!
+    super
+    @classes << "radio"
+  end
+
   def value(choice)
     f.radio_button attribute, choice
   end
@@ -41,7 +46,7 @@ class RadioButtonFieldset < FormGroup
 
   def inner_div_options
     @inner_div_options ||= {}.tap { |opts|
-      opts[:class] ||= @options_class
+      opts[:class] ||=  "inline"
     }.compact
   end
 
