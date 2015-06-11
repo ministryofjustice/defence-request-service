@@ -34,7 +34,7 @@ class DateChooser
 
 
   enableLink: (selector) =>
-    selector.html("<a href>" + selector.text() + "</a>")
+    selector.html("<a href=\"#\">" + selector.text() + "</a>")
 
   toggleDate: (selector) =>
     selector.html selector.text()
