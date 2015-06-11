@@ -1,30 +1,15 @@
-class TextField
-  attr_reader :f, :attribute
-
-  delegate :label, :error?, :id, to: :attribute
+class TextField < FormGroup
 
   def initialize(form, attribute, options)
-    @f = form
-    @attribute = attribute
-    @class =  options.fetch :class, nil
     @input_data = options.fetch :input_data, nil
     @input_class = options.fetch :input_class, nil
-    build_classes!
-  end
-
-  def content(content)
-    f.content_tag :div, div_options do
-      labelled_text_field + content
-    end
+    super
   end
 
   private
 
-  def div_options
-    @div_options ||= {}.tap { |opts|
-      opts[:class] = classes
-      opts[:id] = id
-    }.compact
+  def content_body(inner_body)
+    labelled_text_field + inner_body
   end
 
   def input_options
@@ -35,21 +20,12 @@ class TextField
     }.compact
   end
 
-  def classes
-    @classes.join(" ")
-  end
-
-  def build_classes!
-    @classes = ["form-group", @class].compact
-    @classes << "error" if error?
-  end
-
   def labelled_text_field
     [label, value].join("\n").html_safe
   end
 
   def value
-    f.text_field @attribute.attribute, input_options
+    f.text_field attribute, input_options
   end
 
   def max_length
@@ -59,6 +35,6 @@ class TextField
   end
 
   def validators
-    f.object.class.validators_on @attribute.attribute
+    f.object.class.validators_on attribute
   end
 end
