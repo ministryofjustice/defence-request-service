@@ -32,12 +32,11 @@
   <% end %>
 
   <% if @policy.interview_start_time_edit? %>
-    <%= f.form_group(:interview_start_time) do %>
+    <%= f.form_group(:interview_start_time, optional: true) do %>
       <% render('shared/date_time_form_part',
                  attribute: :interview_start_time,
                  show_label: true,
                  hint_label: :interview_start_time_hint,
-                 optional: true,
                  dates: [Day::TODAY, Day::TOMORROW, Day::DAY_AFTER_TOMORROW],
                  f: f) %>
     <% end %>

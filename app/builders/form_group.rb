@@ -6,6 +6,7 @@ class FormGroup
     @attribute = attribute
     @class = options.fetch :class, nil
     @data = options.fetch :data, nil
+    @optional = options.fetch :optional, false
     build_classes!
   end
 
@@ -56,10 +57,15 @@ class FormGroup
 
   def label_content
     label_text = f.object.class.human_attribute_name attribute
+    label_text += " <span class=\"aside\">(#{I18n.t("optional")})</span>".html_safe if optional?
     label = ["<span class=\"form-label-bold\">#{label_text.html_safe}</span>"]
     label << error_span if error?
 
     label.join(" ").html_safe
+  end
+
+  def optional?
+    @optional
   end
 
   def error?

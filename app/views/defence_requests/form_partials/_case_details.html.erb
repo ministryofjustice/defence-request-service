@@ -14,15 +14,9 @@
   <% f.text_area :unfit_for_interview_reason, rows: '5', class: 'text-field text-field-wide' %>
 <% end %>
 
-<div class="form-group">
-  <%= f.label :investigating_officer_name, label_text_for_form(attribute_name: 'investigating_officer_name', optional: true), class: "form-label-bold" %>
-  <%= f.text_field :investigating_officer_name, label: t('investigating_officer_name'), class: 'text-field custody-number' %>
-</div>
+<%= f.text_field_input(:investigating_officer_name, optional: true) %>
 
-<div class="form-group">
-  <%= f.label :investigating_officer_contact_number, label_text_for_form(attribute_name: 'investigating_officer_contact_number', optional: true), class: "form-label-bold" %>
-  <%= f.text_field :investigating_officer_contact_number, label: t('investigating_officer_contact_number'), class: 'text-field custody-number' %>
-</div>
+<%= f.text_field_input(:investigating_officer_contact_number, optional: true) %>
 
 <div class="form-group">
   <%= f.label :comments, class: "form-label-bold" do %>
