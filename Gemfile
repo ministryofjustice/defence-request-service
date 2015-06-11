@@ -35,6 +35,9 @@ gem "govuk_elements_rails", "~> 0.3.0"
 # Font Awesome 3.x to support IE7
 gem "font-awesome-rails", "3.2.1.3"
 
+# Asset sync - for uploading assets to S3
+gem "asset_sync"
+
 group :development do
   gem "guard-rspec", require: false
   gem "web-console", "~> 2.0"

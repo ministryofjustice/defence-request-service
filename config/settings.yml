@@ -32,3 +32,7 @@ authentication:
 
 analytics:
   google_ua: <%= ENV.fetch("GOOGLE_ANALYTICS_UA", nil) %>
+
+aws:
+  region: eu-west-1
+  s3_asset_bucket_name: <%= ENV.fetch("AWS_S3_ASSET_BUCKET_NAME") %>
