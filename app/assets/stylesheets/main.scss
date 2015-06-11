@@ -1,0 +1,37 @@
+// Give elements default CSS by extending from selectors in govuk elements
+
+$path: "";
+
+@import "elements/helpers";
+@import "elements/reset";
+@import "elements/elements-typography";
+@import "elements/layout";
+@import "elements/forms";
+@import "elements/tables";
+@import "elements/buttons";
+@import "elements/details";
+@import "elements/lists";
+@import "elements/panels";
+
+// App specific granular stylesheets imported here rather than via pipeline
+// for IE version sass vars to work
+
+@import "app-elements/layout";
+@import "app-elements/utility";
+@import "app-elements/typography";
+@import "app-elements/sidebar";
+@import "app-elements/tabs";
+@import "app-elements/errors";
+@import "app-elements/lists";
+@import "app-elements/summaries";
+@import "app-elements/flash-message";
+
+@import "app-elements/forms/fieldset";
+@import "app-elements/forms/labels";
+@import "app-elements/forms/inputs";
+@import "app-elements/forms/buttons";
+@import "app-elements/forms/help-text";
+@import "app-elements/forms/form-links";
+@import "app-elements/forms/date-time-fields";
+
+@import "app-elements/js";

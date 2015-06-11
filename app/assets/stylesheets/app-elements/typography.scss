@@ -1,0 +1,21 @@
+h1 {
+  @extend .heading-xlarge;
+  margin-right: 6%;
+  span {
+    @extend .heading-secondary;
+  }
+  &.detainee {
+    margin-bottom: 0.2em;
+  }
+}
+
+h2 {
+  @extend .heading-large;
+  &.dscc {
+    margin-top: 0.2em;
+  }
+}
+
+h3 {
+  @extend .heading-medium;
+}

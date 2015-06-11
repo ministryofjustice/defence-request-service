@@ -1,0 +1,19 @@
+.js-enabled {
+  .hide {
+    display: none;
+  }
+}
+
+.js-only {
+  display: none;
+  .js-enabled & {
+    display: block;
+  }
+}
+
+.js-only-inline-block {
+  display: none;
+  .js-enabled & {
+    display: inline-block;
+  }
+}

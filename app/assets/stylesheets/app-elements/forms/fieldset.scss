@@ -1,0 +1,7 @@
+.form-group {
+  float: none;
+}
+
+fieldset, .sub-panel {
+  @extend .form-group;
+}
