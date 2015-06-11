@@ -25,15 +25,16 @@
         <%= t.text_field :min, size: 2, maxlength: 2, class: 'minute text-field' %>
       </div>
       <div class="date-field-wrapper">-</div>
-      <div class="date-chooser-values">
+      <div class="date-field-wrapper date-chooser-values">
         <label class="date-chooser-select form-label js-only" data-initial-date-index="<%= initial_date_index %>">
           <% dates.each do |date| %>
             <span class="date-chooser-link" data-date-display="<%= date.date.to_s :full %>"><%= t(date.name) %></span>
           <% end%>
         </label>
-        <div class="date-field-wrapper">
-          <%= t.text_field :date, class: "text-field date", value: date_formatter(date_value) %>
-        </div>
+        <!--[if IE 6]>
+        <%= t.label :date, t('date'), class: "form-label" %>
+        <![endif]-->
+        <%= t.text_field :date, class: "date text-field", value: date_formatter(date_value) %>
       </div>
     <% end %>
   </fieldset>
