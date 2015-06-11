@@ -23,9 +23,10 @@
 
 <%= f.radio_button_fieldset :appropriate_adult %>
 
-<%= f.form_group(:appropriate_adult_reason, class: "panel-indent", data: { "show-when" => "defence_request_appropriate_adult_true" } ) do %>
-  <% render('defence_requests/form_partials/appropriate_adult_reason', f: f) %>
-<% end %>
+<%= f.radio_button_fieldset :appropriate_adult_reason,
+                            class: "panel-indent",
+                            data: {"show-when" => "defence_request_appropriate_adult_true" },
+                            choice: [:detainee_juvenile, :detainee_with_mental_issue] %>
 
 <%= f.radio_button_fieldset :interpreter_required %>
 

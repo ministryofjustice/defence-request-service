@@ -40,8 +40,12 @@ class RadioButtonFieldset < FormGroup
 
   def fieldset_options
     @fieldset_options ||= {}.tap { |opts|
-      opts[:class] = classes.gsub "error", ""
+      opts[:class] = fieldset_classes
     }.compact
+  end
+
+  def fieldset_classes
+    @classes - ["panel-indent", "error"]
   end
 
   def inner_div_options
