@@ -1,68 +1,40 @@
 require "rails_helper"
 
-RSpec.feature "Custody Suite Officers changing interview time for a defence request" do
-  context "with javascript enabled", js: true do
-    specify "can set new interview time to an arbitrary date" do
-      create_and_display_defence_request
+RSpec.shared_examples "setting, changing and validating interview time" do
+  specify "can set new interview time to an arbitrary date" do
+    create_and_display_defence_request
 
-      within "div#interview" do
-        fill_in "Hour", with: "14"
-        fill_in "Min", with: "05"
-        fill_in "defence_request_interview_start_time_date", with: "4 June 2015"
-      end
+    fill_date_and_time("14", "05", "4 June 2015")
 
-      click_button "Save interview time"
+    click_button "Save interview time"
 
-      expect(page).to have_content("Interview at 14:05 4 June 2015")
-    end
-
-    specify "can change interview time to an arbitrary date" do
-      create_and_display_defence_request(true)
-
-      within "div#interview" do
-        click_link "Change this"
-
-        fill_in "Hour", with: "16"
-        fill_in "Min", with: "05"
-        fill_in "defence_request_interview_start_time_date", with: "5 June 2015"
-      end
-
-      click_button "Save interview time"
-
-      expect(page).to have_content("Interview at 16:05 5 June 2015")
-    end
+    expect(page).to have_content("Interview at 14:05 4 June 2015")
   end
 
-  context "with javascript disabled" do
-    specify "can set new interview time to an arbitrary date" do
-      create_and_display_defence_request
+  specify "can change interview time to an arbitrary date" do
+    create_and_display_defence_request(true)
 
-      within "div#interview" do
-        fill_in "Hour", with: "14"
-        fill_in "Min", with: "05"
-        fill_in "defence_request_interview_start_time_date", with: "4 June 2015"
-      end
-
-      click_button "Save interview time"
-
-      expect(page).to have_content("Interview at 14:05 4 June 2015")
+    within "div#interview" do
+      click_link "Change this"
     end
 
-    specify "can change interview time to an arbitrary date" do
-      create_and_display_defence_request(true)
+    fill_date_and_time("16", "05", "5 June 2015")
 
-      within "div#interview" do
-        click_link "Change this"
-      end
+    click_button "Save interview time"
 
-      fill_in "Hour", with: "16"
-      fill_in "Min", with: "05"
-      fill_in "defence_request_interview_start_time_date", with: "5 June 2015"
+    expect(page).to have_content("Interview at 16:05 5 June 2015")
+  end
 
+  specify "gets an error if not all the fields are correctly provided" do
+    create_and_display_defence_request
+
+    fill_date_and_time(nil, nil, "5 June 2015")
+
+    within "div#interview" do
       click_button "Save interview time"
-
-      expect(page).to have_content("Interview at 16:05 5 June 2015")
     end
+
+    expect(page).to have_content("Hour is not a number, Min is not a number")
   end
 
   def create_and_display_defence_request(interview_time_set = false)
@@ -73,5 +45,21 @@ RSpec.feature "Custody Suite Officers changing interview time for a defence requ
     login_as_cso
 
     visit "/defence_requests/#{dr.id}"
+  end
+
+  def fill_date_and_time(hour, min, date)
+    fill_in("defence_request_interview_start_time_hour", with: hour) unless hour.nil?
+    fill_in("defence_request_interview_start_time_min", with: min) unless min.nil?
+    fill_in("defence_request_interview_start_time_date", with: date) unless date.nil?
+  end
+end
+
+RSpec.feature "Custody Suite Officers changing interview time for a defence request" do
+  context "with javascript enabled", js: true do
+    include_examples "setting, changing and validating interview time"
+  end
+
+  context "with javascript disabled" do
+    include_examples "setting, changing and validating interview time"
   end
 end
