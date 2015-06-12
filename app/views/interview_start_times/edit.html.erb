@@ -2,4 +2,6 @@
 
 <%= render "defence_requests/show_partials/header" %>
 
+<%= render "shared/error_messages", object: @defence_request_form %>
+
 <%= render "form", remote: false %>
