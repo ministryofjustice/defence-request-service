@@ -1,42 +1,45 @@
 <h2><%= t('case_details') %></h2>
 <div class="case-details">
+  <%= f.text_field_input(:custody_number) %>
 
-  <div class="form-group">
-    <%= f.label :custody_number, label_text_for_form(attribute_name: 'custody_number'), class: "form-label-bold" %>
-    <%= f.text_field :custody_number, label: t('custody_number'), class: 'text-field' %>
-  </div>
-
-  <%= render('shared/date_time_form_part',
-             attribute: :time_of_arrest,
-             show_label: true,
-             dates: [Day::YESTERDAY, Day::TODAY],
-             initial_date_index: 1,
-             f: f) %>
-
-  <% if @policy.add_case_time_of_arrival? %>
-    <%= render('shared/date_time_form_part',
-               attribute: :time_of_arrival,
-               show_label: true,
+  <%= f.form_group(:time_of_arrest) do %>
+    <% render('shared/date_time_form_part',
+               attribute: :time_of_arrest,
+               show_label: false,
                dates: [Day::YESTERDAY, Day::TODAY],
                initial_date_index: 1,
                f: f) %>
   <% end %>
 
-  <%= render('shared/date_time_form_part',
-             attribute: :time_of_detention_authorised,
-             show_label: true,
-             dates: [Day::YESTERDAY, Day::TODAY],
-             initial_date_index: 1,
-             f: f) %>
+  <% if @policy.add_case_time_of_arrival? %>
+    <%= f.form_group(:time_of_arrival) do %>
+      <% render('shared/date_time_form_part',
+                 attribute: :time_of_arrival,
+                 show_label: false,
+                 dates: [Day::YESTERDAY, Day::TODAY],
+                 initial_date_index: 1,
+                 f: f) %>
+    <% end %>
+  <% end %>
+
+  <%= f.form_group(:time_of_detention_authorised) do %>
+    <% render('shared/date_time_form_part',
+               attribute: :time_of_detention_authorised,
+               show_label: false,
+               dates: [Day::YESTERDAY, Day::TODAY],
+               initial_date_index: 1,
+               f: f) %>
+  <% end %>
 
   <% if @policy.interview_start_time_edit? %>
-    <%= render('shared/date_time_form_part',
-               attribute: :interview_start_time,
-               show_label: true,
-               hint_label: :interview_start_time_hint,
-               optional: true,
-               dates: [Day::TODAY, Day::TOMORROW, Day::DAY_AFTER_TOMORROW],
-               f: f) %>
+    <%= f.form_group(:interview_start_time, optional: true) do %>
+      <% render('shared/date_time_form_part',
+                 attribute: :interview_start_time,
+                 show_label: true,
+                 hint_label: :interview_start_time_hint,
+                 dates: [Day::TODAY, Day::TOMORROW, Day::DAY_AFTER_TOMORROW],
+                 f: f) %>
+    <% end %>
   <% end %>
 
   <%= render('defence_requests/form_partials/case_details', f: f) if @policy.create? %>

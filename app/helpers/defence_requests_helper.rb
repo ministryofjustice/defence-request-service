@@ -38,15 +38,6 @@ module DefenceRequestsHelper
     end
   end
 
-  def data_chooser_setup(time_to_edit, set_default_date)
-    today = Date.today
-    yesterday = today - 1
-    initial_date = initial_date(time_to_edit, set_default_date)
-    initial_date_type = initial_date_type(initial_date, today, yesterday)
-
-    [today, yesterday, initial_date, initial_date_type]
-  end
-
   def label_text_for_form(attribute_name:, optional: false)
     if optional
       "#{t(attribute_name.to_s)} <span class=\"aside\">(#{t("optional")})</span>".html_safe
@@ -63,24 +54,6 @@ module DefenceRequestsHelper
   #
   def format_date_and_time(date)
     date.day == Time.zone.now.day ? date.to_s(:time) : date.to_s(:short)
-  end
-
-  def initial_date(time_to_edit, set_default_date)
-    if time_to_edit
-      time_to_edit.to_date
-    elsif set_default_date
-      Date.today
-    end
-  end
-
-  def initial_date_type(initial_date, today, yesterday)
-    if initial_date.nil?
-      "blank"
-    elsif initial_date == today
-      "today"
-    elsif initial_date == yesterday
-      "yesterday"
-    end
   end
 
   def appropriate_adult_reason(defence_request)

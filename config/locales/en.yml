@@ -1,6 +1,14 @@
 en:
+  defence_request:
+    appropriate_adult_reason:
+      label: Because the detainee is
+    unfit_for_interview_reason:
+      label: Reasons
+
   "no": "No"
   "yes": "Yes"
+  "false": "No"
+  "true": "Yes"
   abort: "Abort"
   accepted: "Accepted"
   accepted_defence_request: "Accepted Defence Requests"
@@ -55,7 +63,6 @@ en:
   delete: "Delete"
   details: "Details"
   detainee: "Detainee"
-  detainee_address: "Address"
   detainee_details: "Detainee details"
   detainee_dob: "Detainee date of birth"
   detainee_juvenile: A juvenile
@@ -69,9 +76,10 @@ en:
   email: Email
   enter_solicitor_firm_name: "Enter solicitor/firm name..."
   error: error
+  error_summary_heading: You need to fix the errors on this page before continuing.
   expected_time_of_arrival: "Solicitor Time of Arrival"
   expired: "Session expired"
-  female: "Female"
+  female: Female
   fit_for_interview: Fit for interview
   fit_for_interview_question: Is the detainee fit for interview?
   full_name: "Full Name"
@@ -94,7 +102,7 @@ en:
   investigating_officer_name: Investigating officer name
   investigating_officer_shoulder_number: Investigating officer shoulder number
   legal_advice_request: "Legal advice request"
-  male: "Male"
+  male: Male
   min: "Min"
   month: "Month"
   name: "Name"
@@ -141,12 +149,11 @@ en:
   transgender: Transgender
   transition_info: Reason aborted
   unavailable: "Unavailable"
-  unfit_for_interview_reasons: Reasons
+  unspecified: Unspecified
   update: "Update"
   update_and_accept: "Update and Accept"
   update_from: "Update from"
   update_time_of_arrival: "Update time of arrival"
-  unspecified: "Unspecified"
   view_the_case_details: "View the case details"
   what_type_is_being_requested: "What type of solicitor is being requested?"
   year: "Year"
@@ -179,11 +186,8 @@ en:
   helpers:
     submit:
       close: "Close %{model}"
-      create: "Create %{model}"
-      update: "Update %{model}"
-      defence_request:
-        update: "Save changes"
-
+      create: "Save changes"
+      update: "Save changes"
 
   activerecord:
     models:
@@ -218,6 +222,17 @@ en:
               invalid_day: "Day is invalid"
               invalid_hour: "Hour is invalid"
               invalid_min: "Minute is invalid"
+    attributes:
+      defence_request:
+        detainee_name: Name
+        detainee_address: Address
+        time_of_arrest: Arrest time
+        time_of_arrival: Arrival time
+
+        #TODO: The 2 below are a problem for errors
+        appropriate_adult_reason: Because the detainee is
+        unfit_for_interview_reason: Reasons
+
   activemodel:
     models:
       abort_defence_request_form: "Abort Defence Request"

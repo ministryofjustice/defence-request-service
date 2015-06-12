@@ -9,7 +9,7 @@ RSpec.feature "Custody Suite Officers creating defence requests" do
     expect(current_path).to eq("/defence_requests")
     expect(page).to have_content "You need to fix the errors on this page before continuing"
 
-    ["Detainee name", "Address", "Date of birth", "Offences", "Custody number", "Gender"].each do |field_name|
+    ["Name", "Address", "Date of birth", "Offences", "Custody number", "Gender"].each do |field_name|
       expect(page).to have_css(".error-summary li", text: "#{field_name}: can't be blank")
     end
   end

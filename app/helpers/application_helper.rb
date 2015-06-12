@@ -14,17 +14,12 @@ module ApplicationHelper
     end
   end
 
-  def object_error_messages(active_model_messages)
-    content_tag(:ul) do
-      active_model_messages.each do |field_name, field_messages|
-        concat errors_for_field(field_name, field_messages)
+  def object_error_messages(object)
+    active_model_messages = object.errors.messages
+    content_tag(:ul, class: "error-summary-list") do
+      active_model_messages.each do |attribute, field_messages|
+        concat errors_for_field(object, attribute, field_messages)
       end
-    end
-  end
-
-  def errors_for_field(field_name, field_messages)
-    content_tag :li do
-      "#{t(field_name)}: #{field_messages.join(', ')}".html_safe
     end
   end
 
@@ -73,5 +68,26 @@ module ApplicationHelper
 
   def tab_active_class(condition)
     "is-active" if condition
+  end
+
+  private
+
+  def prefix_for(object)
+    object.model_name.i18n_key.to_s
+  end
+
+  def error_id_for(parent_id, attribute)
+    field_id = "#{parent_id}_#{attribute}".squeeze("_")
+    "#{field_id}_error"
+  end
+
+  def errors_for_field(object, attribute, field_messages)
+    parent_id = prefix_for(object)
+    content_tag :li do
+      content_tag :a, href: "#" + error_id_for(parent_id, attribute) do
+        label = object.class.human_attribute_name attribute
+        "#{label}: #{field_messages.join(", ")}".html_safe
+      end
+    end
   end
 end

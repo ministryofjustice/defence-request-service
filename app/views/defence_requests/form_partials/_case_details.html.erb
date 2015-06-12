@@ -1,41 +1,18 @@
-<div class="form-group">
-  <%= f.label :offences, label_text_for_form(attribute_name: 'offences'), class: "form-label-bold" %>
-  <%= f.text_field :offences, class: 'text-field text-field-wide' %>
-</div>
+<%= f.text_field_input(:offences) %>
 
-<div class="form-group">
-  <%= f.label :circumstances_of_arrest, label_text_for_form(attribute_name: 'circumstances_of_arrest'), class: "form-label-bold" %>
-  <%= f.text_area :circumstances_of_arrest, label: t('circumstances_of_arrest'), rows: '5', class: 'text-field text-field-wide' %>
-</div>
+<%= f.form_group(:circumstances_of_arrest) do %>
+  <% f.text_area :circumstances_of_arrest, label: t('circumstances_of_arrest'), rows: '5', class: 'text-field text-field-wide' %>
+<% end %>
 
-<div class="form-group">
-  <fieldset class="inline">
-    <%= f.label :fit_for_interview, label_text_for_form(attribute_name: 'fit_for_interview_question'), class: "form-label-bold" %>
-    <label class="block-label form-label" for="defence_request_fit_for_interview_true">
-      <%= f.radio_button :fit_for_interview, true, name: 'defence_request[fit_for_interview]', class: 'fit_for_interview_radio' %>
-      <%= t('yes') %>
-    </label>
-    <label class="block-label form-label" for="defence_request_fit_for_interview_false">
-      <%= f.radio_button :fit_for_interview, false, name: 'defence_request[fit_for_interview]', class: 'fit_for_interview_radio' %>
-      <%= t('no') %>
-    </label>
-  </fieldset>
-</div>
+<%= f.radio_button_fieldset :fit_for_interview %>
 
-<div class="form-group panel-indent" data-show-when="defence_request_fit_for_interview_false">
-  <%= f.label :unfit_for_interview_reason, label_text_for_form(attribute_name: 'unfit_for_interview_reasons'), class: "form-label-bold" %>
-  <%= f.text_area :unfit_for_interview_reason, rows: '5', class: 'text-field text-field-wide' %>
-</div>
+<%= f.form_group(:unfit_for_interview_reason, class: "panel-indent", data: { "show-when" => "defence_request_fit_for_interview_false" } ) do %>
+  <% f.text_area :unfit_for_interview_reason, rows: '5', class: 'text-field text-field-wide' %>
+<% end %>
 
-<div class="form-group">
-  <%= f.label :investigating_officer_name, label_text_for_form(attribute_name: 'investigating_officer_name', optional: true), class: "form-label-bold" %>
-  <%= f.text_field :investigating_officer_name, label: t('investigating_officer_name'), class: 'text-field custody-number' %>
-</div>
+<%= f.text_field_input(:investigating_officer_name, optional: true) %>
 
-<div class="form-group">
-  <%= f.label :investigating_officer_contact_number, label_text_for_form(attribute_name: 'investigating_officer_contact_number', optional: true), class: "form-label-bold" %>
-  <%= f.text_field :investigating_officer_contact_number, label: t('investigating_officer_contact_number'), class: 'text-field custody-number' %>
-</div>
+<%= f.text_field_input(:investigating_officer_contact_number, optional: true) %>
 
 <div class="form-group">
   <%= f.label :comments, class: "form-label-bold" do %>
