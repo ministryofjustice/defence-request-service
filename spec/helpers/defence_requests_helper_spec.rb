@@ -1,5 +1,7 @@
 require "rails_helper"
 
+require "timecop"
+
 RSpec.describe DefenceRequestsHelper, type: :helper do
 
   describe "formatting Not given field" do
@@ -46,51 +48,64 @@ RSpec.describe DefenceRequestsHelper, type: :helper do
   end
 
   describe "interview_at" do
-    context "when interview time blank" do
-      it "renders correctly" do
-        request = create(:defence_request)
-        expected = %[<dl class="time-at"><dt>Interview time</dt> <dd>pending</dd></dl>]
-        expect(helper.interview_at(request)).to eq(expected)
+    let(:now) { Time.parse("2015-06-02 15:20 GMT")}
+    let(:request) { create(:defence_request, interview_start_time: time) }
+    subject do
+      Timecop.freeze(now) do
+        helper.interview_at(request)
       end
     end
-    context "when interview time set" do
-      context "interview time is today" do
+
+    context "when blank" do
+      let(:time) { nil }
+
+      it "renders correctly" do
+        is_expected.to eql(%[<dl class="time-at"><dt>Interview time</dt> <dd>pending</dd></dl>])
+      end
+    end
+
+    context "when set" do
+      context "is today" do
+        let(:time) { Time.parse("2015-06-02 18:20 GMT") }
+
         it "renders just the time" do
-          time = Time.zone.now
-          request = create(:defence_request, interview_start_time: time)
-          expected = %[<dl class="time-at"><dt>Interview at</dt> <dd>#{time.to_s(:time)}</dd></dl>]
-          expect(helper.interview_at(request)).to eq(expected)
+          is_expected.to eql(%[<dl class="time-at"><dt>Interview at</dt> <dd>18:20</dd></dl>])
         end
       end
 
-      context "interview time is not today" do
+      context "is not today" do
+        let(:time) { Time.parse("2015-06-03 18:20 GMT") }
+
         it "renders the date and the time" do
-          time = Time.zone.now + 1.day
-          request = create(:defence_request, interview_start_time: time)
-          expected = %[<dl class="time-at"><dt>Interview at</dt> <dd>#{time.to_s(:short)}</dd></dl>]
-          expect(helper.interview_at(request)).to eq(expected)
+          is_expected.to eql(%[<dl class="time-at"><dt>Interview at</dt> <dd>18:20 3 June 2015</dd></dl>])
         end
       end
     end
   end
 
   describe "arriving_at" do
+    let(:now) { Time.parse("2015-06-02 15:20 GMT")}
+    let(:request) { create(:defence_request, solicitor_time_of_arrival: time) }
+    subject do
+      Timecop.freeze(now) do
+        helper.arriving_at(request)
+      end
+    end
+
     context "when arrival time set" do
       context "arrival time is today" do
+        let(:time) { Time.parse("2015-06-02 18:20 GMT") }
+
         it "renders just the time" do
-          time = Time.zone.now
-          request = create(:defence_request, solicitor_time_of_arrival: time)
-          expected = %[<dl class="time-at"><dt>Arriving at</dt> <dd id="solicitor_time_of_arrival">#{time.to_s(:time)}</dd></dl>]
-          expect(helper.arriving_at(request)).to eq(expected)
+          is_expected.to eql(%[<dl class="time-at"><dt>Arriving at</dt> <dd id="solicitor_time_of_arrival">18:20</dd></dl>])
         end
       end
 
       context "arrival time is not today" do
+        let(:time) { Time.parse("2015-06-03 18:20 GMT") }
+
         it "renders both the date and the time" do
-          time = Time.zone.now + 1.day
-          request = create(:defence_request, solicitor_time_of_arrival: time)
-          expected = %[<dl class="time-at"><dt>Arriving at</dt> <dd id="solicitor_time_of_arrival">#{time.to_s(:short)}</dd></dl>]
-          expect(helper.arriving_at(request)).to eq(expected)
+          is_expected.to eql(%[<dl class="time-at"><dt>Arriving at</dt> <dd id="solicitor_time_of_arrival">18:20 3 June 2015</dd></dl>])
         end
       end
     end

@@ -15,7 +15,7 @@ module DefenceRequestsHelper
   def interview_at(defence_request)
     if defence_request.interview_start_time?
 
-      time = date_and_time_formatter(defence_request.interview_start_time)
+      time = format_date_and_time(defence_request.interview_start_time)
 
       content_tag :dl, class: "time-at" do
         display_value "interview_at", time
@@ -53,7 +53,7 @@ module DefenceRequestsHelper
   # Will format as date + time for dates that are not today
   #
   def format_date_and_time(date)
-    date.day == Time.zone.now.day ? date.to_s(:time) : date.to_s(:short)
+    date.day == Time.zone.now.day ? date.to_s(:time) : date_and_time_formatter(date)
   end
 
   def appropriate_adult_reason(defence_request)
