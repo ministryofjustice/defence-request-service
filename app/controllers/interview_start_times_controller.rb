@@ -14,7 +14,8 @@ class InterviewStartTimesController < BaseController
 
   def update
     if @defence_request_form.submit(defence_request_params)
-      render_for_ajax_or_redirect(:_interview_time, defence_request_path(@defence_request), notice: flash_message(:interview_start_time, DefenceRequest))
+      redirect_params = { notice: flash_message(:interview_start_time, DefenceRequest) }
+      render_for_ajax_or_redirect(:_interview_time, defence_request_path(@defence_request), redirect_params)
     else
       render_for_ajax_or_page(:_form, :edit)
     end
