@@ -12,7 +12,7 @@
 
   <tbody>
     <% requests.each_with_index do |dr,i| %>
-      <%= content_tag_for(:tr, dr, class: "cso-dashboard-dr #{cycle("", "grey")} clickable-row", "data-link": defence_request_path(dr)) do %>
+      <%= content_tag_for(:tr, dr, class: "dashboard-dr #{cycle("", "grey")} clickable-row", "data-link": defence_request_path(dr)) do %>
         <td class="detainee">
           <div class="detainee-container <%= dr.state_class %>">
             <p class="name"><%= dr.detainee_name %></p>
@@ -51,7 +51,9 @@
         </td>
         <td class="actions"><%= link_to "<i class=\"icon-angle-right\"></i>".html_safe, defence_request_path(dr) %></td>
       <% end %>
-      <tr class="seperator"></tr>
+      <tr class="separator">
+        <td colspan="5">&nbsp;</td>
+      </tr>
     <% end %>
   </tbody>
 </table>

@@ -31,4 +31,7 @@ Rails.application.routes.draw do
   get "/accessibility", controller: :static, action: :accessibility, as: :accessibility
   get "/terms", controller: :static, action: :terms, as: :terms
   get "/expired", controller: :static, action: :expired, as: :expired
+
+  # TEMPORARY - for mockup purposes
+  get "/solicitor_admin_dashboard", controller: :static, action: :solicitor_admin_dashboard, as: :solicitor_admin_dashboard
 end

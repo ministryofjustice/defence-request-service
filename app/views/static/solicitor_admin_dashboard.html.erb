@@ -1,0 +1,66 @@
+<header class="page-header group">
+  <h1><%= t('Defence solicitor requests') %></h1>
+</header>
+
+<section>
+  <!-- begin render tabs -->
+  <div class="tabs-nav cf">
+    <ul class="tabs">
+      <li class="tab <%= tab_class(type: :active) %>">
+        <%= link_to "Accepted (5)", "#" %>
+      </li>
+      <li class="tab <%= tab_class(type: :closed) %>">
+        <%= link_to "Completed (2)", "#" %>
+      </li>
+    </ul>
+  </div>
+  <!-- end render tabs -->
+
+
+
+  <!-- begin defence requests -->
+  <section class="solicitor-admin-defence-requests">
+    <table>
+      <thead>
+        <tr>
+          <th>Detainee</th>
+          <th>Custody suite</th>
+          <th>Solicitor interview</th>
+          <th>PACE clock</th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr class="dashboard-dr clickable-row" data-link="#">
+          <td class="detainee">
+            <div class="detainee-container">
+              <p class="name">Robert Kapp</p>
+              <p class="offences">Failure to reg. on Sex Offender List <span class="more">[+2]</span></p>
+              <p class="custody-number">CN: AW201503567</p>
+            </div>
+          </td>
+          <td class="custody-suite">
+            <p class="name">Bridewell</p>
+            <p class="address">Carrington Street,<br>Nottingham,<br>SE27 9NA<br>02036457861</p>
+          </td>
+          <td class="solicitor-interview">
+            <div class="interview">
+              <p class="time">12:30</p>
+              <p class="date">tomorrow</p>
+            </div>
+          </td>
+          <td class="pace-clock">
+            <p>00:45</p>
+          </td>
+          <td class="actions"><%= link_to "<i class=\"icon-angle-right\"></i>".html_safe, "#" %></td>
+        </tr>
+
+        <tr class="separator"></tr>
+      </tbody>
+    </table>
+
+  </section>
+
+  <!-- end defence requests -->
+</section>
