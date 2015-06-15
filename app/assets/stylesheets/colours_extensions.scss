@@ -1,10 +1,12 @@
 @import "colours";
 
-$submitted-defence-request: #FFBF47;
+$submitted-defence-request: $yellow;
 $submitted-defence-request-tint: #FEEED2;
-$accepted-defence-request: #912B88;
+$accepted-defence-request: $fuschia;
 $accepted-defence-request-tint: #e3cae1;
-$completed-defence-request: #28A197;
+$completed-defence-request: $turquoise;
 $completed-defence-request-tint: #CAE7E5;
 $sidebar-background: #e6e6e6;
 $disable-background: #eee;
+$clock: $red;
+$notify: $turquoise;
