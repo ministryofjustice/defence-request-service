@@ -41,5 +41,5 @@ Rails.application.configure do
   config.action_view.raise_on_missing_translations = true
 
   # Configure ActiveJob queue adapter
-  config.active_job.queue_adapter = :test
+  config.active_job.queue_adapter = Settings.rails.active_job_adapter.to_sym
 end

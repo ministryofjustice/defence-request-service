@@ -1,0 +1,9 @@
+aws:
+  receive_message:
+    attribute_names:
+      - ApproximateReceiveCount
+      - SentTimestamp
+
+# Add queues here:
+# queues:
+#   - [<%= "#{ENV.fetch("ACTIVE_JOB_QUEUE_PREFIX")}_queue_name" %>, 1]

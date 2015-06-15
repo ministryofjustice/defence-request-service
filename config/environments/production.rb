@@ -79,7 +79,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # Configure ActiveJob queue adapter
-  config.active_job.queue_adapter = :sucker_punch
+  config.active_job.queue_adapter = Settings.rails.active_job_adapter.to_sym
 
   config.lograge.enabled = true
   config.lograge.formatter = Lograge::Formatters::Logstash.new

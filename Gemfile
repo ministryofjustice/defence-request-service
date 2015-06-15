@@ -22,6 +22,7 @@ gem "rails", "4.2.2"
 gem "rails_config", "~> 0.4.2"
 gem "sass-rails", "~> 5.0.2"
 gem "sdoc", "~> 0.4.0", group: :doc
+gem "shoryuken"
 gem "sucker_punch", "~> 1.0"
 gem "transitions", require: ["transitions", "active_model/transitions"]
 gem "uglifier", ">= 1.3.0"

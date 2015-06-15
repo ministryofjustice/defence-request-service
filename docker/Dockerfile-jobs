@@ -1,0 +1,9 @@
+FROM defence-request-service:production_localbuild
+
+###############################################################################
+# NOTE - this is based on the PRODUCTION container, so that all required
+# gems, files, and similar are available
+###############################################################################
+
+# Run shoryuken as the default process
+CMD ["bundle", "exec", "shoryuken", "--rails", "-C", "config/shoryuken.yml"]

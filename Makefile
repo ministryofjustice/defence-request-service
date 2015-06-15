@@ -26,7 +26,7 @@ force_filesystem_timestamps:
 	find . -not -iwholename '*.git*' -exec touch -t 200001010000.00 {} \;
 
 # Build all docker containers
-build_all_containers: force_filesystem_timestamps base_container development_container production_container test_container
+build_all_containers: force_filesystem_timestamps base_container development_container production_container test_container production_job_container
 
 base_container:
 	cp -a docker/Dockerfile-base Dockerfile
@@ -53,6 +53,12 @@ production_container: base_container
 test_container: base_container
 	cat docker/Dockerfile-test | sed -e "s/FROM ${DOCKER_IMAGE}:base_localbuild/FROM ${DOCKER_IMAGE}:base_${DOCKER_IMAGE_TAG}/g" > Dockerfile
 	docker build -t "${DOCKER_IMAGE}:test_${DOCKER_IMAGE_TAG}" .
+	rm -f Dockerfile
+
+# The job container is based on the production container, rather than base.
+production_job_container: production_container
+	cat docker/Dockerfile-jobs | sed -e "s/FROM ${DOCKER_IMAGE}:production_localbuild/FROM ${DOCKER_IMAGE}:production_${DOCKER_IMAGE_TAG}/g" > Dockerfile
+	docker build -t "${DOCKER_IMAGE}:jobs_${DOCKER_IMAGE_TAG}" .
 	rm -f Dockerfile
 
 # Tag repos
