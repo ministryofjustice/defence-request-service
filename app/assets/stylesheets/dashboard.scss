@@ -2,6 +2,193 @@
 @import "elements/elements-typography";
 @import "grid_layout";
 
+@mixin dashboard-dr {
+  width: 100%;
+  border: 1px solid #dee0e2;
+
+  td {
+    vertical-align: top;
+    position: relative;
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .detainee {
+    padding-top: 0;
+    width: 35%;
+    height: 100%;
+    .name {
+      font-weight: bolder;
+      font-size: 2em;
+      margin-bottom: 0.2em;
+
+      .vulnerable {
+        color: $white;
+        font-size: 0.45em;
+        padding: 3px 9px 2px;
+        display: inline-block;
+        background-color: $notify;
+        border-radius: 6px;
+        font-weight: normal;
+        vertical-align: middle; // use if px not supported
+        vertical-align: 6px;
+        margin-right: 4px;
+      }
+    }
+    .offences {
+      font-weight: bold;
+    }
+    .more {
+      color: $notify;
+    }
+    .custody-number {
+      white-space: nowrap;
+    }
+    padding-bottom: 1em;
+  }
+
+  .firm, .custody-suite {
+    padding-top: 0;
+    width: 30%;
+    .name {
+      font-size: 2em;
+      margin-bottom: 0.2em;
+      font-weight: bold;
+    }
+    .tel {
+      margin-top: 0.2em;
+    }
+    .pending {
+      font-size: 2em;
+      color: $grey-1;
+    }
+
+    .arrival {
+      width: 60%;
+      border:  1px solid #000;
+      padding-left: 10px;
+      .arriving-text {
+        font-size: 2em;
+        color: $grey-1;
+        margin: 0;
+      }
+      .time {
+        margin: 0;
+        font-size: 2em;
+      }
+      .date {
+        margin: 0;
+        font-size: 2em;
+      }
+    }
+  }
+
+  .status {
+    width: 20%;
+    .state{
+      font-size: 2em;
+      margin-bottom: 0.2em;
+    }
+    .dscc-number {
+      margin-top: 0.2em;
+    }
+    padding-top: 0;
+  }
+
+  .detainee-container {
+    height: 100%;
+    margin-left: 1em;
+    padding-right: 0;
+    padding: 0 0 0 15px;
+  }
+
+  .submitted {
+    border-left: 6px solid $submitted-defence-request;
+  }
+
+  .accepted {
+    border-left: 6px solid $accepted-defence-request;
+  }
+
+  .completed {
+    border-left: 6px solid $completed-defence-request;
+  }
+
+  .actions {
+    vertical-align: middle;
+    a {
+      padding: 0 0 0 0 0;
+      font-size: 4em;
+      color: #0099FF;
+      text-decoration: none;
+    }
+    width: 1%;
+
+    .notifications {
+      position: absolute;
+      right: -10px;
+      top: -6px;
+      padding: 3px 14px 2px;
+      border-radius: 6px;
+      background-color: $notify;
+      color: $white;
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+  }
+
+  .interview-container {
+    padding-left: 15px;
+    margin-left: -15px;
+
+    &.notify {
+      padding-left: 9px;
+      border-left: 6px solid $notify;
+    }
+  }
+  .interview {
+    position: relative; // needed for IE6 to show borders
+    border:  1px solid $black;
+    &.not-set {
+      border: 1px solid $grey-2;
+    }
+    padding: 10px;
+    .interview-text {
+      font-size: 2em;
+      color: $grey-1;
+      margin: 0;
+    }
+    .time {
+      margin: 0;
+      font-size: 2em;
+    }
+    .date {
+      margin: 0;
+      font-size: 1.4em;
+    }
+  }
+
+  .solicitor-name {
+    font-size: 1.25em;
+  }
+
+  .pace-clock {
+    padding-top: 0;
+    font-size: 2em;
+    color: $clock;
+  }
+
+  &.clickable-row-active {
+    cursor: pointer;
+  }
+
+  &.grey {
+    background: $grey-4
+  }
+}
+
 .new_defence_request {
   margin-top: 3em;
 }
@@ -14,6 +201,7 @@ table.dashboard {
     font-size: 15px;
     white-space: nowrap;
     width: 10px;
+    padding-bottom: 0;
 
     &.actions {
       font-size: 15px;
@@ -36,144 +224,39 @@ table.dashboard {
   padding-top: 14px;
 }
 
-.cso-defence-requests {
+.cso-defence-requests, .solicitor-admin-defence-requests {
   width: 100%;
 
   table {
     height: 100%
   }
 
-  .cso-dashboard-dr {
-    width: 100%;
-    border: 1px solid #dee0e2;
-
-    .detainee {
-      padding-top: 0;
-      width: 35%;
-      vertical-align: top;
-      height: 100%;
-      .name {
-        font-weight: bolder;
-        font-size: 2em;
-        margin-bottom: 0.2em;
-      }
-      padding-bottom: 1em;
-    }
-
-    .firm {
-      padding-top: 0;
-      vertical-align: top;
-      width: 30%;
-      .name {
-        font-size: 2em;
-        margin-bottom: 0.2em
-      }
-      .tel {
-        margin-top: 0.2em;
-      }
-      .pending {
-        font-size: 2em;
-        color: $grey-1
-      }
-
-      .arrival {
-        width: 60%;
-        border:  1px solid #000;
-        padding-left: 10px;
-        .arriving-text {
-          font-size: 2em;
-          color: $grey-1;
-          margin: 0;
-        }
-        .time {
-          margin: 0;
-          font-size: 2em;
-        }
-        .date {
-          margin: 0;
-          font-size: 2em;
-        }
-      }
-    }
-
-    .status {
-      vertical-align: top;
-      width: 20%;
-      .state{
-        font-size: 2em;
-        margin-bottom: 0.2em;
-      }
-      .dscc-number {
-        margin-top: 0.2em;
-      }
-      padding-top: 0;
-    }
-
-    .requested {
-      vertical-align: top;
-    }
-
-    .detainee-container {
-      height: 100%;
-      margin-left: 1em;
-      padding-right: 0;
-      padding: 0px 0 10px 15px;
-    }
-
-    .submitted {
-      border-left: 6px solid $submitted-defence-request;
-    }
-
-    .accepted {
-      border-left: 6px solid $accepted-defence-request;
-    }
-
-    .completed {
-      border-left: 6px solid $completed-defence-request;
-    }
-
-    .actions {
-      a {
-        padding: 0 0 0 0 0;
-        font-size: 4em;
-        color: #0099FF;
-        text-decoration: none;
-      }
-      width: 1%;
-    }
-
-    .interview {
-      border:  1px solid #000;
-      padding-left: 10px;
-      .interview-text {
-        font-size: 2em;
-        color: $grey-1;
-        margin: 0;
-      }
-      .time {
-        margin: 0;
-        font-size: 2em;
-      }
-      .date {
-        margin: 0;
-        font-size: 2em;
-      }
-    }
+  .dashboard-dr {
+    @include dashboard-dr;
   }
 
-  .clickable-row-active {
-    cursor: pointer;
-  }
-
-  .grey {
-    background: $grey-4
-  }
-
-  .seperator {
+  .separator td {
     height: 1em;
+    padding: 0;
+    border: none;
   }
 }
 
+.cso-defence-requests {
+  thead {
+    th:first-child {
+      padding-left: 37px;
+    }
+  }
+}
+
+.solicitor-admin-defence-requests {
+  thead {
+    th:first-child {
+      padding-left: 31px;
+    }
+  }
+}
 
 .defence-requests {
   ul {
