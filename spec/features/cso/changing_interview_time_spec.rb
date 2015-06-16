@@ -1,32 +1,65 @@
 require "rails_helper"
 
-RSpec.feature "Custody Suite Officers changing interview time for a defence request" do
-  # TODO: check new interview time it rendered when the below story is done:
-  # https://trello.com/c/RtWUhXVc/8-3-as-a-cso-i-d-like-to-add-the-interview-time-so-that-the-solicitor-knows-when-the-interview-starts
+RSpec.shared_examples "setting, changing and validating interview time" do
+  specify "can set new interview time to an arbitrary date" do
+    create_and_display_defence_request
 
-  specify "can change interview time to an arbitrary date" do
-    login_create_and_submit_defence_request
-
-    # navigate to the defence request details page
-    find(".cso-defence-requests tbody tr:first-child td.actions a").click
-
-    within "div#interview" do
-      fill_in "Hour", with: "14"
-      fill_in "Min", with: "05"
-      fill_in "defence_request_interview_start_time_date", with: "4 June 2015"
-    end
+    fill_date_and_time("14", "05", "4 June 2015")
 
     click_button "Save interview time"
 
-    expect(page).to have_content("Interview start time updated")
+    expect(page).to have_content("Interview at 14:05 4 June 2015")
   end
 
-  def login_create_and_submit_defence_request
+  specify "can change interview time to an arbitrary date" do
+    create_and_display_defence_request(true)
+
+    within "div#interview" do
+      click_link "Change this"
+    end
+
+    fill_date_and_time("16", "05", "5 June 2015")
+
+    click_button "Save interview time"
+
+    expect(page).to have_content("Interview at 16:05 5 June 2015")
+  end
+
+  specify "gets an error if not all the fields are correctly provided" do
+    create_and_display_defence_request
+
+    fill_date_and_time(nil, nil, "5 June 2015")
+
+    within "div#interview" do
+      click_button "Save interview time"
+    end
+
+    expect(page).to have_content("Hour is not a number, Min is not a number")
+  end
+
+  def create_and_display_defence_request(interview_time_set = false)
+    traits = [ :acknowledged ]
+    traits << :interview_start_time if interview_time_set
+    dr = create :defence_request, *traits
+
     login_as_cso
 
-    click_link "New request"
-    fill_in_defence_request_form
-    click_button "Create request"
-    click_button "Submit request"
+    visit "/defence_requests/#{dr.id}"
+  end
+
+  def fill_date_and_time(hour, min, date)
+    fill_in("defence_request_interview_start_time_hour", with: hour) unless hour.nil?
+    fill_in("defence_request_interview_start_time_min", with: min) unless min.nil?
+    fill_in("defence_request_interview_start_time_date", with: date) unless date.nil?
+  end
+end
+
+RSpec.feature "Custody Suite Officers changing interview time for a defence request" do
+  context "with javascript enabled", js: true do
+    include_examples "setting, changing and validating interview time"
+  end
+
+  context "with javascript disabled" do
+    include_examples "setting, changing and validating interview time"
   end
 end

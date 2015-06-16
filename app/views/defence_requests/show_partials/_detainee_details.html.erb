@@ -14,5 +14,5 @@
 </dl>
 
 <% if @policy.edit? %>
-    <%= link_to("Change this", edit_defence_request_path(@defence_request, part: "detainee-details"), class: "edit-link") %>
+    <%= link_to(t("change_this"), edit_defence_request_path(@defence_request, part: "detainee-details"), class: "edit-link") %>
 <% end %>

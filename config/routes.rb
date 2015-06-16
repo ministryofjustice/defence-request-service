@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   resources :defence_requests, except: [:index] do
     resource :solicitor_arrival_time, only: [:edit, :update]
-    resource :interview_start_time, only: [:update]
+    resource :interview_start_time, only: [:edit, :update]
     member do
       post "resend_details"
     end
