@@ -34,7 +34,8 @@ RSpec.shared_examples "setting, changing and validating interview time" do
       click_button "Save interview time"
     end
 
-    expect(page).to have_content("Hour is not a number, Min is not a number")
+    expect(page).to have_content "Please check that you have given a valid time for the interview "\
+                                 "(eg 23 10) - please give hour, minutes and date (DD/MM/YYYY) eg 23 10"
   end
 
   def create_and_display_defence_request(interview_time_set = false)

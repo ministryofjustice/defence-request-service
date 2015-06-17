@@ -66,6 +66,15 @@ RSpec.describe DateTimeField do
         end
       end
     end
+
+    context "blank hour/min" do
+      let (:params)  { { date: "13 Apr 1992", hour: "", min: "" } }
+
+      it "is invalid with errors set" do
+        expect(subject).to_not be_valid
+        expect(subject.errors.count).to eql 1
+      end
+    end
   end
 
   context "methods" do

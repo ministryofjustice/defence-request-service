@@ -19,7 +19,7 @@ class DateTimeField
     @value ||= begin
                  year, month, day = *[:year, :month, :day].map { |d| d.to_proc[Chronic.parse(date)] }
                  min, hour = *[self.min, self.hour].map(&maybe.curry[to_integer])
-                 DateTime.new year.to_i, month.to_i, day.to_i, hour.to_i, min.to_i
+                 year && month && day && hour && min && DateTime.new(year.to_i, month.to_i, day.to_i, hour.to_i, min.to_i)
                rescue
                  nil
                end
@@ -50,7 +50,7 @@ class DateTimeField
   end
 
   def to_integer
-    ->(s) { s if to_time_string(s.to_i) == to_time_string(s.to_i.to_s) }
+    ->(s) { s if to_time_string(s.to_i) == to_time_string(s.to_i.to_s) && s =~ /^[0-9]+$/ }
   end
 
   def to_time_string(s)
