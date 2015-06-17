@@ -42,7 +42,7 @@ class DefenceRequestForm
   def submit(params)
     @fields.select!{ |k, v| params.include?(k) }
 
-    params_without_fields =  params.reject { |k, _| @fields.keys.include? k.to_sym}
+    params_without_fields = params.reject { |k, _| @fields.keys.include? k.to_sym }
     @defence_request.assign_attributes params_without_fields
 
     @fields.dup.each do |field_name, field_value|
