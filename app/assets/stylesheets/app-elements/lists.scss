@@ -11,18 +11,34 @@ dl.labels {
     clear: both;
     margin-right: 0.5em;
     margin-bottom: 0.75em;
+    color: $grey-1;
     &:after {
       content: ":";
     }
   }
   dd {
     float: left;
-    font-weight: bold;
     margin-bottom: 0.75em;
 
     &.multi-line {
       white-space: pre-line;
       line-height: 1.4em;
+    }
+  }
+
+  &.inline {
+    dt {
+      float: none;
+      display: inline;
+      &:before {
+        content: "";
+        display: block;
+        margin-top: 0.75em;
+      }
+    }
+    dd {
+      float: none;
+      display: inline;
     }
   }
 }

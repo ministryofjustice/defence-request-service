@@ -54,6 +54,10 @@ dl.time-at {
   border: 1px solid $grey-1;
   margin: $gutter-one-quarter 0px;
 
+  &.tba {
+    color: #999;
+  }
+
   dt {
     @include core-24();
     display: inline-block;
