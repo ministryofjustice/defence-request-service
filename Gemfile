@@ -18,7 +18,7 @@ gem "omniauth-oauth2"
 gem "omniauth-dsds", github: "ministryofjustice/defence-request-service-omniauth-dsds", tag: "v0.8.1"
 gem "pg"
 gem "pundit", "~> 1.0.0"
-gem "rails", "4.2.1"
+gem "rails", "4.2.2"
 gem "rails_config", "~> 0.4.2"
 gem "sass-rails", "~> 5.0.2"
 gem "sdoc", "~> 0.4.0", group: :doc
