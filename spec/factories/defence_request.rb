@@ -27,6 +27,7 @@ FactoryGirl.define do
     detainee_address_not_given "1"
     time_of_arrest now
     time_of_detention_authorised now
+    circumstances_of_arrest "Caught with their hand in the cookie jar"
   end
 
   trait :draft do
@@ -90,10 +91,6 @@ FactoryGirl.define do
   trait :with_detainee_address do
     detainee_address_not_given "0"
     detainee_address "House on the Hill, Letsby Avenue, Right up my street, London, Greater London, XX1 1XX"
-  end
-
-  trait :with_circumstance_of_arrest do
-    circumstances_of_arrest "Caught red handed"
   end
 
   trait :with_investigating_officer do

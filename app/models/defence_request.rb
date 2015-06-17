@@ -51,6 +51,7 @@ class DefenceRequest < ActiveRecord::Base
   validates :offences,
             :custody_number,
             :gender,
+            :circumstances_of_arrest,
             :time_of_arrival, presence: true
 
   validates :appropriate_adult, inclusion: { in: [true, false], message: :blank }
