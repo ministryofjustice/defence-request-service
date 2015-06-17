@@ -85,8 +85,7 @@ module ApplicationHelper
     parent_id = prefix_for(object)
     content_tag :li do
       content_tag :a, href: "#" + error_id_for(parent_id, attribute) do
-        label = object.class.human_attribute_name attribute
-        "#{label}: #{field_messages.join(", ")}".html_safe
+        field_messages.join(", ").html_safe
       end
     end
   end
