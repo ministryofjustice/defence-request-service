@@ -7,7 +7,7 @@ class DateField
     begin
       Date.new year.to_i, month.to_i, day.to_i
     rescue => e
-      errors.add :base, "Invalid Date"
+      errors.add :base, error_message_lookup_proc[:invalid]
     end
   end
 
@@ -33,6 +33,16 @@ class DateField
         dob.year = date.year
       end
     end
+  end
+
+  def set_error_message_lookup_proc!(error_proc)
+    @error_message_lookup_proc = error_proc
+  end
+
+  private
+
+  def error_message_lookup_proc
+    @error_message_lookup_proc || ->(a){ a }
   end
 
 end

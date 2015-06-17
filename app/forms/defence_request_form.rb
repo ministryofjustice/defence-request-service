@@ -16,12 +16,13 @@ class DefenceRequestForm
 
   def_delegators :@defence_request, :persisted?, :id, :human_attribute
 
-  def self.model_name
-    ActiveModel::Name.new(self, nil, "DefenceRequest")
-  end
 
   def self.human_attribute_name(*args)
     DefenceRequest.human_attribute_name *args
+  end
+
+  def self.model_name
+    ActiveModel::Name.new(self, nil, "DefenceRequest")
   end
 
   def initialize(defence_request)
@@ -33,6 +34,10 @@ class DefenceRequestForm
     register_field :time_of_detention_authorised, DateTimeField
     register_field :solicitor_time_of_arrival, DateTimeField
     register_field :interview_start_time, DateTimeField
+  end
+
+  def error_message_lookup_proc(field_name)
+    @defence_request.errors.method(:generate_message).curry(2)[field_name]
   end
 
   def register_field(field_name, klass, opts={})
@@ -47,6 +52,7 @@ class DefenceRequestForm
 
     @fields.dup.each do |field_name, field_value|
       field_value = field_value.class.new params[field_name]
+      field_value.set_error_message_lookup_proc! error_message_lookup_proc(field_name)
       @fields[field_name] = field_value
       @defence_request.assign_attributes({ field_name => field_value.value })
     end

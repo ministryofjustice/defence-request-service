@@ -13,8 +13,8 @@ RSpec.describe DateTimeField do
         expect(date.year).to eql datetime.year
         expect(date.month).to eql datetime.month
         expect(date.day).to eql datetime.day
-        expect(subject.hour).to eql datetime.hour
-        expect(subject.min).to eql datetime.min
+        expect(subject.hour).to eql "%02d" % datetime.hour
+        expect(subject.min).to eql "%02d" % datetime.min
       end
     end
 
@@ -48,11 +48,22 @@ RSpec.describe DateTimeField do
 
       it "is invalid, with errors set" do
         expect(subject).to_not be_valid
-        expect(subject.errors.count).to eql 4
-        expect(subject.errors[:base]).to eql ["Invalid Date or Time"]
-        expect(subject.errors[:date]).to eql ["is not a date"]
-        expect(subject.errors[:hour]).to eql ["is not a number"]
-        expect(subject.errors[:min]).to eql ["is not a number"]
+        expect(subject.errors.count).to eql 1
+      end
+
+      context "no error proc provided" do
+        it "uses the default activereord error message" do
+          expect(subject).to_not be_valid
+          expect(subject.errors[:base]).to eql ["is invalid"]
+        end
+      end
+
+      context "with an error proc"  do
+        it "uses the message from the error proc" do
+          subject.set_error_message_lookup_proc! Proc.new { "INVALID!" }
+          expect(subject).to_not be_valid
+          expect(subject.errors[:base]).to eql ["INVALID!"]
+        end
       end
     end
   end
@@ -122,5 +133,4 @@ RSpec.describe DateTimeField do
       end
     end
   end
-
 end

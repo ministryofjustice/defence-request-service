@@ -42,13 +42,19 @@ RSpec.describe DateField do
     context "invalid params" do
       let (:params) { { day: "I", month: "AM", year: "BROKEN" } }
 
-      it "is invalid, with errors set" do
-        expect(subject).to_not be_valid
-        expect(subject.errors.count).to eql 4
-        expect(subject.errors[:base]).to eql ["Invalid Date"]
-        expect(subject.errors[:day]).to eql ["is not a number"]
-        expect(subject.errors[:month]).to eql ["is not a number"]
-        expect(subject.errors[:year]).to eql ["is not a number"]
+      context "no error proc provided"  do
+        it "uses the default activerecord error message" do
+          expect(subject).to_not be_valid
+          expect(subject.errors[:base]).to eql ["is invalid"]
+        end
+      end
+
+      context "no error proc provided"  do
+        it "uses the default activerecord error message" do
+          subject.set_error_message_lookup_proc! Proc.new { "INVALID!" }
+          expect(subject).to_not be_valid
+          expect(subject.errors[:base]).to eql ["INVALID!"]
+        end
       end
     end
   end
