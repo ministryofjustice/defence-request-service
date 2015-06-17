@@ -10,10 +10,6 @@ class DefenceRequest < ActiveRecord::Base
   scope :not_draft, -> { where.not(state: "draft") }
   scope :ordered_by_created_at, -> { order(created_at: :asc) }
 
-  def self.related_to_solicitor(solicitor)
-    where(organisation_uid: solicitor.organisation_uids.first)
-  end
-
   state_machine auto_scopes: true do
     state :draft # first one is initial state
     state :queued
