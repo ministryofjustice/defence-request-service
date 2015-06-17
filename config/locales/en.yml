@@ -65,6 +65,7 @@ en:
   delete: "Delete"
   details: "Details"
   detainee: "Detainee"
+  detainee_address: "Address"
   detainee_details: "Detainee details"
   detainee_dob: "Detainee date of birth"
   detainee_juvenile: A juvenile
