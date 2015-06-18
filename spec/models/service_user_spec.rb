@@ -12,16 +12,19 @@ RSpec.describe ServiceUser, type: :model do
 
     context "when user passed in is a valid user" do
       let(:roles) { %w(role1 role2) }
+      let(:valid_organisation) do
+        {
+          "type" => "custody_suite",
+          "roles" => roles
+        }
+      end
       let(:organisations) do
         [
           {
             "type" => "some_unknown_type",
             "roles" => [ "does_not_matter" ]
           },
-          {
-            "type" => "custody_suite",
-            "roles" => roles
-          }
+          valid_organisation
         ]
       end
       let(:omni_auth_user) { double(uid: "UID", name: "NAME", email: "EMAIL", organisations: organisations) }
@@ -32,14 +35,18 @@ RSpec.describe ServiceUser, type: :model do
         end
       end
 
-      describe "roles are extracted from organisations" do
-        describe "only custody_suite organisation users have access" do
-          it "exposes roles from the organisation" do
-            expect(subject.roles).to match_array(roles)
+      describe "an organisation is selected and roles become available" do
+        context "when there is an organisation with allowed type" do
+          it "the assigned organisation is the selected one" do
+            expect(subject.organisation).to eql(valid_organisation)
+          end
+
+          it "exposes the organisation roles" do
+            expect(subject.roles).to eql(roles)
           end
         end
 
-        describe "all other organisations have no access" do
+        context "when there is no allowed organisation type" do
           let(:organisations) do
             [
               {
@@ -49,7 +56,11 @@ RSpec.describe ServiceUser, type: :model do
             ]
           end
 
-          it "does not expose any roles" do
+          it "the assigned organisation is nil" do
+            expect(subject.organisation).to be nil
+          end
+
+          it "roles are empty" do
             expect(subject.roles).to be_empty
           end
         end
