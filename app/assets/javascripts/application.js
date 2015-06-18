@@ -21,3 +21,4 @@
 //= require modules/moj.tabs
 //= require remove_nonjs
 //= require page_initialise
+//= require label_highlight

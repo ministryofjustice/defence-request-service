@@ -34,3 +34,14 @@ h3 {
   font-weight: normal;
   margin-right: 4px;
 }
+
+.panel-indent {
+  p {
+    @include core-24();
+
+    span {
+      font-weight: bold;
+      display: block;
+    }
+  }
+}

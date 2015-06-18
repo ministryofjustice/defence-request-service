@@ -3,7 +3,8 @@ ul {
 }
 
 dl.labels {
-  margin-bottom: 1em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
   float: left;
   clear: both;
   dt {
@@ -43,8 +44,29 @@ dl.labels {
   }
 }
 
-dd {
-  margin: 0;
+dl.time-at {
+  background: $white;
+  padding: $gutter-half;
+  border: 1px solid $grey-1;
+  margin-bottom: 10px;
+  display: inline-block;
+
+  &.tba {
+    color: #999;
+  }
+
+  dt {
+    @include core-24();
+    display: inline-block;
+    padding-top: 0.5em;
+    padding-bottom: 0.3em;
+    padding-left: $gutter-one-quarter;
+  }
+  dd {
+    @include bold-24();
+    display: inline-block;
+    padding-right: $gutter-one-quarter;
+  }
 }
 
 ul.error-summary-list {

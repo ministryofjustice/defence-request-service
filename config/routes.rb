@@ -34,5 +34,8 @@ Rails.application.routes.draw do
 
   # TEMPORARY - for mockup purposes
   get "/solicitor_admin_dashboard", controller: :static, action: :solicitor_admin_dashboard, as: :solicitor_admin_dashboard
-  get "/solicitor_admin_dr_detail", controller: :static, action: :solicitor_admin_dr_detail, as: :solicitor_admin_dr_detail
+  get "/solicitor_admin_dr_detail_54", controller: :static, action: :solicitor_admin_dr_detail_54, as: :solicitor_admin_dr_detail_54
+  get "/solicitor_admin_dr_detail_55", controller: :static, action: :solicitor_admin_dr_detail_55, as: :solicitor_admin_dr_detail_55
+  get "/solicitor_admin_dr_detail_56", controller: :static, action: :solicitor_admin_dr_detail_56, as: :solicitor_admin_dr_detail_56
+  get "/solicitor_admin_dr_detail_58", controller: :static, action: :solicitor_admin_dr_detail_58, as: :solicitor_admin_dr_detail_58
 end

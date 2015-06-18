@@ -35,12 +35,55 @@
     </ul>
   </div>
   <div class="js-tabs-content">
+
+
     <div id="interview">
-      <dl class="time-at tba">
-        <dt>Interview time</dt>
-        <dd>to be agreed</dd>
+
+      <dl class="time-at">
+        <dt>Interview at</dt>
+        <dd>13:30</dd>
       </dl>
-      <p><%= link_to "Add a solicitor", "#", class: "button" %></p>
+
+      <form>
+        <!-- create with form builder radio_button_fieldset thingy -->
+        <div class="form-group radio">
+
+          <fieldset class="form-group radio">
+            <div class="inline cf">
+              <div class="option">
+                <label for="defence_request_interview_confirm">
+                  <input name="defence_request[interview]" value="confirm" id="defence_request_interview_confirm" type="radio">
+                  Confirm attendance
+                </label>
+              </div>
+              <div class="option">
+                <label for="defence_request_interview_delay">
+                  <input name="defence_request[interview]" value="delay" id="defence_request_interview_delay" type="radio">
+                  Request delay
+                </label>
+              </div>
+            </div>
+          </fieldset>
+
+          <div class="panel-indent" data-show-when="defence_request_interview_delay">
+            <p>Please call custody on <span>020 3456 7890</span></p>
+          </div>
+        </div>
+
+      </form>
+      
+
+      <h3>Attending solicitor</h3>
+      <dl class="labels">
+        <dt>Solicitor</dt>
+        <dd>Paul Nicholson</dd>
+        <dt>Mobile number</dt>
+        <dd>07123 456789</dd>
+        <dt>Firm</dt>
+        <dd>Tuckers, Nottingham, 01234 567890</dd>
+      </dl>
+
+      <p><a href="#">Swap</a></p>
 
       <!-- begin bit copied from existing interview tab -->
       <div class="location">
@@ -59,11 +102,12 @@
       <!-- end bit copied from existing interview tab -->
 
     </div>
+
+
     <div id="case-details">
       <section class="case-details">
         <h3 class="nonjs">Detention details</h3>
         
-        <!-- begin bit copied from detention details tab -->
         <dl class="labels inline">
           <dt>Custody number</dt>
           <dd>123</dd>
@@ -85,7 +129,6 @@
           <dt>Comments</dt>
           <dd>Unlikely to be questioned today, in cell sleeping. Under the influence of drugs. Needs a medical examination.</dd>
         </dl>
-        <!-- end bit copied from detention details tab -->
 
       </section>
     </div>

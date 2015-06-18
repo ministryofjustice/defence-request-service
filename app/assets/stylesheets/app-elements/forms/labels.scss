@@ -3,6 +3,11 @@
 fieldset.radio {
   label {
     @extend .block-label;
+
+    &.s-selected {
+      border: 1px solid $black;
+      background: $white;
+    }
   }
 }
 
