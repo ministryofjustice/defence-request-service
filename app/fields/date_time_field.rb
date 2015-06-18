@@ -42,7 +42,7 @@ class DateTimeField
   private
 
   def error_message_lookup_proc
-    @error_message_lookup_proc || ->(a){ a }
+    @error_message_lookup_proc ||= ->(a){ a }
   end
 
   def maybe
