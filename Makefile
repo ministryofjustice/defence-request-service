@@ -8,6 +8,12 @@
 # The name of the image created by this project
 DOCKER_IMAGE = defence-request-service
 
+# Whether to remove intermediate layers - it's useful to keep them if we are doing
+# lots of rebuilds with differing input data
+ifndef REMOVE_INTERMEDIATE
+	REMOVE_INTERMEDIATE = --rm=false
+endif
+
 ifndef DOCKER_PUBLISH_PREFIX
 	# Default tag is oskarpearson/${DOCKER_IMAGE}/${DOCKER_IMAGE}:tagvalue
 	DOCKER_PUBLISH_PREFIX = oskarpearson
@@ -30,12 +36,12 @@ build_all_containers: force_filesystem_timestamps base_container development_con
 
 base_container:
 	cp -a docker/Dockerfile-base Dockerfile
-	docker build -t "${DOCKER_IMAGE}:base_${DOCKER_IMAGE_TAG}" .
+	docker build ${REMOVE_INTERMEDIATE} -t "${DOCKER_IMAGE}:base_${DOCKER_IMAGE_TAG}" .
 	rm -f Dockerfile
 
 development_container: base_container
 	cat docker/Dockerfile-development | sed -e "s/FROM ${DOCKER_IMAGE}:base_localbuild/FROM ${DOCKER_IMAGE}:base_${DOCKER_IMAGE_TAG}/g" > Dockerfile
-	docker build -t "${DOCKER_IMAGE}:development_${DOCKER_IMAGE_TAG}" .
+	docker build ${REMOVE_INTERMEDIATE} -t "${DOCKER_IMAGE}:development_${DOCKER_IMAGE_TAG}" .
 	rm -f Dockerfile
 
 production_container: base_container
@@ -47,12 +53,12 @@ production_container: base_container
 	printf "\nRUN echo commit_id: `git rev-parse HEAD` >> /.version.yml\n\n" >> Dockerfile
 	printf "\nRUN echo build_tag: ${JOB_NAME} ${BUILD_ID} >> /.version.yml\n\n" >> Dockerfile
 
-	docker build -t "${DOCKER_IMAGE}:production_${DOCKER_IMAGE_TAG}" .
+	docker build ${REMOVE_INTERMEDIATE} -t "${DOCKER_IMAGE}:production_${DOCKER_IMAGE_TAG}" .
 	rm -f Dockerfile
 
 test_container: base_container
 	cat docker/Dockerfile-test | sed -e "s/FROM ${DOCKER_IMAGE}:base_localbuild/FROM ${DOCKER_IMAGE}:base_${DOCKER_IMAGE_TAG}/g" > Dockerfile
-	docker build -t "${DOCKER_IMAGE}:test_${DOCKER_IMAGE_TAG}" .
+	docker build ${REMOVE_INTERMEDIATE} -t "${DOCKER_IMAGE}:test_${DOCKER_IMAGE_TAG}" .
 	rm -f Dockerfile
 
 # Tag repos
