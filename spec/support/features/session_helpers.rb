@@ -25,8 +25,7 @@ module SessionHelpers
         uid: user.uid,
         name: user.name,
         email: user.email,
-        roles: user.roles,
-        organisation_uids: user.organisation_uids
+        organisations: user.organisations
       }
     )
   end
