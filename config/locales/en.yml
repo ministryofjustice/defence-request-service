@@ -240,8 +240,8 @@ en:
               invalid: *error
             fit_for_interview:
               blank: "You must say if the detainee is fit for interview" #TODO: Waiting on Helen for confirmation of this
-            fit_for_interview_reason:
               blank: "You must say why the detainee is not fit for interview" #TODO: Waiting on Helen for confirmation of this
+            unfit_for_interview_reason:
             reason_aborted:
               blank: "You must give a reason for cancelling this request"
             offences:
