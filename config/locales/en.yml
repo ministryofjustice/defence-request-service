@@ -235,13 +235,13 @@ en:
               blank: *error
               invalid: *error
             interview_start_time:
-              error: &error "Please check that you have given a valid time for the interview (eg 23 10) - please give hour, minutes and date (DD/MM/YYYY)"
+              error: &error "Check that you’ve given a valid interview time (eg 23 10) - please give hour, minutes and date (DD/MM/YYYY)"
               blank: *error
               invalid: *error
             fit_for_interview:
-              blank: "You must say if the detainee is fit for interview" #TODO: Waiting on Helen for confirmation of this
-              blank: "You must say why the detainee is not fit for interview" #TODO: Waiting on Helen for confirmation of this
+              blank: "You must say if the detainee is fit for interview"
             unfit_for_interview_reason:
+              blank: "You must say why the detainee is not fit for interview"
             reason_aborted:
               blank: "You must give a reason for cancelling this request"
             offences:

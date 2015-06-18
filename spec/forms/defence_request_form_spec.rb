@@ -85,8 +85,7 @@ RSpec.describe DefenceRequestForm do
                                                    hour: "BROKEN",
                                                    min: "!" } }
             let(:expected_error_message) {
-              "Please check that you have given a valid time for the interview (eg 23 10) - "\
-              "please give hour, minutes and date (DD/MM/YYYY)"
+              "Check that you’ve given a valid interview time (eg 23 10) - please give hour, minutes and date (DD/MM/YYYY)"
             }
 
             it "adds errors from the field object to itself" do
