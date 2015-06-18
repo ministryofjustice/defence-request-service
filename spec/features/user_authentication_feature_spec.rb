@@ -9,7 +9,7 @@ RSpec.feature "User authentication" do
   end
 
   scenario "with no roles for Service app gets redirected to auth failure page" do
-    user = create :user, roles: []
+    user = create :user
     unauthorized_login_with user
 
     expect(current_path).to eq "/auth/failure"

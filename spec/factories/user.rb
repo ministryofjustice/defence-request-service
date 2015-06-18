@@ -1,60 +1,85 @@
 FactoryGirl.define do
-  factory :user, class: Omniauth::Dsds::User do
-    roles []
-
+  factory :user, class: ServiceUser do
     to_create { |instance| instance }
 
     initialize_with {
-      new(
+      omni_auth_user = Omniauth::Dsds::User.new(
         uid: SecureRandom.uuid,
         name: "Example User",
         email: "user@example.com",
-        roles: roles,
-        organisation_uids: []
+        organisations: []
       )
+
+      ServiceUser.from_omniauth_user(omni_auth_user)
     }
   end
 
-  factory :cco_user, class: Omniauth::Dsds::User do
+  factory :cco_user, class: ServiceUser do
     to_create { |instance| instance }
 
     initialize_with {
-      new(
+      omni_auth_user = Omniauth::Dsds::User.new(
         uid: SecureRandom.uuid,
         name: "Example CCO User",
         email: "cco_user@example.com",
-        roles: ["cco"],
-        organisation_uids: []
+        organisations: [
+          {
+            "uid" => SecureRandom.uuid,
+            "name" => "Example call centre",
+            "type" => "drs_call_center",
+            "roles" => ["cco"]
+          }
+        ]
       )
+
+      ServiceUser.from_omniauth_user(omni_auth_user)
     }
   end
 
-  factory :cso_user, class: Omniauth::Dsds::User do
+  factory :cso_user, class: ServiceUser do
     to_create { |instance| instance }
 
     initialize_with {
-      new(
+      omni_auth_user = Omniauth::Dsds::User.new(
         uid: SecureRandom.uuid,
         name: "Example CSO User",
         email: "cso_user@example.com",
-        roles: ["cso"],
-        organisation_uids: []
+        organisations: [
+          {
+            "uid" => SecureRandom.uuid,
+            "name" => "Example custody suite",
+            "type" => "custody_suite",
+            "roles" => ["cso"]
+          }
+        ]
       )
+
+      ServiceUser.from_omniauth_user(omni_auth_user)
     }
   end
 
-  factory :solicitor_user, class: Omniauth::Dsds::User do
+  factory :solicitor_user, class: ServiceUser do
     to_create { |instance| instance }
-    organisation_uids { [FactoryGirl.create(:organisation, :law_firm).uid] }
+    transient do
+      organisation_uids { [SecureRandom.uuid] }
+    end
 
     initialize_with {
-      new(
+      omni_auth_user = Omniauth::Dsds::User.new(
         uid: SecureRandom.uuid,
         name: "Example Solicitor User",
         email: "solicitor_user@example.com",
-        roles: ["solicitor"],
-        organisation_uids: organisation_uids
+        organisations: [
+          {
+            "uid" => organisation_uids.first,
+            "name" => "Example law firm",
+            "type" => "law_firm",
+            "roles" => ["solicitor"]
+          }
+        ]
       )
+
+      ServiceUser.from_omniauth_user(omni_auth_user)
     }
   end
 
