@@ -208,11 +208,17 @@ en:
             detainee_address:
               blank: "You must select 'Not Given' if the detainee's address is unknown"
             appropriate_adult:
-              blank: "You must say if an appropriate adult is needed or not"
+              error: &error "You must say if an appropriate adult is needed or not"
+              blank: *error
+              inclusion: *error
             appropriate_adult_reason:
-              blank: "You must say if the detainee is 'a juvenile' or 'mentally disturbed' and needs an appropriate adult"
+              error: &error "You must say if the detainee is 'a juvenile' or 'mentally disturbed' and needs an appropriate adult"
+              blank: *error
+              inclusion: *error
             interpreter_required:
-              blank: "You must say if an interpreter is required"
+              error: &error "You must say if an interpreter is required"
+              blank:  *error
+              inclusion: *error
             interpreter_type:
               blank: "If an interpreter is needed, you must say what type"
             custody_number:

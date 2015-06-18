@@ -68,13 +68,13 @@ class DefenceRequestForm
 
   def add_errors_to_form
     @defence_request.errors.messages.each do |field_name, error_message|
-      self.errors[field_name] = error_message.join ", "
+      self.errors[field_name] = error_message.first
     end
 
     @fields.map(&:to_a).reject(&valid_if_present?).each do |field_name, field_value|
       if field_value.present?
         self.errors[field_name].clear
-        self.errors[field_name] = field_value.errors.full_messages.join ", "
+        self.errors[field_name] = field_value.errors.full_messages.first
       end
     end
   end
