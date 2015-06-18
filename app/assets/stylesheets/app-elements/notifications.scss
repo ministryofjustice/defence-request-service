@@ -1,0 +1,21 @@
+.notify-wrapper {
+  clear: both;
+  margin-left: -15px;
+  border-left: 6px solid $notify;
+  padding-left: 9px;
+  margin-bottom: 10px;
+
+  & *:first-child {
+    margin-top: 0;
+  }
+  & *:last-child {
+    margin-bottom: 0;
+  }
+}
+
+h3.notification {
+  clear: both;
+  @include bold-19();
+  margin-top: 0;
+  color: $notify;
+}

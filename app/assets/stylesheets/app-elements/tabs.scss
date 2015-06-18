@@ -51,6 +51,10 @@
   & > h3 {
     margin-top: 0;
   }
+
+  & > * {
+    clear: both;
+  }
 }
 
 .js-enabled .js-tabs-content > div {

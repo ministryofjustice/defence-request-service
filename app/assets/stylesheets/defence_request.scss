@@ -48,25 +48,6 @@
   padding-left: 0.6em;
 }
 
-dl.time-at {
-  background: $white;
-  padding: $gutter-half;
-  border: 1px solid $grey-1;
-  margin: $gutter-one-quarter 0px;
-
-  dt {
-    @include core-24();
-    display: inline-block;
-    padding-top: 0.5em;
-    padding-bottom: 0.3em;
-    padding-left: $gutter-one-quarter;
-  }
-  dd {
-    @include bold-24();
-    display: inline-block;
-  }
-}
-
 .not-given-check {
   margin-bottom: 0px;
 }

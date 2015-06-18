@@ -1,4 +1,40 @@
-.flash.success {
-  background-color: #ffe1e1;
-  border: 3px red solid;
+.flash {
+  border: 5px solid $grey-2;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+
+  h3 {
+    @include bold-24();
+    margin: 10px 0;
+  }
+
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  li {
+    @include bold-19();
+  }
+  a {
+    color: $grey-1;
+  }
+
+  &.success {
+    background-color: #ffe1e1;
+    border-color: red;
+  }
+
+  &.notify {
+    border-color: $notify;
+    a {
+      color: $notify;
+    }
+    ul {
+      margin-bottom: 0;
+    }
+    li {
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+  }
 }
