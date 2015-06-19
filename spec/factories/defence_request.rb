@@ -28,6 +28,7 @@ FactoryGirl.define do
     time_of_arrest now
     time_of_detention_authorised now
     circumstances_of_arrest "Caught with their hand in the cookie jar"
+    custody_suite_uid { SecureRandom.uuid }
   end
 
   trait :draft do

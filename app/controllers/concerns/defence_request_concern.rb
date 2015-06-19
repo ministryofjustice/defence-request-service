@@ -7,7 +7,7 @@ module DefenceRequestConcern
   end
 
   def defence_request
-    @defence_request ||= DefenceRequest.new
+    @defence_request ||= DefenceRequestFactory.build(current_user)
   end
 
   def new_defence_request_form
