@@ -10,7 +10,7 @@ class DefenceRequestsController < BaseController
   helper_method :defence_request_path_with_tab
 
   def show
-    @tab = params[:tab]
+    @tab = params[:tab] && %(interview case-details).include?(params[:tab]) ?  params[:tab] : nil
     if @defence_request.draft?
       render :show_draft
     else
