@@ -43,10 +43,6 @@ class CsoDefenceRequestPolicy < ApplicationPolicy
     policy_record.accepted?
   end
 
-  def add_case_time_of_arrival?
-    create? && policy_record.new_record?
-  end
-
   def interview_start_time_edit?
     !policy_record.aborted?
   end

@@ -11,15 +11,13 @@
                f: f) %>
   <% end %>
 
-  <% if @policy.add_case_time_of_arrival? %>
-    <%= f.form_group(:time_of_arrival) do %>
-      <% render('shared/date_time_form_part',
-                 attribute: :time_of_arrival,
-                 show_label: false,
-                 dates: [Day::YESTERDAY, Day::TODAY],
-                 initial_date_index: 1,
-                 f: f) %>
-    <% end %>
+  <%= f.form_group(:time_of_arrival) do %>
+    <% render('shared/date_time_form_part',
+               attribute: :time_of_arrival,
+               show_label: false,
+               dates: [Day::YESTERDAY, Day::TODAY],
+               initial_date_index: 1,
+               f: f) %>
   <% end %>
 
   <%= f.form_group(:time_of_detention_authorised) do %>

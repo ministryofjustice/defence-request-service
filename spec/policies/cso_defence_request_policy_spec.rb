@@ -21,7 +21,6 @@ RSpec.describe CsoDefenceRequestPolicy do
         :edit,
         :update,
         :queue,
-        :add_case_time_of_arrival,
         :interview_start_time_edit
       ] }
       let (:defreq) { FactoryGirl.build(:defence_request) }
