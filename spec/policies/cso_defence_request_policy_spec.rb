@@ -45,7 +45,6 @@ RSpec.describe CsoDefenceRequestPolicy do
         :show,
         :edit,
         :update,
-        :abort,
         :interview_start_time_edit
       ] }
       let (:defreq) { FactoryGirl.create(:defence_request, :queued) }
@@ -57,8 +56,6 @@ RSpec.describe CsoDefenceRequestPolicy do
         :show,
         :edit,
         :update,
-        :abort,
-        :complete,
         :interview_start_time_edit
       ] }
       let (:defreq) { FactoryGirl.create(:defence_request, :acknowledged) }
@@ -68,9 +65,6 @@ RSpec.describe CsoDefenceRequestPolicy do
     context "with an accepted DR" do
       let (:allowed_actions) { [
         :show,
-        :abort,
-        :complete,
-        :resend_details,
         :interview_start_time_edit,
         :solicitor_time_of_arrival
       ] }

@@ -55,29 +55,7 @@ class CsoDefenceRequestPolicy < ApplicationPolicy
     false
   end
 
-  def dscc_number_edit?
-    false
-  end
-
-  def abort?
-    policy_record.can_execute_abort?
-  end
-
-  def resend_details?
-    policy_record.accepted?
-  end
-
   def queue?
     policy_record.draft?
-  end
-
-  def complete?
-    policy_record.can_execute_complete?
-  end
-
-  private
-
-  def user_is_the_assigned_cco
-    policy_record.cco_uid == policy_user.uid
   end
 end
