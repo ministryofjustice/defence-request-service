@@ -9,9 +9,12 @@ RSpec.feature "Custody Suite Officers creating defence requests" do
     expect(current_path).to eq("/defence_requests")
     expect(page).to have_content "You need to fix the errors on this page before continuing"
 
-    ["Name", "Address", "Date of birth", "Offences", "Custody number", "Gender"].each do |field_name|
-      expect(page).to have_css(".error-summary li", text: "#{field_name}: can't be blank")
-    end
+    expect(page).to have_css(".error-summary li", text: "You must give the detainee's name or select 'Not given'")
+    expect(page).to have_css(".error-summary li", text: "You must select 'Not Given' if the detainee's address is unknown")
+    expect(page).to have_css(".error-summary li", text: "You must give the detainee's date of birth or select 'Not given'")
+    expect(page).to have_css(".error-summary li", text: "You must give at least one offence with which the detainee is charged")
+    expect(page).to have_css(".error-summary li", text: "You must give a custody number")
+    expect(page).to have_css(".error-summary li", text: "You must describe the detainee's gender or select 'Unspecified'")
   end
 
   specify "can select \"not specified\" for gender" do

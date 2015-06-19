@@ -27,7 +27,7 @@ RSpec.describe DefenceRequestForm do
         it "adds any errors from the dr, to itself" do
           expect(subject.submit invalid_params).to eql false
           expect(subject.errors.count).to eql 1
-          expect(subject.errors[:gender]).to eql ["can't be blank"]
+          expect(subject.errors[:gender]).to contain_exactly("You must describe the detainee's gender or select 'Unspecified'")
         end
       end
 
@@ -38,12 +38,14 @@ RSpec.describe DefenceRequestForm do
             let(:invalid_time_of_arrival) { { date: "",
                                               hour: "",
                                               min: "" } }
-
+            let(:expected_error_message) {
+              "You must give the detainee’s arrival time (eg 23 10) - please give hour, minutes and date (DD/MM/YYYY)"
+            }
 
             it "adds errors from the field object to itself" do
               expect(subject.submit invalid_params).to eql false
               expect(subject.errors.count).to eql 1
-              expect(subject.errors[:time_of_arrival]).to eql ["can't be blank"]
+              expect(subject.errors[:time_of_arrival]).to contain_exactly expected_error_message
             end
           end
 
@@ -51,13 +53,14 @@ RSpec.describe DefenceRequestForm do
             let(:invalid_time_of_arrival) { { date: "I",
                                               hour: "BROKEN",
                                               min: "!" } }
+            let(:expected_error_message) {
+              "You must give the detainee’s arrival time (eg 23 10) - please give hour, minutes and date (DD/MM/YYYY)"
+            }
+
             it "adds errors from the field object to itself" do
               expect(subject.submit invalid_params).to eql false
               expect(subject.errors.count).to eql 1
-              expect(subject.errors[:time_of_arrival]).to eql [["Invalid Date or Time",
-                                                                "Hour is not a number",
-                                                                "Min is not a number",
-                                                                "Date is not a date"].join(", ")]
+              expect(subject.errors[:time_of_arrival]).to contain_exactly expected_error_message
             end
           end
         end
@@ -81,14 +84,14 @@ RSpec.describe DefenceRequestForm do
             let(:invalid_interview_start_time) { { date: "I",
                                                    hour: "BROKEN",
                                                    min: "!" } }
+            let(:expected_error_message) {
+              "Check that you’ve given a valid interview time (eg 23 10) - please give hour, minutes and date (DD/MM/YYYY)"
+            }
 
             it "adds errors from the field object to itself" do
               expect(subject.submit invalid_params).to eql false
               expect(subject.errors.count).to eql 1
-              expect(subject.errors[:interview_start_time]).to eql [["Invalid Date or Time",
-                                                                     "Hour is not a number",
-                                                                     "Min is not a number",
-                                                                     "Date is not a date"].join(", ")]
+              expect(subject.errors[:interview_start_time]).to contain_exactly expected_error_message
             end
           end
         end

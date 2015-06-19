@@ -39,6 +39,7 @@ en:
   case_details_for: "Case details for %{dscc}"
   cco: "Call Center Operative"
   change_password: "Change Password"
+  change_this: "Change this"
   circumstances_of_arrest: Circumstances of arrest
   closed: "Closed (%{count})"
   comments: "Comments"
@@ -64,6 +65,7 @@ en:
   delete: "Delete"
   details: "Details"
   detainee: "Detainee"
+  detainee_address: "Address"
   detainee_details: "Detainee details"
   detainee_dob: "Detainee date of birth"
   detainee_juvenile: A juvenile
@@ -197,32 +199,62 @@ en:
       models:
         defence_request:
           attributes:
-            solicitor_time_of_arrival:
-              invalid: "Format is invalid"
-              invalid_year: "Year is invalid"
-              invalid_month: "Month is invalid"
-              invalid_day: "Day is invalid"
-              invalid_hour: "Hour is invalid"
-              invalid_min: "Minute is invalid"
             date_of_birth:
-              invalid: "Format is invalid"
-              invalid_year: "Year is invalid"
-              invalid_month: "Month is invalid"
-              invalid_day: "Day is invalid"
+              blank: "You must give the detainee's date of birth or select 'Not given'"
+            detainee_name:
+              blank: "You must give the detainee's name or select 'Not given'"
+            gender:
+              blank: "You must describe the detainee's gender or select 'Unspecified'"
+            detainee_address:
+              blank: "You must select 'Not Given' if the detainee's address is unknown"
+            appropriate_adult:
+              error: &error "You must say if an appropriate adult is needed or not"
+              blank: *error
+              inclusion: *error
+            appropriate_adult_reason:
+              error: &error "You must say if the detainee is 'a juvenile' or 'mentally disturbed' and needs an appropriate adult"
+              blank: *error
+              inclusion: *error
+            interpreter_required:
+              error: &error "You must say if an interpreter is required"
+              blank:  *error
+              inclusion: *error
+            interpreter_type:
+              blank: "If an interpreter is needed, you must say what type"
+            custody_number:
+              blank: "You must give a custody number"
+              invalid: "You have provided an invalid custody number" #TODO: We don't know the validation rules for this yet
+            solicitor_time_of_arrival:
+              error: &error "You must give the solicitor’s arrival time (eg 23 10) - please give hour, minutes and date (DD/MM/YYYY)"
+              blank: *error
+              invalid: *error
+            time_of_arrest:
+              error: &error "You must give the detainee’s arrest time (eg 23 10) - please give hour, minutes and date (DD/MM/YY)"
+              blank: *error
+              invalid: *error
             time_of_arrival:
-              invalid: "Format is invalid"
-              invalid_year: "Year is invalid"
-              invalid_month: "Month is invalid"
-              invalid_day: "Day is invalid"
-              invalid_hour: "Hour is invalid"
-              invalid_min: "Minute is invalid"
+              error: &error "You must give the detainee’s arrival time (eg 23 10) - please give hour, minutes and date (DD/MM/YYYY)"
+              blank: *error
+              invalid: *error
+            time_of_detention_authorised:
+              error: &error "You must give an authorised detention time (eg 23 10) - please give hour, minutes and date (DD/MM/YYYY)"
+              blank: *error
+              invalid: *error
             interview_start_time:
-              invalid: "Format is invalid"
-              invalid_year: "Year is invalid"
-              invalid_month: "Month is invalid"
-              invalid_day: "Day is invalid"
-              invalid_hour: "Hour is invalid"
-              invalid_min: "Minute is invalid"
+              error: &error "Check that you’ve given a valid interview time (eg 23 10) - please give hour, minutes and date (DD/MM/YYYY)"
+              blank: *error
+              invalid: *error
+            fit_for_interview:
+              blank: "You must say if the detainee is fit for interview"
+            unfit_for_interview_reason:
+              blank: "You must say why the detainee is not fit for interview"
+            reason_aborted:
+              blank: "You must give a reason for cancelling this request"
+            offences:
+              blank: "You must give at least one offence with which the detainee is charged"
+            circumstances_of_arrest:
+              blank: "You must describe the circumstances of the detainee's arrest"
+
     attributes:
       defence_request:
         detainee_name: Name
@@ -244,13 +276,4 @@ en:
         abort_defence_request_form:
           attributes:
             transition_info: Reason aborted
-        defence_request:
-          attributes:
-            tie_of_arrival:
-              invalid_datetime: "Format is invalid"
-              invalid_year: "Year is invalid"
-              invalid_month: "Month is invalid"
-              invalid_day: "Day is invalid"
-              invalid_hour: "Hour is invalid"
-              invalid_min: "Minute is invalid"
-  change_this: "Change this"
+

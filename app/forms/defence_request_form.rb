@@ -16,12 +16,13 @@ class DefenceRequestForm
 
   def_delegators :@defence_request, :persisted?, :id, :human_attribute
 
-  def self.model_name
-    ActiveModel::Name.new(self, nil, "DefenceRequest")
-  end
 
   def self.human_attribute_name(*args)
     DefenceRequest.human_attribute_name *args
+  end
+
+  def self.model_name
+    ActiveModel::Name.new(self, nil, "DefenceRequest")
   end
 
   def initialize(defence_request)
@@ -35,6 +36,10 @@ class DefenceRequestForm
     register_field :interview_start_time, DateTimeField
   end
 
+  def error_message_lookup_proc(field_name)
+    @defence_request.errors.method(:generate_message).curry(2)[field_name]
+  end
+
   def register_field(field_name, klass, opts={})
     @fields[field_name] = klass.from_persisted_value @defence_request.send field_name
   end
@@ -42,11 +47,12 @@ class DefenceRequestForm
   def submit(params)
     @fields.select!{ |k, v| params.include?(k) }
 
-    params_without_fields =  params.reject { |k, _| @fields.keys.include? k.to_sym}
+    params_without_fields = params.reject { |k, _| @fields.keys.include? k.to_sym }
     @defence_request.assign_attributes params_without_fields
 
     @fields.dup.each do |field_name, field_value|
       field_value = field_value.class.new params[field_name]
+      field_value.set_error_message_lookup_proc! error_message_lookup_proc(field_name)
       @fields[field_name] = field_value
       @defence_request.assign_attributes({ field_name => field_value.value })
     end
@@ -62,13 +68,13 @@ class DefenceRequestForm
 
   def add_errors_to_form
     @defence_request.errors.messages.each do |field_name, error_message|
-      self.errors[field_name] = error_message.join ", "
+      self.errors[field_name] = error_message.first
     end
 
     @fields.map(&:to_a).reject(&valid_if_present?).each do |field_name, field_value|
       if field_value.present?
         self.errors[field_name].clear
-        self.errors[field_name] = field_value.errors.full_messages.join ", "
+        self.errors[field_name] = field_value.errors.full_messages.first
       end
     end
   end

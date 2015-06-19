@@ -11,7 +11,6 @@ RSpec.feature "Custody Suite Officers viewing defence request" do
       :solicitor_time_of_arrival,
       :unfit_for_interview,
       :with_detainee_address,
-      :with_circumstance_of_arrest,
       :with_dscc_number,
       :with_interpreter_required,
       :with_investigating_officer

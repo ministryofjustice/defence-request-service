@@ -22,10 +22,14 @@ RSpec.describe DefenceRequest, type: :model do
   describe "validations" do
     before { allow(subject).to receive(:detainee_name_not_given?).and_return(false) }
 
-    it { expect(subject).to validate_presence_of :gender }
-    it { expect(subject).to validate_presence_of :detainee_name }
-    it { expect(subject).to validate_presence_of :offences }
-
+    it { is_expected.to validate_presence_of :detainee_name }
+    it { is_expected.to validate_presence_of :detainee_address }
+    it { is_expected.to validate_presence_of :date_of_birth }
+    it { is_expected.to validate_presence_of :offences }
+    it { is_expected.to validate_presence_of :custody_number }
+    it { is_expected.to validate_presence_of :gender }
+    it { is_expected.to validate_presence_of :circumstances_of_arrest }
+    it { is_expected.to validate_presence_of :time_of_arrival }
     it { is_expected.to validate_presence_of(:appropriate_adult)}
     it { is_expected.to validate_presence_of(:fit_for_interview)}
     it { is_expected.to validate_presence_of(:interpreter_required)}

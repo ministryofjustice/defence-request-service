@@ -18,7 +18,7 @@ module ApplicationHelper
     active_model_messages = object.errors.messages
     content_tag(:ul, class: "error-summary-list") do
       active_model_messages.each do |attribute, field_messages|
-        concat errors_for_field(object, attribute, field_messages)
+        concat error_for_field(object, attribute, field_messages.first)
       end
     end
   end
@@ -81,12 +81,11 @@ module ApplicationHelper
     "#{field_id}_error"
   end
 
-  def errors_for_field(object, attribute, field_messages)
+  def error_for_field(object, attribute, field_message)
     parent_id = prefix_for(object)
     content_tag :li do
       content_tag :a, href: "#" + error_id_for(parent_id, attribute) do
-        label = object.class.human_attribute_name attribute
-        "#{label}: #{field_messages.join(", ")}".html_safe
+        field_message.html_safe
       end
     end
   end

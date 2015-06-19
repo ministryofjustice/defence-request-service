@@ -55,9 +55,8 @@ class RadioButtonFieldset < FormGroup
   end
 
   def fieldset_tag(options={}, &block)
-    (f.tag(:fieldset, options, true) +
-     f.content_tag(:legend, label_content) +
-     (block_given? ? f.capture(&block) : "") +
-     "</fieldset>".html_safe).html_safe
+    f.content_tag :fieldset, options do
+      f.content_tag(:legend, label_content) + block.call if block_given?
+    end
   end
 end
