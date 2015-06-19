@@ -27,17 +27,6 @@ module DefenceRequestsHelper
     end
   end
 
-  def arriving_at(defence_request)
-    if defence_request.solicitor_time_of_arrival?
-
-      time = format_date_and_time defence_request.solicitor_time_of_arrival
-
-      content_tag :dl, class: "time-at" do
-        display_value "arriving_at", time, id: :solicitor_time_of_arrival
-      end
-    end
-  end
-
   def label_text_for_form(attribute_name:, optional: false)
     if optional
       "#{t(attribute_name.to_s)} <span class=\"aside\">(#{t("optional")})</span>".html_safe

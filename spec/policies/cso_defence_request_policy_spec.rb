@@ -65,7 +65,6 @@ RSpec.describe CsoDefenceRequestPolicy do
       let (:allowed_actions) { [
         :show,
         :interview_start_time_edit,
-        :solicitor_time_of_arrival
       ] }
       let (:defreq) { FactoryGirl.create(:defence_request, :accepted) }
       specify{ expect(subject).to permit_actions_and_forbid_all_others actions }

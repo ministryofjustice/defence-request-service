@@ -4,18 +4,6 @@
   <%= render "interview_start_times/form" %>
 <% end %>
 
-<% if @defence_request.solicitor_time_of_arrival? %>
-  <%= arriving_at @defence_request %>
-<% end %>
-
-<% if @policy.solicitor_time_of_arrival_from_show? %>
-  <% if @defence_request.solicitor_time_of_arrival? %>
-    <p><%= link_to t("update_time_of_arrival"), edit_defence_request_solicitor_arrival_time_path(@defence_request) %></p>
-  <% else %>
-    <p><%= link_to t("add_expected_time_of_arrival"), edit_defence_request_solicitor_arrival_time_path(@defence_request), class: "button time-at" %></p>
-  <% end %>
-<% end %>
-
 <% if false # disabled for CSO testing. Only show this content to Solicitors %>
 <div class="location">
   <h3>Location</h3>

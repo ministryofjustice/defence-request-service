@@ -39,16 +39,8 @@ class CsoDefenceRequestPolicy < ApplicationPolicy
     edit?
   end
 
-  def solicitor_time_of_arrival?
-    policy_record.accepted?
-  end
-
   def interview_start_time_edit?
     !policy_record.aborted?
-  end
-
-  def solicitor_time_of_arrival_from_show?
-    false
   end
 
   def queue?
