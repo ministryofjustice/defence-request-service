@@ -85,14 +85,17 @@ RSpec.describe CsoDefenceRequestPolicy do
     end
 
     describe "Scope" do
-      let (:defreq) { FactoryGirl.create(:defence_request) }
+      let(:custody_suite_uid) { user.organisation["uid"] }
+      let (:defence_request_1) { FactoryGirl.create(:defence_request, custody_suite_uid: custody_suite_uid) }
+      let (:defence_request_2) { FactoryGirl.create(:defence_request, :aborted, custody_suite_uid: custody_suite_uid) }
+      let (:defence_request_3) { FactoryGirl.create(:defence_request) }
 
       describe "resolve" do
-        it "returns DRs that are assigned to the solicitor and have been accepted" do
+        it "returns DRs that are assigned to the custody_suite and have not been aborted" do
           context = PolicyContext.new(DefenceRequest, user)
           policy_scope = CsoDefenceRequestPolicy::Scope.new(user, context)
 
-          expect(policy_scope.resolve).to eq [defreq]
+          expect(policy_scope.resolve).to match_array([defence_request_1])
         end
       end
     end

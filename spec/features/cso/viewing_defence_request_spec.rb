@@ -13,7 +13,8 @@ RSpec.feature "Custody Suite Officers viewing defence request" do
       :with_detainee_address,
       :with_dscc_number,
       :with_interpreter_required,
-      :with_investigating_officer
+      :with_investigating_officer,
+      custody_suite_uid: cso_user.organisation["uid"]
     )
 
     login_with cso_user
@@ -26,7 +27,7 @@ RSpec.feature "Custody Suite Officers viewing defence request" do
 
   specify "can follow a link back to the dashboard" do
     cso_user = create :cso_user
-    defence_request = create :defence_request, :queued
+    defence_request = create :defence_request, :queued, custody_suite_uid: cso_user.organisation["uid"]
 
     login_with cso_user
     within "tr#defence_request_#{defence_request.id} td.actions" do

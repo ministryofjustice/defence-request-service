@@ -8,7 +8,7 @@ class CsoDefenceRequestPolicy < ApplicationPolicy
     end
 
     def resolve
-      scope.not_aborted
+      scope.not_aborted.for_custody_suite(user.organisation["uid"])
     end
   end
 
