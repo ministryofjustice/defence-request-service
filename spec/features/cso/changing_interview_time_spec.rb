@@ -39,11 +39,13 @@ RSpec.shared_examples "setting, changing and validating interview time" do
   end
 
   def create_and_display_defence_request(interview_time_set = false)
+    cso = create :cso_user
+
     traits = [ :acknowledged ]
     traits << :interview_start_time if interview_time_set
-    dr = create :defence_request, *traits
+    dr = create :defence_request, *traits, custody_suite_uid: cso.organisation["uid"]
 
-    login_as_cso
+    login_as_cso(cso)
 
     visit "/defence_requests/#{dr.id}"
   end

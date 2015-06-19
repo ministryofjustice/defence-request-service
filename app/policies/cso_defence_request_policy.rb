@@ -20,7 +20,7 @@ class CsoDefenceRequestPolicy < ApplicationPolicy
   end
 
   def show?
-    !policy_record.aborted?
+    scoped?
   end
 
   def new?
@@ -32,7 +32,7 @@ class CsoDefenceRequestPolicy < ApplicationPolicy
   end
 
   def edit?
-    !policy_record.accepted? && !policy_record.aborted?
+    scoped? && !policy_record.accepted?
   end
 
   def update?
@@ -40,10 +40,24 @@ class CsoDefenceRequestPolicy < ApplicationPolicy
   end
 
   def interview_start_time_edit?
-    !policy_record.aborted?
+    scoped?
   end
 
   def queue?
-    policy_record.draft?
+    scoped? && policy_record.draft?
   end
+
+  private
+
+  def scoped?
+    !policy_record.aborted? &&
+      belongs_to_custody_suite?
+  end
+
+  def belongs_to_custody_suite?
+    custody_suite_uid = policy_user.organisation["uid"]
+    policy_record.custody_suite_uid == custody_suite_uid
+  end
+
+
 end
