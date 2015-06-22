@@ -14,7 +14,6 @@ Rails.application.routes.draw do
     resource :solicitor_arrival_time, only: [:edit, :update]
     resource :interview_start_time, only: [:edit, :update]
     member do
-      post "resend_details"
     end
   end
 

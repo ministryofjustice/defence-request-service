@@ -55,14 +55,6 @@ class DefenceRequestsController < BaseController
     end
   end
 
-  def resend_details
-    if @defence_request.resend_details
-      redirect_to(dashboard_path, notice: flash_message(:details_sent, DefenceRequest))
-    else
-      redirect_to(dashboard_path, alert: flash_message(:failed_details_sent, DefenceRequest))
-    end
-  end
-
   private
 
   def authorise_action_access
