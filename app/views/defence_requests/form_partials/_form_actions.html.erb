@@ -5,7 +5,7 @@
 <% if @defence_request_form.defence_request.new_record? %>
   <%= f.submit t("create_request"), class: 'button' %>
   <div class="form-links">
-    <%= link_to t('cancel_and_delete_all_details'), dashboard_path %>
+    <%= link_to t('cancel_and_delete_all_details'), custody_suite_dashboard_path %>
   </div>
 <% else %>
   <%= f.submit class: 'button' %>

@@ -31,7 +31,7 @@ module SessionHelpers
   end
 
   def sign_in_using_dsds_auth
-    visit root_path
+    visit custody_suite_root_path
   end
 
   def sign_out

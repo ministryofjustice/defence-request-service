@@ -1,4 +1,4 @@
-class DashboardsController < BaseController
+class FirmAdmin::DashboardsController < BaseController
   skip_after_action :verify_authorized
   before_action :set_policy_with_context, except: [:refresh_dashboard]
   before_action :set_dashboard

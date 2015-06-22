@@ -1,11 +1,14 @@
 Rails.application.routes.draw do
   mount JasmineRails::Engine => "/specs" if defined?(JasmineRails)
-  root "dashboards#show"
 
-  get "/dashboard", to: "dashboards#show", as: :dashboard
-  get "/dashboard/active", to: "dashboards#show", id: :active, as: :active_dashboard
-  get "/dashboard/closed", to: "dashboards#show", id: :closed, as: :closed_dashboard
-  get "/refresh_dashboard", to: "dashboards#refresh_dashboard"
+  namespace :custody_suite do
+    resource :dashboard, only: [:show] do
+      get :active, action: :show, id: :active
+      get :closed, action: :show, id: :closed
+      get :refresh_dashboard
+    end
+    root controller: :dashboards, action: :show
+  end
 
   resources :defence_requests, except: [:index] do
     resource :solicitor_arrival_time, only: [:edit, :update]

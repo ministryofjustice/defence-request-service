@@ -5,7 +5,7 @@ RSpec.feature "User authentication" do
     cso_user = create :cso_user
     login_with cso_user
 
-    expect(current_path).to eq root_path
+    expect(current_path).to eq custody_suite_root_path
   end
 
   scenario "with no roles for Service app gets redirected to auth failure page" do

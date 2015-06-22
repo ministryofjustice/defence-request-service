@@ -32,7 +32,7 @@ RSpec.feature "Custody Suite Officers checking and submitting defence requests" 
 
     click_button "Submit request"
 
-    expect(current_path).to eq("/dashboard")
+    expect(current_path).to eq("/custody_suite/dashboard")
     expect(page).to have_css(".defence_request .name", "Mannie Badder")
     expect(page).to have_css(".defence_request .state", "Submitted")
   end

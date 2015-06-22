@@ -7,10 +7,10 @@ class TransitionDefenceRequestsController < BaseController
     authorize_defence_request_access(requested_transition)
 
     if transition.complete
-      redirect_to dashboard_path,
+      redirect_to custody_suite_dashboard_path,
         notice: flash_message(requested_transition.to_sym, DefenceRequest)
     else
-      redirect_to dashboard_path,
+      redirect_to custody_suite_dashboard_path,
         notice: flash_message("failed_#{requested_transition}".to_sym, DefenceRequest)
     end
   end

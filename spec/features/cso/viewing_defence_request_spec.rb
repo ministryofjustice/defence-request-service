@@ -34,7 +34,7 @@ RSpec.feature "Custody Suite Officers viewing defence request" do
     end
 
     click_link "< Back to requests"
-    expect(current_path).to eq("/dashboard")
+    expect(current_path).to eq("/custody_suite/dashboard")
   end
 
   specify "It sets the first tab as active", js: true do
