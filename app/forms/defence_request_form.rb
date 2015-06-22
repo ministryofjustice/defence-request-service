@@ -32,7 +32,6 @@ class DefenceRequestForm
     register_field :time_of_arrival, DateTimeField
     register_field :time_of_arrest, DateTimeField
     register_field :time_of_detention_authorised, DateTimeField
-    register_field :solicitor_time_of_arrival, DateTimeField
     register_field :interview_start_time, DateTimeField
   end
 

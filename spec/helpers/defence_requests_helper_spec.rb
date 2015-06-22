@@ -83,34 +83,6 @@ RSpec.describe DefenceRequestsHelper, type: :helper do
     end
   end
 
-  describe "arriving_at" do
-    let(:now) { Time.parse("2015-06-02 15:20 GMT")}
-    let(:request) { create(:defence_request, solicitor_time_of_arrival: time) }
-    subject do
-      Timecop.freeze(now) do
-        helper.arriving_at(request)
-      end
-    end
-
-    context "when arrival time set" do
-      context "arrival time is today" do
-        let(:time) { Time.parse("2015-06-02 18:20 GMT") }
-
-        it "renders just the time" do
-          is_expected.to eql(%[<dl class="time-at"><dt>Arriving at</dt> <dd id="solicitor_time_of_arrival">18:20</dd></dl>])
-        end
-      end
-
-      context "arrival time is not today" do
-        let(:time) { Time.parse("2015-06-03 18:20 GMT") }
-
-        it "renders both the date and the time" do
-          is_expected.to eql(%[<dl class="time-at"><dt>Arriving at</dt> <dd id="solicitor_time_of_arrival">18:20 3 June 2015</dd></dl>])
-        end
-      end
-    end
-  end
-
   describe "label_text_for_form" do
     context "when the label is optional" do
       it "renders the translation of the attribute name" do

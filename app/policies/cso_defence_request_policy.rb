@@ -8,7 +8,7 @@ class CsoDefenceRequestPolicy < ApplicationPolicy
     end
 
     def resolve
-      scope.not_aborted
+      scope.not_aborted.for_custody_suite(user.organisation["uid"])
     end
   end
 
@@ -20,7 +20,7 @@ class CsoDefenceRequestPolicy < ApplicationPolicy
   end
 
   def show?
-    !policy_record.aborted?
+    scoped?
   end
 
   def new?
@@ -32,52 +32,32 @@ class CsoDefenceRequestPolicy < ApplicationPolicy
   end
 
   def edit?
-    !policy_record.accepted? && !policy_record.aborted?
+    scoped? && !policy_record.accepted?
   end
 
   def update?
     edit?
   end
 
-  def solicitor_time_of_arrival?
-    policy_record.accepted?
-  end
-
-  def add_case_time_of_arrival?
-    create? && policy_record.new_record?
-  end
-
   def interview_start_time_edit?
-    !policy_record.aborted?
-  end
-
-  def solicitor_time_of_arrival_from_show?
-    false
-  end
-
-  def dscc_number_edit?
-    false
-  end
-
-  def abort?
-    policy_record.can_execute_abort?
-  end
-
-  def resend_details?
-    policy_record.accepted?
+    scoped?
   end
 
   def queue?
-    policy_record.draft?
-  end
-
-  def complete?
-    policy_record.can_execute_complete?
+    scoped? && policy_record.draft?
   end
 
   private
 
-  def user_is_the_assigned_cco
-    policy_record.cco_uid == policy_user.uid
+  def scoped?
+    !policy_record.aborted? &&
+      belongs_to_custody_suite?
   end
+
+  def belongs_to_custody_suite?
+    custody_suite_uid = policy_user.organisation["uid"]
+    policy_record.custody_suite_uid == custody_suite_uid
+  end
+
+
 end

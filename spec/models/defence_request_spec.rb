@@ -177,4 +177,19 @@ RSpec.describe DefenceRequest, type: :model do
       end
     end
   end
+
+  describe "scopes" do
+    describe ".for_custody_suite" do
+      let(:uid) { SecureRandom.uuid }
+      let!(:defence_request_1) { create(:defence_request) }
+      let!(:defence_request_2) { create(:defence_request, custody_suite_uid: uid) }
+
+
+      subject { described_class.for_custody_suite(uid)}
+
+      it "returns defence request for the custody_suite_uid" do
+        is_expected.to match_array([defence_request_2])
+      end
+    end
+  end
 end

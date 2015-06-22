@@ -9,6 +9,7 @@ class DefenceRequest < ActiveRecord::Base
   scope :not_aborted, -> { where.not(state: "aborted") }
   scope :not_draft, -> { where.not(state: "draft") }
   scope :ordered_by_created_at, -> { order(created_at: :asc) }
+  scope :for_custody_suite, -> (uid) { where(custody_suite_uid: uid) }
 
   state_machine auto_scopes: true do
     state :draft # first one is initial state

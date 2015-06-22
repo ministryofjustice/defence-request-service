@@ -22,7 +22,6 @@ RSpec.describe "defence_requests/new.html.erb" do
 
     assign(:policy, double(
                       :"create?" => true,
-                      :"add_case_time_of_arrival?" => true,
                       :"interview_start_time_edit?" => true,
                     )
     )

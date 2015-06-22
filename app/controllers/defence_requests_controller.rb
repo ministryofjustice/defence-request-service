@@ -35,19 +35,11 @@ class DefenceRequestsController < BaseController
   end
 
   def update
-    if update_and_accept?
-      if @defence_request_form.submit(defence_request_params) && accept_and_save_defence_request
-        redirect_to(dashboard_path, notice: flash_message(:updated_and_accepted, DefenceRequest))
-      else
-        redirect_to(edit_defence_request_path, alert: flash_message(:failed_to_update_not_accepted, DefenceRequest))
-      end
+    @part = params[:part]
+    if @defence_request_form.submit(defence_request_params)
+      redirect_to(defence_request_path_with_tab(@part), notice: flash_message(:update, DefenceRequest))
     else
-      @part = params[:part]
-      if @defence_request_form.submit(defence_request_params)
-        redirect_to(defence_request_path_with_tab(@part), notice: flash_message(:update, DefenceRequest))
-      else
-        render edit_template
-      end
+      render edit_template
     end
   end
 
@@ -63,10 +55,6 @@ class DefenceRequestsController < BaseController
 
   def defence_request_id
     :id
-  end
-
-  def update_and_accept?
-    params[:commit] == "Update and Accept"
   end
 
   def defence_request_params
