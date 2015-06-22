@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.feature "Custody Suite Officers creating defence requests" do
-  specify "creating a blank defence request displays all required validation errors" do
+  specify "creating a blank defence request displays all required validation errors", focus: true do
     login_and_open_new_defence_request_page
 
     click_button "Create request"

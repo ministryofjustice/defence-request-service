@@ -4,7 +4,7 @@ class DefenceRequestsController < BaseController
 
   before_action :find_defence_request, except: [:new, :create]
 
-  before_action ->(c) { authorize_defence_request_access(c.action_name) }
+  before_action :authorise_action_access, except: [:create, :update]
 
   helper_method :defence_request_path_with_tab
 
@@ -26,6 +26,8 @@ class DefenceRequestsController < BaseController
   def create
     @defence_request_form = DefenceRequestForm.new(defence_request, defence_request_params)
 
+    authorize_defence_request_access(:create, @defence_request_form.defence_request)
+
     if @defence_request_form.submit
       redirect_to(@defence_request_form.defence_request, notice: flash_message(:create, DefenceRequestForm))
     else
@@ -44,6 +46,8 @@ class DefenceRequestsController < BaseController
     @defence_request_form = DefenceRequestForm.new(defence_request, defence_request_params)
     @part = tab_param_value(:part)
 
+    authorize_defence_request_access(:edit, @defence_request_form.defence_request)
+
     if @defence_request_form.submit
       redirect_to(defence_request_path_with_tab(@part), notice: flash_message(:update, DefenceRequest))
     else
@@ -60,6 +64,10 @@ class DefenceRequestsController < BaseController
   end
 
   private
+
+  def authorise_action_access
+    authorize_defence_request_access(action_name)
+  end
 
   def defence_request_id
     :id

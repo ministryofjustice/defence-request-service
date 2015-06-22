@@ -28,7 +28,7 @@ class CsoDefenceRequestPolicy < ApplicationPolicy
   end
 
   def create?
-    true
+    belongs_to_custody_suite?
   end
 
   def edit?

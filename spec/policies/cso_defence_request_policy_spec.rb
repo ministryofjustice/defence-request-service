@@ -9,7 +9,7 @@ RSpec.describe CsoDefenceRequestPolicy do
 
   context "with request not assigned to the same custody suite" do
     let(:defence_request) { build(:defence_request) }
-    let(:allowed_actions) { [:new, :create] }
+    let(:allowed_actions) { [:new] }
 
     it { is_expected.to permit_actions_and_forbid_all_others(allowed_actions) }
   end

@@ -10,12 +10,8 @@ module DefenceRequestConcern
     @defence_request ||= DefenceRequestFactory.build(current_user)
   end
 
-  def new_defence_request_form
-    @defence_request_form ||= DefenceRequestForm.new(defence_request)
-  end
-
-  def authorize_defence_request_access(action)
-    policy_context = PolicyContext.new(defence_request, current_user)
+  def authorize_defence_request_access(action, request_to_authorize = defence_request)
+    policy_context = PolicyContext.new(request_to_authorize, current_user)
     @policy ||= policy(policy_context)
     authorize policy_context, "#{action}?"
   end
