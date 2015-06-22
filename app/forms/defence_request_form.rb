@@ -25,7 +25,7 @@ class DefenceRequestForm
     ActiveModel::Name.new(self, nil, "DefenceRequest")
   end
 
-  def initialize(defence_request)
+  def initialize(defence_request, params = {})
     @fields = {}
     @defence_request = defence_request
     register_field :date_of_birth, DateField
@@ -33,11 +33,11 @@ class DefenceRequestForm
     register_field :time_of_arrest, DateTimeField
     register_field :time_of_detention_authorised, DateTimeField
     register_field :interview_start_time, DateTimeField
+
+    assign_params(params) unless params.empty?
   end
 
-  def submit(params)
-    assign_params(params)
-
+  def submit
     if valid?
       @defence_request.save!
       true
