@@ -22,8 +22,8 @@ gem "rails", "4.2.2"
 gem "rails_config", "~> 0.4.2"
 gem "sass-rails", "~> 5.0.2"
 gem "sdoc", "~> 0.4.0", group: :doc
+
 gem "shoryuken"
-gem "sucker_punch", "~> 1.0"
 gem "transitions", require: ["transitions", "active_model/transitions"]
 gem "uglifier", ">= 1.3.0"
 gem "unicorn", "~> 4.8.3"
@@ -45,6 +45,7 @@ group :development do
 end
 
 group :development, :test do
+  gem "sucker_punch", "~> 1.0"
   gem "awesome_print"
   gem "byebug"
   gem "factory_girl_rails"
@@ -73,5 +74,6 @@ group :test do
 end
 
 group :production do
+
   gem "rack-timeout"
 end
