@@ -16,6 +16,23 @@ dl.labels {
     &:after {
       content: ":";
     }
+
+    &.notify {
+      margin-left: -15px;
+      border-left: 6px solid $notify;
+      padding-left: 9px;
+      float: none;
+
+      .notification {
+        display: block;
+        width: 100%;
+        &:after {
+          display: block;
+          clear: both;
+          content: "";
+        }
+      }
+    }
   }
   dd {
     float: left;
