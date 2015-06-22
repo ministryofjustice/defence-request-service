@@ -7,19 +7,11 @@ dl.labels {
 
 .tabs-nav {
   border-bottom: none;
+  background: image-url('black_border.gif') left bottom repeat-x;
+}
 
-  ul {
-    li {
-      a, span {
-        border-bottom: 1px solid black;
-      }
-      &.active_tab {
-        a, span {
-          border-bottom: none;
-        }
-      }
-    }
-  }
+.js-tabs .tabs-nav {
+  display: none;
 }
 
 .grid-row {
