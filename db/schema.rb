@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150612145133) do
+ActiveRecord::Schema.define(version: 20150622095334) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,7 +54,6 @@ ActiveRecord::Schema.define(version: 20150612145133) do
     t.datetime "updated_at"
     t.string   "dscc_number"
     t.datetime "interview_start_time"
-    t.datetime "solicitor_time_of_arrival"
     t.text     "reason_aborted"
     t.string   "appropriate_adult_reason"
     t.string   "investigating_officer_name"

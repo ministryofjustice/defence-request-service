@@ -85,10 +85,6 @@ FactoryGirl.define do
     interview_start_time now
   end
 
-  trait :solicitor_time_of_arrival do
-    solicitor_time_of_arrival now
-  end
-
   trait :with_detainee_address do
     detainee_address_not_given "0"
     detainee_address "House on the Hill, Letsby Avenue, Right up my street, London, Greater London, XX1 1XX"

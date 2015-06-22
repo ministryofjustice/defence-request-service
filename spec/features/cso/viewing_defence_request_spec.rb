@@ -8,7 +8,6 @@ RSpec.feature "Custody Suite Officers viewing defence request" do
       :accepted,
       :appropriate_adult,
       :interview_start_time,
-      :solicitor_time_of_arrival,
       :unfit_for_interview,
       :with_detainee_address,
       :with_dscc_number,
