@@ -39,7 +39,7 @@ RSpec.feature "Custody Suite Officers viewing defence request" do
 
   specify "It sets the first tab as active", js: true do
     cso_user = create :cso_user
-    defence_request = create :defence_request, :queued
+    defence_request = create :defence_request, :queued, custody_suite_uid: cso_user.organisation["uid"]
 
     login_with cso_user
     within "tr#defence_request_#{defence_request.id} td.actions" do
