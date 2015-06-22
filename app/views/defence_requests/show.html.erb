@@ -17,7 +17,7 @@
 <%= content_tag("div", class: "js-tabs cf", id: "edit-tabs", data: { activatefirst: @tab.blank? ? "true" : "false" }) do %>
   <div class="tabs-nav">
     <ul class="cf tabs js-tabs-nav js-only">
-      <li>
+      <li <%= tab_active_class(@tab == "interview") %>>
         <a href="#interview"><%= t("solicitor_attendance") %></a>
       </li>
       <li class="<%= tab_active_class(@tab == "case-details") %>">

@@ -10,7 +10,7 @@ class DefenceRequestsController < BaseController
   helper_method :defence_request_path_with_tab
 
   def show
-    @tab = params[:tab]
+    @tab = tab_param_value(:tab)
     if @defence_request.draft?
       render :show_draft
     else
@@ -30,12 +30,12 @@ class DefenceRequestsController < BaseController
   end
 
   def edit
-    @part = params[:part]
+    @part = tab_param_value(:part)
     render edit_template
   end
 
   def update
-    @part = params[:part]
+    @part = tab_param_value(:part)
     if @defence_request_form.submit(defence_request_params)
       redirect_to(defence_request_path_with_tab(@part), notice: flash_message(:update, DefenceRequest))
     else
@@ -106,6 +106,10 @@ class DefenceRequestsController < BaseController
     else
       :edit
     end
+  end
+
+  def tab_param_value(param_name)
+    params[param_name] && %(interview case-details).include?(params[param_name]) ?  params[param_name] : nil
   end
 
   def defence_request_path_with_tab(tab)
