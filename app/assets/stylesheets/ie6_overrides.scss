@@ -1,4 +1,17 @@
 dl.labels {
+  dt.notify {
+    margin-left: 0;
+  }
+
+  dt.notify-notification {
+    float: none;
+    clear: both;
+
+    &:after {
+      content: "";
+    }
+  }
+
   dd {
     float: none;
     display: inline-block;

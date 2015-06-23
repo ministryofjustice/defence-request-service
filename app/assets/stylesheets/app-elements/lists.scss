@@ -7,33 +7,22 @@ dl.labels {
   margin-bottom: 0.5em;
   float: left;
   clear: both;
+
   dt {
     float: left;
     clear: both;
     margin-right: 0.5em;
     margin-bottom: 0.75em;
     color: $grey-1;
+
     &:after {
       content: ":";
     }
-
-    &.notify {
-      margin-left: -15px;
-      border-left: 6px solid $notify;
-      padding-left: 9px;
-      margin-bottom: 0;
-      &:after {
-        content: "";
-      }
-    }
   }
+
   dd {
     float: left;
     margin-bottom: 0.75em;
-
-    &.notify {
-      margin-bottom: 0;
-    }
 
     &.multi-line {
       white-space: pre-line;
@@ -45,12 +34,14 @@ dl.labels {
     dt {
       float: none;
       display: inline;
+
       &:before {
         content: "";
         display: block;
         margin-top: 0.75em;
       }
     }
+
     dd {
       float: none;
       display: inline;
@@ -76,6 +67,7 @@ dl.time-at {
     padding-bottom: 0.3em;
     padding-left: $gutter-one-quarter;
   }
+
   dd {
     @include bold-24();
     display: inline-block;
