@@ -39,6 +39,10 @@ FactoryGirl.define do
   factory :cso_user, class: ServiceUser do
     to_create { |instance| instance }
 
+    transient do
+      organisation { build(:organisation, :custody_suite) }
+    end
+
     initialize_with {
       omni_auth_user = Omniauth::Dsds::User.new(
         uid: SecureRandom.uuid,
@@ -46,9 +50,9 @@ FactoryGirl.define do
         email: "cso_user@example.com",
         organisations: [
           {
-            "uid" => SecureRandom.uuid,
-            "name" => "Example custody suite",
-            "type" => "custody_suite",
+            "uid" => organisation.uid,
+            "name" => organisation.name,
+            "type" => organisation.type,
             "roles" => ["cso"]
           }
         ]
