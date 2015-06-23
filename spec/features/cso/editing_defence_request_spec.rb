@@ -2,36 +2,41 @@ require "rails_helper"
 
 RSpec.feature "Custody Suite Officers editing defence requests" do
 
-  specify "can edit detainee details" do
-    login_and_view_defence_request
+  context "for defence requests assigned to the same custody suite" do
+    specify "can edit detainee details" do
+      login_and_view_defence_request
 
-    within ".detainee-details" do
-      click_link "Change this"
+      within ".detainee-details" do
+        click_link "Change this"
+      end
+
+      fill_in "defence_request_detainee_address", with: "Changed address"
+      click_button "Save changes"
+
+      expect(page).to have_content("Changed address")
     end
 
-    fill_in "defence_request_detainee_address", with: "Changed address"
-    click_button "Save changes"
+    specify "can edit case details" do
+      login_and_view_defence_request
 
-    expect(page).to have_content("Changed address")
-  end
+      click_link "Case details"
+      within ".case-details" do
+        click_link "Change this"
+      end
 
-  specify "can edit case details" do
-    login_and_view_defence_request
+      fill_in "defence_request_custody_number", with: "New number"
+      click_button "Save changes"
 
-    click_link "Case details"
-    within ".case-details" do
-      click_link "Change this"
+      expect(page).to have_content("New number")
     end
-
-    fill_in "defence_request_custody_number", with: "New number"
-    click_button "Save changes"
-
-    expect(page).to have_content("New number")
   end
 
   def login_and_view_defence_request
-    cso = create :cso_user
-    defence_request = create :defence_request, :queued, custody_suite_uid: cso.organisation["uid"]
+    custody_suite = build :organisation, :custody_suite
+
+    defence_request = create :defence_request, :queued, custody_suite_uid: custody_suite.uid
+
+    cso = create :cso_user, organisation: custody_suite
 
     login_as_cso(cso)
 
