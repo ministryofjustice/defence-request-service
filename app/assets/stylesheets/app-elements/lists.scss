@@ -16,10 +16,24 @@ dl.labels {
     &:after {
       content: ":";
     }
+
+    &.notify {
+      margin-left: -15px;
+      border-left: 6px solid $notify;
+      padding-left: 9px;
+      margin-bottom: 0;
+      &:after {
+        content: "";
+      }
+    }
   }
   dd {
     float: left;
     margin-bottom: 0.75em;
+
+    &.notify {
+      margin-bottom: 0;
+    }
 
     &.multi-line {
       white-space: pre-line;
