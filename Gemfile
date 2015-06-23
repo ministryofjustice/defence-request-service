@@ -74,6 +74,5 @@ group :test do
 end
 
 group :production do
-
   gem "rack-timeout"
 end
