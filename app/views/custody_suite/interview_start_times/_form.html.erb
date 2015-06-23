@@ -7,7 +7,7 @@
 <%= remote_form_for(
             @defence_request_form,
             local_assigns.fetch(:remote, true),
-            url: defence_request_interview_start_time_path(defence_request_id: @defence_request.id),
+            url: custody_suite_defence_request_interview_start_time_path(defence_request_id: @defence_request.id),
             method: :patch,
             builder: LabellingFormBuilder,
             as: :defence_request,

@@ -1,4 +1,4 @@
-class DefenceRequestsController < BaseController
+class CustodySuite::DefenceRequestsController < BaseController
 
   include DefenceRequestConcern
 
@@ -6,7 +6,7 @@ class DefenceRequestsController < BaseController
 
   before_action :authorise_action_access, except: [:create, :update]
 
-  helper_method :defence_request_path_with_tab
+  helper_method :custody_suite_defence_request_path_with_tab
 
   def show
     @defence_request_form = DefenceRequestForm.new(defence_request)
@@ -29,7 +29,7 @@ class DefenceRequestsController < BaseController
     authorize_defence_request_access(:create, @defence_request_form.defence_request)
 
     if @defence_request_form.submit
-      redirect_to(@defence_request_form.defence_request, notice: flash_message(:create, DefenceRequestForm))
+      redirect_to([:custody_suite, @defence_request_form.defence_request], notice: flash_message(:create, DefenceRequestForm))
     else
       render :new
     end
@@ -49,7 +49,7 @@ class DefenceRequestsController < BaseController
     authorize_defence_request_access(:edit, @defence_request_form.defence_request)
 
     if @defence_request_form.submit
-      redirect_to(defence_request_path_with_tab(@part), notice: flash_message(:update, DefenceRequest))
+      redirect_to(custody_suite_defence_request_path_with_tab(@part), notice: flash_message(:update, DefenceRequest))
     else
       render edit_template
     end
@@ -115,16 +115,15 @@ class DefenceRequestsController < BaseController
       :edit
     end
   end
-
   def tab_param_value(param_name)
     params[param_name] && %(interview case-details).include?(params[param_name]) ?  params[param_name] : nil
   end
 
-  def defence_request_path_with_tab(tab)
+  def custody_suite_defence_request_path_with_tab(tab)
     if tab.present?
-      defence_request_path(tab: tab)
+      custody_suite_defence_request_path(tab: tab)
     else
-      defence_request_path
+      custody_suite_defence_request_path
     end
   end
 end

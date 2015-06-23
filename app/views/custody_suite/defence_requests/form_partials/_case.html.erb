@@ -40,7 +40,7 @@
     <% end %>
   <% end %>
 
-  <%= render('defence_requests/form_partials/case_details', f: f) if @policy.create? %>
+  <%= render('custody_suite/defence_requests/form_partials/case_details', f: f) if @policy.create? %>
 
   <% unless @defence_request.dscc_number.blank? %>
     <div class="form-group">

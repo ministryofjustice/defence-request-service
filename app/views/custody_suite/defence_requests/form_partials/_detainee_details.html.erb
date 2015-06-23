@@ -10,7 +10,7 @@
 <%= f.radio_button_fieldset :gender, choice: [ "male", "female", "transgender", "unspecified" ] %>
 
 <%= f.form_group(:date_of_birth) do %>
-  <% render('defence_requests/form_partials/detainee_date_of_birth', f: f) %>
+  <% render('custody_suite/defence_requests/form_partials/detainee_date_of_birth', f: f) %>
 <% end %>
 
 <%= f.text_field_input(:detainee_address,

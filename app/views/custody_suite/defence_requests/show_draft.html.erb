@@ -5,14 +5,14 @@
 <section class="detainee-details">
   <h2><%= not_given_formatter(@defence_request, :detainee_name, "name_not_given") %></h2>
 
-  <%= render("defence_requests/show_partials/detainee_details") %>
+  <%= render("custody_suite/defence_requests/show_partials/detainee_details") %>
 </section>
 
 
 <section class="case-details cf">
   <h2 class="line-above"><%= t("case_details") %></h2>
 
-  <%= render("defence_requests/show_partials/detention_details") %>
+  <%= render("custody_suite/defence_requests/show_partials/detention_details") %>
 </section>
 
 <div class="draft-actions">

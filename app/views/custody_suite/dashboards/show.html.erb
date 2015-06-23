@@ -6,7 +6,7 @@
 
 <% if check_policy_clause(@policy, :new?) %>
   <div class="new_defence_request">
-    <%= link_to t("new_request"), new_defence_request_path, role: "button", class: "button" %>
+    <%= link_to t("new_request"), new_custody_suite_defence_request_path, role: "button", class: "button" %>
   </div>
 <% end %>
 

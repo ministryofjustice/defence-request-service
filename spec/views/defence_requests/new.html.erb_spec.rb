@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "defence_requests/new.html.erb" do
+RSpec.describe "custody_suite/defence_requests/new.html.erb" do
 
   def assert_disable_set(input_id, check_id)
     expect(rendered).to have_css("//*[@id='#{ input_id }'][@data-disable-when='#{ check_id }']")

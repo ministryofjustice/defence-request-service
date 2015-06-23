@@ -1,4 +1,4 @@
-class InterviewStartTimesController < BaseController
+class CustodySuite::InterviewStartTimesController < BaseController
 
   include DefenceRequestConcern
   include AjaxEnabledConcern
@@ -18,7 +18,7 @@ class InterviewStartTimesController < BaseController
 
     if @defence_request_form.submit
       redirect_params = { notice: flash_message(:interview_start_time, DefenceRequest) }
-      render_for_ajax_or_redirect(:_interview_time, defence_request_path(@defence_request), redirect_params)
+      render_for_ajax_or_redirect(:_interview_time, [:custody_suite, @defence_request], redirect_params)
     else
       render_for_ajax_or_page(:_form, :edit)
     end

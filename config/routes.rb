@@ -7,14 +7,12 @@ Rails.application.routes.draw do
       get :closed, action: :show, id: :closed
       get :refresh_dashboard
     end
-    root controller: :dashboards, action: :show
-  end
 
-  resources :defence_requests, except: [:index] do
-    resource :solicitor_arrival_time, only: [:edit, :update]
-    resource :interview_start_time, only: [:edit, :update]
-    member do
+    resources :defence_requests, except: [:index] do
+      resource :interview_start_time, only: [:edit, :update]
     end
+
+    root controller: :dashboards, action: :show
   end
 
   resource :abort_defence_request, only: [:new, :create]

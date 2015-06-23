@@ -4,6 +4,6 @@
 
 <%= render 'shared/error_messages', object: @defence_request %>
 
-<%= form_for @defence_request_form, builder: LabellingFormBuilder do |f| %>
-    <%= render('defence_requests/form_partials/main', f: f) %>
+<%= form_for [:custody_suite, @defence_request_form], builder: LabellingFormBuilder do |f| %>
+    <%= render('custody_suite/defence_requests/form_partials/main', f: f) %>
 <% end if @policy.edit? %>

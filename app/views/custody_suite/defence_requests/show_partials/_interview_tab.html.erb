@@ -1,7 +1,7 @@
 <% if @defence_request.interview_start_time? %>
-  <%= render "interview_start_times/interview_time" %>
+  <%= render "custody_suite/interview_start_times/interview_time" %>
 <% elsif @policy.interview_start_time_edit? %>
-  <%= render "interview_start_times/form" %>
+  <%= render "custody_suite/interview_start_times/form" %>
 <% end %>
 
 <% if false # disabled for CSO testing. Only show this content to Solicitors %>

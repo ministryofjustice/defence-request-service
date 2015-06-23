@@ -5,7 +5,7 @@ RSpec.describe Mailer, type: :mailer do
   let(:defence_request) { FactoryGirl.create(:defence_request, interview_start_time: DateTime.parse("13-04-1992 9:50")) }
   let(:solicitor) { FactoryGirl.create(:solicitor_user) }
 
-  describe "notify_interview_start_change" do
+  xdescribe "notify_interview_start_change" do
     before do
       @response = subject.notify_interview_start_change(defence_request, solicitor).deliver_now
     end
@@ -19,7 +19,7 @@ RSpec.describe Mailer, type: :mailer do
     end
   end
 
-  describe "send_solicitor_case_details" do
+  xdescribe "send_solicitor_case_details" do
     before do
       @response = subject.send_solicitor_case_details(defence_request, solicitor).deliver_now
     end

@@ -2,7 +2,7 @@
 
 <%= link_to t("back_to_requests"), custody_suite_dashboard_path %>
 
-<%= render "defence_requests/show_partials/header" %>
+<%= render "custody_suite/defence_requests/show_partials/header" %>
 
 <% if @defence_request.aborted? %>
   <h1><%= t("case_aborted") %></h1>
@@ -11,7 +11,7 @@
 <% end %>
 
 <section class="detainee-details">
-  <%= render("defence_requests/show_partials/detainee_details") %>
+  <%= render("custody_suite/defence_requests/show_partials/detainee_details") %>
 </section>
 
 <%= content_tag("div", class: "js-tabs cf", id: "edit-tabs", data: { activatefirst: @tab.blank? ? "true" : "false" }) do %>
@@ -27,12 +27,12 @@
   </div>
   <div class="js-tabs-content">
     <div id="interview">
-      <%= render "defence_requests/show_partials/interview_tab" %>
+      <%= render "custody_suite/defence_requests/show_partials/interview_tab" %>
     </div>
     <div id="case-details">
       <section class="case-details">
         <h3 class="nonjs"><%= t("case_details")%></h3>
-        <%= render "defence_requests/show_partials/detention_details" %>
+        <%= render "custody_suite/defence_requests/show_partials/detention_details" %>
       </section>
     </div>
   </div>

@@ -46,7 +46,7 @@ RSpec.feature "Custody Suite Officers viewing defence request" do
       find("a").click
     end
 
-    visit defence_request_path(defence_request, tab: "googly woogly wooo")
+    visit custody_suite_defence_request_path(defence_request, tab: "googly woogly wooo")
     expect(find(:css, ".tabs").first("li")["class"]).to include "is-active"
   end
 end
