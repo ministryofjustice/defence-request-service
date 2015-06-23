@@ -1,4 +1,13 @@
 dl.labels {
+  dt.notify-notification {
+    float: none;
+    clear: both;
+
+    &:after {
+      content: "";
+    }
+  }
+
   dd {
     float: none;
     display: inline-block;
@@ -6,12 +15,12 @@ dl.labels {
 }
 
 .grid-row {
-  margin-left: 0;
-  width: 960px;
+  margin-left: -15px;
+  width: 975px;
 }
 
 .column-three-quarters {
-  padding-left: 0;
+  padding-left: 15px;
   width: 701px;
 }
 
@@ -20,7 +29,7 @@ dl.labels {
 }
 
 .column-full-width {
-  padding-left: 0;
+  padding-left: 15px;
   padding-right: 0;
   width: 960px;
 }

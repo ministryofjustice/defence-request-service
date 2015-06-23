@@ -8,6 +8,7 @@
   & *:first-child {
     margin-top: 0;
   }
+
   & *:last-child {
     margin-bottom: 0;
   }
@@ -18,4 +19,17 @@
   @include bold-19();
   margin-top: 0;
   color: $notify;
+}
+
+dl.labels {
+  dt.notify {
+    margin-left: -15px;
+    border-left: 6px solid $notify;
+    padding-left: 9px;
+    margin-bottom: 0;
+
+    &:after {
+      content: "";
+    }
+  }
 }
