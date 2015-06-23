@@ -9,6 +9,7 @@ gem "coffee-rails", "~> 4.1.0"
 gem "chronic"
 gem "drs-auth_client", github: "ministryofjustice/defence-request-service-auth", tag: "v0.2.1"
 gem "faker", "~> 1.4.3"
+gem "fog-aws", "= 0.1.2"          # See https://github.com/fog/fog-aws/issues/130
 gem "httparty", "~> 0.13.3"
 gem "jbuilder", "~> 2.0"
 gem "jquery-rails"
