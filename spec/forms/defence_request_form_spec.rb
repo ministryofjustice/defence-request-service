@@ -3,37 +3,59 @@ require "rails_helper"
 RSpec.describe DefenceRequestForm do
 
   let (:defence_request) { FactoryGirl.create(:defence_request) }
-  subject { DefenceRequestForm.new FactoryGirl.create(:defence_request) }
+  let (:params_for_dr) do
+    defence_request_params = FactoryGirl.attributes_for(:defence_request)
 
-  let (:params_for_dr)   { {  detainee_name: defence_request.detainee_name,
-                              gender: defence_request.gender,
-                              offences: defence_request.offences,
-                              time_of_arrival: datetime_to_params(defence_request.time_of_arrival),
-                              comments: defence_request.comments } }
+    {
+      detainee_name: defence_request_params[:detainee_name],
+      gender: defence_request_params[:gender],
+      offences: defence_request_params[:offences],
+      time_of_arrival: datetime_to_params(defence_request_params[:time_of_arrival]),
+      comments: defence_request_params[:comments]
+    }
+  end
+  let(:params) { {} }
 
+  subject(:form) { described_class.new(defence_request, params) }
+
+  describe "#initialize" do
+    context "with params" do
+      let(:params) { params_for_dr }
+
+      it "assigns the params to the defence request" do
+        expect(subject.defence_request.detainee_name).to eql(params[:detainee_name])
+      end
+    end
+  end
 
   describe "submit" do
+    subject { form.submit }
+
     context "with valid params" do
+      let(:params) { params_for_dr }
+
       it "returns true, and has no errors" do
-        expect(subject.submit params_for_dr).to eql true
-        expect(subject.errors).to be_blank
+        is_expected.to be true
+        expect(form.errors).to be_blank
       end
     end
 
     context "with invalid params" do
       context "invalid attribute on the dr" do
-        let(:invalid_params) { params_for_dr.merge({ gender: "" }) }
+        let(:params) { params_for_dr.merge({ gender: "" }) }
 
         it "adds any errors from the dr, to itself" do
-          expect(subject.submit invalid_params).to eql false
-          expect(subject.errors.count).to eql 1
-          expect(subject.errors[:gender]).to contain_exactly("You must describe the detainee's gender or select 'Unspecified'")
+          is_expected.to be false
+
+          expect(form.errors.count).to eql 1
+          expect(form.errors[:gender]).to contain_exactly("You must describe the detainee's gender or select 'Unspecified'")
         end
       end
 
       context "invalid field object" do
         context "that is has presence validated on the dr" do
-          let(:invalid_params) { params_for_dr.merge({ time_of_arrival: invalid_time_of_arrival }) }
+          let(:params) { params_for_dr.merge({ time_of_arrival: invalid_time_of_arrival }) }
+
           context "blank" do
             let(:invalid_time_of_arrival) { { date: "",
                                               hour: "",
@@ -43,9 +65,10 @@ RSpec.describe DefenceRequestForm do
             }
 
             it "adds errors from the field object to itself" do
-              expect(subject.submit invalid_params).to eql false
-              expect(subject.errors.count).to eql 1
-              expect(subject.errors[:time_of_arrival]).to contain_exactly expected_error_message
+              is_expected.to be false
+
+              expect(form.errors.count).to eql 1
+              expect(form.errors[:time_of_arrival]).to contain_exactly expected_error_message
             end
           end
 
@@ -58,15 +81,16 @@ RSpec.describe DefenceRequestForm do
             }
 
             it "adds errors from the field object to itself" do
-              expect(subject.submit invalid_params).to eql false
-              expect(subject.errors.count).to eql 1
-              expect(subject.errors[:time_of_arrival]).to contain_exactly expected_error_message
+              is_expected.to be false
+
+              expect(form.errors.count).to eql 1
+              expect(form.errors[:time_of_arrival]).to contain_exactly expected_error_message
             end
           end
         end
 
         context "that does not have presence validated on the dr" do
-          let(:invalid_params) { params_for_dr.merge({ interview_start_time: invalid_interview_start_time }) }
+          let(:params) { params_for_dr.merge({ interview_start_time: invalid_interview_start_time }) }
 
           context "blank" do
             let(:invalid_interview_start_time) { { date: "",
@@ -75,8 +99,9 @@ RSpec.describe DefenceRequestForm do
 
 
             it "it does not add any errors to itself" do
-              expect(subject.submit invalid_params).to eql true
-              expect(subject.errors.count).to eql 0
+              is_expected.to be true
+
+              expect(form.errors.count).to eql 0
             end
           end
 
@@ -89,9 +114,11 @@ RSpec.describe DefenceRequestForm do
             }
 
             it "adds errors from the field object to itself" do
-              expect(subject.submit invalid_params).to eql false
-              expect(subject.errors.count).to eql 1
-              expect(subject.errors[:interview_start_time]).to contain_exactly expected_error_message
+              is_expected.to be false
+
+
+              expect(form.errors.count).to eql 1
+              expect(form.errors[:interview_start_time]).to contain_exactly expected_error_message
             end
           end
         end

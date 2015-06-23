@@ -25,7 +25,7 @@ class DefenceRequestForm
     ActiveModel::Name.new(self, nil, "DefenceRequest")
   end
 
-  def initialize(defence_request)
+  def initialize(defence_request, params = {})
     @fields = {}
     @defence_request = defence_request
     register_field :date_of_birth, DateField
@@ -33,17 +33,23 @@ class DefenceRequestForm
     register_field :time_of_arrest, DateTimeField
     register_field :time_of_detention_authorised, DateTimeField
     register_field :interview_start_time, DateTimeField
+
+    assign_params(params) unless params.empty?
   end
 
-  def error_message_lookup_proc(field_name)
-    @defence_request.errors.method(:generate_message).curry(2)[field_name]
+  def submit
+    if valid?
+      @defence_request.save!
+      true
+    else
+      add_errors_to_form
+      false
+    end
   end
 
-  def register_field(field_name, klass, opts={})
-    @fields[field_name] = klass.from_persisted_value @defence_request.send field_name
-  end
+  private
 
-  def submit(params)
+  def assign_params(params)
     @fields.select!{ |k, v| params.include?(k) }
 
     params_without_fields = params.reject { |k, _| @fields.keys.include? k.to_sym }
@@ -55,14 +61,18 @@ class DefenceRequestForm
       @fields[field_name] = field_value
       @defence_request.assign_attributes({ field_name => field_value.value })
     end
+  end
 
-    if @fields.all?(&valid_if_present?) & @defence_request.valid?
-      @defence_request.save!
-      true
-    else
-      add_errors_to_form
-      false
-    end
+  def valid?
+    @fields.all?(&valid_if_present?) & @defence_request.valid?
+  end
+
+  def error_message_lookup_proc(field_name)
+    @defence_request.errors.method(:generate_message).curry(2)[field_name]
+  end
+
+  def register_field(field_name, klass, opts={})
+    @fields[field_name] = klass.from_persisted_value @defence_request.send field_name
   end
 
   def add_errors_to_form
