@@ -6,6 +6,8 @@ dsds:
 rails:
   secret_key_base: <%= ENV.fetch("SECRET_KEY_BASE") %>
   force_ssl: <%= ENV.fetch("FORCE_SSL", true) %>
+  active_job_adapter: <%= ENV.fetch("ACTIVE_JOB_ADAPTER") %>
+  active_job_queue_prefix: <%= ENV.fetch("ACTIVE_JOB_QUEUE_PREFIX") %>
 
 action_mailer:
   default_url_options:
@@ -34,5 +36,5 @@ analytics:
   google_ua: <%= ENV.fetch("GOOGLE_ANALYTICS_UA", nil) %>
 
 aws:
-  region: eu-west-1
+  region: <%= ENV.fetch("AWS_REGION") %>
   s3_asset_bucket_name: <%= ENV.fetch("AWS_S3_ASSET_BUCKET_NAME") %>

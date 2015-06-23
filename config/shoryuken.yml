@@ -1,0 +1,11 @@
+aws:
+  access_key_id: <%= ENV.fetch("AWS_ACCESS_KEY_ID", nil) %>
+  secret_access_key: <%= ENV.fetch("AWS_SECRET_ACCESS_KEY", nil) %>
+  receive_message:
+    attribute_names:
+      - ApproximateReceiveCount
+      - SentTimestamp
+
+# Add queues here:
+# queues:
+#   - [<%= "#{ENV.fetch("ACTIVE_JOB_QUEUE_PREFIX")}_queue_name" %>, 1]
