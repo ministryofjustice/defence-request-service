@@ -30,7 +30,7 @@ RSpec.describe CsoDefenceRequestPolicy do
         it { is_expected.to permit_actions_and_forbid_all_others(allowed_actions) }
       end
 
-      %i(queued acknowledged).each do |state|
+      %i(queued acknowledged accepted).each do |state|
         context "with #{state} request" do
           let(:defence_request) { build(:defence_request, state, custody_suite_uid: custody_suite_uid)}
           let(:allowed_actions) { [:show, :new, :create, :edit, :update, :interview_start_time_edit] }
