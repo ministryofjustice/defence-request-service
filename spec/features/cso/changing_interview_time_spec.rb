@@ -47,7 +47,7 @@ RSpec.shared_examples "setting, changing and validating interview time" do
 
     login_as_cso(cso)
 
-    visit "/defence_requests/#{dr.id}"
+    visit custody_suite_defence_request_path(dr)
   end
 
   def fill_date_and_time(hour, min, date)

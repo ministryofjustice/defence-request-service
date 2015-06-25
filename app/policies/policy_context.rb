@@ -7,6 +7,6 @@ class PolicyContext
   end
 
   def policy_class
-    "#{@user.roles.uniq.first}DefenceRequestPolicy".classify
+    "#{@user.role}DefenceRequestPolicy".classify
   end
 end

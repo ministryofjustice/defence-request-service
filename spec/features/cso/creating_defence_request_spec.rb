@@ -6,7 +6,7 @@ RSpec.feature "Custody Suite Officers creating defence requests" do
 
     click_button "Create request"
 
-    expect(current_path).to eq("/defence_requests")
+    expect(current_path).to eq("/custody_suite/defence_requests")
     expect(page).to have_content "You need to fix the errors on this page before continuing"
 
     expect(page).to have_css(".error-summary li", text: "You must give the detainee's name or select 'Not given'")

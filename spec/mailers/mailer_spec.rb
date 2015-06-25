@@ -18,15 +18,4 @@ RSpec.describe Mailer, type: :mailer do
       expect(@response.body).to have_content "9:50"
     end
   end
-
-  describe "send_solicitor_case_details" do
-    before do
-      @response = subject.send_solicitor_case_details(defence_request, solicitor).deliver_now
-    end
-
-    it "contains a link to the request" do
-      expect(@response.body).to have_link "View the case details"
-      expect(@response.body).to have_content defence_request.dscc_number
-    end
-  end
 end
