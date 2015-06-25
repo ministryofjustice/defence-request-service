@@ -7,6 +7,10 @@ class ServiceUser < SimpleDelegator
     new(user) unless user.nil?
   end
 
+  def role
+    roles.uniq.first
+  end
+
   def roles
     return [] unless @organisation
 

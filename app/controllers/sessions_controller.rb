@@ -10,12 +10,7 @@ class SessionsController < ApplicationController
   private
 
   def redirect_url
-    custody_suite_root_url if user_role == "cso"
-  end
-
-  # TODO: This is hacky
-  def user_role
-    @user_role ||= current_user.organisations.map { |o| o["roles"] }.flatten.uniq.first
+    custody_suite_root_url if current_user.role == "cso"
   end
 
   def auth_hash
