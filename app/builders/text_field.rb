@@ -3,7 +3,6 @@ class TextField < FormGroup
   def initialize(form, attribute, options)
     @input_data = options.fetch :input_data, nil
     @input_class = options.fetch :input_class, nil
-    @multiline = options.fetch :multiline, false
     super
   end
 
@@ -26,11 +25,7 @@ class TextField < FormGroup
   end
 
   def value
-    if @multiline
-      f.text_area attribute, input_options.merge({rows: @multiline})
-    else
-      f.text_field attribute, input_options
-    end
+    f.text_field attribute, input_options
   end
 
   def max_length
