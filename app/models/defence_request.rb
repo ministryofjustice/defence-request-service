@@ -3,8 +3,6 @@ class DefenceRequest < ActiveRecord::Base
 
   attr_accessor :cco, :solicitor
 
-  after_update :notify_interview_start_change, if: :interview_start_time_changed?
-
   scope :accepted_aborted_or_completed, -> { where(state: ["accepted", "aborted", "completed"]) }
   scope :not_aborted, -> { where.not(state: "aborted") }
   scope :not_draft, -> { where.not(state: "draft") }
@@ -30,7 +28,7 @@ class DefenceRequest < ActiveRecord::Base
       transitions from: [:queued], to: :acknowledged
     end
 
-    event :accept, success: :send_solicitor_case_details do
+    event :accept  do
       transitions from: [:acknowledged], to: :accepted, guard: [:dscc_number?]
     end
 
@@ -108,11 +106,5 @@ class DefenceRequest < ActiveRecord::Base
 
   def closed?
     CLOSED_STATES.include? state.to_sym
-  end
-
-  private
-
-  def notify_interview_start_change
-    Mailer.notify_interview_start_change(self, solicitor).deliver_later if solicitor
   end
 end

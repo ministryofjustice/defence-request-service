@@ -89,7 +89,7 @@ RSpec.describe DefenceRequest, type: :model do
     end
 
     shared_examples "transition possible" do |event|
-      xspecify { expect{ subject.send(event) }.to_not raise_error }
+      specify { expect{ subject.send(event) }.to_not raise_error }
       specify { expect(subject.send("can_execute_#{event}?".to_sym)).to eq true }
     end
 
@@ -144,37 +144,6 @@ RSpec.describe DefenceRequest, type: :model do
     describe "completed" do
       let(:state) { :completed }
       include_examples "allowed transitions", []
-    end
-  end
-
-  describe "callbacks" do
-    context "marked as accepted" do
-      before do
-        @dr_with_dscc = FactoryGirl.create(:defence_request, :with_dscc_number, :acknowledged)
-      end
-
-      xit "notifies the solicitor"  do
-        expect(@dr_with_dscc).to receive(:send_solicitor_case_details).and_call_original
-        @dr_with_dscc.accept
-      end
-    end
-
-    before do
-      @persisted_request = FactoryGirl.create(:defence_request)
-    end
-
-    context "interview time changes" do
-      it "notifies the solicitor"  do
-        expect(@persisted_request).to receive(:notify_interview_start_change).and_call_original
-        @persisted_request.update_attribute(:interview_start_time, DateTime.parse("13-04-1992 9:50"))
-      end
-    end
-
-    context "save happens without change" do
-      it "does not notify the solicitor" do
-        expect(@persisted_request).to_not receive(:notify_interview_start_change)
-        @persisted_request.update_attribute(:detainee_name, "Eamonn Holmes")
-      end
     end
   end
 
