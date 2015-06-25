@@ -83,7 +83,8 @@ RSpec::describe "LabellingFormBuilder", type: :helper do
   end
 
   describe "#text_field_input" do
-    let(:row) { form.text_field_input(:detainee_name) }
+    let(:options) { {} }
+    let(:row) { form.text_field_input(:detainee_name, options) }
 
     it "outputs the correct form element" do
       expect(row).to contain_css_selectors([".form-group input[type=text]", ".form-group label"])
@@ -93,6 +94,19 @@ RSpec::describe "LabellingFormBuilder", type: :helper do
       messages = double("error_messages", messages: { detainee_name: ["date cannot be blank"] })
       expect(defence_request).to receive(:errors).at_least(:once).and_return(messages)
       expect(row).to only_show_errors_inside(:label, error_css: "label span.error-message")
+    end
+
+    context "when multiline is set" do
+      let(:options) { { multiline: 3 } }
+      it "renders textarea" do
+        expect(row).to match(%r{<textarea[^>]*>})
+      end
+    end
+
+    context "when multiline is not set" do
+      it "renders input type=\"text\"" do
+        expect(row).to match(%r{^<input[^>]+type="text"[^>]*>})
+      end
     end
   end
 

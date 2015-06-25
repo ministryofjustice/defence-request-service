@@ -14,6 +14,7 @@
 <% end %>
 
 <%= f.text_field_input(:detainee_address,
+    multiline: 5,
     input_data: { "disable-when" => "defence_request_detainee_address_not_given"}) do %>
   <% f.label :detainee_address_not_given, class: 'form-checkbox' do %>
     <%= f.check_box :detainee_address_not_given %>
