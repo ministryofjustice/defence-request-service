@@ -32,7 +32,7 @@ class CsoDefenceRequestPolicy < ApplicationPolicy
   end
 
   def edit?
-    scoped? && !policy_record.accepted?
+    scoped?
   end
 
   def update?
