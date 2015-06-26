@@ -10,12 +10,7 @@ class DefenceRequestForm
                           :fit_for_interview, :unfit_for_interview_reason, :interpreter_required, :interpreter_type,
                           :detainee_name_not_given, :detainee_address_not_given, :date_of_birth_not_given
 
-  DELEGATED_ATTRIBUTES.each do |attr_name|
-    def_delegator :@defence_request, "#{attr_name}_before_type_cast", attr_name
-  end
-
-  def_delegators :@defence_request, :persisted?, :id, :human_attribute
-
+  def_delegators :@defence_request, :persisted?, :id, :human_attribute, *DELEGATED_ATTRIBUTES
 
   def self.human_attribute_name(*args)
     DefenceRequest.human_attribute_name *args
